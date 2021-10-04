@@ -371,11 +371,11 @@ crippled_hw_sdma_cont	equ	$ff8901
 	movea.l	4(sp),a0
 	move.l	a0,d0
 	addi.l	#128,d0
-	move.l	d0,U91922.l
+	move.l	d0,U91922
 	move.l	4(a0),d0
 	andi.b	#254,d0
 	movea.l	d0,sp
-	move.l	8(a0),U91914.l
+	move.l	8(a0),U91914
 	move.l	12(a0),d0
 	add.l	20(a0),d0
 	add.l	28(a0),d0
@@ -385,30 +385,30 @@ crippled_hw_sdma_cont	equ	$ff8901
 	move.w	d0,-(sp)
 	move.w	#74,-(sp)
 L64:
-	jsr	L77804.l
+	jsr	L77804
 	tst.w	d0
 	beq.s	L86
 	move.l	d0,-(sp)
-	jsr	L77748.l
+	jsr	L77748
 	addq.l	#4,sp
 	bra.s	L64
 
 L86:
 	trap	#1		; Gemdos
-	jmp	L37058.l
+	jmp	L37058
 
 L94:
 	move.l	#2560,-(sp)
-	jsr	L77748.l
+	jsr	L77748
 	move.l	d0,(sp)
-	jsr	L77804.l
+	jsr	L77804
 	move.l	d0,-(sp)
-	jsr	L77748.l
+	jsr	L77748
 	addq.l	#4,sp
-	move.l	d0,U91918.l
-	jsr	L77830.l
+	move.l	d0,U91918
+	jsr	L77830
 	addq.l	#4,sp
-	move.l	U91918.l,d0
+	move.l	U91918,d0
 	rts
 
 L146:
@@ -417,23 +417,23 @@ L146:
 	rts
 
 L156:
-	move.l	U91914.l,d0
+	move.l	U91914,d0
 	rts
 
 L164:
-	move.l	U91922.l,d0
+	move.l	U91922,d0
 	rts
 
 L172:
-	move.l	(sp)+,U91946.l
+	move.l	(sp)+,U91946
 	trap	#13		; Bios
-	move.l	U91946.l,-(sp)
+	move.l	U91946,-(sp)
 	rts
 
 L188:
-	move.l	(sp)+,U91946.l
+	move.l	(sp)+,U91946
 	trap	#14		; Xbios
-	move.l	U91946.l,-(sp)
+	move.l	U91946,-(sp)
 	rts
 
 L204:
@@ -454,18 +454,18 @@ L218:
 	rts
 
 L236:
-	move.l	iv_M1_kb_midi.l,U91928.l
-	move.l	#L276,iv_M1_kb_midi.l
+	move.l	iv_M1_kb_midi,U91928
+	move.l	#L276,iv_M1_kb_midi
 	move.w	#1,-(sp)
 	move.w	#14,-(sp)	; Iorec
 	trap	#14		; Xbios
 	addq.w	#4,sp
-	move.l	d0,U91932.l
+	move.l	d0,U91932
 	rts
 
 L276:
-	addq.w	#1,U91926.l
-	move.l	U91928.l,-(sp)
+	addq.w	#1,U91926
+	move.l	U91928,-(sp)
 	rts
 
 L290:
@@ -473,16 +473,16 @@ L290:
 	move.w	#32,-(sp)	; Super
 	trap	#1		; Gemdos
 	addq.w	#6,sp
-	move.l	d0,U91942.l
-	move.l	U91928.l,iv_M1_kb_midi.l
-	move.l	U91942.l,-(sp)
+	move.l	d0,U91942
+	move.l	U91928,iv_M1_kb_midi
+	move.l	U91942,-(sp)
 	move.w	#32,-(sp)	; Super
 	trap	#1		; Gemdos
 	addq.w	#6,sp
 	rts
 
 L332:
-	movea.l	U101194.l,a0
+	movea.l	U101194,a0
 	clr.l	d1
 	move.w	4(sp),d1
 	lsl.l	#2,d1
@@ -492,7 +492,7 @@ L332:
 	rts
 
 L358:
-	movea.l	U101194.l,a0
+	movea.l	U101194,a0
 	clr.l	d0
 	move.w	4(sp),d0
 	lsl.l	#2,d0
@@ -500,7 +500,7 @@ L358:
 	rts
 
 L378:
-	movea.l	U101194.l,a0
+	movea.l	U101194,a0
 	clr.l	d0
 	move.w	4(sp),d0
 	lsl.l	#2,d0
@@ -508,7 +508,7 @@ L378:
 	rts
 
 L398:
-	movea.l	U101194.l,a0
+	movea.l	U101194,a0
 	clr.l	d0
 	move.w	4(sp),d0
 	lsl.l	#2,d0
@@ -516,7 +516,7 @@ L398:
 	rts
 
 L418:
-	movea.l	U101194.l,a0
+	movea.l	U101194,a0
 	clr.l	d0
 	move.w	4(sp),d0
 	lsl.l	#2,d0
@@ -525,7 +525,7 @@ L418:
 	rts
 
 L444:
-	movea.l	U101194.l,a0
+	movea.l	U101194,a0
 	clr.l	d0
 	move.w	4(sp),d0
 	lsl.l	#2,d0
@@ -533,7 +533,7 @@ L444:
 	rts
 
 L466:
-	movea.l	U101194.l,a0
+	movea.l	U101194,a0
 	clr.l	d0
 	move.w	4(sp),d0
 	lsl.l	#2,d0
@@ -541,7 +541,7 @@ L466:
 	rts
 
 L488:
-	movea.l	U101194.l,a0
+	movea.l	U101194,a0
 	clr.l	d0
 	move.w	4(sp),d0
 	lsl.l	#2,d0
@@ -549,13 +549,13 @@ L488:
 	rts
 
 L510:
-	movea.l	U101194.l,a0
+	movea.l	U101194,a0
 	clr.l	d0
 	move.w	4(sp),d0
 	lsl.l	#2,d0
 	clr.l	d1
 	move.w	2(a0,d0.l),d1
-	add.l	U91914.l,d1
+	add.l	U91914,d1
 	movea.l	d1,a0
 	jmp	(a0)
 
@@ -566,14 +566,14 @@ L540:
 	rts
 
 L552:
-	move.l	(sp)+,U91946.l
+	move.l	(sp)+,U91946
 	trap	#1		; Gemdos
-	move.l	U91946.l,-(sp)
+	move.l	U91946,-(sp)
 	rts
 
 L568:
 	link	fp,#-10
-	move.w	8(fp),U100906.l
+	move.w	8(fp),U100906
 	move.w	8(fp),d0
 	add.w	#-10,d0
 	muls	#3,d0
@@ -596,25 +596,25 @@ L612:
 L642:
 	cmpi.w	#4,-2(fp)
 	blt.s	L612
-	move.l	U101000.l,(sp)
-	jsr	L540.l
+	move.l	U101000,(sp)
+	jsr	L540
 	clr.w	d0
-	move.w	U100946.l,d0
+	move.w	U100946,d0
 	unlk	fp
 	rts
 
 L674:
 	link	fp,#-6
-	move.l	#U100906,U98686.l
-	move.l	#U100590,U98690.l
-	move.l	#U100914,U98694.l
-	move.l	#U100946,U98698.l
-	move.l	#U101058,U98702.l
-	move.l	#U101464,U98706.l
-	move.l	#U98686,U101000.l
+	move.l	#U100906,U98686
+	move.l	#U100590,U98690
+	move.l	#U100914,U98694
+	move.l	#U100946,U98698
+	move.l	#U101058,U98702
+	move.l	#U101464,U98706
+	move.l	#U98686,U101000
 	move.w	#10,(sp)
 	bsr  	L568
-	move.w	U100946.l,U101048.l
+	move.w	U100946,U101048
 	moveq	#1,d0
 	unlk	fp
 	rts
@@ -629,38 +629,38 @@ L772:
 
 L790:
 	link	fp,#-4
-	move.w	8(fp),U100914.l
-	move.w	10(fp),U100916.l
-	move.w	12(fp),U100918.l
-	move.w	14(fp),U100920.l
-	move.w	16(fp),U100922.l
-	move.w	18(fp),U100924.l
-	move.w	20(fp),U100926.l
-	move.w	22(fp),U100928.l
-	move.w	24(fp),U100930.l
-	move.w	26(fp),U100932.l
-	move.w	28(fp),U100934.l
-	move.w	30(fp),U100936.l
-	move.w	32(fp),U100938.l
-	move.w	34(fp),U100940.l
-	move.l	36(fp),U101058.l
-	move.w	40(fp),U100942.l
-	move.w	42(fp),U100944.l
+	move.w	8(fp),U100914
+	move.w	10(fp),U100916
+	move.w	12(fp),U100918
+	move.w	14(fp),U100920
+	move.w	16(fp),U100922
+	move.w	18(fp),U100924
+	move.w	20(fp),U100926
+	move.w	22(fp),U100928
+	move.w	24(fp),U100930
+	move.w	26(fp),U100932
+	move.w	28(fp),U100934
+	move.w	30(fp),U100936
+	move.w	32(fp),U100938
+	move.w	34(fp),U100940
+	move.l	36(fp),U101058
+	move.w	40(fp),U100942
+	move.w	42(fp),U100944
 	move.w	#25,(sp)
 	bsr  	L568
 	movea.l	60(fp),a0
-	move.w	U100956.l,(a0)
+	move.w	U100956,(a0)
 	movea.l	64(fp),a0
-	move.w	U100958.l,(a0)
+	move.w	U100958,(a0)
 	clr.w	d0
-	move.w	U100946.l,d0
+	move.w	U100946,d0
 	unlk	fp
 	rts
 
 L970:
 	link	fp,#-4
-	move.l	8(fp),U101058.l
-	move.w	12(fp),U100914.l
+	move.l	8(fp),U101058
+	move.w	12(fp),U100914
 	move.w	#30,(sp)
 	bsr  	L568
 	unlk	fp
@@ -668,9 +668,9 @@ L970:
 
 L1002:
 	link	fp,#-4
-	move.l	8(fp),U101058.l
-	move.w	12(fp),U100914.l
-	move.w	14(fp),U100916.l
+	move.l	8(fp),U101058
+	move.w	12(fp),U100914
+	move.w	14(fp),U100916
 	move.w	#31,(sp)
 	bsr  	L568
 	unlk	fp
@@ -678,9 +678,9 @@ L1002:
 
 L1042:
 	link	fp,#-4
-	move.l	8(fp),U101058.l
-	move.w	12(fp),U100914.l
-	move.w	14(fp),U100916.l
+	move.l	8(fp),U101058
+	move.w	12(fp),U100914
+	move.w	14(fp),U100916
 	move.w	#32,(sp)
 	bsr  	L568
 	unlk	fp
@@ -688,26 +688,26 @@ L1042:
 
 L1082:
 	link	fp,#-4
-	move.l	8(fp),U101058.l
-	move.w	12(fp),U100914.l
-	move.w	14(fp),U100916.l
+	move.l	8(fp),U101058
+	move.w	12(fp),U100914
+	move.w	14(fp),U100916
 	move.w	#33,(sp)
 	bsr  	L568
 	unlk	fp
 	rts
 
 	link	fp,#-4
-	move.l	8(fp),U101058.l
-	move.w	12(fp),U100914.l
-	move.w	14(fp),U100916.l
+	move.l	8(fp),U101058
+	move.w	12(fp),U100914
+	move.w	14(fp),U100916
 	move.w	#40,(sp)
 	bsr  	L568
 	unlk	fp
 	rts
 
 	link	fp,#-4
-	move.l	8(fp),U101058.l
-	move.w	12(fp),U100914.l
+	move.l	8(fp),U101058
+	move.w	12(fp),U100914
 	move.w	#41,(sp)
 	bsr  	L568
 	unlk	fp
@@ -715,13 +715,13 @@ L1082:
 
 L1194:
 	link	fp,#-4
-	move.l	8(fp),U101058.l
-	move.w	12(fp),U100914.l
-	move.w	14(fp),U100916.l
-	move.w	16(fp),U100918.l
-	move.w	18(fp),U100920.l
-	move.w	20(fp),U100922.l
-	move.w	22(fp),U100924.l
+	move.l	8(fp),U101058
+	move.w	12(fp),U100914
+	move.w	14(fp),U100916
+	move.w	16(fp),U100918
+	move.w	18(fp),U100920
+	move.w	20(fp),U100922
+	move.w	22(fp),U100924
 	move.w	#42,(sp)
 	bsr  	L568
 	unlk	fp
@@ -729,8 +729,8 @@ L1194:
 
 L1266:
 	link	fp,#-4
-	move.l	8(fp),U101058.l
-	move.w	12(fp),U100914.l
+	move.l	8(fp),U101058
+	move.w	12(fp),U100914
 	move.w	#50,(sp)
 	bsr  	L568
 	unlk	fp
@@ -738,15 +738,15 @@ L1266:
 
 L1298:
 	link	fp,#-4
-	move.w	8(fp),U100914.l
-	move.w	10(fp),U100916.l
-	move.w	12(fp),U100918.l
-	move.w	14(fp),U100920.l
-	move.w	16(fp),U100922.l
-	move.w	18(fp),U100924.l
-	move.w	20(fp),U100926.l
-	move.w	22(fp),U100928.l
-	move.w	24(fp),U100930.l
+	move.w	8(fp),U100914
+	move.w	10(fp),U100916
+	move.w	12(fp),U100918
+	move.w	14(fp),U100920
+	move.w	16(fp),U100922
+	move.w	18(fp),U100924
+	move.w	20(fp),U100926
+	move.w	22(fp),U100928
+	move.w	24(fp),U100930
 	move.w	#51,(sp)
 	bsr  	L568
 	unlk	fp
@@ -754,8 +754,8 @@ L1298:
 
 L1386:
 	link	fp,#-4
-	move.w	8(fp),U100914.l
-	move.l	10(fp),U101058.l
+	move.w	8(fp),U100914
+	move.l	10(fp),U101058
 	move.w	#52,(sp)
 	bsr  	L568
 	unlk	fp
@@ -766,22 +766,22 @@ L1418:
 	move.w	#77,(sp)
 	bsr  	L568
 	movea.l	8(fp),a0
-	move.w	U100948.l,(a0)
+	move.w	U100948,(a0)
 	movea.l	12(fp),a0
-	move.w	U100950.l,(a0)
+	move.w	U100950,(a0)
 	movea.l	16(fp),a0
-	move.w	U100952.l,(a0)
+	move.w	U100952,(a0)
 	movea.l	20(fp),a0
-	move.w	U100954.l,(a0)
+	move.w	U100954,(a0)
 	clr.w	d0
-	move.w	U100946.l,d0
+	move.w	U100946,d0
 	unlk	fp
 	rts
 
 L1482:
 	link	fp,#-4
-	move.w	8(fp),U100914.l
-	move.l	10(fp),U101058.l
+	move.w	8(fp),U100914
+	move.l	10(fp),U101058
 	move.w	#78,(sp)
 	bsr  	L568
 	unlk	fp
@@ -792,36 +792,36 @@ L1514:
 	move.w	#79,(sp)
 	bsr  	L568
 	movea.l	8(fp),a0
-	move.w	U100948.l,(a0)
+	move.w	U100948,(a0)
 	movea.l	12(fp),a0
-	move.w	U100950.l,(a0)
+	move.w	U100950,(a0)
 	movea.l	16(fp),a0
-	move.w	U100952.l,(a0)
+	move.w	U100952,(a0)
 	movea.l	20(fp),a0
-	move.w	U100954.l,(a0)
+	move.w	U100954,(a0)
 	unlk	fp
 	rts
 
 L1570:
 	link	fp,#-4
-	move.l	8(fp),U101058.l
-	move.l	12(fp),U101062.l
+	move.l	8(fp),U101058
+	move.l	12(fp),U101062
 	move.w	#90,(sp)
 	bsr  	L568
 	movea.l	16(fp),a0
-	move.w	U100948.l,(a0)
+	move.w	U100948,(a0)
 	clr.w	d0
-	move.w	U100946.l,d0
+	move.w	U100946,d0
 	unlk	fp
 	rts
 
 L1620:
 	link	fp,#-4
-	move.w	8(fp),U100914.l
-	move.w	10(fp),U100916.l
-	move.w	12(fp),U100918.l
-	move.w	14(fp),U100920.l
-	move.w	16(fp),U100922.l
+	move.w	8(fp),U100914
+	move.w	10(fp),U100916
+	move.w	12(fp),U100918
+	move.w	14(fp),U100920
+	move.w	16(fp),U100922
 	move.w	#100,(sp)
 	bsr  	L568
 	unlk	fp
@@ -829,11 +829,11 @@ L1620:
 
 L1676:
 	link	fp,#-4
-	move.w	8(fp),U100914.l
-	move.w	10(fp),U100916.l
-	move.w	12(fp),U100918.l
-	move.w	14(fp),U100920.l
-	move.w	16(fp),U100922.l
+	move.w	8(fp),U100914
+	move.w	10(fp),U100916
+	move.w	12(fp),U100918
+	move.w	14(fp),U100920
+	move.w	16(fp),U100922
 	move.w	#101,(sp)
 	bsr  	L568
 	unlk	fp
@@ -841,14 +841,14 @@ L1676:
 
 L1732:
 	link	fp,#-4
-	move.w	8(fp),U100914.l
+	move.w	8(fp),U100914
 	move.w	#102,(sp)
 	bsr  	L568
 	unlk	fp
 	rts
 
 	link	fp,#-4
-	move.w	8(fp),U100914.l
+	move.w	8(fp),U100914
 	move.w	#103,(sp)
 	bsr  	L568
 	unlk	fp
@@ -856,31 +856,31 @@ L1732:
 
 L1780:
 	link	fp,#-4
-	move.w	8(fp),U100914.l
-	move.w	10(fp),U100916.l
+	move.w	8(fp),U100914
+	move.w	10(fp),U100916
 	move.w	#104,(sp)
 	bsr  	L568
 	movea.l	12(fp),a0
-	move.w	U100948.l,(a0)
+	move.w	U100948,(a0)
 	movea.l	16(fp),a0
-	move.w	U100950.l,(a0)
+	move.w	U100950,(a0)
 	movea.l	20(fp),a0
-	move.w	U100952.l,(a0)
+	move.w	U100952,(a0)
 	movea.l	24(fp),a0
-	move.w	U100954.l,(a0)
+	move.w	U100954,(a0)
 	clr.w	d0
-	move.w	U100946.l,d0
+	move.w	U100946,d0
 	unlk	fp
 	rts
 
 L1860:
 	link	fp,#-4
-	move.w	8(fp),U100914.l
-	move.w	10(fp),U100916.l
-	move.w	12(fp),U100918.l
-	move.w	14(fp),U100920.l
-	move.w	16(fp),U100922.l
-	move.w	18(fp),U100924.l
+	move.w	8(fp),U100914
+	move.w	10(fp),U100916
+	move.w	12(fp),U100918
+	move.w	14(fp),U100920
+	move.w	16(fp),U100922
+	move.w	18(fp),U100924
 	move.w	#105,(sp)
 	bsr  	L568
 	unlk	fp
@@ -888,7 +888,7 @@ L1860:
 
 L1924:
 	link	fp,#-4
-	move.w	8(fp),U100914.l
+	move.w	8(fp),U100914
 	move.w	#107,(sp)
 	bsr  	L568
 	unlk	fp
@@ -899,18 +899,18 @@ L1948:
 	movem.l	d7/a4-a5,-(sp)
 	movea.l	12(fp),a5
 	movea.l	16(fp),a4
-	move.w	8(fp),U100914.l
-	move.w	10(fp),U100916.l
-	move.w	(a5)+,U100918.l
-	move.w	(a5)+,U100920.l
-	move.w	(a5)+,U100922.l
-	move.w	(a5),U100924.l
+	move.w	8(fp),U100914
+	move.w	10(fp),U100916
+	move.w	(a5)+,U100918
+	move.w	(a5)+,U100920
+	move.w	(a5)+,U100922
+	move.w	(a5),U100924
 	move.w	#108,(sp)
 	bsr  	L568
-	move.w	U100948.l,(a4)+
-	move.w	U100950.l,(a4)+
-	move.w	U100952.l,(a4)+
-	move.w	U100954.l,(a4)
+	move.w	U100948,(a4)+
+	move.w	U100950,(a4)+
+	move.w	U100952,(a4)+
+	move.w	U100954,(a4)
 	tst.l	(sp)+
 	movem.l	(sp)+,a4-a5
 	unlk	fp
@@ -918,7 +918,7 @@ L1948:
 
 L2046:
 	link	fp,#-4
-	move.l	8(fp),U101058.l
+	move.l	8(fp),U101058
 	move.w	#110,(sp)
 	bsr  	L568
 	unlk	fp
@@ -926,102 +926,102 @@ L2046:
 
 L2070:
 	link	fp,#-4
-	move.w	8(fp),U100914.l
-	move.w	10(fp),U100916.l
+	move.w	8(fp),U100914
+	move.w	10(fp),U100916
 	move.w	#112,(sp)
 	bsr  	L568
 	movea.l	12(fp),a0
-	move.l	U101464.l,(a0)
+	move.l	U101464,(a0)
 	clr.w	d0
-	move.w	U100946.l,d0
+	move.w	U100946,d0
 	unlk	fp
 	rts
 
 L2120:
 	link	fp,#-4
-	jsr	L61904.l
+	jsr	L61904
 	tst.w	d0
 	bne.s	L2222
 	clr.w	d0
-	move.w	U99864.l,d0
-	move.w	d0,U100626.l
+	move.w	U99864,d0
+	move.w	d0,U100626
 	move.w	d0,(sp)
-	jsr	L358.l
-	move.w	d0,U100636.l
-	jsr	L60580.l
-	move.w	U101156.l,U101460.l
-	jsr	L61904.l
+	jsr	L358
+	move.w	d0,U100636
+	jsr	L60580
+	move.w	U101156,U101460
+	jsr	L61904
 	tst.w	d0
 	bne.s	L2222
-	jsr	L61850.l
+	jsr	L61850
 	tst.w	d0
 	beq.s	L2206
-	jsr	L59950.l
+	jsr	L59950
 	bra.s	L2222
 
 L2206:
-	move.w	U100636.l,U101046.l
-	jsr	L67028.l
+	move.w	U100636,U101046
+	jsr	L67028
 L2222:
 	unlk	fp
 	rts
 
 L2226:
 	link	fp,#-4
-	jsr	L62430.l
-	move.l	T87062.l,(sp)
-	jsr	L76994.l
-	jsr	L66768.l
+	jsr	L62430
+	move.l	T87062,(sp)
+	jsr	L76994
+	jsr	L66768
 	move.w	#6,(sp)
-	jsr	L64300.l
+	jsr	L64300
 	move.w	#22,(sp)
-	jsr	L64090.l
+	jsr	L64090
 	bra.s	L2290
 
 L2276:
-	jsr	L64888.l
+	jsr	L64888
 L2282:
-	jsr	L37176.l
+	jsr	L37176
 	bra.s	L2282
 
 L2290:
 	move.l	#U101014,(sp)
-	jsr	L204.l
+	jsr	L204
 	tst.w	d0
 	beq.s	L2276
 	move.w	#22,(sp)
-	jsr	L68540.l
+	jsr	L68540
 	move.w	#7,(sp)
-	jsr	L64326.l
-	jsr	L66800.l
+	jsr	L64326
+	jsr	L66800
 	unlk	fp
 	rts
 
 L2336:
 	link	fp,#-6
 	bsr  	L2920
-	jsr	L62226.l
+	jsr	L62226
 	move.w	d0,-2(fp)
 	bge.s	L2362
-	jsr	L67118.l
+	jsr	L67118
 L2362:
-	jsr	L61312.l
+	jsr	L61312
 	bra.s	L2376
 
 L2370:
-	jsr	L59768.l
+	jsr	L59768
 L2376:
 	move.w	-2(fp),d0
 	subq.w	#1,-2(fp)
 	tst.w	d0
 	bne.s	L2370
-	jsr	L61834.l
+	jsr	L61834
 	unlk	fp
 	rts
 
 L2398:
 	link	fp,#-4
-	jsr	L61206.l
+	jsr	L61206
 	bsr.s	L2414
 	unlk	fp
 	rts
@@ -1029,23 +1029,23 @@ L2398:
 L2414:
 	link	fp,#-4
 	move.w	#18,(sp)
-	jsr	L62262.l
+	jsr	L62262
 	unlk	fp
 	rts
 
 L2432:
 	link	fp,#-4
-	jsr	L61312.l
-	jsr	L59848.l
+	jsr	L61312
+	jsr	L59848
 	unlk	fp
 	rts
 
 L2452:
 	link	fp,#-4
-	jsr	L61608.l
+	jsr	L61608
 	clr.w	d0
-	move.w	U101046.l,d0
-	cmp.w	U101186.l,d0
+	move.w	U101046,d0
+	cmp.w	U101186,d0
 	beq.s	L2482
 	clr.w	(sp)
 	bra.s	L2486
@@ -1053,20 +1053,20 @@ L2452:
 L2482:
 	move.w	#1,(sp)
 L2486:
-	jsr	L60886.l
+	jsr	L60886
 	unlk	fp
 	rts
 
 L2496:
 	link	fp,#-4
-	move.w	U100984.l,(sp)
+	move.w	U100984,(sp)
 	bsr.s	L2528
 	unlk	fp
 	rts
 
 L2512:
 	link	fp,#-4
-	move.w	U101186.l,(sp)
+	move.w	U101186,(sp)
 	bsr.s	L2528
 	unlk	fp
 	rts
@@ -1076,25 +1076,25 @@ L2528:
 	movem.l	d5-d7,-(sp)
 	move.w	8(fp),d7
 	move.w	d7,(sp)
-	jsr	L64090.l
+	jsr	L64090
 	move.w	#2,(sp)
-	jsr	L61132.l
+	jsr	L61132
 	move.w	d0,d6
 	bra.s	L2588
 
 L2562:
-	jsr	L61608.l
-	cmp.w	U101046.l,d7
+	jsr	L61608
+	cmp.w	U101046,d7
 	beq.s	L2588
-	move.w	U101046.l,(sp)
-	jsr	L64276.l
+	move.w	U101046,(sp)
+	jsr	L64276
 L2588:
 	move.w	d6,(sp)
-	jsr	L61098.l
+	jsr	L61098
 	subq.w	#1,d6
 	tst.w	d0
 	beq.s	L2562
-	jsr	L64764.l
+	jsr	L64764
 	tst.l	(sp)+
 	movem.l	(sp)+,d6-d7
 	unlk	fp
@@ -1102,21 +1102,21 @@ L2588:
 
 L2618:
 	link	fp,#-4
-	jsr	L61904.l
+	jsr	L61904
 	tst.w	d0
 	bne.s	L2638
-	jsr	L61206.l
+	jsr	L61206
 L2638:
 	move.w	#22,(sp)
-	jsr	L62262.l
+	jsr	L62262
 	unlk	fp
 	rts
 
 L2652:
 	link	fp,#-4
-	jsr	L61608.l
-	move.w	U100984.l,(sp)
-	move.w	U101046.l,-(sp)
+	jsr	L61608
+	move.w	U100984,(sp)
+	move.w	U101046,-(sp)
 	bsr.s	L2730
 	addq.l	#2,sp
 	unlk	fp
@@ -1124,13 +1124,13 @@ L2652:
 
 L2682:
 	link	fp,#-4
-	jsr	L61904.l
+	jsr	L61904
 	tst.w	d0
 	bne.s	L2724
-	move.w	U99864.l,(sp)
-	jsr	L358.l
+	move.w	U99864,(sp)
+	jsr	L358
 	move.w	d0,(sp)
-	jsr	L65322.l
+	jsr	L65322
 	tst.w	d0
 	bne.s	L2724
 	clr.w	d0
@@ -1147,69 +1147,69 @@ L2730:
 	bsr.s	L2682
 	tst.w	d0
 	beq.s	L2746
-	jsr	L67666.l
+	jsr	L67666
 L2746:
-	jsr	L61312.l
+	jsr	L61312
 	clr.w	d0
 	move.w	8(fp),d0
 	cmp.w	10(fp),d0
 	bne.s	L2784
-	jsr	L59848.l
+	jsr	L59848
 	bsr.s	L2682
 	tst.w	d0
 	bne.s	L2808
-	jsr	L59950.l
+	jsr	L59950
 	bra.s	L2808
 
 L2784:
-	jsr	L61834.l
+	jsr	L61834
 	bsr.s	L2682
 	tst.w	d0
 	bne.s	L2808
-	jsr	L61312.l
-	jsr	L59848.l
+	jsr	L61312
+	jsr	L59848
 L2808:
 	unlk	fp
 	rts
 
 L2812:
 	link	fp,#-4
-	move.l	T85052.l,-(sp)
-	jsr	L61476.l
+	move.l	T85052,-(sp)
+	jsr	L61476
 	move.l	d0,-(sp)
-	jsr	L79448.l
+	jsr	L79448
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81968.l
+	jsr	L81968
 	addq.l	#8,sp
 	move.l	d0,(sp)
-	jsr	L61950.l
+	jsr	L61950
 	unlk	fp
 	rts
 
 L2860:
 	link	fp,#-4
-	jsr	L61476.l
+	jsr	L61476
 	move.l	d0,(sp)
-	jsr	L37032.l
+	jsr	L37032
 	move.l	d0,(sp)
-	jsr	L61950.l
+	jsr	L61950
 	unlk	fp
 	rts
 
 L2890:
 	link	fp,#-4
-	jsr	L61476.l
+	jsr	L61476
 	move.l	d0,(sp)
-	jsr	L37006.l
+	jsr	L37006
 	move.l	d0,(sp)
-	jsr	L61950.l
+	jsr	L61950
 	unlk	fp
 	rts
 
 L2920:
 	link	fp,#-4
-	jsr	L61476.l
+	jsr	L61476
 	move.l	d0,(sp)
 	bsr  	L3592
 	unlk	fp
@@ -1217,8 +1217,8 @@ L2920:
 
 L2940:
 	link	fp,#-4
-	jsr	L61374.l
-	jsr	L61340.l
+	jsr	L61374
+	jsr	L61340
 	movea.l	8(fp),a0
 	jsr	(a0)
 	unlk	fp
@@ -1228,23 +1228,23 @@ L2966:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
 	move.w	#2,(sp)
-	jsr	L61132.l
+	jsr	L61132
 	move.w	d0,d7
-	jsr	L61374.l
+	jsr	L61374
 	bra.s	L3012
 
 L2994:
-	jsr	L61340.l
+	jsr	L61340
 	movea.l	8(fp),a0
 	jsr	(a0)
-	jsr	L64746.l
+	jsr	L64746
 L3012:
 	subq.w	#1,d7
 	move.w	d7,(sp)
-	jsr	L61098.l
+	jsr	L61098
 	tst.w	d0
 	beq.s	L2994
-	jsr	L64764.l
+	jsr	L64764
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
 	unlk	fp
@@ -1259,13 +1259,13 @@ L3042:
 
 L3058:
 	link	fp,#-4
-	move.l	T85048.l,-(sp)
+	move.l	T85048,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	bge.s	L3096
 	move.l	8(fp),-(sp)
-	jsr	L82000.l
+	jsr	L82000
 	addq.l	#4,sp
 	bra.s	L3100
 
@@ -1282,35 +1282,35 @@ L3104:
 	moveq	#1,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688.l
+	jsr	L81688
 	addq.l	#4,sp
 	move.l	d0,-(sp)
 	move.l	(a5),-(sp)
-	jsr	L81832.l
+	jsr	L81832
 	addq.l	#4,sp
 	move.w	d0,d7
 	move.l	(a5),-(sp)
 	move.w	d7,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688.l
+	jsr	L81688
 	addq.l	#4,sp
 	move.l	d0,-4(fp)
 	move.l	d0,-(sp)
-	jsr	L82028.l
+	jsr	L82028
 	addq.l	#8,sp
 	move.l	d0,-(sp)
 	bsr.s	L3058
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	bge.s	L3198
 	move.l	-4(fp),d0
 	bra.s	L3204
 
 L3198:
-	jsr	L66880.l
+	jsr	L66880
 L3204:
 	tst.l	(sp)+
 	movem.l	(sp)+,d7/a5
@@ -1319,18 +1319,18 @@ L3204:
 
 L3214:
 	link	fp,#-8
-	jsr	L61476.l
+	jsr	L61476
 	move.l	d0,-4(fp)
 	move.l	fp,(sp)
 	subq.l	#4,(sp)
 	bsr  	L3104
 	move.l	d0,-(sp)
-	jsr	L81832.l
+	jsr	L81832
 	addq.l	#4,sp
 	move.w	d0,(sp)
 	bsr  	L4614
 	move.w	d0,(sp)
-	jsr	L61926.l
+	jsr	L61926
 	unlk	fp
 	rts
 
@@ -1339,26 +1339,26 @@ L3264:
 	movem.l	d7/a4-a5,-(sp)
 	movea.l	8(fp),a5
 	movea.l	12(fp),a4
-	move.l	T85048.l,-(sp)
+	move.l	T85048,-(sp)
 	move.l	a4,-(sp)
 	bsr  	L3104
 	addq.l	#4,sp
 	move.l	d0,(a4)
 	move.l	d0,-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	bne.s	L3314
-	jsr	L67382.l
+	jsr	L67382
 L3314:
 	move.l	a5,(sp)
 	bsr  	L3104
 	move.l	d0,(a5)
 	move.l	(a4),-(sp)
 	move.l	(a5),-(sp)
-	jsr	L81572.l
+	jsr	L81572
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	jsr	L81832.l
+	jsr	L81832
 	addq.l	#4,sp
 	tst.l	(sp)+
 	movem.l	(sp)+,a4-a5
@@ -1367,9 +1367,9 @@ L3314:
 
 L3354:
 	link	fp,#-12
-	jsr	L61476.l
+	jsr	L61476
 	move.l	d0,-4(fp)
-	jsr	L61476.l
+	jsr	L61476
 	move.l	d0,-8(fp)
 	move.l	fp,(sp)
 	subq.l	#8,(sp)
@@ -1379,18 +1379,18 @@ L3354:
 	addq.l	#4,sp
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688.l
+	jsr	L81688
 	addq.l	#4,sp
 	move.l	d0,(sp)
-	jsr	L61950.l
+	jsr	L61950
 	unlk	fp
 	rts
 
 L3414:
 	link	fp,#-12
-	jsr	L61476.l
+	jsr	L61476
 	move.l	d0,-4(fp)
-	jsr	L61476.l
+	jsr	L61476
 	move.l	d0,-8(fp)
 	move.l	-8(fp),-(sp)
 	move.l	fp,-(sp)
@@ -1401,33 +1401,33 @@ L3414:
 	addq.l	#8,sp
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688.l
+	jsr	L81688
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81968.l
+	jsr	L81968
 	addq.l	#8,sp
 	move.l	d0,-(sp)
 	move.l	-4(fp),-(sp)
-	jsr	L82028.l
+	jsr	L82028
 	addq.l	#8,sp
 	move.l	d0,(sp)
-	jsr	L61950.l
+	jsr	L61950
 	unlk	fp
 	rts
 
 L3504:
 	link	fp,#-4
-	move.w	#899,U100646.l
+	move.w	#899,U100646
 	unlk	fp
 	rts
 
 L3520:
 	link	fp,#-4
-	jsr	L61340.l
-	move.l	T85048.l,-(sp)
-	jsr	L62206.l
+	jsr	L61340
+	move.l	T85048,-(sp)
+	jsr	L62206
 	move.l	d0,-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	bge.s	L3562
 	move.l	#-2147483456,-(sp)
@@ -1436,9 +1436,9 @@ L3520:
 L3562:
 	move.l	#-2147483584,-(sp)
 L3568:
-	jsr	L62206.l
+	jsr	L62206
 	move.l	d0,-(sp)
-	jsr	L81510.l
+	jsr	L81510
 	addq.l	#8,sp
 	move.l	d0,(sp)
 	bsr.s	L3592
@@ -1451,7 +1451,7 @@ L3592:
 	addq.l	#8,(sp)
 	bsr  	L3104
 	move.l	d0,(sp)
-	jsr	L61950.l
+	jsr	L61950
 	unlk	fp
 	rts
 
@@ -1471,47 +1471,47 @@ L3634:
 
 L3652:
 	link	fp,#-4
-	jsr	L60670.l
-	move.w	U100888.l,(sp)
-	jsr	L60784.l
-	jsr	L62206.l
+	jsr	L60670
+	move.w	U100888,(sp)
+	jsr	L60784
+	jsr	L62206
 	move.l	d0,-(sp)
-	jsr	L82000.l
+	jsr	L82000
 	addq.l	#4,sp
 	move.l	d0,(sp)
-	jsr	L61950.l
+	jsr	L61950
 	unlk	fp
 	rts
 
 L3702:
 	link	fp,#-4
-	jsr	L62206.l
+	jsr	L62206
 	move.l	d0,-(sp)
-	jsr	L64224.l
+	jsr	L64224
 	move.w	d0,-(sp)
-	jsr	L65532.l
+	jsr	L65532
 	addq.l	#2,sp
 	move.l	d0,-(sp)
-	jsr	L81510.l
+	jsr	L81510
 	addq.l	#8,sp
 	move.l	d0,(sp)
-	jsr	L61950.l
+	jsr	L61950
 	unlk	fp
 	rts
 
 L3752:
 	link	fp,#-4
-	jsr	L62206.l
+	jsr	L62206
 	move.l	d0,-(sp)
-	jsr	L64224.l
+	jsr	L64224
 	move.w	d0,-(sp)
-	jsr	L65532.l
+	jsr	L65532
 	addq.l	#2,sp
 	move.l	d0,-(sp)
-	jsr	L82028.l
+	jsr	L82028
 	addq.l	#8,sp
 	move.l	d0,(sp)
-	jsr	L61950.l
+	jsr	L61950
 	unlk	fp
 	rts
 
@@ -1520,14 +1520,14 @@ L3802:
 	bsr  	L4460
 	tst.w	d0
 	beq.s	L3860
-	jsr	L62206.l
+	jsr	L62206
 	move.l	d0,-(sp)
-	jsr	L64224.l
+	jsr	L64224
 	move.w	d0,-(sp)
-	jsr	L65532.l
+	jsr	L65532
 	addq.l	#2,sp
 	move.l	d0,-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	ble.s	L3854
 	clr.w	(sp)
@@ -1548,16 +1548,16 @@ L3860:
 L3872:
 	move.w	#1,(sp)
 L3876:
-	jsr	L60886.l
+	jsr	L60886
 	unlk	fp
 	rts
 
 L3886:
 	link	fp,#-4
-	move.w	U101046.l,(sp)
-	jsr	L64224.l
+	move.w	U101046,(sp)
+	jsr	L64224
 	move.w	d0,-(sp)
-	jsr	L6590.l
+	jsr	L6590
 	addq.l	#2,sp
 	tst.w	d0
 	beq.s	L3920
@@ -1567,7 +1567,7 @@ L3886:
 L3920:
 	move.w	#1,(sp)
 L3924:
-	jsr	L60886.l
+	jsr	L60886
 	unlk	fp
 	rts
 
@@ -1576,14 +1576,14 @@ L3934:
 	bsr  	L4460
 	tst.w	d0
 	beq.s	L3992
-	jsr	L62206.l
+	jsr	L62206
 	move.l	d0,-(sp)
-	jsr	L64224.l
+	jsr	L64224
 	move.w	d0,-(sp)
-	jsr	L65532.l
+	jsr	L65532
 	addq.l	#2,sp
 	move.l	d0,-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	bge.s	L3986
 	clr.w	(sp)
@@ -1604,7 +1604,7 @@ L3992:
 L4004:
 	move.w	#1,(sp)
 L4008:
-	jsr	L60886.l
+	jsr	L60886
 	unlk	fp
 	rts
 
@@ -1612,7 +1612,7 @@ L4018:
 	link	fp,#-4
 	bsr.s	L4036
 	move.w	d0,(sp)
-	jsr	L60886.l
+	jsr	L60886
 	unlk	fp
 	rts
 
@@ -1621,14 +1621,14 @@ L4036:
 	bsr  	L4460
 	tst.w	d0
 	beq.s	L4092
-	jsr	L62206.l
+	jsr	L62206
 	move.l	d0,-(sp)
-	jsr	L64224.l
+	jsr	L64224
 	move.w	d0,-(sp)
-	jsr	L65532.l
+	jsr	L65532
 	addq.l	#2,sp
 	move.l	d0,-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	blt.s	L4088
 	clr.w	d0
@@ -1657,14 +1657,14 @@ L4110:
 	bsr  	L4460
 	tst.w	d0
 	beq.s	L4168
-	jsr	L62206.l
+	jsr	L62206
 	move.l	d0,-(sp)
-	jsr	L64224.l
+	jsr	L64224
 	move.w	d0,-(sp)
-	jsr	L65532.l
+	jsr	L65532
 	addq.l	#2,sp
 	move.l	d0,-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	bgt.s	L4162
 	clr.w	(sp)
@@ -1685,47 +1685,47 @@ L4168:
 L4180:
 	move.w	#1,(sp)
 L4184:
-	jsr	L60886.l
+	jsr	L60886
 	unlk	fp
 	rts
 
 L4194:
 	link	fp,#-4
-	move.l	T85048.l,-(sp)
-	jsr	L62206.l
+	move.l	T85048,-(sp)
+	jsr	L62206
 	move.l	d0,-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	bne.s	L4228
-	jsr	L67382.l
+	jsr	L67382
 L4228:
-	jsr	L62206.l
+	jsr	L62206
 	move.l	d0,-(sp)
-	jsr	L64224.l
+	jsr	L64224
 	move.w	d0,-(sp)
-	jsr	L65532.l
+	jsr	L65532
 	addq.l	#2,sp
 	move.l	d0,-(sp)
-	jsr	L81572.l
+	jsr	L81572
 	addq.l	#8,sp
 	move.l	d0,(sp)
-	jsr	L61950.l
+	jsr	L61950
 	unlk	fp
 	rts
 
 L4274:
 	link	fp,#-4
-	jsr	L62206.l
+	jsr	L62206
 	move.l	d0,-(sp)
-	jsr	L64224.l
+	jsr	L64224
 	move.w	d0,-(sp)
-	jsr	L65532.l
+	jsr	L65532
 	addq.l	#2,sp
 	move.l	d0,-(sp)
-	jsr	L81968.l
+	jsr	L81968
 	addq.l	#8,sp
 	move.l	d0,(sp)
-	jsr	L61950.l
+	jsr	L61950
 	unlk	fp
 	rts
 
@@ -1745,8 +1745,8 @@ L4342:
 
 L4356:
 	link	fp,#-4
-	jsr	L61572.l
-	jsr	L61190.l
+	jsr	L61572
+	jsr	L61190
 	bsr  	L3886
 	unlk	fp
 	rts
@@ -1774,23 +1774,23 @@ L4408:
 
 L4422:
 	link	fp,#-4
-	jsr	L61572.l
-	jsr	L62398.l
-	jsr	L61572.l
-	jsr	L62398.l
-	jsr	L64764.l
+	jsr	L61572
+	jsr	L62398
+	jsr	L61572
+	jsr	L62398
+	jsr	L64764
 	unlk	fp
 	rts
 
 L4460:
 	link	fp,#-4
-	jsr	L64160.l
+	jsr	L64160
 	move.w	d0,(sp)
-	jsr	L65356.l
+	jsr	L65356
 	tst.w	d0
 	beq.s	L4498
-	move.w	U101046.l,(sp)
-	jsr	L65356.l
+	move.w	U101046,(sp)
+	jsr	L65356
 	tst.w	d0
 	bne.s	L4502
 L4498:
@@ -1805,8 +1805,8 @@ L4504:
 
 L4508:
 	link	fp,#-4
-	move.w	U101046.l,(sp)
-	jsr	L64224.l
+	move.w	U101046,(sp)
+	jsr	L64224
 	move.w	d0,-(sp)
 	bsr.s	L4534
 	addq.l	#2,sp
@@ -1816,18 +1816,18 @@ L4508:
 L4534:
 	link	fp,#0
 	movem.l	d7/a5,-(sp)
-	jsr	L9350.l
+	jsr	L9350
 	move.w	8(fp),(sp)
-	jsr	L55092.l
+	jsr	L55092
 	clr.w	(sp)
-	jsr	L74948.l
-	movea.l	U101030.l,a5
+	jsr	L74948
+	movea.l	U101030,a5
 	move.w	10(fp),(sp)
-	jsr	L55092.l
-	jsr	L9388.l
+	jsr	L55092
+	jsr	L9388
 	move.l	a5,(sp)
 	move.l	#U100754,-(sp)
-	jsr	L83748.l
+	jsr	L83748
 	addq.l	#4,sp
 	tst.l	(sp)+
 	movem.l	(sp)+,a5
@@ -1837,47 +1837,47 @@ L4534:
 L4614:
 	link	fp,#-4
 	move.l	#-65456,-(sp)
-	move.w	U100646.l,d0
+	move.w	U100646,d0
 	muls	#899,d0
 	and.w	#32767,d0
-	move.w	d0,U100646.l
+	move.w	d0,U100646
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688.l
+	jsr	L81688
 	addq.l	#4,sp
 	move.l	d0,-(sp)
 	moveq	#2,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688.l
+	jsr	L81688
 	addq.l	#4,sp
 	move.l	d0,-(sp)
 	move.w	8(fp),d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688.l
+	jsr	L81688
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81968.l
+	jsr	L81968
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	jsr	L81968.l
+	jsr	L81968
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	jsr	L81572.l
+	jsr	L81572
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	jsr	L81832.l
+	jsr	L81832
 	addq.l	#4,sp
 	unlk	fp
 	rts
 
 L4734:
 	link	fp,#-4
-	jsr	L61312.l
-	move.w	U101046.l,(sp)
+	jsr	L61312
+	move.w	U101046,(sp)
 	bsr.s	L4762
-	jsr	L64764.l
+	jsr	L64764
 	unlk	fp
 	rts
 
@@ -1887,14 +1887,14 @@ L4762:
 	move.w	8(fp),d7
 	tst.w	d7
 	bne.s	L4790
-	jsr	L64732.l
+	jsr	L64732
 	moveq	#1,d0
 	bra  	L4914
 
 L4790:
-	jsr	L74764.l
+	jsr	L74764
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,(sp)
 	bsr.s	L4762
 	move.w	d0,d4
@@ -1902,18 +1902,18 @@ L4790:
 	bsr  	L4614
 	move.w	d0,d5
 	move.w	d7,(sp)
-	jsr	L358.l
+	jsr	L358
 	move.w	d0,d7
-	jsr	L64160.l
+	jsr	L64160
 	move.w	d0,d6
 	tst.w	d5
 	bne.s	L4862
 	move.w	d6,(sp)
 	move.w	d7,-(sp)
-	jsr	L65496.l
+	jsr	L65496
 	addq.l	#2,sp
 	move.w	d0,(sp)
-	jsr	L64276.l
+	jsr	L64276
 	bra.s	L4910
 
 L4862:
@@ -1921,20 +1921,20 @@ L4862:
 
 L4864:
 	move.w	d6,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d6
 L4874:
 	subq.w	#1,d5
 	bne.s	L4864
 	move.w	d6,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,(sp)
 	move.w	d7,-(sp)
-	jsr	L65496.l
+	jsr	L65496
 	addq.l	#2,sp
 	move.w	d0,(sp)
 	move.w	d6,-(sp)
-	jsr	L65226.l
+	jsr	L65226
 	addq.l	#2,sp
 L4910:
 	move.w	d4,d0
@@ -1948,105 +1948,105 @@ L4914:
 L4924:
 	link	fp,#0
 	movem.l	d5-d7,-(sp)
-	jsr	L61312.l
-	tst.w	U101046.l
+	jsr	L61312
+	tst.w	U101046
 	beq  	L5262
-	jsr	L64746.l
-	jsr	L64732.l
-	move.w	U101046.l,d6
+	jsr	L64746
+	jsr	L64732
+	move.w	U101046,d6
 	bra  	L5244
 
 L4970:
-	jsr	L75596.l
+	jsr	L75596
 	move.w	d6,(sp)
-	jsr	L358.l
-	move.w	d0,U101046.l
+	jsr	L358
+	move.w	d0,U101046
 	move.w	d0,(sp)
-	jsr	L65322.l
+	jsr	L65322
 	tst.w	d0
 	bne.s	L5008
-	jsr	L67118.l
+	jsr	L67118
 L5008:
-	jsr	L64160.l
+	jsr	L64160
 	tst.w	d0
 	bne.s	L5042
-	move.w	U101046.l,(sp)
-	jsr	L65694.l
+	move.w	U101046,(sp)
+	jsr	L65694
 	move.w	d0,(sp)
-	jsr	L64276.l
+	jsr	L64276
 	bra  	L5234
 
 L5042:
-	jsr	L64160.l
+	jsr	L64160
 	move.w	d0,(sp)
-	jsr	L358.l
+	jsr	L358
 	move.w	d0,(sp)
-	jsr	L64090.l
+	jsr	L64090
 	bsr  	L4036
 	tst.w	d0
 	bne.s	L5106
-	jsr	L64160.l
+	jsr	L64160
 	move.w	d0,(sp)
-	move.w	U101046.l,-(sp)
-	jsr	L65496.l
+	move.w	U101046,-(sp)
+	jsr	L65496
 	addq.l	#2,sp
 	move.w	d0,(sp)
-	jsr	L64276.l
+	jsr	L64276
 	bra  	L5234
 
 L5106:
-	jsr	L64160.l
+	jsr	L64160
 	move.w	d0,d7
 L5114:
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	tst.w	d0
 	bne.s	L5152
-	move.w	U101046.l,(sp)
-	jsr	L65694.l
+	move.w	U101046,(sp)
+	jsr	L65694
 	move.w	d0,(sp)
 	move.w	d7,-(sp)
-	jsr	L65226.l
+	jsr	L65226
 	addq.l	#2,sp
 	bra.s	L5234
 
 L5152:
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,(sp)
-	jsr	L358.l
+	jsr	L358
 	move.w	d0,(sp)
-	jsr	L64090.l
+	jsr	L64090
 	bsr  	L4036
 	tst.w	d0
 	bne.s	L5222
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,(sp)
-	move.w	U101046.l,-(sp)
-	jsr	L65496.l
+	move.w	U101046,-(sp)
+	jsr	L65496
 	addq.l	#2,sp
 	move.w	d0,(sp)
 	move.w	d7,-(sp)
-	jsr	L65226.l
+	jsr	L65226
 	addq.l	#2,sp
 	bra.s	L5234
 
 L5222:
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d7
 	bra.s	L5114
 
 L5234:
 	move.w	d6,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d6
 L5244:
 	tst.w	d6
 	bne  	L4970
-	jsr	L64764.l
-	jsr	L64180.l
+	jsr	L64764
+	jsr	L64180
 L5262:
 	tst.l	(sp)+
 	movem.l	(sp)+,d6-d7
@@ -2055,16 +2055,16 @@ L5262:
 
 L5272:
 	link	fp,#-4
-	jsr	L61608.l
-	move.w	U101046.l,U99816.l
-	jsr	L61834.l
+	jsr	L61608
+	move.w	U101046,U99816
+	jsr	L61834
 	unlk	fp
 	rts
 
 L5302:
 	link	fp,#-4
-	move.w	U101186.l,(sp)
-	move.w	U99816.l,-(sp)
+	move.w	U101186,(sp)
+	move.w	U99816,-(sp)
 	bsr  	L2730
 	addq.l	#2,sp
 	unlk	fp
@@ -2072,8 +2072,8 @@ L5302:
 
 L5328:
 	link	fp,#-4
-	move.w	U100984.l,(sp)
-	move.w	U99816.l,-(sp)
+	move.w	U100984,(sp)
+	move.w	U99816,-(sp)
 	bsr  	L2730
 	addq.l	#2,sp
 	unlk	fp
@@ -2081,149 +2081,149 @@ L5328:
 
 L5354:
 	link	fp,#-4
-	jsr	L61476.l
+	jsr	L61476
 	move.l	d0,(sp)
 	bsr  	L3058
 	move.l	d0,(sp)
-	jsr	L61950.l
+	jsr	L61950
 	unlk	fp
 	rts
 
 L5382:
 	link	fp,#-4
-	move.l	T85052.l,-(sp)
-	jsr	L61476.l
+	move.l	T85052,-(sp)
+	jsr	L61476
 	move.l	d0,-(sp)
-	jsr	L81968.l
+	jsr	L81968
 	addq.l	#8,sp
 	move.l	d0,(sp)
-	jsr	L61950.l
+	jsr	L61950
 	unlk	fp
 	rts
 
 L5420:
 	link	fp,#-4
-	move.l	T85052.l,-(sp)
-	jsr	L61476.l
+	move.l	T85052,-(sp)
+	jsr	L61476
 	move.l	d0,-(sp)
-	jsr	L81572.l
+	jsr	L81572
 	addq.l	#8,sp
 	move.l	d0,(sp)
-	jsr	L61950.l
+	jsr	L61950
 	unlk	fp
 	rts
 
 L5458:
 	link	fp,#-4
-	move.l	T85052.l,-(sp)
+	move.l	T85052,-(sp)
 	move.w	#180,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688.l
+	jsr	L81688
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81572.l
+	jsr	L81572
 	addq.l	#8,sp
 	move.l	d0,(sp)
-	jsr	L61950.l
+	jsr	L61950
 	unlk	fp
 	rts
 
 L5506:
 	link	fp,#-8
-	move.l	T85048.l,-(sp)
-	jsr	L61476.l
+	move.l	T85048,-(sp)
+	jsr	L61476
 	move.l	d0,-(sp)
-	jsr	L37032.l
+	jsr	L37032
 	addq.l	#4,sp
 	move.l	d0,-4(fp)
 	move.l	d0,-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	bne.s	L5554
-	jsr	L67118.l
+	jsr	L67118
 L5554:
 	move.l	-4(fp),-(sp)
-	jsr	L62206.l
+	jsr	L62206
 	move.l	d0,-(sp)
-	jsr	L37006.l
+	jsr	L37006
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81572.l
+	jsr	L81572
 	addq.l	#8,sp
 	move.l	d0,(sp)
-	jsr	L61950.l
+	jsr	L61950
 	unlk	fp
 	rts
 
 L5596:
 	link	fp,#-4
-	move.l	T85048.l,-(sp)
-	jsr	L61476.l
+	move.l	T85048,-(sp)
+	jsr	L61476
 	move.l	d0,-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	bge.s	L5630
-	jsr	L67118.l
+	jsr	L67118
 L5630:
-	jsr	L62206.l
+	jsr	L62206
 	move.l	d0,(sp)
-	jsr	L81604.l
+	jsr	L81604
 	move.l	d0,(sp)
-	jsr	L61950.l
+	jsr	L61950
 	unlk	fp
 	rts
 
 L5656:
 	link	fp,#-4
-	jsr	L61476.l
+	jsr	L61476
 	move.l	d0,(sp)
-	jsr	L81632.l
+	jsr	L81632
 	move.l	d0,(sp)
-	jsr	L61950.l
+	jsr	L61950
 	unlk	fp
 	rts
 
 L5686:
 	link	fp,#-4
-	move.l	T85048.l,-(sp)
-	jsr	L61476.l
+	move.l	T85048,-(sp)
+	jsr	L61476
 	move.l	d0,-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	bgt.s	L5720
-	jsr	L67118.l
+	jsr	L67118
 L5720:
-	jsr	L62206.l
+	jsr	L62206
 	move.l	d0,(sp)
-	jsr	L81660.l
+	jsr	L81660
 	move.l	d0,(sp)
-	jsr	L61950.l
+	jsr	L61950
 	unlk	fp
 	rts
 
 L5746:
 	link	fp,#-4
-	move.l	T85048.l,-(sp)
-	jsr	L61476.l
+	move.l	T85048,-(sp)
+	jsr	L61476
 	move.l	d0,-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	bgt.s	L5780
-	jsr	L67118.l
+	jsr	L67118
 L5780:
 	move.l	#-1610612668,(sp)
-	jsr	L81660.l
+	jsr	L81660
 	move.l	d0,-(sp)
-	jsr	L62206.l
+	jsr	L62206
 	move.l	d0,-(sp)
-	jsr	L81660.l
+	jsr	L81660
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81572.l
+	jsr	L81572
 	addq.l	#8,sp
 	move.l	d0,(sp)
-	jsr	L61950.l
+	jsr	L61950
 	unlk	fp
 	rts
 
@@ -2236,40 +2236,40 @@ L5832:
 
 L5850:
 	link	fp,#-4
-	move.l	T85048.l,-(sp)
-	jsr	L64160.l
+	move.l	T85048,-(sp)
+	jsr	L64160
 	move.w	d0,-(sp)
-	jsr	L65532.l
+	jsr	L65532
 	addq.l	#2,sp
 	move.l	d0,-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	bgt.s	L5920
-	jsr	L64224.l
+	jsr	L64224
 	move.w	d0,(sp)
 	move.l	#T85014,-(sp)
-	jsr	L62012.l
+	jsr	L62012
 	addq.l	#4,sp
 	move.w	d0,-(sp)
-	jsr	L67066.l
+	jsr	L67066
 	addq.l	#2,sp
 L5920:
-	jsr	L62206.l
+	jsr	L62206
 	move.l	d0,-(sp)
-	jsr	L64224.l
+	jsr	L64224
 	move.w	d0,-(sp)
-	jsr	L65532.l
+	jsr	L65532
 	addq.l	#2,sp
 	move.l	d0,-(sp)
-	jsr	L81660.l
+	jsr	L81660
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81968.l
+	jsr	L81968
 	addq.l	#8,sp
 	move.l	d0,(sp)
-	jsr	L81632.l
+	jsr	L81632
 	move.l	d0,(sp)
-	jsr	L61950.l
+	jsr	L61950
 	unlk	fp
 	rts
 
@@ -2279,20 +2279,20 @@ L5984:
 	move.w	8(fp),d7
 	move.w	10(fp),d6
 	move.w	d6,(sp)
-	jsr	L65266.l
+	jsr	L65266
 	tst.w	d0
 	beq.s	L6018
-	jsr	L67118.l
+	jsr	L67118
 L6018:
 	bra.s	L6040
 
 L6020:
 	tst.w	d6
 	bne.s	L6030
-	jsr	L67474.l
+	jsr	L67474
 L6030:
 	move.w	d6,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d6
 L6040:
 	cmp.w	#1,d7
@@ -2317,7 +2317,7 @@ L6066:
 L6082:
 	addq.w	#1,d6
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d7
 L6094:
 	tst.w	d7
@@ -2338,9 +2338,9 @@ L6110:
 	moveq	#-1,d7
 L6132:
 	move.w	d6,(sp)
-	jsr	L64090.l
+	jsr	L64090
 	clr.w	d0
-	move.w	d0,U101046.l
+	move.w	d0,U101046
 	move.w	d0,d5
 	bra.s	L6224
 
@@ -2348,27 +2348,27 @@ L6152:
 	tst.w	d5
 	bne.s	L6182
 	move.w	d6,(sp)
-	jsr	L358.l
+	jsr	L358
 	move.w	d0,(sp)
-	jsr	L65694.l
+	jsr	L65694
 	move.w	d0,d5
-	move.w	d5,U101046.l
+	move.w	d5,U101046
 	bra.s	L6214
 
 L6182:
 	move.w	d6,(sp)
-	jsr	L358.l
+	jsr	L358
 	move.w	d0,(sp)
-	jsr	L65694.l
+	jsr	L65694
 	move.w	d0,d4
 	move.w	d4,(sp)
 	move.w	d5,-(sp)
-	jsr	L65226.l
+	jsr	L65226
 	addq.l	#2,sp
 	move.w	d4,d5
 L6214:
 	move.w	d6,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d6
 L6224:
 	move.w	d7,d0
@@ -2378,7 +2378,7 @@ L6224:
 	tst.w	d6
 	bne.s	L6152
 L6236:
-	jsr	L64180.l
+	jsr	L64180
 	clr.w	d0
 	move.w	d5,d0
 	tst.l	(sp)+
@@ -2397,22 +2397,22 @@ L6256:
 	moveq	#-1,d7
 L6282:
 	move.w	d6,(sp)
-	jsr	L64090.l
+	jsr	L64090
 	bra.s	L6334
 
 L6292:
 	move.w	d6,(sp)
-	jsr	L358.l
+	jsr	L358
 	move.w	d0,(sp)
-	jsr	L65694.l
+	jsr	L65694
 	move.w	d0,d4
 	move.w	d4,(sp)
 	move.w	d5,-(sp)
-	jsr	L65226.l
+	jsr	L65226
 	addq.l	#2,sp
 	move.w	d4,d5
 	move.w	d6,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d6
 L6334:
 	move.w	d7,d0
@@ -2422,7 +2422,7 @@ L6334:
 	tst.w	d6
 	bne.s	L6292
 L6346:
-	jsr	L64180.l
+	jsr	L64180
 	clr.w	d0
 	move.w	d5,d0
 	tst.l	(sp)+
@@ -2432,20 +2432,20 @@ L6346:
 
 L6366:
 	link	fp,#-4
-	jsr	L61500.l
+	jsr	L61500
 	bsr  	L9296
-	move.b	U100754.l,d0
+	move.b	U100754,d0
 	ext.w	d0
 	move.w	d0,(sp)
-	jsr	L61926.l
+	jsr	L61926
 	unlk	fp
 	rts
 
 L6400:
 	link	fp,#-4
-	jsr	L61294.l
+	jsr	L61294
 	move.w	d0,(sp)
-	jsr	L65266.l
+	jsr	L65266
 	tst.w	d0
 	beq.s	L6432
 	move.w	#1,(sp)
@@ -2453,37 +2453,37 @@ L6400:
 	bra.s	L6450
 
 L6432:
-	move.w	U101046.l,(sp)
-	jsr	L378.l
-	move.w	d0,U101046.l
+	move.w	U101046,(sp)
+	jsr	L378
+	move.w	d0,U101046
 L6450:
 	unlk	fp
 	rts
 
 L6454:
 	link	fp,#-4
-	jsr	L62246.l
+	jsr	L62246
 	movea.l	#U100754,a0
-	move.l	a0,U101030.l
+	move.l	a0,U101030
 	move.l	a0,-(sp)
-	jsr	L62206.l
+	jsr	L62206
 	move.l	d0,-(sp)
-	jsr	L81832.l
+	jsr	L81832
 	addq.l	#4,sp
 	ext.w	d0
 	movea.l	(sp)+,a0
 	move.b	d0,(a0)
-	jsr	L61974.l
+	jsr	L61974
 	unlk	fp
 	rts
 
 L6510:
 	link	fp,#-4
-	jsr	L61294.l
+	jsr	L61294
 	move.w	d0,(sp)
 	bsr.s	L6536
 	move.w	d0,(sp)
-	jsr	L61926.l
+	jsr	L61926
 	unlk	fp
 	rts
 
@@ -2492,12 +2492,12 @@ L6536:
 	movem.l	d6-d7,-(sp)
 	move.w	8(fp),d7
 	move.w	d7,(sp)
-	jsr	L65322.l
+	jsr	L65322
 	tst.w	d0
 	beq.s	L6574
 	bsr  	L9186
 	clr.w	d0
-	move.w	U99178.l,d0
+	move.w	U99178,d0
 	bra.s	L6580
 
 L6574:
@@ -2516,29 +2516,29 @@ L6590:
 	move.w	10(fp),d6
 	move.w	d7,d5
 	move.w	d5,(sp)
-	jsr	L65266.l
+	jsr	L65266
 	tst.w	d0
 	beq  	L6766
 	move.w	d6,(sp)
-	jsr	L65266.l
+	jsr	L65266
 	tst.w	d0
 	beq  	L6762
 	move.w	d5,(sp)
-	jsr	L65356.l
+	jsr	L65356
 	tst.w	d0
 	beq.s	L6702
 	move.w	d6,(sp)
-	jsr	L65356.l
+	jsr	L65356
 	tst.w	d0
 	beq.s	L6702
 	move.w	d6,(sp)
-	jsr	L65532.l
+	jsr	L65532
 	move.l	d0,-(sp)
 	move.w	d5,-(sp)
-	jsr	L65532.l
+	jsr	L65532
 	addq.l	#2,sp
 	move.l	d0,-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	beq.s	L6696
 	clr.w	d0
@@ -2551,17 +2551,17 @@ L6698:
 
 L6702:
 	move.w	d5,(sp)
-	jsr	L65356.l
+	jsr	L65356
 	tst.w	d0
 	bne.s	L6726
 	move.w	d6,(sp)
-	jsr	L65356.l
+	jsr	L65356
 	tst.w	d0
 	beq.s	L6750
 L6726:
 	move.w	d6,(sp)
 	move.w	d5,-(sp)
-	jsr	L4534.l
+	jsr	L4534
 	addq.l	#2,sp
 	tst.w	d0
 	beq.s	L6746
@@ -2589,16 +2589,16 @@ L6762:
 	bra.s	L6848
 
 L6766:
-	jsr	L74764.l
+	jsr	L74764
 	move.w	d6,(sp)
-	jsr	L65266.l
+	jsr	L65266
 	tst.w	d0
 	bne.s	L6846
 	move.w	d6,(sp)
-	jsr	L358.l
+	jsr	L358
 	move.w	d0,(sp)
 	move.w	d5,-(sp)
-	jsr	L358.l
+	jsr	L358
 	addq.l	#2,sp
 	move.w	d0,-(sp)
 	bsr  	L6590
@@ -2606,10 +2606,10 @@ L6766:
 	tst.w	d0
 	beq.s	L6846
 	move.w	d6,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,(sp)
 	move.w	d7,-(sp)
-	jsr	L378.l
+	jsr	L378
 	addq.l	#2,sp
 	move.w	d0,-(sp)
 	bsr  	L6590
@@ -2629,7 +2629,7 @@ L6858:
 	movem.l	d6-d7,-(sp)
 	move.w	8(fp),d7
 	move.w	d7,(sp)
-	jsr	L65356.l
+	jsr	L65356
 	tst.w	d0
 	beq.s	L6886
 	clr.w	d0
@@ -2637,12 +2637,12 @@ L6858:
 
 L6886:
 	move.w	d7,(sp)
-	jsr	L65322.l
+	jsr	L65322
 	tst.w	d0
 	beq.s	L6926
-	move.w	U101046.l,(sp)
+	move.w	U101046,(sp)
 	bsr  	L9214
-	movea.l	U101030.l,a0
+	movea.l	U101030,a0
 	tst.b	(a0)
 	beq.s	L6922
 	clr.w	d0
@@ -2669,19 +2669,19 @@ L6936:
 
 L6946:
 	link	fp,#-4
-	jsr	L61294.l
+	jsr	L61294
 	move.w	d0,(sp)
 	bsr.s	L6858
 	move.w	d0,(sp)
-	jsr	L60886.l
+	jsr	L60886
 	unlk	fp
 	rts
 
 L6972:
 	link	fp,#-4
-	jsr	L61294.l
+	jsr	L61294
 	move.w	d0,(sp)
-	jsr	L65266.l
+	jsr	L65266
 	tst.w	d0
 	beq.s	L7002
 	clr.w	(sp)
@@ -2689,16 +2689,16 @@ L6972:
 	bra.s	L7054
 
 L7002:
-	move.w	U101046.l,(sp)
-	jsr	L378.l
+	move.w	U101046,(sp)
+	jsr	L378
 	tst.w	d0
 	bne.s	L7026
-	clr.w	U101046.l
+	clr.w	U101046
 	bra.s	L7054
 
 L7026:
-	move.w	U101046.l,(sp)
-	move.w	U101046.l,-(sp)
+	move.w	U101046,(sp)
+	move.w	U101046,-(sp)
 	bsr  	L6066
 	addq.l	#2,sp
 	move.w	d0,-(sp)
@@ -2711,57 +2711,57 @@ L7054:
 
 L7058:
 	link	fp,#-4
-	jsr	L61572.l
-	jsr	L61190.l
-	jsr	L60852.l
+	jsr	L61572
+	jsr	L61190
+	jsr	L60852
 	unlk	fp
 	rts
 
 L7084:
 	link	fp,#-4
-	jsr	L61550.l
-	move.w	U101046.l,(sp)
-	jsr	L65266.l
+	jsr	L61550
+	move.w	U101046,(sp)
+	jsr	L65266
 	tst.w	d0
 	beq.s	L7122
 	bsr  	L9296
-	jsr	L61974.l
+	jsr	L61974
 	bra.s	L7140
 
 L7122:
-	move.w	U101046.l,(sp)
-	jsr	L358.l
-	move.w	d0,U101046.l
+	move.w	U101046,(sp)
+	jsr	L358
+	move.w	d0,U101046
 L7140:
 	unlk	fp
 	rts
 
 L7144:
 	link	fp,#-4
-	jsr	L61572.l
-	jsr	L61294.l
+	jsr	L61572
+	jsr	L61294
 	move.w	d0,(sp)
-	jsr	L65322.l
+	jsr	L65322
 	tst.w	d0
 	beq.s	L7220
-	jsr	L62398.l
+	jsr	L62398
 	bsr  	L9350
-	jsr	L64224.l
+	jsr	L64224
 	move.w	d0,(sp)
-	jsr	L55092.l
-	move.w	U101046.l,(sp)
-	jsr	L55092.l
+	jsr	L55092
+	move.w	U101046,(sp)
+	jsr	L55092
 	bsr  	L9388
-	jsr	L61992.l
+	jsr	L61992
 	bra.s	L7248
 
 L7220:
-	move.w	U101046.l,(sp)
-	jsr	L64224.l
+	move.w	U101046,(sp)
+	jsr	L64224
 	move.w	d0,-(sp)
-	jsr	L65496.l
+	jsr	L65496
 	addq.l	#2,sp
-	move.w	d0,U101046.l
+	move.w	d0,U101046
 L7248:
 	unlk	fp
 	rts
@@ -2771,35 +2771,35 @@ L7252:
 	movem.l	d6-d7,-(sp)
 	bsr  	L8924
 	move.w	d0,d7
-	jsr	L61294.l
+	jsr	L61294
 	move.w	d0,(sp)
-	jsr	L65322.l
+	jsr	L65322
 	tst.w	d0
 	beq.s	L7322
 	bsr  	L9162
-	cmp.w	U99178.l,d7
+	cmp.w	U99178,d7
 	bls.s	L7302
-	jsr	L67474.l
+	jsr	L67474
 L7302:
 	move.w	d7,d0
 	subq.w	#1,d0
 	ext.l	d0
-	add.l	d0,U101030.l
-	jsr	L61974.l
+	add.l	d0,U101030
+	jsr	L61974
 	bra.s	L7364
 
 L7322:
-	move.w	U101046.l,(sp)
+	move.w	U101046,(sp)
 	bsr  	L6536
 	cmp.w	d7,d0
 	bge.s	L7342
-	jsr	L67474.l
+	jsr	L67474
 L7342:
-	move.w	U101046.l,(sp)
+	move.w	U101046,(sp)
 	move.w	d7,-(sp)
-	jsr	L65756.l
+	jsr	L65756
 	addq.l	#2,sp
-	move.w	d0,U101046.l
+	move.w	d0,U101046
 L7364:
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
@@ -2808,31 +2808,31 @@ L7364:
 
 L7374:
 	link	fp,#-4
-	jsr	L61550.l
-	move.w	U101046.l,(sp)
-	jsr	L65266.l
+	jsr	L61550
+	move.w	U101046,(sp)
+	jsr	L65266
 	tst.w	d0
 	beq.s	L7434
 	bsr  	L9162
 	clr.w	d0
-	move.w	U99178.l,d0
+	move.w	U99178,d0
 	subq.w	#1,d0
 	swap	d0
 	clr.w	d0
 	swap	d0
-	add.l	d0,U101030.l
-	jsr	L61974.l
+	add.l	d0,U101030
+	jsr	L61974
 	bra.s	L7468
 
 L7434:
-	move.w	U101046.l,(sp)
-	move.w	U101046.l,-(sp)
+	move.w	U101046,(sp)
+	move.w	U101046,-(sp)
 	bsr  	L6066
 	addq.l	#2,sp
 	move.w	d0,-(sp)
-	jsr	L65756.l
+	jsr	L65756
 	addq.l	#2,sp
-	move.w	d0,U101046.l
+	move.w	d0,U101046
 L7468:
 	unlk	fp
 	rts
@@ -2840,18 +2840,18 @@ L7468:
 L7472:
 	link	fp,#-4
 	move.w	#2,(sp)
-	jsr	L61064.l
+	jsr	L61064
 	move.w	d0,(sp)
 	bsr  	L8638
-	jsr	L64764.l
+	jsr	L64764
 	unlk	fp
 	rts
 
 L7502:
 	link	fp,#-4
-	jsr	L61294.l
+	jsr	L61294
 	move.w	d0,(sp)
-	jsr	L65322.l
+	jsr	L65322
 	tst.w	d0
 	beq.s	L7528
 	clr.w	(sp)
@@ -2860,41 +2860,41 @@ L7502:
 L7528:
 	move.w	#1,(sp)
 L7532:
-	jsr	L60886.l
+	jsr	L60886
 	unlk	fp
 	rts
 
 L7542:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
-	jsr	L61572.l
-	jsr	L61294.l
+	jsr	L61572
+	jsr	L61294
 	move.w	d0,(sp)
-	jsr	L65322.l
+	jsr	L65322
 	tst.w	d0
 	beq.s	L7622
-	jsr	L62398.l
+	jsr	L62398
 	bsr  	L9350
-	move.w	U101046.l,(sp)
-	jsr	L55092.l
-	jsr	L64224.l
+	move.w	U101046,(sp)
+	jsr	L55092
+	jsr	L64224
 	move.w	d0,(sp)
-	jsr	L55092.l
+	jsr	L55092
 	bsr  	L9388
-	jsr	L61992.l
+	jsr	L61992
 	bra.s	L7696
 
 L7622:
-	tst.w	U101046.l
+	tst.w	U101046
 	beq.s	L7676
-	move.w	U101046.l,(sp)
+	move.w	U101046,(sp)
 	clr.w	-(sp)
 	bsr  	L6110
 	addq.l	#2,sp
 	move.w	d0,(sp)
-	jsr	L64224.l
+	jsr	L64224
 	move.w	d0,-(sp)
-	jsr	L65694.l
+	jsr	L65694
 	addq.l	#2,sp
 	move.w	d0,-(sp)
 	move.w	#1,-(sp)
@@ -2903,10 +2903,10 @@ L7622:
 	bra.s	L7696
 
 L7676:
-	jsr	L64224.l
+	jsr	L64224
 	move.w	d0,(sp)
-	jsr	L65694.l
-	move.w	d0,U101046.l
+	jsr	L65694
+	move.w	d0,U101046
 L7696:
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
@@ -2918,18 +2918,18 @@ L7706:
 	movem.l	d5-d7,-(sp)
 	bsr  	L8924
 	move.w	d0,d7
-	jsr	L61294.l
+	jsr	L61294
 	move.w	d0,(sp)
 	move.w	d7,-(sp)
 	bsr  	L5984
 	addq.l	#2,sp
 	move.w	d0,d6
-	jsr	L61294.l
+	jsr	L61294
 	move.w	d0,(sp)
 	move.w	d6,-(sp)
-	jsr	L65186.l
+	jsr	L65186
 	addq.l	#2,sp
-	jsr	L61834.l
+	jsr	L61834
 	tst.l	(sp)+
 	movem.l	(sp)+,d6-d7
 	unlk	fp
@@ -2940,27 +2940,27 @@ L7772:
 	movem.l	d4-d7,-(sp)
 	bsr  	L8924
 	move.w	d0,d5
-	jsr	L61294.l
+	jsr	L61294
 	move.w	d0,(sp)
 	move.w	d5,-(sp)
 	bsr  	L5984
 	addq.l	#2,sp
 	move.w	d0,d7
-	jsr	L61294.l
+	jsr	L61294
 	move.w	d0,d6
 	move.w	d6,(sp)
-	jsr	L65322.l
+	jsr	L65322
 	tst.w	d0
 	beq.s	L7834
 	move.w	d6,(sp)
-	jsr	L65694.l
+	jsr	L65694
 	move.w	d0,d6
 L7834:
 	move.w	d6,(sp)
 	move.w	d7,-(sp)
-	jsr	L65226.l
+	jsr	L65226
 	addq.l	#2,sp
-	jsr	L61834.l
+	jsr	L61834
 	tst.l	(sp)+
 	movem.l	(sp)+,d5-d7
 	unlk	fp
@@ -2968,10 +2968,10 @@ L7834:
 
 L7862:
 	link	fp,#-4
-	jsr	L61572.l
-	jsr	L61294.l
+	jsr	L61572
+	jsr	L61294
 	move.w	d0,(sp)
-	jsr	L65322.l
+	jsr	L65322
 	tst.w	d0
 	beq.s	L7896
 	bsr.s	L7912
@@ -2982,46 +2982,46 @@ L7896:
 	bsr  	L8088
 	move.w	d0,(sp)
 L7902:
-	jsr	L60886.l
+	jsr	L60886
 	unlk	fp
 	rts
 
 L7912:
 	link	fp,#0
 	movem.l	d6-d7/a5,-(sp)
-	jsr	L62398.l
+	jsr	L62398
 	bsr  	L9350
-	jsr	L64224.l
+	jsr	L64224
 	move.w	d0,(sp)
-	jsr	L55092.l
-	move.w	U99178.l,d7
+	jsr	L55092
+	move.w	U99178,d7
 	bne.s	L7962
 	bsr  	L9388
 	clr.w	d0
 	bra  	L8078
 
 L7962:
-	movea.l	U101030.l,a5
-	move.w	U101046.l,(sp)
-	jsr	L55092.l
+	movea.l	U101030,a5
+	move.w	U101046,(sp)
+	jsr	L55092
 	bsr  	L9388
 	clr.w	d0
-	move.w	U99178.l,d0
+	move.w	U99178,d0
 	sub.w	d7,d0
-	move.w	d0,U91950.l
-	move.w	#1,U101106.l
+	move.w	d0,U91950
+	move.w	#1,U101106
 	bra.s	L8062
 
 L8010:
-	cmp.w	U91950.l,d7
+	cmp.w	U91950,d7
 	move	sr,d0
-	subq.w	#1,U91950.l
+	subq.w	#1,U91950
 	move	d0,ccr
 	bgt.s	L8070
 	move.w	d7,(sp)
 	move.l	a5,-(sp)
-	move.l	U101030.l,-(sp)
-	jsr	L83814.l
+	move.l	U101030,-(sp)
+	jsr	L83814
 	addq.l	#8,sp
 	addq.l	#1,a5
 	tst.w	d0
@@ -3030,12 +3030,12 @@ L8010:
 	bra.s	L8078
 
 L8056:
-	addq.w	#1,U101106.l
+	addq.w	#1,U101106
 L8062:
-	tst.w	U91950.l
+	tst.w	U91950
 	bne.s	L8010
 L8070:
-	clr.w	U101106.l
+	clr.w	U101106
 	clr.w	d0
 L8078:
 	tst.l	(sp)+
@@ -3046,14 +3046,14 @@ L8078:
 L8088:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
-	jsr	L64224.l
+	jsr	L64224
 	move.w	d0,d7
-	move.w	#1,U101106.l
+	move.w	#1,U101106
 	bra.s	L8168
 
 L8114:
-	move.w	U101046.l,(sp)
-	jsr	L358.l
+	move.w	U101046,(sp)
+	jsr	L358
 	move.w	d0,(sp)
 	move.w	d7,-(sp)
 	bsr  	L6590
@@ -3064,14 +3064,14 @@ L8114:
 	bra.s	L8184
 
 L8144:
-	move.w	U101046.l,(sp)
-	jsr	L378.l
-	move.w	d0,U101046.l
-	addq.w	#1,U101106.l
+	move.w	U101046,(sp)
+	jsr	L378
+	move.w	d0,U101046
+	addq.w	#1,U101106
 L8168:
-	tst.w	U101046.l
+	tst.w	U101046
 	bne.s	L8114
-	clr.w	U101106.l
+	clr.w	U101106
 	clr.w	d0
 L8184:
 	tst.l	(sp)+
@@ -3081,13 +3081,13 @@ L8184:
 
 L8194:
 	link	fp,#-4
-	jsr	L61190.l
-	move.w	U101046.l,(sp)
-	jsr	L65356.l
+	jsr	L61190
+	move.w	U101046,(sp)
+	jsr	L65356
 	tst.w	d0
 	bne.s	L8240
-	move.w	U101046.l,(sp)
-	jsr	L61390.l
+	move.w	U101046,(sp)
+	jsr	L61390
 	tst.w	d0
 	bne.s	L8240
 	clr.w	(sp)
@@ -3096,7 +3096,7 @@ L8194:
 L8240:
 	move.w	#1,(sp)
 L8244:
-	jsr	L60886.l
+	jsr	L60886
 	unlk	fp
 	rts
 
@@ -3104,70 +3104,70 @@ L8254:
 	link	fp,#-2
 	movem.l	d5-d7,-(sp)
 	move.w	#2,(sp)
-	jsr	L61064.l
+	jsr	L61064
 	move.w	d0,-2(fp)
 	clr.w	(sp)
-	jsr	L64090.l
+	jsr	L64090
 	bra  	L8446
 
 L8288:
-	jsr	L61190.l
-	jsr	L64160.l
+	jsr	L61190
+	jsr	L64160
 	tst.w	d0
 	bne.s	L8382
-	tst.w	U101046.l
+	tst.w	U101046
 	beq.s	L8380
-	move.w	U101046.l,(sp)
-	jsr	L65322.l
+	move.w	U101046,(sp)
+	jsr	L65322
 	tst.w	d0
 	beq.s	L8352
-	move.w	U101046.l,(sp)
-	jsr	L65694.l
+	move.w	U101046,(sp)
+	jsr	L65694
 	move.w	d0,d7
 	move.w	d7,(sp)
-	jsr	L64276.l
+	jsr	L64276
 	bra.s	L8380
 
 L8352:
-	move.w	U101046.l,(sp)
+	move.w	U101046,(sp)
 	clr.w	-(sp)
 	bsr  	L6110
 	addq.l	#2,sp
 	move.w	d0,d7
-	move.w	U101046.l,(sp)
-	jsr	L64276.l
+	move.w	U101046,(sp)
+	jsr	L64276
 L8380:
 	bra.s	L8446
 
 L8382:
-	move.w	U101046.l,(sp)
-	jsr	L65322.l
+	move.w	U101046,(sp)
+	jsr	L65322
 	tst.w	d0
 	beq.s	L8428
-	move.w	U101046.l,(sp)
-	jsr	L65694.l
+	move.w	U101046,(sp)
+	jsr	L65694
 	move.w	d0,d6
 	move.w	d6,(sp)
 	move.w	d7,-(sp)
-	jsr	L65226.l
+	jsr	L65226
 	addq.l	#2,sp
 	move.w	d6,d7
 	bra.s	L8446
 
 L8428:
 	move.w	d7,(sp)
-	move.w	U101046.l,-(sp)
+	move.w	U101046,-(sp)
 	clr.w	-(sp)
 	bsr  	L6256
 	addq.l	#4,sp
 	move.w	d0,d7
 L8446:
 	move.w	-2(fp),(sp)
-	jsr	L61098.l
+	jsr	L61098
 	subq.w	#1,-2(fp)
 	tst.w	d0
 	beq  	L8288
-	jsr	L64764.l
+	jsr	L64764
 	tst.l	(sp)+
 	movem.l	(sp)+,d6-d7
 	unlk	fp
@@ -3175,11 +3175,11 @@ L8446:
 
 L8482:
 	link	fp,#-4
-	jsr	L61294.l
+	jsr	L61294
 	move.w	d0,(sp)
-	jsr	L65322.l
+	jsr	L65322
 	move.w	d0,(sp)
-	jsr	L60886.l
+	jsr	L60886
 	unlk	fp
 	rts
 
@@ -3187,40 +3187,40 @@ L8512:
 	link	fp,#0
 	movem.l	d5-d7,-(sp)
 	move.w	#2,(sp)
-	jsr	L61064.l
+	jsr	L61064
 	move.w	d0,(sp)
 	bsr.s	L8638
 	bsr  	L9350
-	jsr	L64224.l
+	jsr	L64224
 	move.w	d0,d7
 	bra.s	L8614
 
 L8548:
 	move.w	d7,(sp)
-	jsr	L358.l
+	jsr	L358
 	move.w	d0,d6
 	move.w	d6,(sp)
-	jsr	L65322.l
+	jsr	L65322
 	tst.w	d0
 	bne.s	L8596
 	move.w	d6,(sp)
-	move.w	U101460.l,-(sp)
-	jsr	L358.l
+	move.w	U101460,-(sp)
+	jsr	L358
 	addq.l	#2,sp
 	move.w	d0,-(sp)
-	jsr	L67066.l
+	jsr	L67066
 	addq.l	#2,sp
 L8596:
 	move.w	d6,(sp)
-	jsr	L55092.l
+	jsr	L55092
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d7
 L8614:
 	tst.w	d7
 	bne.s	L8548
 	bsr  	L9388
-	jsr	L61992.l
+	jsr	L61992
 	tst.l	(sp)+
 	movem.l	(sp)+,d6-d7
 	unlk	fp
@@ -3230,35 +3230,35 @@ L8638:
 	link	fp,#0
 	movem.l	d5-d7,-(sp)
 	move.w	8(fp),(sp)
-	jsr	L61098.l
+	jsr	L61098
 	tst.w	d0
 	beq.s	L8668
-	jsr	L64732.l
+	jsr	L64732
 	bra.s	L8742
 
 L8668:
-	jsr	L61294.l
+	jsr	L61294
 	move.w	d0,(sp)
-	jsr	L65694.l
+	jsr	L65694
 	move.w	d0,d7
 	move.w	d7,(sp)
-	jsr	L64090.l
+	jsr	L64090
 	bra.s	L8724
 
 L8694:
-	jsr	L61294.l
+	jsr	L61294
 	move.w	d0,(sp)
-	jsr	L65694.l
+	jsr	L65694
 	move.w	d0,d6
 	move.w	d6,(sp)
 	move.w	d7,-(sp)
-	jsr	L65226.l
+	jsr	L65226
 	addq.l	#2,sp
 	move.w	d6,d7
 L8724:
 	subq.w	#1,8(fp)
 	move.w	8(fp),(sp)
-	jsr	L61098.l
+	jsr	L61098
 	tst.w	d0
 	beq.s	L8694
 L8742:
@@ -3272,45 +3272,45 @@ L8752:
 	movem.l	d5-d7,-(sp)
 	bsr  	L8924
 	move.w	d0,d7
-	jsr	L61476.l
+	jsr	L61476
 	move.l	d0,-(sp)
-	jsr	L81832.l
+	jsr	L81832
 	addq.l	#4,sp
 	move.w	d0,d6
 	move.w	d6,d0
 	cmp.w	d7,d0
 	bge.s	L8796
-	jsr	L67118.l
+	jsr	L67118
 L8796:
-	jsr	L61294.l
+	jsr	L61294
 	move.w	d0,(sp)
-	jsr	L65322.l
+	jsr	L65322
 	tst.w	d0
 	beq.s	L8864
 	bsr  	L9162
-	cmp.w	U99178.l,d6
+	cmp.w	U99178,d6
 	bls.s	L8832
-	jsr	L67474.l
+	jsr	L67474
 L8832:
 	move.w	d7,d0
 	subq.w	#1,d0
 	ext.l	d0
-	add.l	d0,U101030.l
+	add.l	d0,U101030
 	move.w	d6,d0
 	sub.w	d7,d0
 	addq.w	#1,d0
-	move.w	d0,U99178.l
-	jsr	L61992.l
+	move.w	d0,U99178
+	jsr	L61992
 	bra.s	L8914
 
 L8864:
-	move.w	U101046.l,(sp)
+	move.w	U101046,(sp)
 	bsr  	L6066
 	cmp.w	d6,d0
 	bge.s	L8884
-	jsr	L67474.l
+	jsr	L67474
 L8884:
-	move.w	U101046.l,(sp)
+	move.w	U101046,(sp)
 	move.w	d7,-(sp)
 	bsr  	L5984
 	addq.l	#2,sp
@@ -3330,9 +3330,9 @@ L8914:
 L8924:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
-	jsr	L61476.l
+	jsr	L61476
 	move.l	d0,-(sp)
-	jsr	L81832.l
+	jsr	L81832
 	addq.l	#4,sp
 	move.w	d0,d7
 	ble.s	L8956
@@ -3340,7 +3340,7 @@ L8924:
 	bra.s	L8962
 
 L8956:
-	jsr	L67118.l
+	jsr	L67118
 L8962:
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
@@ -3349,8 +3349,8 @@ L8962:
 
 L8972:
 	link	fp,#-4
-	move.w	U101106.l,(sp)
-	jsr	L61926.l
+	move.w	U101106,(sp)
+	jsr	L61926
 	unlk	fp
 	rts
 
@@ -3358,7 +3358,7 @@ L8992:
 	link	fp,#-4
 	move.l	#L36478,(sp)
 	bsr.s	L9036
-	jsr	L61992.l
+	jsr	L61992
 	unlk	fp
 	rts
 
@@ -3366,16 +3366,16 @@ L9014:
 	link	fp,#-4
 	move.l	#L36522,(sp)
 	bsr.s	L9036
-	jsr	L61992.l
+	jsr	L61992
 	unlk	fp
 	rts
 
 L9036:
 	link	fp,#0
 	movem.l	d7/a5,-(sp)
-	jsr	L61500.l
+	jsr	L61500
 	bsr  	L9186
-	movea.l	U101030.l,a5
+	movea.l	U101030,a5
 	bra.s	L9080
 
 L9062:
@@ -3388,9 +3388,9 @@ L9062:
 	move.b	d0,(a5)
 	addq.l	#1,a5
 L9080:
-	move.l	U101030.l,d0
+	move.l	U101030,d0
 	clr.l	d1
-	move.w	U99178.l,d1
+	move.w	U99178,d1
 	add.l	d1,d0
 	cmpa.l	d0,a5
 	bcs.s	L9062
@@ -3402,25 +3402,25 @@ L9080:
 
 L9114:
 	link	fp,#-4
-	tst.w	U101046.l
+	tst.w	U101046
 	bne.s	L9132
-	jsr	L67118.l
+	jsr	L67118
 L9132:
 	bsr.s	L9162
-	subq.w	#1,U99178.l
+	subq.w	#1,U99178
 	move.w	8(fp),d0
 	ext.l	d0
-	add.l	d0,U101030.l
-	jsr	L61992.l
+	add.l	d0,U101030
+	jsr	L61992
 	unlk	fp
 	rts
 
 L9162:
 	link	fp,#-4
 	bsr.s	L9186
-	tst.w	U99178.l
+	tst.w	U99178
 	bne.s	L9182
-	jsr	L67118.l
+	jsr	L67118
 L9182:
 	unlk	fp
 	rts
@@ -3428,8 +3428,8 @@ L9182:
 L9186:
 	link	fp,#-4
 	bsr  	L9350
-	move.w	U101046.l,(sp)
-	jsr	L55092.l
+	move.w	U101046,(sp)
+	jsr	L55092
 	bsr  	L9388
 	unlk	fp
 	rts
@@ -3439,20 +3439,20 @@ L9214:
 	movem.l	d6-d7,-(sp)
 	move.w	8(fp),d7
 	movea.l	#U100754,a0
-	move.l	a0,U101030.l
+	move.l	a0,U101030
 	move.l	a0,-(sp)
 	clr.w	-(sp)
 	move.w	d7,-(sp)
-	jsr	L378.l
+	jsr	L378
 	addq.l	#2,sp
 	move.w	d0,-(sp)
-	jsr	L358.l
+	jsr	L358
 	addq.l	#2,sp
 	move.w	d0,-(sp)
-	jsr	L358.l
+	jsr	L358
 	addq.l	#2,sp
 	move.w	d0,-(sp)
-	jsr	L332.l
+	jsr	L332
 	addq.l	#4,sp
 	movea.l	(sp)+,a0
 	move.b	d0,(a0)
@@ -3463,20 +3463,20 @@ L9214:
 
 L9296:
 	link	fp,#-4
-	move.w	U101046.l,(sp)
-	jsr	L65356.l
+	move.w	U101046,(sp)
+	jsr	L65356
 	tst.w	d0
 	beq.s	L9322
 	bsr  	L9162
 	bra.s	L9346
 
 L9322:
-	move.w	U101046.l,(sp)
+	move.w	U101046,(sp)
 	bsr.s	L9214
-	movea.l	U101030.l,a0
+	movea.l	U101030,a0
 	tst.b	(a0)
 	bne.s	L9346
-	jsr	L67118.l
+	jsr	L67118
 L9346:
 	unlk	fp
 	rts
@@ -3484,24 +3484,24 @@ L9346:
 L9350:
 	link	fp,#-4
 	clr.w	d0
-	move.w	d0,U99178.l
+	move.w	d0,U99178
 	movea.l	#U100754,a1
-	move.l	a1,U101030.l
+	move.l	a1,U101030
 	move.b	d0,(a1)
-	move.w	#1,U98714.l
+	move.w	#1,U98714
 	unlk	fp
 	rts
 
 L9388:
 	link	fp,#-4
-	move.l	#U100754,U101030.l
-	clr.w	U98714.l
+	move.l	#U100754,U101030
+	clr.w	U98714
 	unlk	fp
 	rts
 
 L9412:
 	link	fp,#-4
-	addq.l	#1,U101030.l
+	addq.l	#1,U101030
 	unlk	fp
 	rts
 
@@ -3510,14 +3510,14 @@ L9426:
 	bra.s	L9442
 
 L9432:
-	move.w	#6,U100982.l
+	move.w	#6,U100982
 	bsr.s	L9412
 L9442:
-	movea.l	U101030.l,a0
+	movea.l	U101030,a0
 	move.b	(a0),d0
 	ext.w	d0
 	move.w	d0,(sp)
-	jsr	L51120.l
+	jsr	L51120
 	tst.w	d0
 	bne.s	L9432
 	unlk	fp
@@ -3527,45 +3527,45 @@ L9468:
 	link	fp,#-4
 	bsr.s	L9350
 	move.w	8(fp),(sp)
-	jsr	L55092.l
+	jsr	L55092
 	bsr.s	L9388
-	clr.w	U100982.l
-	tst.w	U99178.l
+	clr.w	U100982
+	tst.w	U99178
 	bne.s	L9506
 	clr.w	d0
 	bra  	L9652
 
 L9506:
-	movea.l	U101030.l,a0
+	movea.l	U101030,a0
 	cmpi.b	#45,(a0)
 	bne.s	L9520
 	bsr.s	L9412
 L9520:
 	bsr.s	L9426
-	movea.l	U101030.l,a0
+	movea.l	U101030,a0
 	cmpi.b	#46,(a0)
 	bne.s	L9538
 	bsr.s	L9412
 	bsr.s	L9426
 L9538:
-	tst.w	U100982.l
+	tst.w	U100982
 	bne.s	L9550
 	clr.w	d0
 	bra.s	L9652
 
 L9550:
-	movea.l	U101030.l,a0
+	movea.l	U101030,a0
 	move.b	(a0),d0
 	ext.w	d0
 	move.w	d0,(sp)
-	jsr	L36478.l
+	jsr	L36478
 	cmp.w	#69,d0
 	bne.s	L9610
 	bsr  	L9412
-	movea.l	U101030.l,a0
+	movea.l	U101030,a0
 	cmpi.b	#43,(a0)
 	beq.s	L9602
-	movea.l	U101030.l,a0
+	movea.l	U101030,a0
 	cmpi.b	#45,(a0)
 	bne.s	L9606
 L9602:
@@ -3573,9 +3573,9 @@ L9602:
 L9606:
 	bsr  	L9426
 L9610:
-	tst.w	U100982.l
+	tst.w	U100982
 	beq.s	L9628
-	movea.l	U101030.l,a0
+	movea.l	U101030,a0
 	tst.b	(a0)
 	beq.s	L9632
 L9628:
@@ -3584,8 +3584,8 @@ L9628:
 
 L9632:
 	move.l	#U100754,(sp)
-	jsr	L80660.l
-	move.l	d0,U99602.l
+	jsr	L80660
+	move.l	d0,U99602
 	moveq	#1,d0
 L9652:
 	unlk	fp
@@ -3593,21 +3593,21 @@ L9652:
 
 L9656:
 	link	fp,#-4
-	jsr	L61592.l
+	jsr	L61592
 	move.l	#L9834,(sp)
-	jsr	L64160.l
+	jsr	L64160
 	move.w	d0,-(sp)
-	jsr	L62078.l
+	jsr	L62078
 	addq.l	#2,sp
 	tst.w	d0
 	beq.s	L9702
 	move.w	#24,(sp)
-	jsr	L64276.l
+	jsr	L64276
 L9702:
-	jsr	L61312.l
+	jsr	L61312
 	bsr.s	L9760
 	bsr.s	L9724
-	jsr	L61834.l
+	jsr	L61834
 	bsr.s	L9794
 	unlk	fp
 	rts
@@ -3615,135 +3615,135 @@ L9702:
 L9724:
 	link	fp,#-4
 	move.l	#U101014,(sp)
-	jsr	L204.l
+	jsr	L204
 	tst.w	d0
 	bne.s	L9756
-	jsr	L64888.l
-	jsr	L59768.l
+	jsr	L64888
+	jsr	L59768
 L9756:
 	unlk	fp
 	rts
 
 L9760:
 	link	fp,#-4
-	jsr	L66768.l
+	jsr	L66768
 	move.w	#6,(sp)
-	jsr	L64300.l
+	jsr	L64300
 	move.w	#20,(sp)
-	jsr	L64090.l
+	jsr	L64090
 	unlk	fp
 	rts
 
 L9794:
 	link	fp,#-4
 	move.w	#20,(sp)
-	jsr	L68540.l
+	jsr	L68540
 	move.w	#7,(sp)
-	jsr	L64326.l
-	jsr	L66800.l
-	jsr	L64180.l
+	jsr	L64326
+	jsr	L66800
+	jsr	L64180
 	unlk	fp
 	rts
 
 L9834:
 	link	fp,#-4
-	move.w	U100890.l,U101046.l
+	move.w	U100890,U101046
 	unlk	fp
 	rts
 
 L9852:
 	link	fp,#-4
-	jsr	L61500.l
+	jsr	L61500
 L9862:
-	move.w	U101046.l,(sp)
-	jsr	L68570.l
+	move.w	U101046,(sp)
+	jsr	L68570
 	tst.w	d0
 	beq.s	L9922
 	clr.w	d0
-	move.w	d0,U99864.l
-	move.w	d0,U99818.l
-	jsr	L61834.l
-	jsr	L64942.l
+	move.w	d0,U99864
+	move.w	d0,U99818
+	jsr	L61834
+	jsr	L64942
 	move.w	#1,(sp)
 	move.l	#U101014,-(sp)
-	jsr	L218.l
+	jsr	L218
 	addq.l	#4,sp
 L9922:
-	jsr	L64006.l
+	jsr	L64006
 	tst.w	d0
 	bne.s	L9940
-	jsr	L64028.l
+	jsr	L64028
 	bra.s	L9862
 
 L9940:
 	clr.w	d0
-	move.w	U101046.l,d0
-	cmp.w	U101012.l,d0
+	move.w	U101046,d0
+	cmp.w	U101012,d0
 	bne.s	L9974
 	move.w	#1,(sp)
 	move.l	#U101158,-(sp)
-	jsr	L218.l
+	jsr	L218
 	addq.l	#4,sp
 L9974:
-	jsr	L67768.l
+	jsr	L67768
 	unlk	fp
 	rts
 
 L9984:
 	link	fp,#-4
-	jsr	L60580.l
-	jsr	L61834.l
+	jsr	L60580
+	jsr	L61834
 	unlk	fp
 	rts
 
 L10004:
 	link	fp,#-4
-	jsr	L61500.l
+	jsr	L61500
 	bsr  	L10182
-	jsr	L64006.l
+	jsr	L64006
 	tst.w	d0
 	bne  	L10172
-	move.w	U98716.l,(sp)
+	move.w	U98716,(sp)
 	move.w	#9,-(sp)
-	jsr	L64352.l
+	jsr	L64352
 	addq.l	#2,sp
 	move.w	d0,-(sp)
-	jsr	L66008.l
+	jsr	L66008
 	addq.l	#2,sp
-	move.w	d0,U99818.l
+	move.w	d0,U99818
 	beq.s	L10172
 	bra.s	L10152
 
 L10068:
-	move.w	U99818.l,(sp)
-	jsr	L358.l
-	move.w	d0,U99864.l
+	move.w	U99818,(sp)
+	jsr	L358
+	move.w	d0,U99864
 	bra.s	L10142
 
 L10088:
-	clr.w	U100894.l
+	clr.w	U100894
 	bsr  	L10220
 	clr.w	d0
-	move.w	U100894.l,d0
-	cmp.w	U101046.l,d0
+	move.w	U100894,d0
+	cmp.w	U101046,d0
 	bne.s	L10142
-	jsr	L61834.l
-	jsr	L64942.l
+	jsr	L61834
+	jsr	L64942
 	clr.w	(sp)
 	move.l	#U101014,-(sp)
-	jsr	L218.l
+	jsr	L218
 	addq.l	#4,sp
 L10142:
-	jsr	L61904.l
+	jsr	L61904
 	tst.w	d0
 	beq.s	L10088
 L10152:
-	move.w	U99818.l,(sp)
-	jsr	L378.l
-	move.w	d0,U99818.l
+	move.w	U99818,(sp)
+	jsr	L378
+	move.w	d0,U99818
 	bne.s	L10068
 L10172:
-	jsr	L67802.l
+	jsr	L67802
 	unlk	fp
 	rts
 
@@ -3752,12 +3752,12 @@ L10182:
 	bra.s	L10206
 
 L10188:
-	jsr	L64160.l
+	jsr	L64160
 	cmp.w	#18,d0
 	beq.s	L10216
-	jsr	L64028.l
+	jsr	L64028
 L10206:
-	jsr	L64006.l
+	jsr	L64006
 	tst.w	d0
 	beq.s	L10188
 L10216:
@@ -3767,61 +3767,61 @@ L10216:
 L10220:
 	link	fp,#-4
 	move.l	#L9984,(sp)
-	move.w	U99864.l,-(sp)
-	jsr	L358.l
+	move.w	U99864,-(sp)
+	jsr	L358
 	addq.l	#2,sp
 	move.w	d0,-(sp)
-	jsr	L62078.l
+	jsr	L62078
 	addq.l	#2,sp
 	tst.w	d0
 	beq  	L10378
-	jsr	L59950.l
-	jsr	L61904.l
+	jsr	L59950
+	jsr	L61904
 	tst.w	d0
 	bne  	L10442
-	move.w	U99864.l,(sp)
-	jsr	L358.l
+	move.w	U99864,(sp)
+	jsr	L358
 	move.w	d0,(sp)
-	jsr	L65726.l
+	jsr	L65726
 	tst.w	d0
 	beq.s	L10376
-	jsr	L9350.l
-	move.w	U99864.l,(sp)
-	jsr	L358.l
+	jsr	L9350
+	move.w	U99864,(sp)
+	jsr	L358
 	move.w	d0,(sp)
-	jsr	L55092.l
-	jsr	L9388.l
-	tst.w	U99178.l
+	jsr	L55092
+	jsr	L9388
+	tst.w	U99178
 	beq.s	L10376
-	jsr	L50570.l
-	cmpi.b	#34,U100754.l
+	jsr	L50570
+	cmpi.b	#34,U100754
 	bne.s	L10376
-	jsr	L53396.l
-	jsr	L64224.l
-	move.w	d0,U100894.l
+	jsr	L53396
+	jsr	L64224
+	move.w	d0,U100894
 L10376:
 	bra.s	L10436
 
 L10378:
-	move.w	U99864.l,(sp)
-	jsr	L358.l
-	cmp.w	U100624.l,d0
+	move.w	U99864,(sp)
+	jsr	L358
+	cmp.w	U100624,d0
 	bne.s	L10436
-	jsr	L59950.l
-	jsr	L61904.l
+	jsr	L59950
+	jsr	L61904
 	tst.w	d0
 	bne.s	L10442
 	bsr  	L10220
 	bra.s	L10426
 
 L10420:
-	jsr	L59950.l
+	jsr	L59950
 L10426:
-	jsr	L61884.l
+	jsr	L61884
 	tst.w	d0
 	beq.s	L10420
 L10436:
-	jsr	L59950.l
+	jsr	L59950
 L10442:
 	unlk	fp
 	rts
@@ -3829,136 +3829,136 @@ L10442:
 L10446:
 	link	fp,#-4
 	clr.w	d0
-	move.w	U100978.l,d0
+	move.w	U100978,d0
 	swap	d0
 	clr.w	d0
 	swap	d0
 	move.l	d0,-(sp)
-	jsr	L81688.l
+	jsr	L81688
 	addq.l	#4,sp
 	move.l	d0,(sp)
-	jsr	L52972.l
-	jsr	L64764.l
+	jsr	L52972
+	jsr	L64764
 	unlk	fp
 	rts
 
 L10492:
 	link	fp,#-4
-	jsr	L64732.l
-	jsr	L57504.l
+	jsr	L64732
+	jsr	L57504
 	bra.s	L10522
 
 L10510:
-	move.w	U100668.l,(sp)
-	jsr	L12242.l
+	move.w	U100668,(sp)
+	jsr	L12242
 L10522:
-	jsr	L57542.l
+	jsr	L57542
 	tst.w	d0
 	bne.s	L10510
-	jsr	L64764.l
+	jsr	L64764
 	unlk	fp
 	rts
 
 L10542:
 	link	fp,#-4
-	move.w	#1,U101198.l
+	move.w	#1,U101198
 	move.w	#2,(sp)
-	jsr	L48084.l
+	jsr	L48084
 	unlk	fp
 	rts
 
 L10568:
 	link	fp,#-4
-	clr.w	U101198.l
+	clr.w	U101198
 	move.w	#2,(sp)
-	jsr	L48156.l
+	jsr	L48156
 	unlk	fp
 	rts
 
 L10592:
 	link	fp,#-4
-	move.w	U101046.l,(sp)
-	move.w	U98398.l,-(sp)
-	jsr	L66654.l
+	move.w	U101046,(sp)
+	move.w	U98398,-(sp)
+	jsr	L66654
 	addq.l	#2,sp
-	move.w	d0,U98398.l
+	move.w	d0,U98398
 	unlk	fp
 	rts
 
 L10626:
 	link	fp,#-4
-	move.w	U98398.l,(sp)
-	move.w	U101046.l,-(sp)
-	jsr	L65496.l
+	move.w	U98398,(sp)
+	move.w	U101046,-(sp)
+	jsr	L65496
 	addq.l	#2,sp
-	move.w	d0,U98398.l
+	move.w	d0,U98398
 	unlk	fp
 	rts
 
 L10660:
 	link	fp,#-4
-	jsr	L61884.l
+	jsr	L61884
 	tst.w	d0
 	beq.s	L10688
-	move.w	U100736.l,(sp)
-	jsr	L64090.l
+	move.w	U100736,(sp)
+	jsr	L64090
 	bra.s	L10694
 
 L10688:
-	jsr	L15622.l
+	jsr	L15622
 L10694:
 	move.l	#L10592,(sp)
 	bsr  	L10816
 	move.l	#L10626,(sp)
 	bsr.s	L10816
-	jsr	L64180.l
-	tst.w	U98398.l
+	jsr	L64180
+	tst.w	U98398
 	beq.s	L10736
 	move.w	#1,(sp)
-	jsr	L48084.l
+	jsr	L48084
 L10736:
-	jsr	L61834.l
+	jsr	L61834
 	unlk	fp
 	rts
 
 L10746:
 	link	fp,#-4
-	jsr	L61884.l
+	jsr	L61884
 	tst.w	d0
 	beq.s	L10768
-	clr.w	U98398.l
+	clr.w	U98398
 	bra.s	L10788
 
 L10768:
-	jsr	L15622.l
+	jsr	L15622
 	move.l	#L10592,(sp)
 	bsr.s	L10816
-	jsr	L64180.l
+	jsr	L64180
 L10788:
-	tst.w	U98398.l
+	tst.w	U98398
 	bne.s	L10806
 	move.w	#1,(sp)
-	jsr	L48156.l
+	jsr	L48156
 L10806:
-	jsr	L61834.l
+	jsr	L61834
 	unlk	fp
 	rts
 
 L10816:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
-	jsr	L64160.l
+	jsr	L64160
 	move.w	d0,d7
 	bra.s	L10864
 
 L10834:
 	move.w	d7,(sp)
-	jsr	L358.l
-	move.w	d0,U101046.l
+	jsr	L358
+	move.w	d0,U101046
 	movea.l	8(fp),a0
 	jsr	(a0)
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d7
 L10864:
 	tst.w	d7
@@ -3970,16 +3970,16 @@ L10864:
 
 L10878:
 	link	fp,#-4
-	jsr	L61592.l
-	jsr	L61206.l
-	jsr	L64160.l
+	jsr	L61592
+	jsr	L61206
+	jsr	L64160
 	move.w	d0,(sp)
-	move.w	U101046.l,-(sp)
+	move.w	U101046,-(sp)
 	bsr  	L11134
 	addq.l	#2,sp
-	jsr	L64224.l
+	jsr	L64224
 	move.w	d0,(sp)
-	jsr	L55654.l
+	jsr	L55654
 	unlk	fp
 	rts
 
@@ -3987,23 +3987,23 @@ L10932:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
 	move.w	#1,(sp)
-	jsr	L61064.l
+	jsr	L61064
 	move.w	d0,d7
 	bra.s	L10974
 
 L10954:
-	jsr	L61500.l
+	jsr	L61500
 	clr.w	(sp)
-	move.w	U101046.l,-(sp)
+	move.w	U101046,-(sp)
 	bsr  	L11782
 	addq.l	#2,sp
 L10974:
 	move.w	d7,(sp)
-	jsr	L61098.l
+	jsr	L61098
 	subq.w	#1,d7
 	tst.w	d0
 	beq.s	L10954
-	jsr	L61834.l
+	jsr	L61834
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
 	unlk	fp
@@ -4011,14 +4011,14 @@ L10974:
 
 L11004:
 	link	fp,#-4
-	jsr	L61500.l
-	move.w	U101046.l,(sp)
+	jsr	L61500
+	move.w	U101046,(sp)
 	bsr  	L11848
 	tst.w	d0
 	bne.s	L11056
-	move.w	U98718.l,(sp)
-	move.w	U101046.l,-(sp)
-	jsr	L65948.l
+	move.w	U98718,(sp)
+	move.w	U101046,-(sp)
+	jsr	L65948
 	addq.l	#2,sp
 	tst.w	d0
 	bne.s	L11056
@@ -4028,24 +4028,24 @@ L11004:
 L11056:
 	move.w	#1,(sp)
 L11060:
-	jsr	L60886.l
+	jsr	L60886
 	unlk	fp
 	rts
 
 L11070:
 	link	fp,#-4
-	jsr	L61500.l
-	move.w	U101046.l,(sp)
-	jsr	L60254.l
+	jsr	L61500
+	move.w	U101046,(sp)
+	jsr	L60254
 	unlk	fp
 	rts
 
 L11096:
 	link	fp,#-4
-	jsr	L61572.l
-	jsr	L61500.l
-	move.w	U101046.l,(sp)
-	jsr	L64224.l
+	jsr	L61572
+	jsr	L61500
+	move.w	U101046,(sp)
+	jsr	L64224
 	move.w	d0,-(sp)
 	bsr.s	L11134
 	addq.l	#2,sp
@@ -4059,30 +4059,30 @@ L11134:
 	move.w	10(fp),d6
 	move.w	d6,(sp)
 	bsr  	L11848
-	move.w	d0,U91952.l
+	move.w	d0,U91952
 	bne.s	L11212
 	move.w	d7,(sp)
-	jsr	L64090.l
+	jsr	L64090
 	move.w	d6,(sp)
-	jsr	L64090.l
+	jsr	L64090
 	move.w	d7,(sp)
-	move.w	U98718.l,-(sp)
+	move.w	U98718,-(sp)
 	move.w	d6,-(sp)
-	jsr	L66062.l
+	jsr	L66062
 	addq.l	#4,sp
-	jsr	L64180.l
-	jsr	L64180.l
+	jsr	L64180
+	jsr	L64180
 	bra.s	L11228
 
 L11212:
 	move.w	d7,(sp)
-	move.w	U91952.l,-(sp)
-	jsr	L65226.l
+	move.w	U91952,-(sp)
+	jsr	L65226
 	addq.l	#2,sp
 L11228:
-	tst.w	U101198.l
+	tst.w	U101198
 	beq.s	L11296
-	jsr	L60968.l
+	jsr	L60968
 	move.w	d7,(sp)
 	move.l	#L55354,-(sp)
 	clr.l	d0
@@ -4091,13 +4091,13 @@ L11228:
 	asl.l	d1,d0
 	move.l	d0,-(sp)
 	move.l	#L54682,-(sp)
-	move.l	T87282.l,-(sp)
-	jsr	L54390.l
+	move.l	T87282,-(sp)
+	jsr	L54390
 	adda.l	#16,sp
-	jsr	L74840.l
-	jsr	L47940.l
+	jsr	L74840
+	jsr	L47940
 L11296:
-	jsr	L61834.l
+	jsr	L61834
 	tst.l	(sp)+
 	movem.l	(sp)+,d6-d7
 	unlk	fp
@@ -4105,79 +4105,79 @@ L11296:
 
 L11312:
 	link	fp,#-4
-	jsr	L61592.l
-	jsr	L61500.l
-	move.w	U101046.l,(sp)
-	jsr	L64224.l
+	jsr	L61592
+	jsr	L61500
+	move.w	U101046,(sp)
+	jsr	L64224
 	move.w	d0,-(sp)
-	jsr	L66008.l
+	jsr	L66008
 	addq.l	#2,sp
-	move.w	d0,U101046.l
+	move.w	d0,U101046
 	unlk	fp
 	rts
 
 L11360:
 	link	fp,#-4
-	jsr	L61500.l
-	move.w	U101046.l,(sp)
-	jsr	L66356.l
-	move.w	d0,U101046.l
+	jsr	L61500
+	move.w	U101046,(sp)
+	jsr	L66356
+	move.w	d0,U101046
 	unlk	fp
 	rts
 
 L11392:
 	link	fp,#-4
-	jsr	L61592.l
-	jsr	L61592.l
-	jsr	L61294.l
+	jsr	L61592
+	jsr	L61592
+	jsr	L61294
 	move.w	d0,(sp)
-	jsr	L64160.l
+	jsr	L64160
 	move.w	d0,-(sp)
 	move.w	#1,-(sp)
-	jsr	L64352.l
+	jsr	L64352
 	addq.l	#2,sp
 	move.w	d0,-(sp)
-	jsr	L66062.l
+	jsr	L66062
 	addq.l	#4,sp
-	jsr	L64180.l
-	jsr	L64180.l
-	jsr	L61834.l
+	jsr	L64180
+	jsr	L64180
+	jsr	L61834
 	unlk	fp
 	rts
 
 L11468:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
-	jsr	L15576.l
-	jsr	L64732.l
+	jsr	L15576
+	jsr	L64732
 	move.w	#1,(sp)
-	jsr	L57456.l
-	jsr	L64160.l
+	jsr	L57456
+	jsr	L64160
 	move.w	d0,d7
 	bra  	L11650
 
 L11510:
 	move.w	d7,(sp)
-	jsr	L358.l
+	jsr	L358
 	move.w	d0,(sp)
-	jsr	L57838.l
+	jsr	L57838
 	bra.s	L11622
 
 L11528:
-	jsr	L57986.l
+	jsr	L57986
 	tst.w	d0
 	bne.s	L11622
-	jsr	L74840.l
-	move.w	U101182.l,(sp)
+	jsr	L74840
+	move.w	U101182,(sp)
 	move.l	#L55354,-(sp)
 	clr.l	d0
-	move.w	U101490.l,d0
+	move.w	U101490,d0
 	moveq	#16,d1
 	asl.l	d1,d0
 	move.l	d0,-(sp)
 	move.l	#L55354,-(sp)
 	move.w	d7,-(sp)
-	jsr	L358.l
+	jsr	L358
 	addq.l	#2,sp
 	swap	d0
 	clr.w	d0
@@ -4186,23 +4186,23 @@ L11528:
 	asl.l	d1,d0
 	move.l	d0,-(sp)
 	move.l	#L55092,-(sp)
-	move.l	T87310.l,-(sp)
-	jsr	L54390.l
+	move.l	T87310,-(sp)
+	jsr	L54390
 	adda.l	#24,sp
 L11622:
-	jsr	L57902.l
+	jsr	L57902
 	tst.w	d0
 	bne.s	L11528
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d7
 	move.w	d7,(sp)
-	jsr	L64276.l
+	jsr	L64276
 L11650:
 	tst.w	d7
 	bne  	L11510
-	jsr	L61834.l
-	jsr	L64180.l
+	jsr	L61834
+	jsr	L64180
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
 	unlk	fp
@@ -4210,28 +4210,28 @@ L11650:
 
 L11678:
 	link	fp,#-4
-	jsr	L61592.l
-	jsr	L61500.l
-	move.w	U101046.l,(sp)
-	jsr	L64224.l
+	jsr	L61592
+	jsr	L61500
+	move.w	U101046,(sp)
+	jsr	L64224
 	move.w	d0,-(sp)
-	jsr	L66244.l
+	jsr	L66244
 	addq.l	#2,sp
-	jsr	L61834.l
+	jsr	L61834
 	unlk	fp
 	rts
 
 L11726:
 	link	fp,#-4
-	jsr	L61592.l
-	jsr	L15576.l
-	jsr	L64732.l
+	jsr	L61592
+	jsr	L15576
+	jsr	L64732
 	move.w	#2,(sp)
-	jsr	L64352.l
+	jsr	L64352
 	move.w	d0,(sp)
-	jsr	L57456.l
-	jsr	L64764.l
-	jsr	L64180.l
+	jsr	L57456
+	jsr	L64764
+	jsr	L64180
 	unlk	fp
 	rts
 
@@ -4239,40 +4239,40 @@ L11782:
 	link	fp,#-4
 	move.w	10(fp),(sp)
 	move.w	8(fp),-(sp)
-	jsr	L65496.l
+	jsr	L65496
 	addq.l	#2,sp
 	move.w	d0,(sp)
-	jsr	L64090.l
-	move.w	U101474.l,(sp)
-	jsr	L64160.l
+	jsr	L64090
+	move.w	U101474,(sp)
+	jsr	L64160
 	move.w	d0,-(sp)
-	jsr	L65496.l
+	jsr	L65496
 	addq.l	#2,sp
-	move.w	d0,U101474.l
-	jsr	L64180.l
+	move.w	d0,U101474
+	jsr	L64180
 	unlk	fp
 	rts
 
 L11848:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
-	move.w	U101474.l,d7
+	move.w	U101474,d7
 	bra.s	L11906
 
 L11864:
 	move.w	d7,(sp)
-	jsr	L358.l
+	jsr	L358
 	move.w	d0,(sp)
-	jsr	L358.l
+	jsr	L358
 	cmp.w	8(fp),d0
 	bne.s	L11896
 	move.w	d7,(sp)
-	jsr	L358.l
+	jsr	L358
 	bra.s	L11912
 
 L11896:
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d7
 L11906:
 	tst.w	d7
@@ -4287,41 +4287,41 @@ L11912:
 L11922:
 	link	fp,#-4
 	move.w	#2,(sp)
-	jsr	L64300.l
-	move.w	U100738.l,(sp)
-	jsr	L57456.l
-	move.w	U100738.l,(sp)
-	jsr	L56100.l
+	jsr	L64300
+	move.w	U100738,(sp)
+	jsr	L57456
+	move.w	U100738,(sp)
+	jsr	L56100
 	unlk	fp
 	rts
 
 L11964:
 	link	fp,#-4
-	jsr	L61534.l
-	jsr	L61294.l
+	jsr	L61534
+	jsr	L61294
 	move.w	d0,(sp)
-	jsr	L65266.l
+	jsr	L65266
 	tst.w	d0
 	beq.s	L11998
-	jsr	L67118.l
+	jsr	L67118
 L11998:
-	move.w	U101046.l,(sp)
-	jsr	L358.l
+	move.w	U101046,(sp)
+	jsr	L358
 	move.w	d0,(sp)
 	bsr.s	L12082
-	move.w	U101046.l,(sp)
-	jsr	L378.l
+	move.w	U101046,(sp)
+	jsr	L378
 	move.w	d0,(sp)
 	bsr  	L12154
-	jsr	L61804.l
-	move.w	U101046.l,(sp)
-	move.w	U98716.l,-(sp)
-	jsr	L64160.l
+	jsr	L61804
+	move.w	U101046,(sp)
+	move.w	U98716,-(sp)
+	jsr	L64160
 	move.w	d0,-(sp)
-	jsr	L66062.l
+	jsr	L66062
 	addq.l	#4,sp
-	jsr	L64180.l
-	jsr	L61834.l
+	jsr	L64180
+	jsr	L61834
 	unlk	fp
 	rts
 
@@ -4330,20 +4330,20 @@ L12082:
 	movem.l	d6-d7,-(sp)
 	move.w	8(fp),d7
 	move.w	d7,(sp)
-	jsr	L65322.l
+	jsr	L65322
 	tst.w	d0
 	beq.s	L12112
-	jsr	L67118.l
+	jsr	L67118
 L12112:
 	bra.s	L12140
 
 L12114:
 	move.w	d7,(sp)
-	jsr	L358.l
+	jsr	L358
 	move.w	d0,(sp)
-	jsr	L62492.l
+	jsr	L62492
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d7
 L12140:
 	tst.w	d7
@@ -4361,15 +4361,15 @@ L12154:
 
 L12168:
 	move.w	d7,(sp)
-	jsr	L358.l
+	jsr	L358
 	move.w	d0,(sp)
-	jsr	L65266.l
+	jsr	L65266
 	tst.w	d0
 	beq.s	L12194
-	jsr	L67118.l
+	jsr	L67118
 L12194:
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d7
 L12204:
 	tst.w	d7
@@ -4381,34 +4381,34 @@ L12204:
 
 L12218:
 	link	fp,#-4
-	jsr	L61500.l
+	jsr	L61500
 	bsr  	L13392
-	move.w	d0,U101046.l
+	move.w	d0,U101046
 	unlk	fp
 	rts
 
 L12242:
 	link	fp,#-4
-	jsr	L64160.l
+	jsr	L64160
 	move.w	d0,(sp)
 	move.w	8(fp),-(sp)
-	jsr	L65496.l
+	jsr	L65496
 	addq.l	#2,sp
 	move.w	d0,(sp)
-	jsr	L64276.l
+	jsr	L64276
 	unlk	fp
 	rts
 
 L12278:
 	link	fp,#-4
-	jsr	L61500.l
-	jsr	L64732.l
+	jsr	L61500
+	jsr	L64732
 	clr.w	(sp)
-	move.w	U101046.l,-(sp)
+	move.w	U101046,-(sp)
 	bsr.s	L12322
 	addq.l	#2,sp
-	jsr	L64180.l
-	jsr	L61834.l
+	jsr	L64180
+	jsr	L61834
 	unlk	fp
 	rts
 
@@ -4416,9 +4416,9 @@ L12322:
 	link	fp,#-2
 	movem.l	d5-d7,-(sp)
 	move.w	8(fp),d7
-	move.w	U98716.l,(sp)
+	move.w	U98716,(sp)
 	move.w	d7,-(sp)
-	jsr	L66008.l
+	jsr	L66008
 	addq.l	#2,sp
 	move.w	d0,d6
 	beq  	L12480
@@ -4428,16 +4428,16 @@ L12322:
 	addq.l	#2,sp
 	tst.w	d0
 	bne.s	L12480
-	jsr	L74840.l
+	jsr	L74840
 	move.w	10(fp),d0
 	asl.w	#1,d0
 	move.w	d0,(sp)
-	jsr	L76954.l
+	jsr	L76954
 	move.w	d6,(sp)
 	move.w	d7,-(sp)
-	jsr	L55502.l
+	jsr	L55502
 	addq.l	#2,sp
-	jsr	L56040.l
+	jsr	L56040
 	move.w	10(fp),(sp)
 	addq.w	#1,(sp)
 	move.w	d7,-(sp)
@@ -4448,17 +4448,17 @@ L12322:
 	bsr  	L12242
 	tst.w	-2(fp)
 	bne.s	L12480
-	jsr	L74764.l
-	jsr	L64732.l
+	jsr	L74764
+	jsr	L64732
 	move.w	10(fp),(sp)
 	addq.w	#1,(sp)
 	move.w	d6,-(sp)
-	jsr	L378.l
+	jsr	L378
 	addq.l	#2,sp
 	move.w	d0,-(sp)
 	bsr.s	L12490
 	addq.l	#2,sp
-	jsr	L64180.l
+	jsr	L64180
 L12480:
 	tst.l	(sp)+
 	movem.l	(sp)+,d6-d7
@@ -4470,7 +4470,7 @@ L12490:
 	movem.l	d5-d7,-(sp)
 	move.w	8(fp),d7
 	move.w	d7,(sp)
-	jsr	L65266.l
+	jsr	L65266
 	tst.w	d0
 	beq.s	L12528
 	move.w	10(fp),(sp)
@@ -4486,13 +4486,13 @@ L12528:
 L12532:
 	move.w	10(fp),(sp)
 	move.w	d6,-(sp)
-	jsr	L358.l
+	jsr	L358
 	addq.l	#2,sp
 	move.w	d0,-(sp)
 	bsr.s	L12490
 	addq.l	#2,sp
 	move.w	d6,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d6
 L12562:
 	tst.w	d6
@@ -4511,13 +4511,13 @@ L12576:
 
 L12590:
 	move.w	d7,(sp)
-	jsr	L64352.l
+	jsr	L64352
 	move.w	d0,d6
 	bra.s	L12630
 
 L12602:
 	move.w	d6,(sp)
-	jsr	L358.l
+	jsr	L358
 	cmp.w	8(fp),d0
 	bne.s	L12620
 	moveq	#1,d0
@@ -4525,7 +4525,7 @@ L12602:
 
 L12620:
 	move.w	d6,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d6
 L12630:
 	tst.w	d6
@@ -4545,58 +4545,58 @@ L12644:
 L12654:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
-	clr.w	U100674.l
-	move.w	U100736.l,d7
+	clr.w	U100674
+	move.w	U100736,d7
 	bra.s	L12718
 
 L12676:
-	move.w	U100674.l,(sp)
+	move.w	U100674,(sp)
 	move.w	d7,-(sp)
-	jsr	L358.l
+	jsr	L358
 	addq.l	#2,sp
 	move.w	d0,-(sp)
-	jsr	L65496.l
+	jsr	L65496
 	addq.l	#2,sp
-	move.w	d0,U100674.l
+	move.w	d0,U100674
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d7
 L12718:
 	tst.w	d7
 	bne.s	L12676
-	jsr	L64732.l
-	move.w	U100736.l,d7
+	jsr	L64732
+	move.w	U100736,d7
 	bra.s	L12798
 
 L12736:
-	move.w	U98716.l,(sp)
+	move.w	U98716,(sp)
 	move.w	d7,-(sp)
-	jsr	L358.l
+	jsr	L358
 	addq.l	#2,sp
 	move.w	d0,-(sp)
-	jsr	L66008.l
+	jsr	L66008
 	addq.l	#2,sp
 	move.w	d0,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,(sp)
 	move.w	d7,-(sp)
-	jsr	L358.l
+	jsr	L358
 	addq.l	#2,sp
 	move.w	d0,-(sp)
 	bsr.s	L12840
 	addq.l	#2,sp
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d7
 L12798:
 	tst.w	d7
 	bne.s	L12736
-	jsr	L64180.l
+	jsr	L64180
 	clr.w	(sp)
-	move.w	U100674.l,-(sp)
-	jsr	L56676.l
+	move.w	U100674,-(sp)
+	jsr	L56676
 	addq.l	#2,sp
-	jsr	L61834.l
+	jsr	L61834
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
 	unlk	fp
@@ -4607,22 +4607,22 @@ L12840:
 	movem.l	d5-d7,-(sp)
 	move.w	10(fp),d7
 	move.w	d7,(sp)
-	jsr	L65726.l
+	jsr	L65726
 	tst.w	d0
 	beq.s	L12956
-	move.w	U98716.l,(sp)
+	move.w	U98716,(sp)
 	move.w	d7,-(sp)
-	jsr	L66008.l
+	jsr	L66008
 	addq.l	#2,sp
 	move.w	d0,d6
 	beq.s	L12956
 	cmp.w	8(fp),d7
 	beq.s	L12912
 	move.w	d7,(sp)
-	move.w	U100674.l,-(sp)
-	jsr	L66654.l
+	move.w	U100674,-(sp)
+	jsr	L66654
 	addq.l	#2,sp
-	move.w	d0,U100674.l
+	move.w	d0,U100674
 L12912:
 	move.w	#1,(sp)
 	move.w	d7,-(sp)
@@ -4632,30 +4632,30 @@ L12912:
 	bne.s	L13010
 	move.w	d7,(sp)
 	bsr  	L12242
-	jsr	L74764.l
+	jsr	L74764
 	move.w	d6,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,(sp)
 	move.w	d7,-(sp)
 	bsr.s	L12840
 	addq.l	#2,sp
 L12956:
 	move.w	d7,(sp)
-	jsr	L65266.l
+	jsr	L65266
 	tst.w	d0
 	bne.s	L13010
 	bra.s	L13006
 
 L12970:
-	jsr	L74764.l
+	jsr	L74764
 	move.w	d7,(sp)
-	jsr	L358.l
+	jsr	L358
 	move.w	d0,(sp)
 	move.w	8(fp),-(sp)
 	bsr  	L12840
 	addq.l	#2,sp
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d7
 L13006:
 	tst.w	d7
@@ -4669,42 +4669,42 @@ L13010:
 L13020:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
-	clr.w	U100674.l
-	jsr	L61294.l
+	clr.w	U100674
+	jsr	L61294
 	move.w	d0,(sp)
-	jsr	L65266.l
+	jsr	L65266
 	tst.w	d0
 	beq.s	L13070
-	move.w	U101046.l,(sp)
-	jsr	L65694.l
-	move.w	d0,U101046.l
+	move.w	U101046,(sp)
+	jsr	L65694
+	move.w	d0,U101046
 L13070:
-	jsr	L64732.l
+	jsr	L64732
 	bra  	L13230
 
 L13080:
-	move.w	U100736.l,d7
+	move.w	U100736,d7
 	bra  	L13208
 
 L13090:
-	move.w	U98716.l,(sp)
+	move.w	U98716,(sp)
 	move.w	d7,-(sp)
-	jsr	L358.l
+	jsr	L358
 	addq.l	#2,sp
 	move.w	d0,-(sp)
-	jsr	L66008.l
+	jsr	L66008
 	addq.l	#2,sp
 	move.w	d0,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,(sp)
 	bsr  	L13278
 	tst.w	d0
 	beq.s	L13198
-	move.w	U100674.l,(sp)
-	jsr	L64090.l
+	move.w	U100674,(sp)
+	jsr	L64090
 	move.w	#1,(sp)
 	move.w	d7,-(sp)
-	jsr	L358.l
+	jsr	L358
 	addq.l	#2,sp
 	move.w	d0,-(sp)
 	bsr  	L12576
@@ -4712,31 +4712,31 @@ L13090:
 	tst.w	d0
 	bne.s	L13186
 	move.w	d7,(sp)
-	jsr	L358.l
+	jsr	L358
 	move.w	d0,(sp)
 	bsr  	L12242
 L13186:
-	jsr	L64224.l
-	move.w	d0,U100674.l
+	jsr	L64224
+	move.w	d0,U100674
 L13198:
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d7
 L13208:
 	tst.w	d7
 	bne.s	L13090
-	move.w	U101046.l,(sp)
-	jsr	L378.l
-	move.w	d0,U101046.l
+	move.w	U101046,(sp)
+	jsr	L378
+	move.w	d0,U101046
 L13230:
-	tst.w	U101046.l
+	tst.w	U101046
 	bne  	L13080
-	jsr	L64180.l
+	jsr	L64180
 	clr.w	(sp)
-	move.w	U100674.l,-(sp)
-	jsr	L56676.l
+	move.w	U100674,-(sp)
+	jsr	L56676
 	addq.l	#2,sp
-	jsr	L61834.l
+	jsr	L61834
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
 	unlk	fp
@@ -4747,11 +4747,11 @@ L13278:
 	movem.l	d6-d7,-(sp)
 	move.w	8(fp),d7
 	move.w	d7,(sp)
-	jsr	L65726.l
+	jsr	L65726
 	tst.w	d0
 	beq.s	L13326
-	move.w	U101046.l,(sp)
-	jsr	L358.l
+	move.w	U101046,(sp)
+	jsr	L358
 	cmp.w	d7,d0
 	beq.s	L13322
 	clr.w	d0
@@ -4764,15 +4764,15 @@ L13324:
 
 L13326:
 	move.w	d7,(sp)
-	jsr	L65266.l
+	jsr	L65266
 	tst.w	d0
 	bne.s	L13380
 	bra.s	L13376
 
 L13340:
-	jsr	L74764.l
+	jsr	L74764
 	move.w	d7,(sp)
-	jsr	L358.l
+	jsr	L358
 	move.w	d0,(sp)
 	bsr.s	L13278
 	tst.w	d0
@@ -4782,7 +4782,7 @@ L13340:
 
 L13366:
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d7
 L13376:
 	tst.w	d7
@@ -4797,90 +4797,90 @@ L13382:
 
 L13392:
 	link	fp,#-4
-	move.w	U98716.l,(sp)
-	move.w	U101046.l,-(sp)
-	jsr	L66008.l
+	move.w	U98716,(sp)
+	move.w	U101046,-(sp)
+	jsr	L66008
 	addq.l	#2,sp
 	unlk	fp
 	rts
 
 L13420:
 	link	fp,#-4
-	jsr	L61500.l
+	jsr	L61500
 	bsr.s	L13392
 	move.w	d0,(sp)
-	jsr	L60886.l
+	jsr	L60886
 	unlk	fp
 	rts
 
 L13444:
 	link	fp,#-4
-	move.w	U100736.l,U101046.l
+	move.w	U100736,U101046
 	unlk	fp
 	rts
 
 L13462:
 	link	fp,#-4
-	jsr	L61500.l
-	move.w	U101046.l,(sp)
-	jsr	L65878.l
+	jsr	L61500
+	move.w	U101046,(sp)
+	jsr	L65878
 	move.w	d0,(sp)
-	jsr	L60886.l
+	jsr	L60886
 	unlk	fp
 	rts
 
 L13496:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
-	jsr	L61534.l
-	jsr	L61518.l
-	move.w	U101046.l,(sp)
-	jsr	L65878.l
+	jsr	L61534
+	jsr	L61518
+	move.w	U101046,(sp)
+	jsr	L65878
 	tst.w	d0
 	beq.s	L13540
-	move.w	U100742.l,d7
+	move.w	U100742,d7
 	bra.s	L13562
 
 L13540:
 	bsr  	L13392
 	tst.w	d0
 	beq.s	L13556
-	move.w	U98716.l,d7
+	move.w	U98716,d7
 	bra.s	L13562
 
 L13556:
-	jsr	L67118.l
+	jsr	L67118
 L13562:
-	jsr	L61804.l
-	move.w	U100738.l,(sp)
-	move.w	U101046.l,-(sp)
-	jsr	L66008.l
+	jsr	L61804
+	move.w	U100738,(sp)
+	move.w	U101046,-(sp)
+	jsr	L66008
 	addq.l	#2,sp
 	tst.w	d0
 	beq.s	L13636
-	move.w	U100738.l,(sp)
-	move.w	U101046.l,-(sp)
-	jsr	L66008.l
+	move.w	U100738,(sp)
+	move.w	U101046,-(sp)
+	jsr	L66008
 	addq.l	#2,sp
 	move.w	d0,(sp)
-	move.w	U100738.l,-(sp)
-	jsr	L64160.l
+	move.w	U100738,-(sp)
+	jsr	L64160
 	move.w	d0,-(sp)
-	jsr	L66062.l
+	jsr	L66062
 	addq.l	#4,sp
 L13636:
 	move.w	d7,(sp)
-	move.w	U101046.l,-(sp)
-	jsr	L66008.l
+	move.w	U101046,-(sp)
+	jsr	L66008
 	addq.l	#2,sp
 	move.w	d0,(sp)
 	move.w	d7,-(sp)
-	jsr	L64160.l
+	jsr	L64160
 	move.w	d0,-(sp)
-	jsr	L66062.l
+	jsr	L66062
 	addq.l	#4,sp
-	jsr	L64180.l
-	jsr	L61834.l
+	jsr	L64180
+	jsr	L61834
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
 	unlk	fp
@@ -4892,31 +4892,31 @@ L13694:
 	bra.s	L13744
 
 L13702:
-	jsr	L64746.l
+	jsr	L64746
 	bsr.s	L13764
-	move.w	U101046.l,(sp)
-	jsr	L66626.l
-	jsr	L64224.l
+	move.w	U101046,(sp)
+	jsr	L66626
+	jsr	L64224
 	move.w	d0,(sp)
-	move.w	U101046.l,-(sp)
-	jsr	L66394.l
+	move.w	U101046,-(sp)
+	jsr	L66394
 	addq.l	#2,sp
 L13744:
-	jsr	L61884.l
+	jsr	L61884
 	tst.w	d0
 	beq.s	L13702
-	jsr	L61834.l
+	jsr	L61834
 	unlk	fp
 	rts
 
 L13764:
 	link	fp,#-4
-	jsr	L61190.l
-	move.w	U101046.l,(sp)
-	jsr	L66524.l
+	jsr	L61190
+	move.w	U101046,(sp)
+	jsr	L66524
 	tst.w	d0
 	bne.s	L13796
-	jsr	L67118.l
+	jsr	L67118
 L13796:
 	unlk	fp
 	rts
@@ -4924,120 +4924,120 @@ L13796:
 L13800:
 	link	fp,#-4
 	bsr  	L15576
-	jsr	L64714.l
-	jsr	L56498.l
-	jsr	L56230.l
+	jsr	L64714
+	jsr	L56498
+	jsr	L56230
 	move.w	#1,(sp)
-	jsr	L64224.l
+	jsr	L64224
 	move.w	d0,-(sp)
-	jsr	L56676.l
+	jsr	L56676
 	addq.l	#2,sp
-	jsr	L56362.l
+	jsr	L56362
 	move.w	#2,(sp)
-	jsr	L64224.l
+	jsr	L64224
 	move.w	d0,-(sp)
-	jsr	L56676.l
+	jsr	L56676
 	addq.l	#2,sp
-	jsr	L56572.l
-	jsr	L56386.l
+	jsr	L56572
+	jsr	L56386
 	unlk	fp
 	rts
 
 L13888:
 	link	fp,#-4
 	bsr  	L15576
-	jsr	L56362.l
+	jsr	L56362
 	move.w	#2,(sp)
-	jsr	L64224.l
+	jsr	L64224
 	move.w	d0,-(sp)
-	jsr	L56650.l
+	jsr	L56650
 	addq.l	#2,sp
-	jsr	L56386.l
+	jsr	L56386
 	unlk	fp
 	rts
 
 L13932:
 	link	fp,#-4
 	bsr  	L15576
-	jsr	L56230.l
+	jsr	L56230
 	move.w	#1,(sp)
-	jsr	L64224.l
+	jsr	L64224
 	move.w	d0,-(sp)
-	jsr	L56650.l
+	jsr	L56650
 	addq.l	#2,sp
-	jsr	L56386.l
+	jsr	L56386
 	unlk	fp
 	rts
 
 L13976:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
-	jsr	L61884.l
+	jsr	L61884
 	tst.w	d0
 	beq.s	L14068
-	tst.w	U100748.l
+	tst.w	U100748
 	beq.s	L14038
 	move.w	#1,(sp)
-	move.w	U100748.l,-(sp)
-	jsr	L65694.l
+	move.w	U100748,-(sp)
+	jsr	L65694
 	addq.l	#2,sp
 	move.w	d0,-(sp)
-	jsr	L56650.l
+	jsr	L56650
 	addq.l	#2,sp
-	clr.w	U100748.l
+	clr.w	U100748
 	bra.s	L14064
 
 L14038:
-	tst.w	U98712.l
+	tst.w	U98712
 	beq.s	L14058
-	move.l	U101102.l,U99196.l
+	move.l	U101102,U99196
 	bra.s	L14064
 
 L14058:
-	jsr	L69744.l
+	jsr	L69744
 L14064:
 	bra  	L14200
 
 L14068:
 	bsr  	L15526
-	jsr	L64160.l
+	jsr	L64160
 	move.w	d0,d7
 	bra.s	L14144
 
 L14082:
 	move.w	d7,(sp)
-	jsr	L358.l
-	move.w	d0,U101046.l
+	jsr	L358
+	move.w	d0,U101046
 	move.w	d0,(sp)
-	jsr	L62492.l
-	move.w	U98718.l,(sp)
-	move.w	U101046.l,-(sp)
-	jsr	L65948.l
+	jsr	L62492
+	move.w	U98718,(sp)
+	move.w	U101046,-(sp)
+	jsr	L65948
 	addq.l	#2,sp
 	tst.w	d0
 	bne.s	L14134
-	jsr	L61710.l
+	jsr	L61710
 L14134:
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d7
 L14144:
 	tst.w	d7
 	bne.s	L14082
-	jsr	L56498.l
+	jsr	L56498
 	move.w	#1,(sp)
-	jsr	L64160.l
+	jsr	L64160
 	move.w	d0,-(sp)
-	jsr	L56676.l
+	jsr	L56676
 	addq.l	#2,sp
 	move.w	#2,(sp)
-	jsr	L64224.l
+	jsr	L64224
 	move.w	d0,-(sp)
-	jsr	L56676.l
+	jsr	L56676
 	addq.l	#2,sp
-	jsr	L56572.l
+	jsr	L56572
 L14200:
-	jsr	L56386.l
+	jsr	L56386
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
 	unlk	fp
@@ -5049,10 +5049,10 @@ L14216:
 	bra.s	L14252
 
 L14226:
-	move.w	U100984.l,(sp)
-	move.w	U100994.l,-(sp)
-	move.w	U101046.l,-(sp)
-	jsr	L66062.l
+	move.w	U100984,(sp)
+	move.w	U100994,-(sp)
+	move.w	U101046,-(sp)
+	jsr	L66062
 	addq.l	#4,sp
 L14252:
 	bsr  	L15814
@@ -5067,9 +5067,9 @@ L14264:
 	bra.s	L14294
 
 L14274:
-	move.w	U100994.l,(sp)
-	move.w	U101046.l,-(sp)
-	jsr	L66244.l
+	move.w	U100994,(sp)
+	move.w	U101046,-(sp)
+	jsr	L66244
 	addq.l	#2,sp
 L14294:
 	bsr  	L15814
@@ -5080,9 +5080,9 @@ L14294:
 
 L14306:
 	link	fp,#-4
-	jsr	L74840.l
-	jsr	L76978.l
-	jsr	L76978.l
+	jsr	L74840
+	jsr	L76978
+	jsr	L76978
 	unlk	fp
 	rts
 
@@ -5090,35 +5090,35 @@ L14332:
 	link	fp,#-4
 	bsr.s	L14306
 	move.w	#34,(sp)
-	jsr	L74948.l
-	move.w	U100668.l,(sp)
-	jsr	L54682.l
+	jsr	L74948
+	move.w	U100668,(sp)
+	jsr	L54682
 	move.l	8(fp),(sp)
-	jsr	L74902.l
+	jsr	L74902
 	unlk	fp
 	rts
 
 L14374:
 	link	fp,#0
 	movem.l	d5-d7,-(sp)
-	jsr	L61884.l
+	jsr	L61884
 	tst.w	d0
 	beq.s	L14454
-	jsr	L64732.l
-	jsr	L57504.l
+	jsr	L64732
+	jsr	L57504
 	bra.s	L14442
 
 L14406:
-	move.w	U100648.l,(sp)
-	move.w	U100668.l,-(sp)
-	jsr	L66008.l
+	move.w	U100648,(sp)
+	move.w	U100668,-(sp)
+	jsr	L66008
 	addq.l	#2,sp
 	tst.w	d0
 	beq.s	L14442
-	move.w	U100668.l,(sp)
-	jsr	L12242.l
+	move.w	U100668,(sp)
+	jsr	L12242
 L14442:
-	jsr	L57542.l
+	jsr	L57542
 	tst.w	d0
 	bne.s	L14406
 	bra.s	L14458
@@ -5129,93 +5129,93 @@ L14458:
 	bra  	L14744
 
 L14462:
-	jsr	L74840.l
-	move.w	U100994.l,(sp)
-	jsr	L64160.l
+	jsr	L74840
+	move.w	U100994,(sp)
+	jsr	L64160
 	move.w	d0,-(sp)
-	jsr	L358.l
+	jsr	L358
 	addq.l	#2,sp
 	move.w	d0,d7
 	move.w	d7,-(sp)
-	jsr	L65948.l
+	jsr	L65948
 	addq.l	#2,sp
 	tst.w	d0
 	beq.s	L14530
 	move.w	d7,(sp)
 	move.l	#L54682,-(sp)
-	move.l	T87198.l,-(sp)
-	jsr	L54390.l
+	move.l	T87198,-(sp)
+	jsr	L54390
 	addq.l	#8,sp
 	bra.s	L14538
 
 L14530:
 	move.w	d7,(sp)
-	jsr	L54682.l
+	jsr	L54682
 L14538:
-	jsr	L57504.l
+	jsr	L57504
 	bra  	L14710
 
 L14548:
-	move.w	U98400.l,(sp)
-	move.w	U100668.l,-(sp)
-	jsr	L66008.l
+	move.w	U98400,(sp)
+	move.w	U100668,-(sp)
+	jsr	L66008
 	addq.l	#2,sp
 	cmp.w	d7,d0
 	bne  	L14710
-	move.w	U98716.l,(sp)
-	move.w	U100668.l,-(sp)
-	jsr	L66008.l
+	move.w	U98716,(sp)
+	move.w	U100668,-(sp)
+	jsr	L66008
 	addq.l	#2,sp
 	move.w	d0,d6
 	beq.s	L14630
 	bsr  	L14306
-	jsr	L57364.l
+	jsr	L57364
 	move.w	d6,(sp)
-	move.w	U100668.l,-(sp)
-	jsr	L55502.l
+	move.w	U100668,-(sp)
+	jsr	L55502
 	addq.l	#2,sp
-	jsr	L56040.l
+	jsr	L56040
 L14630:
-	move.w	U98718.l,(sp)
-	move.w	U100668.l,-(sp)
-	jsr	L66008.l
+	move.w	U98718,(sp)
+	move.w	U100668,-(sp)
+	jsr	L66008
 	addq.l	#2,sp
 	tst.w	d0
 	beq.s	L14664
-	move.l	T87190.l,(sp)
+	move.l	T87190,(sp)
 	bsr  	L14332
 L14664:
-	move.w	U100668.l,(sp)
-	jsr	L57838.l
+	move.w	U100668,(sp)
+	jsr	L57838
 	bra.s	L14700
 
 L14678:
-	jsr	L57986.l
+	jsr	L57986
 	tst.w	d0
 	bne.s	L14700
-	move.l	T87194.l,(sp)
+	move.l	T87194,(sp)
 	bsr  	L14332
 	bra.s	L14710
 
 L14700:
-	jsr	L57902.l
+	jsr	L57902
 	tst.w	d0
 	bne.s	L14678
 L14710:
-	jsr	L57542.l
+	jsr	L57542
 	tst.w	d0
 	bne  	L14548
-	jsr	L64160.l
+	jsr	L64160
 	move.w	d0,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,(sp)
-	jsr	L64276.l
+	jsr	L64276
 L14744:
-	jsr	L64160.l
+	jsr	L64160
 	tst.w	d0
 	bne  	L14462
-	jsr	L64180.l
-	jsr	L61834.l
+	jsr	L64180
+	jsr	L61834
 	tst.l	(sp)+
 	movem.l	(sp)+,d6-d7
 	unlk	fp
@@ -5225,44 +5225,44 @@ L14778:
 	link	fp,#-4
 	bsr  	L15526
 	clr.w	(sp)
-	move.w	U98718.l,-(sp)
-	move.w	U98716.l,-(sp)
+	move.w	U98718,-(sp)
+	move.w	U98716,-(sp)
 	bsr  	L15672
 	addq.l	#4,sp
 	move.w	#1,(sp)
-	jsr	L64160.l
+	jsr	L64160
 	move.w	d0,-(sp)
-	jsr	L56676.l
+	jsr	L56676
 	addq.l	#2,sp
 	move.w	#2,(sp)
-	jsr	L64224.l
+	jsr	L64224
 	move.w	d0,-(sp)
-	jsr	L56676.l
+	jsr	L56676
 	addq.l	#2,sp
-	jsr	L61834.l
+	jsr	L61834
 	unlk	fp
 	rts
 
 L14856:
 	link	fp,#-4
 	bsr  	L15576
-	jsr	L64714.l
+	jsr	L64714
 	bsr  	L15002
 	bsr.s	L14948
-	jsr	L61834.l
+	jsr	L61834
 	unlk	fp
 	rts
 
 L14886:
 	link	fp,#-4
 	bsr  	L15576
-	jsr	L56230.l
+	jsr	L56230
 	clr.w	(sp)
-	jsr	L64224.l
+	jsr	L64224
 	move.w	d0,-(sp)
-	jsr	L56676.l
+	jsr	L56676
 	addq.l	#2,sp
-	jsr	L61834.l
+	jsr	L61834
 	unlk	fp
 	rts
 
@@ -5270,17 +5270,17 @@ L14928:
 	link	fp,#-4
 	bsr  	L15576
 	bsr.s	L14948
-	jsr	L61834.l
+	jsr	L61834
 	unlk	fp
 	rts
 
 L14948:
 	link	fp,#-4
-	jsr	L56362.l
+	jsr	L56362
 	move.w	#2,(sp)
-	jsr	L64224.l
+	jsr	L64224
 	move.w	d0,-(sp)
-	jsr	L56676.l
+	jsr	L56676
 	addq.l	#2,sp
 	unlk	fp
 	rts
@@ -5289,17 +5289,17 @@ L14982:
 	link	fp,#-4
 	bsr  	L15576
 	bsr.s	L15002
-	jsr	L61834.l
+	jsr	L61834
 	unlk	fp
 	rts
 
 L15002:
 	link	fp,#-4
-	jsr	L56230.l
+	jsr	L56230
 	move.w	#1,(sp)
-	jsr	L64224.l
+	jsr	L64224
 	move.w	d0,-(sp)
-	jsr	L56676.l
+	jsr	L56676
 	addq.l	#2,sp
 	unlk	fp
 	rts
@@ -5307,44 +5307,44 @@ L15002:
 L15036:
 	link	fp,#-4
 	bsr  	L15576
-	jsr	L64714.l
-	jsr	L64714.l
+	jsr	L64714
+	jsr	L64714
 	bsr  	L15248
 	bsr  	L15268
-	jsr	L64160.l
+	jsr	L64160
 	tst.w	d0
 	bne.s	L15092
-	jsr	L64732.l
-	move.w	U100648.l,(sp)
-	jsr	L57456.l
+	jsr	L64732
+	move.w	U100648,(sp)
+	jsr	L57456
 L15092:
-	jsr	L64714.l
-	move.w	U100648.l,(sp)
-	jsr	L56100.l
-	jsr	L64732.l
-	move.w	U98400.l,(sp)
-	jsr	L57456.l
-	move.w	U98400.l,(sp)
-	jsr	L56100.l
-	jsr	L61834.l
+	jsr	L64714
+	move.w	U100648,(sp)
+	jsr	L56100
+	jsr	L64732
+	move.w	U98400,(sp)
+	jsr	L57456
+	move.w	U98400,(sp)
+	jsr	L56100
+	jsr	L61834
 	unlk	fp
 	rts
 
 L15150:
 	link	fp,#-4
 	bsr  	L15622
-	jsr	L56070.l
-	jsr	L61834.l
+	jsr	L56070
+	jsr	L61834
 	unlk	fp
 	rts
 
 L15174:
 	link	fp,#-4
 	bsr  	L15526
-	move.w	U98718.l,(sp)
+	move.w	U98718,(sp)
 	bsr  	L15640
-	jsr	L56054.l
-	jsr	L61834.l
+	jsr	L56054
+	jsr	L61834
 	unlk	fp
 	rts
 
@@ -5352,7 +5352,7 @@ L15208:
 	link	fp,#-4
 	bsr  	L15576
 	bsr.s	L15248
-	jsr	L61834.l
+	jsr	L61834
 	unlk	fp
 	rts
 
@@ -5360,55 +5360,55 @@ L15228:
 	link	fp,#-4
 	bsr  	L15576
 	bsr.s	L15268
-	jsr	L61834.l
+	jsr	L61834
 	unlk	fp
 	rts
 
 L15248:
 	link	fp,#-4
-	jsr	L56362.l
-	jsr	L56054.l
+	jsr	L56362
+	jsr	L56054
 	unlk	fp
 	rts
 
 L15268:
 	link	fp,#-4
-	jsr	L56230.l
-	jsr	L56070.l
+	jsr	L56230
+	jsr	L56070
 	unlk	fp
 	rts
 
 L15288:
 	link	fp,#-4
-	jsr	L61592.l
+	jsr	L61592
 	bsr  	L15526
 	move.w	#1,(sp)
-	move.w	U98718.l,-(sp)
-	move.w	U98716.l,-(sp)
+	move.w	U98718,-(sp)
+	move.w	U98716,-(sp)
 	bsr  	L15672
 	addq.l	#4,sp
-	tst.w	U101108.l
+	tst.w	U101108
 	bne.s	L15338
 	clr.w	(sp)
 	bsr.s	L15406
 	bra.s	L15350
 
 L15338:
-	jsr	L64180.l
-	jsr	L64180.l
+	jsr	L64180
+	jsr	L64180
 L15350:
-	jsr	L61834.l
+	jsr	L61834
 	unlk	fp
 	rts
 
 L15360:
 	link	fp,#-4
-	jsr	L61592.l
+	jsr	L61592
 	move.w	#2,(sp)
-	jsr	L64300.l
-	jsr	L56246.l
+	jsr	L64300
+	jsr	L56246
 	move.w	#1,(sp)
-	jsr	L57456.l
+	jsr	L57456
 	move.w	#1,(sp)
 	bsr.s	L15406
 	unlk	fp
@@ -5416,62 +5416,62 @@ L15360:
 
 L15406:
 	link	fp,#-4
-	move.w	U100984.l,(sp)
-	move.w	U100648.l,-(sp)
+	move.w	U100984,(sp)
+	move.w	U100648,-(sp)
 	move.w	#1,-(sp)
-	jsr	L64352.l
+	jsr	L64352
 	addq.l	#2,sp
 	move.w	d0,-(sp)
-	jsr	L66062.l
+	jsr	L66062
 	addq.l	#4,sp
 	bra.s	L15508
 
 L15446:
 	tst.w	8(fp)
 	beq.s	L15476
-	move.w	U98400.l,(sp)
-	move.w	U101046.l,-(sp)
-	jsr	L65948.l
+	move.w	U98400,(sp)
+	move.w	U101046,-(sp)
+	jsr	L65948
 	addq.l	#2,sp
 	tst.w	d0
 	bne.s	L15508
 L15476:
 	move.w	#1,(sp)
-	jsr	L64352.l
+	jsr	L64352
 	move.w	d0,(sp)
-	move.w	U98400.l,-(sp)
-	move.w	U101046.l,-(sp)
-	jsr	L66062.l
+	move.w	U98400,-(sp)
+	move.w	U101046,-(sp)
+	jsr	L66062
 	addq.l	#4,sp
 L15508:
 	bsr  	L15814
 	tst.w	d0
 	bne.s	L15446
-	jsr	L64180.l
+	jsr	L64180
 	unlk	fp
 	rts
 
 L15526:
 	link	fp,#-4
-	jsr	L61294.l
+	jsr	L61294
 	move.w	d0,(sp)
-	jsr	L65266.l
+	jsr	L65266
 	tst.w	d0
 	beq.s	L15566
-	move.w	U101046.l,(sp)
-	jsr	L65694.l
-	move.w	d0,U101046.l
+	move.w	U101046,(sp)
+	jsr	L65694
+	move.w	d0,U101046
 L15566:
-	jsr	L64746.l
+	jsr	L64746
 	unlk	fp
 	rts
 
 L15576:
 	link	fp,#-4
-	jsr	L61884.l
+	jsr	L61884
 	tst.w	d0
 	beq.s	L15598
-	jsr	L64732.l
+	jsr	L64732
 	bra.s	L15600
 
 L15598:
@@ -5483,7 +5483,7 @@ L15600:
 L15604:
 	link	fp,#-4
 	bsr.s	L15526
-	move.w	U100648.l,(sp)
+	move.w	U100648,(sp)
 	bsr.s	L15640
 	unlk	fp
 	rts
@@ -5491,7 +5491,7 @@ L15604:
 L15622:
 	link	fp,#-4
 	bsr.s	L15526
-	move.w	U98716.l,(sp)
+	move.w	U98716,(sp)
 	bsr.s	L15640
 	unlk	fp
 	rts
@@ -5515,38 +5515,38 @@ L15672:
 	movem.l	d4-d7,-(sp)
 	move.w	8(fp),d7
 	move.w	10(fp),d6
-	jsr	L64160.l
+	jsr	L64160
 	move.w	d0,d5
 	bra.s	L15800
 
 L15698:
 	move.w	d5,(sp)
-	jsr	L358.l
-	move.w	d0,U101046.l
+	jsr	L358
+	move.w	d0,U101046
 	move.w	d0,(sp)
-	jsr	L62492.l
-	jsr	L64746.l
+	jsr	L62492
+	jsr	L64746
 	tst.w	12(fp)
 	beq.s	L15754
-	move.w	U101046.l,(sp)
-	jsr	L57838.l
-	jsr	L57808.l
+	move.w	U101046,(sp)
+	jsr	L57838
+	jsr	L57808
 	tst.w	d0
 	beq.s	L15784
 L15754:
 	move.w	d7,(sp)
-	jsr	L57428.l
+	jsr	L57428
 	tst.w	d0
 	bne.s	L15784
 	move.w	d6,(sp)
-	jsr	L57428.l
+	jsr	L57428
 	tst.w	d0
 	bne.s	L15784
-	jsr	L67118.l
+	jsr	L67118
 L15784:
-	jsr	L64180.l
+	jsr	L64180
 	move.w	d5,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d5
 L15800:
 	tst.w	d5
@@ -5558,30 +5558,30 @@ L15800:
 
 L15814:
 	link	fp,#-4
-	jsr	L64160.l
+	jsr	L64160
 	tst.w	d0
 	bne.s	L15844
-	jsr	L64180.l
-	jsr	L61834.l
+	jsr	L64180
+	jsr	L61834
 	clr.w	d0
 	bra.s	L15906
 
 L15844:
-	jsr	L64160.l
+	jsr	L64160
 	move.w	d0,(sp)
-	jsr	L358.l
-	move.w	d0,U101046.l
+	jsr	L358
+	move.w	d0,U101046
 	move.w	d0,(sp)
-	jsr	L65726.l
+	jsr	L65726
 	tst.w	d0
 	bne.s	L15882
-	jsr	L67118.l
+	jsr	L67118
 L15882:
-	jsr	L64160.l
+	jsr	L64160
 	move.w	d0,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,(sp)
-	jsr	L64276.l
+	jsr	L64276
 	moveq	#1,d0
 L15906:
 	unlk	fp
@@ -5589,9 +5589,9 @@ L15906:
 
 L15910:
 	link	fp,#-8
-	jsr	L61476.l
+	jsr	L61476
 	move.l	d0,-(sp)
-	jsr	L81832.l
+	jsr	L81832
 	addq.l	#4,sp
 	move.l	d0,-4(fp)
 	move.l	-4(fp),d0
@@ -5617,82 +5617,82 @@ L15970:
 
 L15980:
 	link	fp,#-4
-	move.w	U101124.l,(sp)
-	jsr	L61658.l
+	move.w	U101124,(sp)
+	jsr	L61658
 	unlk	fp
 	rts
 
 L16000:
 	link	fp,#-8
 	move.l	#-130993,-(sp)
-	jsr	L61476.l
+	jsr	L61476
 	move.l	d0,-4(fp)
 	move.l	d0,-(sp)
-	jsr	L3058.l
+	jsr	L3058
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	bgt.s	L16060
-	jsr	L48234.l
-	jsr	L61834.l
+	jsr	L48234
+	jsr	L61834
 	move.l	-4(fp),d0
 	bra.s	L16066
 
 L16060:
-	jsr	L67118.l
+	jsr	L67118
 L16066:
 	unlk	fp
 	rts
 
 	link	fp,#-4
-	jsr	L61340.l
-	jsr	L62226.l
+	jsr	L61340
+	jsr	L62226
 	unlk	fp
 	rts
 
 L16090:
 	link	fp,#-4
-	jsr	L61312.l
-	move.w	U101046.l,U100896.l
+	jsr	L61312
+	move.w	U101046,U100896
 	unlk	fp
 	rts
 
 L16114:
 	link	fp,#-4
-	tst.w	U100896.l
+	tst.w	U100896
 	bne.s	L16132
-	jsr	L67474.l
+	jsr	L67474
 L16132:
-	move.w	U100896.l,(sp)
-	jsr	L358.l
+	move.w	U100896,(sp)
+	jsr	L358
 	move.w	d0,(sp)
-	jsr	L64090.l
-	move.w	U100896.l,(sp)
-	jsr	L378.l
-	move.w	d0,U100896.l
+	jsr	L64090
+	move.w	U100896,(sp)
+	jsr	L378
+	move.w	d0,U100896
 	unlk	fp
 	rts
 
 L16174:
 	link	fp,#-4
 	bsr.s	L16114
-	jsr	L64160.l
+	jsr	L64160
 	move.w	d0,(sp)
-	jsr	L65356.l
+	jsr	L65356
 	tst.w	d0
 	bne.s	L16236
-	jsr	L64160.l
+	jsr	L64160
 	move.w	d0,(sp)
-	jsr	L61390.l
+	jsr	L61390
 	tst.w	d0
 	beq.s	L16230
-	jsr	L64180.l
-	jsr	L52990.l
+	jsr	L64180
+	jsr	L52990
 	bra.s	L16236
 
 L16230:
-	jsr	L67118.l
+	jsr	L67118
 L16236:
 	unlk	fp
 	rts
@@ -5707,9 +5707,9 @@ L16240:
 
 L16256:
 	link	fp,#-4
-	jsr	L64224.l
+	jsr	L64224
 	move.w	d0,(sp)
-	jsr	L65532.l
+	jsr	L65532
 	unlk	fp
 	rts
 
@@ -5719,7 +5719,7 @@ L16278:
 	bsr.s	L16174
 	bsr.s	L16256
 	move.l	d0,-(sp)
-	jsr	L81832.l
+	jsr	L81832
 	addq.l	#4,sp
 	move.w	d0,d7
 	cmp.w	8(fp),d7
@@ -5727,7 +5727,7 @@ L16278:
 	tst.w	d7
 	bge.s	L16318
 L16312:
-	jsr	L67118.l
+	jsr	L67118
 L16318:
 	move.w	d7,d0
 	tst.l	(sp)+
@@ -5737,18 +5737,18 @@ L16318:
 
 L16330:
 	link	fp,#-4
-	move.l	T85048.l,(sp)
-	move.l	T85048.l,-(sp)
-	jsr	L35228.l
+	move.l	T85048,(sp)
+	move.l	T85048,-(sp)
+	jsr	L35228
 	addq.l	#4,sp
-	move.l	T85048.l,(sp)
-	jsr	L33502.l
+	move.l	T85048,(sp)
+	jsr	L33502
 	unlk	fp
 	rts
 
 L16370:
 	link	fp,#-4
-	move.w	T85006.l,(sp)
+	move.w	T85006,(sp)
 	move.l	#L33736,-(sp)
 	bsr  	L17846
 	addq.l	#4,sp
@@ -5758,158 +5758,158 @@ L16370:
 L16396:
 	link	fp,#-12
 	bsr  	L16240
-	move.l	T85016.l,-(sp)
+	move.l	T85016,-(sp)
 	bsr  	L16256
 	move.l	d0,-4(fp)
 	move.l	d0,-(sp)
-	jsr	L3058.l
+	jsr	L3058
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	bgt.s	L16516
-	move.l	T85016.l,-(sp)
+	move.l	T85016,-(sp)
 	bsr  	L16256
 	move.l	d0,-8(fp)
 	move.l	d0,-(sp)
-	jsr	L3058.l
+	jsr	L3058
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	bgt.s	L16516
-	jsr	L48234.l
-	jsr	L27654.l
+	jsr	L48234
+	jsr	L27654
 	move.l	-4(fp),(sp)
 	move.l	-8(fp),-(sp)
-	jsr	L33794.l
+	jsr	L33794
 	addq.l	#4,sp
-	jsr	L27654.l
+	jsr	L27654
 	bsr  	L18502
 	bra.s	L16522
 
 L16516:
-	jsr	L67118.l
+	jsr	L67118
 L16522:
 	unlk	fp
 	rts
 
 L16526:
 	link	fp,#-8
-	jsr	L61476.l
+	jsr	L61476
 	move.l	d0,-(sp)
-	jsr	L82000.l
+	jsr	L82000
 	addq.l	#4,sp
 	move.l	d0,-4(fp)
-	jsr	L48234.l
+	jsr	L48234
 	move.l	-4(fp),(sp)
-	jsr	L33366.l
+	jsr	L33366
 	bsr  	L18502
 	unlk	fp
 	rts
 
 L16574:
 	link	fp,#-4
-	jsr	L48234.l
-	jsr	L33580.l
-	jsr	L47940.l
+	jsr	L48234
+	jsr	L33580
+	jsr	L47940
 	unlk	fp
 	rts
 
 L16600:
 	link	fp,#-4
-	jsr	L48234.l
-	jsr	L33580.l
-	jsr	L33238.l
+	jsr	L48234
+	jsr	L33580
+	jsr	L33238
 	bsr  	L16330
-	jsr	L33212.l
-	jsr	L47940.l
+	jsr	L33212
+	jsr	L47940
 	unlk	fp
 	rts
 
 L16642:
 	link	fp,#-8
-	jsr	L61476.l
+	jsr	L61476
 	move.l	d0,-4(fp)
-	jsr	L48234.l
+	jsr	L48234
 	move.l	-4(fp),(sp)
-	jsr	L33366.l
+	jsr	L33366
 	bsr  	L18502
 	unlk	fp
 	rts
 
 L16680:
 	link	fp,#-4
-	jsr	L34018.l
+	jsr	L34018
 	move.l	d0,(sp)
-	jsr	L52972.l
-	jsr	L34032.l
+	jsr	L52972
+	jsr	L34032
 	move.l	d0,(sp)
-	jsr	L52972.l
-	jsr	L33566.l
+	jsr	L52972
+	jsr	L33566
 	move.l	d0,(sp)
-	jsr	L52972.l
-	jsr	L33300.l
+	jsr	L52972
+	jsr	L33300
 	movea.w	d0,a0
 	adda.l	a0,a0
 	adda.l	a0,a0
 	movea.l	#T87322,a1
 	move.l	0(a0,a1.l),(sp)
-	jsr	L62056.l
-	jsr	L33352.l
+	jsr	L62056
+	jsr	L33352
 	move.w	d0,(sp)
-	jsr	L53070.l
-	jsr	L34468.l
+	jsr	L53070
+	jsr	L34468
 	move.w	d0,(sp)
-	jsr	L60886.l
-	jsr	L64746.l
+	jsr	L60886
+	jsr	L64746
 	move.w	#6,(sp)
-	jsr	L62166.l
+	jsr	L62166
 	unlk	fp
 	rts
 
 L16802:
 	link	fp,#-4
-	jsr	L33160.l
+	jsr	L33160
 	move.w	d0,(sp)
-	jsr	L53070.l
-	jsr	L34634.l
+	jsr	L53070
+	jsr	L34634
 	movea.w	d0,a0
 	adda.l	a0,a0
 	adda.l	a0,a0
 	movea.l	#T87338,a1
 	move.l	0(a0,a1.l),(sp)
-	jsr	L62056.l
-	jsr	L34692.l
+	jsr	L62056
+	jsr	L34692
 	move.l	d0,(sp)
-	jsr	L52972.l
-	jsr	L33780.l
+	jsr	L52972
+	jsr	L33780
 	move.l	d0,(sp)
-	jsr	L52972.l
-	jsr	L33882.l
+	jsr	L52972
+	jsr	L33882
 	move.l	d0,(sp)
-	jsr	L52972.l
-	jsr	L33896.l
+	jsr	L52972
+	jsr	L33896
 	move.l	d0,(sp)
-	jsr	L52972.l
+	jsr	L52972
 	move.w	#6,(sp)
-	jsr	L62166.l
+	jsr	L62166
 	unlk	fp
 	rts
 
 L16918:
 	link	fp,#-4
-	jsr	L48234.l
-	jsr	L34414.l
-	jsr	L47940.l
+	jsr	L48234
+	jsr	L34414
+	jsr	L47940
 	unlk	fp
 	rts
 
 L16944:
 	link	fp,#-4
-	jsr	L48234.l
+	jsr	L48234
 	bsr  	L16330
-	jsr	L47940.l
+	jsr	L47940
 	unlk	fp
 	rts
 
@@ -5917,11 +5917,11 @@ L16968:
 	link	fp,#-4
 	bsr  	L16000
 	move.l	d0,-(sp)
-	jsr	L82000.l
+	jsr	L82000
 	addq.l	#4,sp
 	move.l	d0,(sp)
-	jsr	L33472.l
-	jsr	L47940.l
+	jsr	L33472
+	jsr	L47940
 	unlk	fp
 	rts
 
@@ -5929,19 +5929,19 @@ L17004:
 	link	fp,#-4
 	bsr  	L16000
 	move.l	d0,(sp)
-	jsr	L33472.l
-	jsr	L47940.l
+	jsr	L33472
+	jsr	L47940
 	unlk	fp
 	rts
 
 L17030:
 	link	fp,#-6
-	move.w	U101126.l,(sp)
-	jsr	L61658.l
+	move.w	U101126,(sp)
+	jsr	L61658
 	move.w	d0,-2(fp)
-	jsr	L48234.l
+	jsr	L48234
 	move.w	-2(fp),(sp)
-	jsr	L33174.l
+	jsr	L33174
 	bsr  	L18502
 	unlk	fp
 	rts
@@ -5950,8 +5950,8 @@ L17074:
 	link	fp,#-4
 	bsr  	L16000
 	move.l	d0,(sp)
-	jsr	L33502.l
-	jsr	L47940.l
+	jsr	L33502
+	jsr	L47940
 	unlk	fp
 	rts
 
@@ -5959,9 +5959,9 @@ L17100:
 	link	fp,#-6
 	bsr  	L15980
 	move.w	d0,-2(fp)
-	jsr	L48234.l
+	jsr	L48234
 	move.w	-2(fp),(sp)
-	jsr	L33316.l
+	jsr	L33316
 	bsr  	L18502
 	unlk	fp
 	rts
@@ -5971,59 +5971,59 @@ L17136:
 	movem.l	d6-d7,-(sp)
 	bsr  	L16090
 	bsr  	L16114
-	move.w	U101124.l,(sp)
+	move.w	U101124,(sp)
 	bsr  	L16278
 	move.w	d0,d7
-	jsr	L9350.l
-	jsr	L64224.l
+	jsr	L9350
+	jsr	L64224
 	move.w	d0,(sp)
-	jsr	L55092.l
-	jsr	L9388.l
-	jsr	L48234.l
-	move.l	T87322.l,(sp)
+	jsr	L55092
+	jsr	L9388
+	jsr	L48234
+	move.l	T87322,(sp)
 	move.l	#U100754,-(sp)
-	jsr	L83748.l
+	jsr	L83748
 	addq.l	#4,sp
 	tst.w	d0
 	bne.s	L17228
-	jsr	L33238.l
+	jsr	L33238
 	bra.s	L17330
 
 L17228:
-	move.l	T87326.l,(sp)
+	move.l	T87326,(sp)
 	move.l	#U100754,-(sp)
-	jsr	L83748.l
+	jsr	L83748
 	addq.l	#4,sp
 	tst.w	d0
 	bne.s	L17260
-	jsr	L33212.l
+	jsr	L33212
 	bra.s	L17330
 
 L17260:
-	move.l	T87330.l,(sp)
+	move.l	T87330,(sp)
 	move.l	#U100754,-(sp)
-	jsr	L83748.l
+	jsr	L83748
 	addq.l	#4,sp
 	tst.w	d0
 	bne.s	L17292
-	jsr	L33276.l
+	jsr	L33276
 	bra.s	L17330
 
 L17292:
-	move.l	T87334.l,(sp)
+	move.l	T87334,(sp)
 	move.l	#U100754,-(sp)
-	jsr	L83748.l
+	jsr	L83748
 	addq.l	#4,sp
 	tst.w	d0
 	bne.s	L17324
-	jsr	L33252.l
+	jsr	L33252
 	bra.s	L17330
 
 L17324:
-	jsr	L67118.l
+	jsr	L67118
 L17330:
 	move.w	d7,(sp)
-	jsr	L33316.l
+	jsr	L33316
 	bsr  	L18502
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
@@ -6033,13 +6033,13 @@ L17330:
 L17352:
 	link	fp,#-8
 	bsr  	L16240
-	jsr	L48234.l
+	jsr	L48234
 	bsr  	L16256
 	move.l	d0,-4(fp)
 	move.l	-4(fp),(sp)
 	bsr  	L16256
 	move.l	d0,-(sp)
-	jsr	L35228.l
+	jsr	L35228
 	addq.l	#4,sp
 	bsr  	L18502
 	unlk	fp
@@ -6047,13 +6047,13 @@ L17352:
 
 L17400:
 	link	fp,#-8
-	jsr	L61476.l
+	jsr	L61476
 	move.l	d0,-4(fp)
-	jsr	L48234.l
-	jsr	L34032.l
+	jsr	L48234
+	jsr	L34032
 	move.l	d0,(sp)
 	move.l	-4(fp),-(sp)
-	jsr	L35228.l
+	jsr	L35228
 	addq.l	#4,sp
 	bsr  	L18502
 	unlk	fp
@@ -6061,13 +6061,13 @@ L17400:
 
 L17448:
 	link	fp,#-8
-	jsr	L61476.l
+	jsr	L61476
 	move.l	d0,-4(fp)
-	jsr	L48234.l
+	jsr	L48234
 	move.l	-4(fp),(sp)
-	jsr	L34018.l
+	jsr	L34018
 	move.l	d0,-(sp)
-	jsr	L35228.l
+	jsr	L35228
 	addq.l	#4,sp
 	bsr  	L18502
 	unlk	fp
@@ -6075,73 +6075,73 @@ L17448:
 
 L17496:
 	link	fp,#-4
-	jsr	L48234.l
-	jsr	L34440.l
-	jsr	L47940.l
+	jsr	L48234
+	jsr	L34440
+	jsr	L47940
 	unlk	fp
 	rts
 
 L17522:
 	link	fp,#-12
 	bsr  	L16240
-	jsr	L34032.l
+	jsr	L34032
 	move.l	d0,-(sp)
 	bsr  	L16256
 	move.l	d0,-(sp)
-	jsr	L82028.l
+	jsr	L82028
 	addq.l	#8,sp
 	move.l	d0,-8(fp)
-	move.l	T85048.l,-(sp)
-	jsr	L34018.l
+	move.l	T85048,-(sp)
+	jsr	L34018
 	move.l	d0,-(sp)
 	bsr  	L16256
 	move.l	d0,-(sp)
-	jsr	L82028.l
+	jsr	L82028
 	addq.l	#8,sp
 	move.l	d0,-4(fp)
 	move.l	d0,-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	bne.s	L17642
-	move.l	T85048.l,-(sp)
+	move.l	T85048,-(sp)
 	move.l	-8(fp),-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	bge.s	L17628
 	move.l	#-1275068344,(sp)
 	bra.s	L17634
 
 L17628:
-	move.l	T85048.l,(sp)
+	move.l	T85048,(sp)
 L17634:
-	jsr	L61950.l
+	jsr	L61950
 	bra.s	L17756
 
 L17642:
-	move.l	T85052.l,-(sp)
+	move.l	T85052,-(sp)
 	move.l	-4(fp),-(sp)
 	move.l	-8(fp),-(sp)
-	jsr	L81572.l
+	jsr	L81572
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	jsr	L79448.l
+	jsr	L79448
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81968.l
+	jsr	L81968
 	addq.l	#8,sp
 	move.l	d0,-(sp)
 	move.l	#-1275068345,-(sp)
-	jsr	L82028.l
+	jsr	L82028
 	addq.l	#8,sp
 	move.l	d0,-8(fp)
-	move.l	T85048.l,-(sp)
+	move.l	T85048,-(sp)
 	move.l	-4(fp),-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	bge.s	L17746
 	move.l	#-1275068344,-(sp)
 	move.l	-8(fp),-(sp)
-	jsr	L81510.l
+	jsr	L81510
 	addq.l	#8,sp
 	move.l	d0,(sp)
 	bra.s	L17750
@@ -6149,36 +6149,36 @@ L17642:
 L17746:
 	move.l	-8(fp),(sp)
 L17750:
-	jsr	L61950.l
+	jsr	L61950
 L17756:
 	unlk	fp
 	rts
 
 L17760:
 	link	fp,#-4
-	jsr	L46108.l
+	jsr	L46108
 	move.w	d0,(sp)
-	jsr	L60886.l
+	jsr	L60886
 	unlk	fp
 	rts
 
 L17782:
 	link	fp,#-4
-	jsr	L48234.l
-	jsr	L34554.l
-	jsr	L47940.l
+	jsr	L48234
+	jsr	L34554
+	jsr	L47940
 	unlk	fp
 	rts
 
 L17808:
 	link	fp,#-4
-	jsr	L77166.l
+	jsr	L77166
 	unlk	fp
 	rts
 
 L17822:
 	link	fp,#-4
-	move.w	T85002.l,(sp)
+	move.w	T85002,(sp)
 	move.l	#L34648,-(sp)
 	bsr.s	L17846
 	addq.l	#4,sp
@@ -6190,86 +6190,86 @@ L17846:
 	move.w	12(fp),d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688.l
+	jsr	L81688
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L61476.l
+	jsr	L61476
 	move.l	d0,-(sp)
 	move.l	#-2147483583,-(sp)
-	jsr	L81572.l
+	jsr	L81572
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	bgt.s	L18002
 	move.w	12(fp),d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688.l
+	jsr	L81688
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L62206.l
+	jsr	L62206
 	move.l	d0,-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	bgt.s	L18002
-	move.l	T85048.l,-(sp)
-	jsr	L62206.l
+	move.l	T85048,-(sp)
+	jsr	L62206
 	move.l	d0,-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	ble.s	L18002
-	jsr	L48234.l
-	jsr	L27654.l
-	jsr	L62206.l
+	jsr	L48234
+	jsr	L27654
+	jsr	L62206
 	move.l	d0,-(sp)
 	movea.l	8(fp),a0
 	jsr	(a0)
 	addq.l	#4,sp
-	jsr	L27654.l
+	jsr	L27654
 	bsr  	L18502
 	bra.s	L18008
 
 L18002:
-	jsr	L67118.l
+	jsr	L67118
 L18008:
 	unlk	fp
 	rts
 
 L18012:
 	link	fp,#-4
-	jsr	L34018.l
+	jsr	L34018
 	move.l	d0,(sp)
-	jsr	L61950.l
+	jsr	L61950
 	unlk	fp
 	rts
 
 L18034:
 	link	fp,#-4
-	jsr	L34032.l
+	jsr	L34032
 	move.l	d0,(sp)
-	jsr	L61950.l
+	jsr	L61950
 	unlk	fp
 	rts
 
 L18056:
 	link	fp,#-4
-	jsr	L34018.l
+	jsr	L34018
 	move.l	d0,(sp)
-	jsr	L52972.l
-	jsr	L34032.l
+	jsr	L52972
+	jsr	L34032
 	move.l	d0,(sp)
-	jsr	L52972.l
+	jsr	L52972
 	move.w	#2,(sp)
-	jsr	L62166.l
+	jsr	L62166
 	unlk	fp
 	rts
 
 L18102:
 	link	fp,#-4
-	jsr	L33566.l
+	jsr	L33566
 	move.l	d0,(sp)
-	jsr	L61950.l
+	jsr	L61950
 	unlk	fp
 	rts
 
@@ -6279,20 +6279,20 @@ L18124:
 	move.l	d0,-4(fp)
 	clr.l	(sp)
 	move.w	#32,-(sp)
-	jsr	L77356.l
+	jsr	L77356
 	addq.l	#2,sp
-	move.l	d0,U91942.l
+	move.l	d0,U91942
 	movea.l	-4(fp),a0
 	move.b	(a0),-6(fp)
-	move.l	U91942.l,(sp)
+	move.l	U91942,(sp)
 	move.w	#32,-(sp)
-	jsr	L77356.l
+	jsr	L77356
 	addq.l	#2,sp
 	move.b	-6(fp),d0
 	ext.w	d0
 	move.w	d0,(sp)
 	andi.w	#255,(sp)
-	jsr	L61926.l
+	jsr	L61926
 	unlk	fp
 	rts
 
@@ -6301,19 +6301,19 @@ L18204:
 	movem.l	d7/a5,-(sp)
 	bsr  	L15910
 	movea.l	d0,a5
-	jsr	L62246.l
+	jsr	L62246
 	move.b	d0,-2(fp)
 	clr.l	(sp)
 	move.w	#32,-(sp)
-	jsr	L77356.l
+	jsr	L77356
 	addq.l	#2,sp
-	move.l	d0,U91942.l
+	move.l	d0,U91942
 	move.b	-2(fp),(a5)
-	move.l	U91942.l,(sp)
+	move.l	U91942,(sp)
 	move.w	#32,-(sp)
-	jsr	L77356.l
+	jsr	L77356
 	addq.l	#2,sp
-	jsr	L61834.l
+	jsr	L61834
 	tst.l	(sp)+
 	movem.l	(sp)+,a5
 	unlk	fp
@@ -6325,21 +6325,21 @@ L18286:
 	move.l	d0,-4(fp)
 	btst	#0,-1(fp)
 	beq.s	L18312
-	jsr	L67118.l
+	jsr	L67118
 L18312:
 	clr.l	(sp)
 	move.w	#32,-(sp)
-	jsr	L77356.l
+	jsr	L77356
 	addq.l	#2,sp
-	move.l	d0,U91942.l
+	move.l	d0,U91942
 	movea.l	-4(fp),a0
 	move.w	(a0),-6(fp)
-	move.l	U91942.l,(sp)
+	move.l	U91942,(sp)
 	move.w	#32,-(sp)
-	jsr	L77356.l
+	jsr	L77356
 	addq.l	#2,sp
 	move.w	-6(fp),(sp)
-	jsr	L61926.l
+	jsr	L61926
 	unlk	fp
 	rts
 
@@ -6349,25 +6349,25 @@ L18372:
 	move.l	d0,-4(fp)
 	btst	#0,-1(fp)
 	beq.s	L18398
-	jsr	L67118.l
+	jsr	L67118
 L18398:
-	jsr	L61476.l
+	jsr	L61476
 	move.l	d0,-(sp)
-	jsr	L81832.l
+	jsr	L81832
 	addq.l	#4,sp
 	move.w	d0,-6(fp)
 	clr.l	(sp)
 	move.w	#32,-(sp)
-	jsr	L77356.l
+	jsr	L77356
 	addq.l	#2,sp
-	move.l	d0,U91942.l
+	move.l	d0,U91942
 	movea.l	-4(fp),a0
 	move.w	-6(fp),(a0)
-	move.l	U91942.l,(sp)
+	move.l	U91942,(sp)
 	move.w	#32,-(sp)
-	jsr	L77356.l
+	jsr	L77356
 	addq.l	#2,sp
-	jsr	L61834.l
+	jsr	L61834
 	unlk	fp
 	rts
 
@@ -6377,21 +6377,21 @@ L18474:
 	move.l	d0,-4(fp)
 	movea.l	-4(fp),a0
 	jsr	(a0)
-	jsr	L61834.l
+	jsr	L61834
 	unlk	fp
 	rts
 
 L18502:
 	link	fp,#-4
-	jsr	L47940.l
-	jsr	L61834.l
+	jsr	L47940
+	jsr	L61834
 	unlk	fp
 	rts
 
 L18522:
 	link	fp,#-4
 	bsr.s	L18538
-	jsr	L74860.l
+	jsr	L74860
 	unlk	fp
 	rts
 
@@ -6399,25 +6399,25 @@ L18538:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
 	move.w	#1,(sp)
-	jsr	L61064.l
+	jsr	L61064
 	move.w	d0,d7
 	move.w	d7,(sp)
-	jsr	L61098.l
+	jsr	L61098
 	tst.w	d0
 	bne.s	L18606
 L18570:
-	jsr	L61206.l
+	jsr	L61206
 	bsr.s	L18616
 	subq.w	#1,d7
 	move.w	d7,(sp)
-	jsr	L61098.l
+	jsr	L61098
 	tst.w	d0
 	bne.s	L18600
-	jsr	L76978.l
+	jsr	L76978
 	bra.s	L18570
 
 L18600:
-	jsr	L61834.l
+	jsr	L61834
 L18606:
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
@@ -6426,58 +6426,58 @@ L18606:
 
 L18616:
 	link	fp,#-4
-	tst.w	U101046.l
+	tst.w	U101046
 	beq.s	L18670
-	move.w	U101046.l,(sp)
-	jsr	L65266.l
+	move.w	U101046,(sp)
+	jsr	L65266
 	tst.w	d0
 	beq.s	L18658
-	move.w	U101046.l,(sp)
-	jsr	L55092.l
+	move.w	U101046,(sp)
+	jsr	L55092
 	bra.s	L18670
 
 L18658:
-	move.w	U101046.l,(sp)
-	jsr	L55144.l
+	move.w	U101046,(sp)
+	jsr	L55144
 L18670:
 	unlk	fp
 	rts
 
 L18674:
 	link	fp,#-4
-	jsr	L61206.l
+	jsr	L61206
 	bsr.s	L18690
 	unlk	fp
 	rts
 
 L18690:
 	link	fp,#-4
-	move.w	U101046.l,(sp)
-	jsr	L55354.l
-	jsr	L74860.l
-	jsr	L61834.l
+	move.w	U101046,(sp)
+	jsr	L55354
+	jsr	L74860
+	jsr	L61834
 	unlk	fp
 	rts
 
 L18722:
 	link	fp,#-4
-	jsr	L62430.l
+	jsr	L62430
 	move.l	#U100656,(sp)
-	jsr	L204.l
+	jsr	L204
 	tst.w	d0
 	beq.s	L18756
-	jsr	L2226.l
+	jsr	L2226
 	bra.s	L18796
 
 L18756:
 	clr.w	(sp)
-	jsr	L50590.l
+	jsr	L50590
 	move.l	#U100162,d0
-	move.l	d0,U101030.l
+	move.l	d0,U101030
 	move.l	d0,(sp)
-	jsr	L83914.l
-	move.w	d0,U99178.l
-	jsr	L61992.l
+	jsr	L83914
+	move.w	d0,U99178
+	jsr	L61992
 L18796:
 	unlk	fp
 	rts
@@ -6485,37 +6485,37 @@ L18796:
 L18800:
 	link	fp,#-4
 	move.l	#U100656,(sp)
-	jsr	L204.l
+	jsr	L204
 	tst.w	d0
 	beq.s	L18828
-	jsr	L2226.l
+	jsr	L2226
 	bra.s	L18866
 
 L18828:
-	jsr	L75856.l
-	move.b	U101150.l,U91954.l
-	jsr	L75582.l
-	move.l	#U91954,U101030.l
-	jsr	L61974.l
+	jsr	L75856
+	move.b	U101150,U91954
+	jsr	L75582
+	move.l	#U91954,U101030
+	jsr	L61974
 L18866:
 	unlk	fp
 	rts
 
 L18870:
 	link	fp,#-4
-	jsr	L62430.l
+	jsr	L62430
 	move.l	#U100656,(sp)
-	jsr	L204.l
+	jsr	L204
 	tst.w	d0
 	beq.s	L18904
-	jsr	L2226.l
+	jsr	L2226
 	bra.s	L18924
 
 L18904:
 	clr.w	(sp)
-	jsr	L50590.l
-	jsr	L53628.l
-	jsr	L64764.l
+	jsr	L50590
+	jsr	L53628
+	jsr	L64764
 L18924:
 	unlk	fp
 	rts
@@ -6526,10 +6526,10 @@ L18928:
 	bra.s	L18988
 
 L18936:
-	jsr	L48330.l
-	move.l	T87058.l,(sp)
+	jsr	L48330
+	move.l	T87058,(sp)
 	move.w	#2,-(sp)
-	jsr	L1386.l
+	jsr	L1386
 	addq.l	#2,sp
 	cmp.w	#2,d0
 	beq.s	L18970
@@ -6540,21 +6540,21 @@ L18970:
 	moveq	#1,d0
 L18972:
 	move.w	d0,-2(fp)
-	jsr	L48260.l
+	jsr	L48260
 	tst.w	-2(fp)
 	bne.s	L19006
 L18988:
-	jsr	L49708.l
+	jsr	L49708
 	tst.w	d0
 	beq.s	L18936
-	move.w	#1,U101146.l
+	move.w	#1,U101146
 L19006:
 	unlk	fp
 	rts
 
 L19010:
 	link	fp,#-4
-	clr.w	U101146.l
+	clr.w	U101146
 	unlk	fp
 	rts
 
@@ -6573,7 +6573,7 @@ L19046:
 	move.b	(a5),d0
 	ext.w	d0
 	move.w	d0,(sp)
-	jsr	L74802.l
+	jsr	L74802
 	tst.w	d0
 	beq.s	L19038
 	move.w	#10,(sp)
@@ -6588,20 +6588,20 @@ L19078:
 	bra.s	L19090
 
 L19084:
-	jsr	L75596.l
+	jsr	L75596
 L19090:
-	jsr	L49708.l
+	jsr	L49708
 	tst.w	d0
 	beq.s	L19084
 	cmpi.b	#10,9(fp)
 	bne.s	L19118
 	move.w	#13,(sp)
-	jsr	L49730.l
+	jsr	L49730
 L19118:
 	move.b	9(fp),d0
 	ext.w	d0
 	move.w	d0,(sp)
-	jsr	L49730.l
+	jsr	L49730
 	unlk	fp
 	rts
 
@@ -6609,20 +6609,20 @@ L19136:
 	link	fp,#0
 	movem.l	d7/a5,-(sp)
 	move.l	#L36478,(sp)
-	jsr	L9036.l
+	jsr	L9036
 	move.l	#U100754,(sp)
 	move.w	#46,-(sp)
-	jsr	L50940.l
+	jsr	L50940
 	addq.l	#2,sp
 	tst.w	d0
 	bne.s	L19196
 	move.l	8(fp),(sp)
 	move.l	#U100754,-(sp)
-	jsr	L83706.l
+	jsr	L83706
 	addq.l	#4,sp
 L19196:
 	move.l	#U100754,(sp)
-	jsr	L83914.l
+	jsr	L83914
 	ext.l	d0
 	movea.l	d0,a5
 	adda.l	#U100754,a5
@@ -6633,7 +6633,7 @@ L19220:
 	move.b	-1(a5),d0
 	ext.w	d0
 	move.w	d0,-(sp)
-	jsr	L50940.l
+	jsr	L50940
 	addq.l	#2,sp
 	tst.w	d0
 	bne.s	L19256
@@ -6643,10 +6643,10 @@ L19248:
 	bhi.s	L19220
 L19256:
 	move.l	a5,(sp)
-	jsr	L83914.l
+	jsr	L83914
 	cmp.w	#12,d0
 	ble.s	L19276
-	jsr	L67118.l
+	jsr	L67118
 L19276:
 	tst.l	(sp)+
 	movem.l	(sp)+,a5
@@ -6656,13 +6656,13 @@ L19276:
 L19286:
 	link	fp,#-4
 	clr.w	(sp)
-	move.l	U101030.l,-(sp)
-	jsr	L77468.l
+	move.l	U101030,-(sp)
+	jsr	L77468
 	addq.l	#4,sp
-	move.w	d0,U101054.l
+	move.w	d0,U101054
 	cmp.w	#-1,d0
 	bgt.s	L19324
-	jsr	L67642.l
+	jsr	L67642
 L19324:
 	unlk	fp
 	rts
@@ -6670,50 +6670,50 @@ L19324:
 L19328:
 	link	fp,#-4
 	clr.w	(sp)
-	move.l	U101030.l,-(sp)
-	jsr	L77664.l
+	move.l	U101030,-(sp)
+	jsr	L77664
 	addq.l	#4,sp
-	move.w	d0,U101054.l
+	move.w	d0,U101054
 	cmp.w	#-1,d0
 	bgt.s	L19366
-	jsr	L67118.l
+	jsr	L67118
 L19366:
 	unlk	fp
 	rts
 
 L19370:
 	link	fp,#-4
-	move.w	U101054.l,(sp)
-	jsr	L77496.l
+	move.w	U101054,(sp)
+	jsr	L77496
 	cmp.w	#-1,d0
 	bgt.s	L19398
-	jsr	L67546.l
+	jsr	L67546
 L19398:
 	unlk	fp
 	rts
 
 L19402:
 	link	fp,#-4
-	move.w	U101054.l,(sp)
+	move.w	U101054,(sp)
 	move.w	#1,-(sp)
 	move.l	fp,-(sp)
 	addi.l	#9,(sp)
-	jsr	L77554.l
+	jsr	L77554
 	addq.l	#6,sp
 	cmp.w	#1,d0
 	beq.s	L19444
-	jsr	L67570.l
+	jsr	L67570
 L19444:
 	unlk	fp
 	rts
 
 L19448:
 	link	fp,#-6
-	move.w	U101054.l,(sp)
+	move.w	U101054,(sp)
 	move.w	#1,-(sp)
 	move.l	fp,-(sp)
 	subq.l	#2,(sp)
-	jsr	L77520.l
+	jsr	L77520
 	addq.l	#6,sp
 	tst.w	d0
 	beq.s	L19482
@@ -6723,7 +6723,7 @@ L19448:
 L19482:
 	moveq	#1,d0
 L19484:
-	move.w	d0,U100998.l
+	move.w	d0,U100998
 	beq.s	L19498
 	clr.b	-2(fp)
 	bra.s	L19514
@@ -6742,20 +6742,20 @@ L19514:
 L19524:
 	link	fp,#-4
 	movea.l	#U100162,a0
-	movea.w	U100898.l,a1
+	movea.w	U100898,a1
 	adda.l	a1,a0
 	move.l	a0,-(sp)
 	bsr.s	L19448
 	movea.l	(sp)+,a0
 	move.b	d0,(a0)
-	addq.w	#1,U100898.l
-	move.w	U100898.l,d0
+	addq.w	#1,U100898
+	move.w	U100898,d0
 	cmp.w	#400,d0
 	blt.s	L19574
-	jsr	L67450.l
+	jsr	L67450
 L19574:
 	movea.l	#U100162,a0
-	movea.w	U100898.l,a1
+	movea.w	U100898,a1
 	adda.l	a1,a0
 	clr.b	(a0)
 	unlk	fp
@@ -6763,9 +6763,9 @@ L19574:
 
 L19594:
 	link	fp,#-4
-	move.w	#2,U100986.l
-	clr.w	U100898.l
-	clr.w	U100998.l
+	move.w	#2,U100986
+	clr.w	U100898
+	clr.w	U100998
 	bsr.s	L19524
 	bsr.s	L19524
 	bsr.s	L19524
@@ -6774,15 +6774,15 @@ L19594:
 
 L19628:
 	link	fp,#-4
-	move.l	T87150.l,(sp)
+	move.l	T87150,(sp)
 	bsr  	L19136
-	move.l	U101030.l,(sp)
-	jsr	L77692.l
+	move.l	U101030,(sp)
+	jsr	L77692
 	cmp.w	#-1,d0
 	bgt.s	L19666
-	jsr	L67642.l
+	jsr	L67642
 L19666:
-	jsr	L61834.l
+	jsr	L61834
 	unlk	fp
 	rts
 
@@ -6790,12 +6790,12 @@ L19676:
 	link	fp,#-6
 	move.l	fp,d0
 	add.l	#9,d0
-	sub.l	U100744.l,d0
+	sub.l	U100744,d0
 	add.l	#-1536,d0
 	move.w	d0,-2(fp)
 	cmp.w	#128,d0
 	bge.s	L19716
-	jsr	L67594.l
+	jsr	L67594
 L19716:
 	move.w	-2(fp),d0
 	unlk	fp
@@ -6803,59 +6803,59 @@ L19716:
 
 L19724:
 	link	fp,#-8
-	jsr	L62468.l
-	jsr	L62430.l
-	move.l	T87150.l,(sp)
+	jsr	L62468
+	jsr	L62430
+	move.l	T87150,(sp)
 	bsr  	L19136
 	clr.w	(sp)
-	move.l	U101030.l,-(sp)
-	jsr	L77468.l
+	move.l	U101030,-(sp)
+	jsr	L77468
 	addq.l	#4,sp
-	move.w	d0,U101054.l
+	move.w	d0,U101054
 	cmp.w	#-1,d0
 	bgt.s	L19782
 	bsr  	L19328
 L19782:
-	move.l	U100744.l,U101102.l
+	move.l	U100744,U101102
 	bsr.s	L19676
 	move.w	d0,-2(fp)
-	clr.w	U100998.l
-	clr.w	U101200.l
+	clr.w	U100998
+	clr.w	U101200
 	bra.s	L19856
 
 L19812:
-	addq.l	#1,U101102.l
-	move.l	U101102.l,-(sp)
+	addq.l	#1,U101102
+	move.l	U101102,-(sp)
 	bsr  	L19448
 	movea.l	(sp)+,a0
 	move.b	d0,(a0)
-	move.w	U101200.l,d0
+	move.w	U101200,d0
 	cmp.w	-2(fp),d0
 	ble.s	L19850
-	jsr	L67594.l
+	jsr	L67594
 L19850:
-	addq.w	#1,U101200.l
+	addq.w	#1,U101200
 L19856:
-	tst.w	U100998.l
+	tst.w	U100998
 	beq.s	L19812
 	bsr  	L19370
-	jsr	L56464.l
-	jsr	L56572.l
-	jsr	L69648.l
-	jsr	L70038.l
+	jsr	L56464
+	jsr	L56572
+	jsr	L69648
+	jsr	L70038
 	bsr  	L19328
-	move.l	U100744.l,U101102.l
+	move.l	U100744,U101102
 	bra.s	L19930
 
 L19908:
-	movea.l	U101102.l,a0
+	movea.l	U101102,a0
 	move.b	(a0),d0
 	ext.w	d0
 	move.w	d0,(sp)
 	bsr  	L19402
-	addq.l	#1,U101102.l
+	addq.l	#1,U101102
 L19930:
-	movea.l	U101102.l,a0
+	movea.l	U101102,a0
 	tst.b	(a0)
 	bne.s	L19908
 	bsr  	L19370
@@ -6864,118 +6864,118 @@ L19930:
 
 L19948:
 	link	fp,#-138
-	jsr	L48408.l
-	jsr	L62430.l
-	jsr	L62468.l
-	move.l	T87150.l,(sp)
+	jsr	L48408
+	jsr	L62430
+	jsr	L62468
+	move.l	T87150,(sp)
 	bsr  	L19136
 	bsr  	L19286
 	move.l	#U100754,(sp)
 	move.l	#U100678,-(sp)
-	jsr	L83880.l
+	jsr	L83880
 	addq.l	#4,sp
-	jsr	L61884.l
+	jsr	L61884
 	tst.w	d0
 	bne.s	L20056
-	jsr	L61500.l
-	move.w	U100984.l,(sp)
-	move.w	U100648.l,-(sp)
+	jsr	L61500
+	move.w	U100984,(sp)
+	move.w	U100648,-(sp)
 	clr.w	d0
-	move.w	U101046.l,d0
-	move.w	d0,U101108.l
+	move.w	U101046,d0
+	move.w	d0,U101108
 	move.w	d0,-(sp)
-	jsr	L66062.l
+	jsr	L66062
 	addq.l	#4,sp
 L20056:
 	bsr  	L19594
-	jsr	L66768.l
-	move.w	#1,U101476.l
+	jsr	L66768
+	move.w	#1,U101476
 	bra.s	L20082
 
 L20076:
-	jsr	L37176.l
+	jsr	L37176
 L20082:
-	tst.w	U101476.l
+	tst.w	U101476
 	bne.s	L20076
-	jsr	L66800.l
-	jsr	L58082.l
-	jsr	L48444.l
-	jsr	L61834.l
+	jsr	L66800
+	jsr	L58082
+	jsr	L48444
+	jsr	L61834
 	unlk	fp
 	rts
 
 L20118:
 	link	fp,#-6
-	jsr	L48408.l
-	jsr	L62430.l
-	jsr	L62468.l
-	move.w	U101044.l,-2(fp)
-	move.l	T87150.l,(sp)
+	jsr	L48408
+	jsr	L62430
+	jsr	L62468
+	move.w	U101044,-2(fp)
+	move.l	T87150,(sp)
 	bsr  	L19136
 	bsr  	L20414
 	tst.w	d0
 	beq.s	L20172
-	jsr	L67618.l
+	jsr	L67618
 L20172:
 	bsr  	L19328
 	move.l	#U100754,(sp)
 	move.l	#U100678,-(sp)
-	jsr	L83880.l
+	jsr	L83880
 	addq.l	#4,sp
-	jsr	L15576.l
-	move.w	#2,U100996.l
-	jsr	L64714.l
-	jsr	L64714.l
-	jsr	L64714.l
-	jsr	L64714.l
-	jsr	L56230.l
+	jsr	L15576
+	move.w	#2,U100996
+	jsr	L64714
+	jsr	L64714
+	jsr	L64714
+	jsr	L64714
+	jsr	L56230
 	move.w	#1,(sp)
-	jsr	L64224.l
+	jsr	L64224
 	move.w	d0,-(sp)
-	jsr	L56676.l
+	jsr	L56676
 	addq.l	#2,sp
-	jsr	L56362.l
+	jsr	L56362
 	move.w	#2,(sp)
-	jsr	L64224.l
+	jsr	L64224
 	move.w	d0,-(sp)
-	jsr	L56676.l
+	jsr	L56676
 	addq.l	#2,sp
-	jsr	L64732.l
+	jsr	L64732
 	move.w	#1,(sp)
-	jsr	L57456.l
+	jsr	L57456
 	move.w	#3,(sp)
-	jsr	L64224.l
+	jsr	L64224
 	move.w	d0,-(sp)
-	jsr	L56676.l
+	jsr	L56676
 	addq.l	#2,sp
-	jsr	L64732.l
-	move.w	U98400.l,(sp)
-	jsr	L57456.l
+	jsr	L64732
+	move.w	U98400,(sp)
+	jsr	L57456
 	move.w	#4,(sp)
-	jsr	L64224.l
+	jsr	L64224
 	move.w	d0,-(sp)
-	jsr	L56676.l
+	jsr	L56676
 	addq.l	#2,sp
 	move.w	#5,(sp)
-	jsr	L64224.l
+	jsr	L64224
 	move.w	d0,-(sp)
-	jsr	L56676.l
+	jsr	L56676
 	addq.l	#2,sp
 	bsr  	L19370
-	jsr	L58068.l
-	jsr	L48444.l
-	move.w	-2(fp),U101044.l
-	jsr	L61834.l
+	jsr	L58068
+	jsr	L48444
+	move.w	-2(fp),U101044
+	jsr	L61834
 	unlk	fp
 	rts
 
 L20414:
 	link	fp,#-6
 	clr.w	(sp)
-	move.l	U101030.l,-(sp)
-	jsr	L77468.l
+	move.l	U101030,-(sp)
+	jsr	L77468
 	addq.l	#4,sp
-	move.w	d0,U101054.l
+	move.w	d0,U101054
 	cmp.w	#-1,d0
 	bgt.s	L20450
 	clr.w	d0
@@ -6994,35 +6994,35 @@ L20462:
 
 L20470:
 	link	fp,#-44
-	move.l	T87150.l,(sp)
+	move.l	T87150,(sp)
 	bsr  	L19136
 	bsr.s	L20414
 	tst.w	d0
 	beq.s	L20496
-	jsr	L67118.l
+	jsr	L67118
 L20496:
-	move.l	U101030.l,(sp)
+	move.l	U101030,(sp)
 	move.l	fp,-(sp)
 	addi.l	#-40,(sp)
-	jsr	L83880.l
+	jsr	L83880
 	addq.l	#4,sp
-	move.l	T87150.l,(sp)
+	move.l	T87150,(sp)
 	bsr  	L19136
 	bsr.s	L20414
 	tst.w	d0
 	bne.s	L20540
-	jsr	L67118.l
+	jsr	L67118
 L20540:
 	move.l	fp,(sp)
 	addi.l	#-40,(sp)
-	move.l	U101030.l,-(sp)
-	jsr	L77716.l
+	move.l	U101030,-(sp)
+	jsr	L77716
 	addq.l	#4,sp
 	cmp.w	#-1,d0
 	bgt.s	L20574
-	jsr	L67118.l
+	jsr	L67118
 L20574:
-	jsr	L61834.l
+	jsr	L61834
 	unlk	fp
 	rts
 
@@ -7030,7 +7030,7 @@ L20584:
 	link	fp,#0
 	movem.l	d7/a5,-(sp)
 	move.l	#L36478,(sp)
-	jsr	L9036.l
+	jsr	L9036
 	movea.l	#U100754,a5
 	tst.b	(a5)
 	beq.s	L20652
@@ -7040,10 +7040,10 @@ L20584:
 	ext.w	d0
 	move.w	d0,(sp)
 	addi.w	#-65,(sp)
-	jsr	L77640.l
+	jsr	L77640
 	cmp.w	#-1,d0
 	bgt.s	L20650
-	jsr	L67118.l
+	jsr	L67118
 L20650:
 	addq.l	#2,a5
 L20652:
@@ -7053,12 +7053,12 @@ L20652:
 	clr.b	1(a5)
 L20664:
 	move.l	a5,(sp)
-	jsr	L77588.l
+	jsr	L77588
 	cmp.w	#-1,d0
 	bgt.s	L20684
-	jsr	L67118.l
+	jsr	L67118
 L20684:
-	jsr	L61834.l
+	jsr	L61834
 	tst.l	(sp)+
 	movem.l	(sp)+,a5
 	unlk	fp
@@ -7066,21 +7066,21 @@ L20684:
 
 L20700:
 	link	fp,#-68
-	jsr	L77380.l
+	jsr	L77380
 	add.w	#65,d0
 	move.b	d0,-64(fp)
 	move.b	#58,-63(fp)
-	jsr	L77380.l
+	jsr	L77380
 	move.w	d0,(sp)
 	addq.w	#1,(sp)
 	move.l	fp,-(sp)
 	addi.l	#-62,(sp)
-	jsr	L77612.l
+	jsr	L77612
 	addq.l	#4,sp
 	move.l	fp,(sp)
 	addi.l	#-64,(sp)
-	jsr	L62012.l
-	move.w	d0,U101046.l
+	jsr	L62012
+	move.w	d0,U101046
 	unlk	fp
 	rts
 
@@ -7088,27 +7088,27 @@ L20774:
 	link	fp,#-54
 	move.l	fp,(sp)
 	addi.l	#-50,(sp)
-	jsr	L77398.l
-	jsr	L64732.l
+	jsr	L77398
+	jsr	L64732
 	clr.w	(sp)
-	move.l	U101030.l,-(sp)
-	jsr	L77422.l
+	move.l	U101030,-(sp)
+	jsr	L77422
 	addq.l	#4,sp
 	cmp.w	#-1,d0
 	ble.s	L20876
 L20820:
-	jsr	L64160.l
+	jsr	L64160
 	move.w	d0,(sp)
 	move.l	fp,-(sp)
 	addi.l	#-20,(sp)
-	jsr	L62012.l
+	jsr	L62012
 	addq.l	#4,sp
 	move.w	d0,-(sp)
-	jsr	L65496.l
+	jsr	L65496
 	addq.l	#2,sp
 	move.w	d0,(sp)
-	jsr	L64276.l
-	jsr	L77450.l
+	jsr	L64276
+	jsr	L77450
 	cmp.w	#-1,d0
 	ble.s	L20876
 	bra.s	L20820
@@ -7119,38 +7119,38 @@ L20876:
 
 L20880:
 	link	fp,#-6
-	jsr	L61884.l
+	jsr	L61884
 	tst.w	d0
 	beq.s	L20908
-	jsr	L9350.l
-	jsr	L9388.l
+	jsr	L9350
+	jsr	L9388
 	bra.s	L20920
 
 L20908:
 	move.l	#L36478,(sp)
-	jsr	L9036.l
+	jsr	L9036
 L20920:
-	movea.l	U101030.l,a0
+	movea.l	U101030,a0
 	tst.b	(a0)
 	beq.s	L20956
-	movea.l	U101030.l,a0
+	movea.l	U101030,a0
 	cmpi.b	#58,1(a0)
 	bne.s	L20992
-	movea.l	U101030.l,a0
+	movea.l	U101030,a0
 	tst.b	2(a0)
 	bne.s	L20992
 L20956:
-	move.l	T87150.l,(sp)
+	move.l	T87150,(sp)
 	move.l	#T85023,-(sp)
-	move.l	U101030.l,-(sp)
-	jsr	L83706.l
+	move.l	U101030,-(sp)
+	jsr	L83706
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	jsr	L83706.l
+	jsr	L83706
 	addq.l	#4,sp
 L20992:
 	bsr  	L20774
-	jsr	L64764.l
+	jsr	L64764
 	unlk	fp
 	rts
 
@@ -7163,24 +7163,24 @@ L21006:
 L21016:
 	link	fp,#-4
 	movem.l	d7/a5,-(sp)
-	jsr	L16174.l
-	jsr	L16256.l
+	jsr	L16174
+	jsr	L16256
 	move.l	d0,-4(fp)
-	jsr	L16174.l
-	jsr	L16256.l
+	jsr	L16174
+	jsr	L16256
 	move.l	d0,(sp)
 	move.l	-4(fp),-(sp)
-	jsr	L33606.l
+	jsr	L33606
 	addq.l	#4,sp
 	movea.l	d0,a5
 	move.w	(a5),d0
-	add.w	U100970.l,d0
+	add.w	U100970,d0
 	movea.l	8(fp),a1
 	move.w	d0,(a1)
 	addq.l	#2,8(fp)
 	addq.l	#2,a5
 	move.w	(a5),d0
-	add.w	U100972.l,d0
+	add.w	U100972,d0
 	movea.l	8(fp),a1
 	move.w	d0,(a1)
 	tst.l	(sp)+
@@ -7190,51 +7190,51 @@ L21016:
 
 L21112:
 	link	fp,#-4
-	jsr	L16174.l
+	jsr	L16174
 	move.l	#-1275068345,-(sp)
-	jsr	L16256.l
+	jsr	L16256
 	move.l	d0,-(sp)
-	jsr	L82028.l
+	jsr	L82028
 	addq.l	#8,sp
 	move.l	d0,(sp)
-	jsr	L36300.l
+	jsr	L36300
 	move.l	d0,-(sp)
 	move.l	#-1275068343,-(sp)
-	jsr	L82028.l
+	jsr	L82028
 	addq.l	#8,sp
 	move.l	d0,-(sp)
 	moveq	#10,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688.l
+	jsr	L81688
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81968.l
+	jsr	L81968
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	jsr	L81832.l
+	jsr	L81832
 	addq.l	#4,sp
 	unlk	fp
 	rts
 
 L21208:
 	link	fp,#-8
-	jsr	L16174.l
-	move.l	T85048.l,-(sp)
-	jsr	L16256.l
+	jsr	L16174
+	move.l	T85048,-(sp)
+	jsr	L16256
 	move.l	d0,-4(fp)
 	move.l	d0,-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	bge.s	L21252
-	jsr	L67118.l
+	jsr	L67118
 L21252:
 	move.l	-4(fp),-(sp)
 	movea.l	8(fp),a0
 	jsr	(a0)
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81832.l
+	jsr	L81832
 	addq.l	#4,sp
 	unlk	fp
 	rts
@@ -7255,14 +7255,14 @@ L21294:
 
 L21310:
 	link	fp,#-4
-	move.w	U98718.l,(sp)
-	move.l	T87350.l,-(sp)
-	jsr	L62012.l
+	move.w	U98718,(sp)
+	move.l	T87350,-(sp)
+	jsr	L62012
 	addq.l	#4,sp
 	move.w	d0,-(sp)
-	jsr	L66008.l
+	jsr	L66008
 	addq.l	#2,sp
-	cmp.w	U100984.l,d0
+	cmp.w	U100984,d0
 	beq.s	L21356
 	clr.w	d0
 	bra.s	L21358
@@ -7276,12 +7276,12 @@ L21358:
 L21362:
 	link	fp,#-4
 	clr.w	d0
-	move.w	d0,U99882.l
-	move.w	d0,U99878.l
-	move.w	d0,U99876.l
-	move.w	d0,U99874.l
-	move.w	d0,U99872.l
-	move.w	#11,U101066.l
+	move.w	d0,U99882
+	move.w	d0,U99878
+	move.w	d0,U99876
+	move.w	d0,U99874
+	move.w	d0,U99872
+	move.w	#11,U101066
 	bsr.s	L21310
 	tst.w	d0
 	beq.s	L21416
@@ -7291,9 +7291,9 @@ L21362:
 L21416:
 	moveq	#2,d0
 L21418:
-	move.w	d0,U101076.l
-	move.w	#4,U101068.l
-	move.w	#2,U101072.l
+	move.w	d0,U101076
+	move.w	#4,U101068
+	move.w	#2,U101072
 	bsr  	L22312
 	unlk	fp
 	rts
@@ -7303,104 +7303,104 @@ L21448:
 	cmpi.w	#-1,12(fp)
 	beq.s	L21478
 	move.w	12(fp),(sp)
-	jsr	L33316.l
+	jsr	L33316
 	move.w	12(fp),(sp)
 	bsr  	L27190
 L21478:
-	move.w	#16,U101066.l
-	move.w	#1,U101068.l
-	clr.w	U101072.l
-	move.w	10(fp),U99868.l
-	clr.w	U99870.l
-	jsr	L37312.l
-	move.w	U100566.l,U91964.l
-	move.w	#15,U101066.l
-	clr.w	U101068.l
-	move.w	#1,U101072.l
-	move.w	8(fp),U98410.l
-	jsr	L37312.l
-	move.w	U98720.l,d0
-	move.w	d0,U91962.l
-	cmp.w	U101134.l,d0
+	move.w	#16,U101066
+	move.w	#1,U101068
+	clr.w	U101072
+	move.w	10(fp),U99868
+	clr.w	U99870
+	jsr	L37312
+	move.w	U100566,U91964
+	move.w	#15,U101066
+	clr.w	U101068
+	move.w	#1,U101072
+	move.w	8(fp),U98410
+	jsr	L37312
+	move.w	U98720,d0
+	move.w	d0,U91962
+	cmp.w	U101134,d0
 	bne.s	L21698
-	move.l	T87362.l,(sp)
-	jsr	L62012.l
+	move.l	T87362,(sp)
+	jsr	L62012
 	move.w	d0,(sp)
-	move.l	T87354.l,-(sp)
-	jsr	L62012.l
+	move.l	T87354,-(sp)
+	jsr	L62012
 	addq.l	#4,sp
 	move.w	d0,-(sp)
-	jsr	L66008.l
+	jsr	L66008
 	addq.l	#2,sp
 	move.w	d0,-2(fp)
 	beq.s	L21698
 	move.w	-2(fp),(sp)
-	jsr	L65356.l
+	jsr	L65356
 	tst.w	d0
 	beq.s	L21698
-	move.w	#113,U101066.l
-	clr.w	U101068.l
-	move.w	#1,U101072.l
+	move.w	#113,U101066
+	clr.w	U101068
+	move.w	#1,U101072
 	move.w	-2(fp),(sp)
-	jsr	L65532.l
+	jsr	L65532
 	move.l	d0,-(sp)
-	jsr	L81832.l
+	jsr	L81832
 	addq.l	#4,sp
-	move.w	d0,U98410.l
-	jsr	L37312.l
+	move.w	d0,U98410
+	jsr	L37312
 L21698:
 	unlk	fp
 	rts
 
 L21702:
 	link	fp,#-6
-	move.w	U92050.l,-2(fp)
+	move.w	U92050,-2(fp)
 	move.w	8(fp),d0
-	move.w	d0,U92050.l
-	move.w	d0,U98410.l
-	move.w	#32,U101066.l
-	clr.w	U101068.l
-	move.w	#1,U101072.l
-	jsr	L37312.l
+	move.w	d0,U92050
+	move.w	d0,U98410
+	move.w	#32,U101066
+	clr.w	U101068
+	move.w	#1,U101072
+	jsr	L37312
 	move.w	-2(fp),d0
 	unlk	fp
 	rts
 
 L21766:
 	link	fp,#-6
-	move.w	#25,U101066.l
-	clr.w	U101068.l
-	move.w	#1,U101072.l
-	move.w	8(fp),U98410.l
-	jsr	L37312.l
-	move.w	U92052.l,-2(fp)
-	move.w	U98720.l,U92052.l
+	move.w	#25,U101066
+	clr.w	U101068
+	move.w	#1,U101072
+	move.w	8(fp),U98410
+	jsr	L37312
+	move.w	U92052,-2(fp)
+	move.w	U98720,U92052
 	move.w	-2(fp),d0
 	unlk	fp
 	rts
 
 L21832:
 	link	fp,#-6
-	move.w	#23,U101066.l
-	clr.w	U101068.l
-	move.w	#1,U101072.l
-	move.w	8(fp),U98410.l
-	jsr	L37312.l
-	move.w	U92054.l,-2(fp)
-	move.w	U98720.l,U92054.l
+	move.w	#23,U101066
+	clr.w	U101068
+	move.w	#1,U101072
+	move.w	8(fp),U98410
+	jsr	L37312
+	move.w	U92054,-2(fp)
+	move.w	U98720,U92054
 	move.w	-2(fp),d0
 	unlk	fp
 	rts
 
 L21898:
 	link	fp,#-6
-	move.w	#24,U101066.l
-	clr.w	U101068.l
-	move.w	#1,U101072.l
-	move.w	8(fp),U98410.l
-	jsr	L37312.l
-	move.w	U92056.l,-2(fp)
-	move.w	U98720.l,U92056.l
+	move.w	#24,U101066
+	clr.w	U101068
+	move.w	#1,U101072
+	move.w	8(fp),U98410
+	jsr	L37312
+	move.w	U92056,-2(fp)
+	move.w	U98720,U92056
 	move.w	-2(fp),d0
 	unlk	fp
 	rts
@@ -7409,36 +7409,36 @@ L21964:
 	link	fp,#-4
 	movem.l	d6-d7,-(sp)
 	move.w	12(fp),d0
-	move.w	d0,U91960.l
+	move.w	d0,U91960
 	move.w	d0,(sp)
 	bsr  	L21766
 	move.w	8(fp),d0
-	move.w	d0,U91956.l
+	move.w	d0,U91956
 	move.w	d0,(sp)
 	bsr  	L21832
 	move.w	10(fp),d0
-	move.w	d0,U91958.l
+	move.w	d0,U91958
 	move.w	d0,(sp)
 	bsr.s	L21898
-	cmpi.w	#4,U91956.l
+	cmpi.w	#4,U91956
 	bne  	L22282
-	move.l	T87358.l,(sp)
-	jsr	L62012.l
+	move.l	T87358,(sp)
+	jsr	L62012
 	move.w	d0,(sp)
-	move.l	T87354.l,-(sp)
-	jsr	L62012.l
+	move.l	T87354,-(sp)
+	jsr	L62012
 	addq.l	#4,sp
 	move.w	d0,-(sp)
-	jsr	L66008.l
+	jsr	L66008
 	addq.l	#2,sp
 	move.w	d0,-2(fp)
 	beq  	L22282
 	move.w	-2(fp),(sp)
-	jsr	L65322.l
+	jsr	L65322
 	tst.w	d0
 	bne  	L22282
 	move.w	-2(fp),(sp)
-	jsr	L6536.l
+	jsr	L6536
 	cmp.w	#16,d0
 	bne  	L22282
 	clr.w	d7
@@ -7448,33 +7448,33 @@ L22116:
 	move.w	-2(fp),(sp)
 	move.w	d7,-(sp)
 	addq.w	#1,(sp)
-	jsr	L65756.l
+	jsr	L65756
 	addq.l	#2,sp
 	move.w	d0,-4(fp)
 	move.w	d0,(sp)
-	jsr	L65356.l
+	jsr	L65356
 	tst.w	d0
 	beq  	L22282
 	move.l	#0,-(sp)
 	move.w	-4(fp),-(sp)
-	jsr	L65532.l
+	jsr	L65532
 	addq.l	#2,sp
 	move.l	d0,-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	blt.s	L22282
 	move.l	#-65456,-(sp)
 	move.w	-4(fp),-(sp)
-	jsr	L65532.l
+	jsr	L65532
 	addq.l	#2,sp
 	move.l	d0,-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	bgt.s	L22282
 	move.w	-4(fp),(sp)
-	jsr	L65532.l
+	jsr	L65532
 	move.l	d0,-(sp)
-	jsr	L81832.l
+	jsr	L81832
 	addq.l	#4,sp
 	move.w	d0,-(sp)
 	movea.w	d7,a0
@@ -7485,10 +7485,10 @@ L22116:
 L22246:
 	cmp.w	#16,d7
 	blt  	L22116
-	move.w	#112,U101066.l
-	clr.w	U101068.l
-	move.w	#16,U101072.l
-	jsr	L37312.l
+	move.w	#112,U101066
+	clr.w	U101068
+	move.w	#16,U101072
+	jsr	L37312
 L22282:
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
@@ -7497,25 +7497,25 @@ L22282:
 
 L22292:
 	link	fp,#-4
-	jsr	L48260.l
-	jsr	L37312.l
+	jsr	L48260
+	jsr	L37312
 	unlk	fp
 	rts
 
 L22312:
 	link	fp,#-4
 	bsr.s	L22292
-	jsr	L33100.l
-	move.w	#1,U92038.l
-	jsr	L47940.l
-	jsr	L61834.l
+	jsr	L33100
+	move.w	#1,U92038
+	jsr	L47940
+	jsr	L61834
 	unlk	fp
 	rts
 
 L22348:
 	link	fp,#-4
-	jsr	L48234.l
-	jsr	L33144.l
+	jsr	L48234
+	jsr	L33144
 	unlk	fp
 	rts
 
@@ -7531,39 +7531,39 @@ L22368:
 L22392:
 	link	fp,#-4
 	movea.l	8(fp),a0
-	move.w	(a0),U100970.l
+	move.w	(a0),U100970
 	movea.l	8(fp),a0
-	move.w	2(a0),U100972.l
+	move.w	2(a0),U100972
 	movea.l	8(fp),a0
 	move.w	4(a0),d0
-	cmp.w	U100974.l,d0
+	cmp.w	U100974,d0
 	bne.s	L22450
 	movea.l	8(fp),a0
 	move.w	6(a0),d0
-	cmp.w	U100976.l,d0
+	cmp.w	U100976,d0
 	beq.s	L22482
 L22450:
 	movea.l	8(fp),a0
 	move.w	6(a0),(sp)
 	movea.l	8(fp),a0
 	move.w	4(a0),-(sp)
-	jsr	L32390.l
+	jsr	L32390
 	addq.l	#2,sp
-	move.w	#1,U92032.l
+	move.w	#1,U92032
 L22482:
 	movea.l	8(fp),a0
-	move.w	4(a0),U100974.l
+	move.w	4(a0),U100974
 	movea.l	8(fp),a0
-	move.w	6(a0),U100976.l
-	move.w	U91960.l,(sp)
-	move.w	U91958.l,-(sp)
-	move.w	U91956.l,-(sp)
+	move.w	6(a0),U100976
+	move.w	U91960,(sp)
+	move.w	U91958,-(sp)
+	move.w	U91956,-(sp)
 	bsr  	L21964
 	addq.l	#4,sp
-	jsr	L33352.l
+	jsr	L33352
 	move.w	d0,(sp)
-	move.w	U91964.l,-(sp)
-	move.w	U91962.l,-(sp)
+	move.w	U91964,-(sp)
+	move.w	U91962,-(sp)
 	bsr  	L21448
 	addq.l	#4,sp
 	unlk	fp
@@ -7571,38 +7571,38 @@ L22482:
 
 L22560:
 	link	fp,#-4
-	tst.w	U92032.l
+	tst.w	U92032
 	beq.s	L22584
-	clr.w	U92032.l
-	jsr	L32596.l
+	clr.w	U92032
+	jsr	L32596
 L22584:
 	unlk	fp
 	rts
 
 L22588:
 	link	fp,#-4
-	move.w	10(fp),U101154.l
-	move.w	8(fp),U101044.l
-	move.w	14(fp),U100672.l
-	move.w	12(fp),U101498.l
+	move.w	10(fp),U101154
+	move.w	8(fp),U101044
+	move.w	14(fp),U100672
+	move.w	12(fp),U101498
 	unlk	fp
 	rts
 
 L22628:
 	link	fp,#-4
-	move.w	U91970.l,d0
+	move.w	U91970,d0
 	unlk	fp
 	rts
 
 L22642:
 	link	fp,#-4
-	move.w	U91972.l,d0
+	move.w	U91972,d0
 	unlk	fp
 	rts
 
 L22656:
 	link	fp,#-4
-	move.w	U91980.l,d0
+	move.w	U91980,d0
 	unlk	fp
 	rts
 
@@ -7614,7 +7614,7 @@ L22670:
 	move.l	#U92058,(sp)
 	move.l	10(fp),-(sp)
 	move.w	#8,-(sp)
-	jsr	L50230.l
+	jsr	L50230
 	addq.l	#6,sp
 	bra.s	L22726
 
@@ -7623,29 +7623,29 @@ L22712:
 	bne.s	L22726
 	move.l	#U92058,-4(fp)
 L22726:
-	move.w	#129,U101066.l
-	move.w	#2,U101068.l
-	move.w	#1,U101072.l
-	move.w	#1,U98410.l
+	move.w	#129,U101066
+	move.w	#2,U101068
+	move.w	#1,U101072
+	move.w	#1,U98410
 	movea.l	-4(fp),a0
-	move.w	(a0),U99868.l
+	move.w	(a0),U99868
 	movea.l	-4(fp),a0
-	move.w	2(a0),U99870.l
+	move.w	2(a0),U99870
 	movea.l	-4(fp),a0
 	move.w	(a0),d0
 	movea.l	-4(fp),a1
 	move.w	4(a1),d1
 	add.w	d1,d0
 	subq.w	#1,d0
-	move.w	d0,U99872.l
+	move.w	d0,U99872
 	movea.l	-4(fp),a0
 	move.w	2(a0),d0
 	movea.l	-4(fp),a1
 	move.w	6(a1),d1
 	add.w	d1,d0
 	subq.w	#1,d0
-	move.w	d0,U99874.l
-	jsr	L37312.l
+	move.w	d0,U99874
+	jsr	L37312
 	unlk	fp
 	rts
 
@@ -7673,7 +7673,7 @@ L22862:
 	movea.l	8(fp),a0
 	clr.w	10(a0)
 	movea.l	8(fp),a0
-	move.w	U101478.l,12(a0)
+	move.w	U101478,12(a0)
 	movea.l	8(fp),a0
 	move.l	12(fp),(a0)
 	unlk	fp
@@ -7682,105 +7682,105 @@ L22862:
 L22938:
 	link	fp,#-6
 	move.l	#U98410,(sp)
-	jsr	L37408.l
+	jsr	L37408
 	move.l	#U98720,(sp)
-	jsr	L37440.l
+	jsr	L37440
 	move.l	#U99868,(sp)
-	jsr	L37392.l
+	jsr	L37392
 	move.l	#U100566,(sp)
-	jsr	L37424.l
-	move.w	#1,U98410.l
-	move.w	#1,U98412.l
-	move.w	#1,U98414.l
-	move.w	#1,U98416.l
-	move.w	#1,U98418.l
-	move.w	#1,U98420.l
-	move.w	#1,U98422.l
-	move.w	#1,U98424.l
-	move.w	#1,U98426.l
-	move.w	#1,U98428.l
-	move.w	#2,U98430.l
-	move.w	#100,U101066.l
-	clr.w	U101068.l
-	move.w	#11,U101072.l
-	move.w	8(fp),U101078.l
-	jsr	L37312.l
-	move.w	U98720.l,d0
+	jsr	L37424
+	move.w	#1,U98410
+	move.w	#1,U98412
+	move.w	#1,U98414
+	move.w	#1,U98416
+	move.w	#1,U98418
+	move.w	#1,U98420
+	move.w	#1,U98422
+	move.w	#1,U98424
+	move.w	#1,U98426
+	move.w	#1,U98428
+	move.w	#2,U98430
+	move.w	#100,U101066
+	clr.w	U101068
+	move.w	#11,U101072
+	move.w	8(fp),U101078
+	jsr	L37312
+	move.w	U98720,d0
 	addq.w	#1,d0
-	move.w	d0,U99806.l
-	move.w	U98722.l,d0
+	move.w	d0,U99806
+	move.w	U98722,d0
 	addq.w	#1,d0
-	move.w	d0,U101056.l
-	move.w	U98746.l,d0
+	move.w	d0,U101056
+	move.w	U98746,d0
 	subq.w	#1,d0
-	move.w	d0,U101126.l
-	move.w	d0,U101124.l
-	move.w	#1000,U101128.l
-	move.w	#4,U101130.l
-	move.w	U98742.l,U101132.l
-	move.w	U98744.l,U101142.l
-	move.w	#7,U101134.l
-	move.w	U98734.l,U101136.l
+	move.w	d0,U101126
+	move.w	d0,U101124
+	move.w	#1000,U101128
+	move.w	#4,U101130
+	move.w	U98742,U101132
+	move.w	U98744,U101142
+	move.w	#7,U101134
+	move.w	U98734,U101136
 	bne.s	L23226
-	move.w	#39,U101136.l
+	move.w	#39,U101136
 L23226:
-	move.w	U98726.l,U101138.l
-	move.w	U98728.l,U101140.l
-	move.w	U101140.l,d0
+	move.w	U98726,U101138
+	move.w	U98728,U101140
+	move.w	U101140,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688.l
+	jsr	L81688
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	move.w	U101138.l,d0
+	move.w	U101138,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688.l
+	jsr	L81688
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81572.l
+	jsr	L81572
 	addq.l	#8,sp
-	move.l	d0,U100900.l
-	clr.w	U101478.l
-	move.w	U98746.l,-2(fp)
+	move.l	d0,U100900
+	clr.w	U101478
+	move.w	U98746,-2(fp)
 	bra.s	L23326
 
 L23316:
-	addq.w	#1,U101478.l
+	addq.w	#1,U101478
 	asr	-2(fp)
 L23326:
 	cmpi.w	#1,-2(fp)
 	bgt.s	L23316
-	move.w	U100568.l,U91988.l
-	move.w	#38,U101066.l
-	clr.w	U101068.l
-	clr.w	U101072.l
-	jsr	L37312.l
-	move.w	U100568.l,U91990.l
+	move.w	U100568,U91988
+	move.w	#38,U101066
+	clr.w	U101068
+	clr.w	U101072
+	jsr	L37312
+	move.w	U100568,U91990
 	move.l	#U91976,(sp)
 	move.l	#U91974,-(sp)
 	move.l	#U91984,-(sp)
 	move.l	#U91982,-(sp)
-	move.w	U91988.l,-(sp)
+	move.w	U91988,-(sp)
 	bsr  	L23592
 	adda.l	#14,sp
 	move.l	#U91972,(sp)
 	move.l	#U91970,-(sp)
 	move.l	#U91980,-(sp)
 	move.l	#U91978,-(sp)
-	move.w	U91990.l,-(sp)
+	move.w	U91990,-(sp)
 	bsr  	L23592
 	adda.l	#14,sp
-	move.w	U99806.l,d0
+	move.w	U99806,d0
 	ext.l	d0
-	divs	U91970.l,d0
-	move.w	d0,U91968.l
-	move.w	U101056.l,d0
+	divs	U91970,d0
+	move.w	d0,U91968
+	move.w	U101056,d0
 	ext.l	d0
-	divs	U91972.l,d0
-	move.w	d0,U91966.l
-	clr.w	U92032.l
-	clr.w	U92034.l
+	divs	U91972,d0
+	move.w	d0,U91966
+	clr.w	U92032
+	clr.w	U92034
 	unlk	fp
 	rts
 
@@ -7788,13 +7788,13 @@ L23516:
 	link	fp,#-4
 	cmpi.w	#2,8(fp)
 	bne.s	L23536
-	move.w	U101132.l,d0
+	move.w	U101132,d0
 	bra.s	L23554
 
 L23536:
 	cmpi.w	#3,8(fp)
 	bne.s	L23552
-	move.w	U101142.l,d0
+	move.w	U101142,d0
 	bra.s	L23554
 
 L23552:
@@ -7805,29 +7805,29 @@ L23554:
 
 L23558:
 	link	fp,#-4
-	move.w	#101,U101066.l
-	clr.w	U101068.l
-	clr.w	U101072.l
-	jsr	L37312.l
+	move.w	#101,U101066
+	clr.w	U101068
+	clr.w	U101072
+	jsr	L37312
 	unlk	fp
 	rts
 
 L23592:
 	link	fp,#-4
-	move.w	#12,U101066.l
-	move.w	#1,U101068.l
-	clr.w	U101072.l
-	clr.w	U99868.l
-	move.w	8(fp),U99870.l
-	jsr	L37312.l
+	move.w	#12,U101066
+	move.w	#1,U101068
+	clr.w	U101072
+	clr.w	U99868
+	move.w	8(fp),U99870
+	jsr	L37312
 	movea.l	10(fp),a0
-	move.w	U100566.l,(a0)
+	move.w	U100566,(a0)
 	movea.l	14(fp),a0
-	move.w	U100568.l,(a0)
+	move.w	U100568,(a0)
 	movea.l	18(fp),a0
-	move.w	U100570.l,(a0)
+	move.w	U100570,(a0)
 	movea.l	22(fp),a0
-	move.w	U100572.l,(a0)
+	move.w	U100572,(a0)
 	unlk	fp
 	rts
 
@@ -7845,19 +7845,19 @@ L23682:
 	bsr  	L21898
 	move.w	d0,-2(fp)
 L23728:
-	move.w	14(fp),U99868.l
-	move.w	16(fp),U99870.l
+	move.w	14(fp),U99868
+	move.w	16(fp),U99870
 	move.w	14(fp),d0
 	add.w	18(fp),d0
 	subq.w	#1,d0
-	move.w	d0,U99872.l
+	move.w	d0,U99872
 	move.w	16(fp),d0
 	add.w	20(fp),d0
 	subq.w	#1,d0
-	move.w	d0,U99874.l
-	move.w	#114,U101066.l
-	move.w	#2,U101068.l
-	clr.w	U101072.l
+	move.w	d0,U99874
+	move.w	#114,U101066
+	move.w	#2,U101068
+	clr.w	U101072
 	bsr  	L22292
 	move.w	-6(fp),(sp)
 	bsr  	L21702
@@ -7873,39 +7873,39 @@ L23832:
 
 L23836:
 	link	fp,#-4
-	move.w	U101056.l,(sp)
-	move.w	U99806.l,-(sp)
+	move.w	U101056,(sp)
+	move.w	U99806,-(sp)
 	clr.l	-(sp)
 	move.l	#U91992,-(sp)
 	bsr  	L22862
 	adda.l	#10,sp
-	move.w	U101056.l,(sp)
-	move.w	U99806.l,-(sp)
+	move.w	U101056,(sp)
+	move.w	U99806,-(sp)
 	clr.l	-(sp)
 	move.l	#U92012,-(sp)
 	bsr  	L22862
 	adda.l	#10,sp
-	move.w	10(fp),U99868.l
-	move.w	12(fp),U99870.l
+	move.w	10(fp),U99868
+	move.w	12(fp),U99870
 	move.w	10(fp),d0
 	add.w	18(fp),d0
 	subq.w	#1,d0
-	move.w	d0,U99872.l
+	move.w	d0,U99872
 	move.w	12(fp),d0
 	add.w	20(fp),d0
 	subq.w	#1,d0
-	move.w	d0,U99874.l
-	move.w	14(fp),U99876.l
-	move.w	16(fp),U99878.l
+	move.w	d0,U99874
+	move.w	14(fp),U99876
+	move.w	16(fp),U99878
 	move.w	14(fp),d0
 	add.w	18(fp),d0
 	subq.w	#1,d0
-	move.w	d0,U99880.l
+	move.w	d0,U99880
 	move.w	16(fp),d0
 	add.w	20(fp),d0
 	subq.w	#1,d0
-	move.w	d0,U99882.l
-	move.w	8(fp),U98410.l
+	move.w	d0,U99882
+	move.w	8(fp),U98410
 	bsr  	L24230
 	unlk	fp
 	rts
@@ -7914,17 +7914,17 @@ L24012:
 	link	fp,#0
 	movem.l	d6-d7/a5,-(sp)
 	movea.l	8(fp),a5
-	jsr	L48260.l
-	move.w	#8,U101066.l
-	move.w	#1,U101068.l
-	move.w	16(fp),U101072.l
-	move.w	18(fp),U99868.l
+	jsr	L48260
+	move.w	#8,U101066
+	move.w	#1,U101068
+	move.w	16(fp),U101072
+	move.w	18(fp),U99868
 	bra.s	L24128
 
 L24064:
 	move.w	14(fp),d0
 	add.w	d0,20(fp)
-	move.w	20(fp),U99870.l
+	move.w	20(fp),U99870
 	clr.w	d7
 	bra.s	L24108
 
@@ -7940,7 +7940,7 @@ L24084:
 L24108:
 	cmp.w	16(fp),d7
 	blt.s	L24084
-	jsr	L37312.l
+	jsr	L37312
 	move.w	12(fp),d0
 	ext.l	d0
 	adda.l	d0,a5
@@ -7955,60 +7955,60 @@ L24128:
 
 L24148:
 	link	fp,#-4
-	jsr	L48260.l
-	move.w	10(fp),U99868.l
+	jsr	L48260
+	move.w	10(fp),U99868
 	bsr  	L22656
 	add.w	12(fp),d0
-	move.w	d0,U99870.l
+	move.w	d0,U99870
 	move.b	9(fp),d0
 	ext.w	d0
 	and.w	#255,d0
-	move.w	d0,U98410.l
-	move.w	#8,U101066.l
-	move.w	#1,U101068.l
-	move.w	#1,U101072.l
-	jsr	L37312.l
+	move.w	d0,U98410
+	move.w	#8,U101066
+	move.w	#1,U101068
+	move.w	#1,U101072
+	jsr	L37312
 	unlk	fp
 	rts
 
 L24230:
 	link	fp,#-4
-	move.w	#109,U101066.l
-	move.w	#4,U101068.l
-	move.w	#1,U101072.l
+	move.w	#109,U101066
+	move.w	#4,U101068
+	move.w	#1,U101072
 	move.l	#U91992,(sp)
-	jsr	L37456.l
+	jsr	L37456
 	move.l	#U92012,(sp)
-	jsr	L37472.l
+	jsr	L37472
 	bsr  	L22292
 	unlk	fp
 	rts
 
 L24290:
 	link	fp,#-4
-	move.l	10(fp),U92042.l
-	move.w	8(fp),U92036.l
-	move.w	#1,U92038.l
-	clr.w	U92040.l
+	move.l	10(fp),U92042
+	move.w	8(fp),U92036
+	move.w	#1,U92038
+	clr.w	U92040
 	unlk	fp
 	rts
 
 L24328:
 	link	fp,#-12
-	tst.w	U92036.l
+	tst.w	U92036
 	beq  	L24500
-	tst.w	U92038.l
+	tst.w	U92038
 	beq  	L24500
-	clr.w	U92038.l
+	clr.w	U92038
 	clr.w	d0
 	move.w	d0,-6(fp)
 	move.w	d0,-8(fp)
-	move.w	U99806.l,-4(fp)
-	move.w	U101056.l,-2(fp)
+	move.w	U99806,-4(fp)
+	move.w	U101056,-2(fp)
 	move.l	fp,(sp)
 	subq.l	#8,(sp)
 	move.l	8(fp),-(sp)
-	jsr	L49946.l
+	jsr	L49946
 	addq.l	#4,sp
 	tst.w	d0
 	beq.s	L24500
@@ -8017,27 +8017,27 @@ L24328:
 	move.w	#2,-(sp)
 	bsr  	L22670
 	addq.l	#2,sp
-	jsr	L33144.l
-	cmpi.w	#2,U92036.l
+	jsr	L33144
+	cmpi.w	#2,U92036
 	bne.s	L24452
 	move.l	fp,(sp)
 	subq.l	#8,(sp)
-	move.l	T87318.l,-(sp)
+	move.l	T87318,-(sp)
 	bsr  	L25344
 	addq.l	#4,sp
 	bra.s	L24472
 
 L24452:
-	move.l	U92042.l,(sp)
+	move.l	U92042,(sp)
 	move.l	fp,-(sp)
 	subq.l	#8,(sp)
 	move.w	#1,-(sp)
 	bsr  	L24620
 	addq.l	#6,sp
 L24472:
-	move.w	-4(fp),U92046.l
-	move.w	-2(fp),U92048.l
-	jsr	L33100.l
+	move.w	-4(fp),U92046
+	move.w	-2(fp),U92048
+	jsr	L33100
 	clr.w	(sp)
 	bsr  	L22670
 L24500:
@@ -8046,35 +8046,35 @@ L24500:
 
 L24504:
 	link	fp,#-12
-	tst.w	U92040.l
+	tst.w	U92040
 	bne.s	L24616
-	jsr	L33130.l
-	tst.w	U92036.l
+	jsr	L33130
+	tst.w	U92036
 	beq.s	L24610
-	tst.w	U99190.l
+	tst.w	U99190
 	bne.s	L24610
 	move.w	8(fp),-8(fp)
 	move.w	10(fp),-6(fp)
-	cmpi.w	#2,U92036.l
+	cmpi.w	#2,U92036
 	bne.s	L24578
 	move.l	fp,(sp)
 	subq.l	#8,(sp)
-	move.l	T87318.l,-(sp)
+	move.l	T87318,-(sp)
 	bsr  	L24872
 	addq.l	#4,sp
 	bra.s	L24610
 
 L24578:
-	move.w	U92046.l,-4(fp)
-	move.w	U92048.l,-2(fp)
-	move.l	U92042.l,(sp)
+	move.w	U92046,-4(fp)
+	move.w	U92048,-2(fp)
+	move.l	U92042,(sp)
 	move.l	fp,-(sp)
 	subq.l	#8,(sp)
 	clr.w	-(sp)
 	bsr.s	L24620
 	addq.l	#6,sp
 L24610:
-	jsr	L33100.l
+	jsr	L33100
 L24616:
 	unlk	fp
 	rts
@@ -8144,7 +8144,7 @@ L24620:
 	move.w	6(a0),d0
 	subq.w	#1,d0
 	move.w	d0,6(a4)
-	move.w	#3,U98410.l
+	move.w	#3,U98410
 	bsr  	L24230
 	tst.l	(sp)+
 	movem.l	(sp)+,a4-a5
@@ -8155,48 +8155,48 @@ L24872:
 	link	fp,#-190
 	clr.w	(sp)
 	move.l	8(fp),-(sp)
-	jsr	L77468.l
+	jsr	L77468
 	addq.l	#4,sp
 	move.w	d0,-184(fp)
 	cmp.w	#-1,d0
 	bgt.s	L24906
-	jsr	L69438.l
+	jsr	L69438
 L24906:
 	move.w	-184(fp),(sp)
 	move.w	#10,-(sp)
 	move.l	fp,-(sp)
 	addi.l	#-180,(sp)
-	jsr	L77520.l
+	jsr	L77520
 	addq.l	#6,sp
 	cmp.w	#-1,d0
 	bgt.s	L24942
-	jsr	L69504.l
+	jsr	L69504
 L24942:
 	move.w	-180(fp),d0
-	cmp.w	U101478.l,d0
+	cmp.w	U101478,d0
 	beq.s	L24960
-	jsr	L69624.l
+	jsr	L69624
 L24960:
-	move.l	T87318.l,d0
+	move.l	T87318,d0
 	cmp.l	8(fp),d0
 	beq.s	L25050
 	move.l	12(fp),(sp)
 	move.l	fp,-(sp)
 	addi.l	#-178,(sp)
-	jsr	L49856.l
+	jsr	L49856
 	addq.l	#4,sp
 	tst.w	d0
 	bne.s	L25050
-	move.w	#1,U92040.l
+	move.w	#1,U92040
 	move.l	fp,(sp)
 	addi.l	#-178,(sp)
-	jsr	L45542.l
-	clr.w	U92040.l
+	jsr	L45542
+	clr.w	U92040
 	move.l	12(fp),(sp)
 	move.l	fp,-(sp)
 	addi.l	#-178,(sp)
 	move.w	#8,-(sp)
-	jsr	L50230.l
+	jsr	L50230
 	addq.l	#6,sp
 	bra.s	L25076
 
@@ -8206,7 +8206,7 @@ L25050:
 	move.l	fp,-(sp)
 	addi.l	#-174,(sp)
 	move.w	#4,-(sp)
-	jsr	L50230.l
+	jsr	L50230
 	addq.l	#6,sp
 L25076:
 	movea.l	12(fp),a0
@@ -8228,7 +8228,7 @@ L25076:
 	add.w	#15,d0
 	ext.l	d0
 	divs	#16,d0
-	muls	U101478.l,d0
+	muls	U101478,d0
 	asl.w	#1,d0
 	move.w	d0,-186(fp)
 	bra.s	L25228
@@ -8238,11 +8238,11 @@ L25164:
 	move.w	-186(fp),-(sp)
 	move.l	fp,-(sp)
 	addi.l	#-180,(sp)
-	jsr	L77520.l
+	jsr	L77520
 	addq.l	#6,sp
 	cmp.w	#-1,d0
 	bgt.s	L25200
-	jsr	L69504.l
+	jsr	L69504
 L25200:
 	move.l	fp,(sp)
 	addi.l	#-180,(sp)
@@ -8259,7 +8259,7 @@ L25228:
 	blt.s	L25164
 L25242:
 	move.w	-184(fp),(sp)
-	jsr	L77496.l
+	jsr	L77496
 	unlk	fp
 	rts
 
@@ -8268,26 +8268,26 @@ L25256:
 	move.w	14(fp),(sp)
 	move.w	12(fp),-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L77554.l
+	jsr	L77554
 	addq.l	#6,sp
 	move.w	d0,-2(fp)
 	cmp.w	#-1,d0
 	bgt.s	L25296
-	jsr	L69504.l
+	jsr	L69504
 L25296:
 	move.w	-2(fp),d0
 	cmp.w	12(fp),d0
 	bge.s	L25340
-	cmpi.w	#2,U92036.l
+	cmpi.w	#2,U92036
 	bne.s	L25334
 	clr.w	(sp)
-	jsr	L49422.l
+	jsr	L49422
 	clr.l	(sp)
 	clr.w	-(sp)
 	bsr  	L24290
 	addq.l	#2,sp
 L25334:
-	jsr	L67570.l
+	jsr	L67570
 L25340:
 	unlk	fp
 	rts
@@ -8296,19 +8296,19 @@ L25344:
 	link	fp,#-190
 	clr.w	(sp)
 	move.l	8(fp),-(sp)
-	jsr	L77664.l
+	jsr	L77664
 	addq.l	#4,sp
 	move.w	d0,-184(fp)
 	cmp.w	#-1,d0
 	bgt.s	L25378
-	jsr	L69438.l
+	jsr	L69438
 L25378:
-	move.w	U101478.l,-180(fp)
+	move.w	U101478,-180(fp)
 	move.l	fp,(sp)
 	addi.l	#-178,(sp)
 	move.l	12(fp),-(sp)
 	move.w	#8,-(sp)
-	jsr	L50230.l
+	jsr	L50230
 	addq.l	#6,sp
 	move.w	-184(fp),(sp)
 	move.w	#10,-(sp)
@@ -8329,7 +8329,7 @@ L25378:
 	add.w	#15,d0
 	ext.l	d0
 	divs	#16,d0
-	muls	U101478.l,d0
+	muls	U101478,d0
 	asl.w	#1,d0
 	move.w	d0,-186(fp)
 	bra.s	L25548
@@ -8355,10 +8355,10 @@ L25548:
 	cmp.w	-182(fp),d0
 	blt.s	L25496
 	move.w	-184(fp),(sp)
-	jsr	L77496.l
+	jsr	L77496
 	cmp.w	#-1,d0
 	bgt.s	L25584
-	jsr	L69570.l
+	jsr	L69570
 L25584:
 	unlk	fp
 	rts
@@ -8367,7 +8367,7 @@ L25588:
 	link	fp,#-4
 	move.l	#L24872,(sp)
 	bsr.s	L25628
-	move.w	#1,U92038.l
+	move.w	#1,U92038
 	unlk	fp
 	rts
 
@@ -8380,55 +8380,55 @@ L25612:
 
 L25628:
 	link	fp,#-12
-	move.l	T87314.l,(sp)
-	jsr	L19136.l
-	jsr	L48234.l
+	move.l	T87314,(sp)
+	jsr	L19136
+	jsr	L48234
 	move.l	fp,(sp)
 	subq.l	#8,(sp)
 	move.l	#U100970,-(sp)
 	move.w	#8,-(sp)
-	jsr	L50230.l
+	jsr	L50230
 	addq.l	#6,sp
-	jsr	L33144.l
+	jsr	L33144
 	move.l	fp,-(sp)
 	subq.l	#8,(sp)
 	move.l	#U100754,-(sp)
 	movea.l	8(fp),a0
 	jsr	(a0)
 	addq.l	#8,sp
-	jsr	L33100.l
-	jsr	L47940.l
-	jsr	L61834.l
+	jsr	L33100
+	jsr	L47940
+	jsr	L61834
 	unlk	fp
 	rts
 
 L25718:
 	link	fp,#-4
-	move.w	U91962.l,d0
+	move.w	U91962,d0
 	unlk	fp
 	rts
 
 L25732:
 	link	fp,#-4
-	move.w	U91964.l,d0
+	move.w	U91964,d0
 	unlk	fp
 	rts
 
 L25746:
 	link	fp,#-4
-	move.w	U91956.l,d0
+	move.w	U91956,d0
 	unlk	fp
 	rts
 
 L25760:
 	link	fp,#-4
-	move.w	U91958.l,d0
+	move.w	U91958,d0
 	unlk	fp
 	rts
 
 L25774:
 	link	fp,#-4
-	move.w	U91960.l,d0
+	move.w	U91960,d0
 	unlk	fp
 	rts
 
@@ -8437,16 +8437,16 @@ L25788:
 	move.w	#1,(sp)
 	bsr  	L21702
 	move.w	d0,-2(fp)
-	jsr	L33352.l
+	jsr	L33352
 	move.w	d0,(sp)
 	bsr  	L27190
-	move.w	#6,U101066.l
-	move.w	#2,U101068.l
-	clr.w	U101072.l
-	move.w	8(fp),U99868.l
-	move.w	10(fp),U99870.l
-	move.w	12(fp),U99872.l
-	move.w	14(fp),U99874.l
+	move.w	#6,U101066
+	move.w	#2,U101068
+	clr.w	U101072
+	move.w	8(fp),U99868
+	move.w	10(fp),U99870
+	move.w	12(fp),U99872
+	move.w	14(fp),U99874
 	bsr  	L22292
 	move.w	-2(fp),(sp)
 	bsr  	L21702
@@ -8458,11 +8458,11 @@ L25886:
 L25890:
 	move.w	#-1,(sp)
 	move.w	#32,-(sp)
-	jsr	L188.l
+	jsr	L188
 	addq.l	#2,sp
 	tst.w	d0
 	bne.s	L25890
-	jsr	L16090.l
+	jsr	L16090
 	clr.w	-2(fp)
 	bra.s	L25964
 
@@ -8471,13 +8471,13 @@ L25922:
 	adda.l	#U99606,a0
 	move.l	a0,-(sp)
 	move.w	#255,-(sp)
-	jsr	L16278.l
+	jsr	L16278
 	addq.l	#2,sp
 	ext.w	d0
 	movea.l	(sp)+,a0
 	move.b	d0,(a0)
 	addq.w	#1,-2(fp)
-	tst.w	U100896.l
+	tst.w	U100896
 	beq.s	L25972
 L25964:
 	cmpi.w	#200,-2(fp)
@@ -8485,97 +8485,97 @@ L25964:
 L25972:
 	move.l	#U99606,(sp)
 	move.w	#32,-(sp)
-	jsr	L188.l
+	jsr	L188
 	addq.l	#2,sp
-	jsr	L61834.l
+	jsr	L61834
 	unlk	fp
 	rts
 
 L26000:
 	link	fp,#-4
-	jsr	L16090.l
+	jsr	L16090
 	bsr  	L22348
 	move.l	#U99868,(sp)
 	bsr  	L21016
 	bsr  	L21278
-	add.w	U99868.l,d0
+	add.w	U99868,d0
 	subq.w	#1,d0
-	move.w	d0,U99872.l
+	move.w	d0,U99872
 	bsr  	L21294
 	move.w	d0,-(sp)
-	move.w	U99870.l,d0
+	move.w	U99870,d0
 	sub.w	(sp)+,d0
 	addq.w	#1,d0
-	move.w	d0,U99874.l
+	move.w	d0,U99874
 	bsr  	L21310
 	tst.w	d0
 	beq.s	L26098
-	move.w	#11,U101066.l
-	move.w	#2,U101068.l
-	move.w	#1,U101076.l
+	move.w	#11,U101066
+	move.w	#2,U101068
+	move.w	#1,U101076
 	bra.s	L26178
 
 L26098:
-	move.w	U99872.l,d0
-	move.w	d0,U99880.l
-	move.w	d0,U99876.l
-	move.w	U99868.l,d0
-	move.w	d0,U99884.l
-	move.w	d0,U99872.l
-	move.w	U99870.l,d0
-	move.w	d0,U99886.l
-	move.w	d0,U99882.l
-	move.w	U99874.l,U99878.l
-	move.w	#6,U101066.l
-	move.w	#5,U101068.l
+	move.w	U99872,d0
+	move.w	d0,U99880
+	move.w	d0,U99876
+	move.w	U99868,d0
+	move.w	d0,U99884
+	move.w	d0,U99872
+	move.w	U99870,d0
+	move.w	d0,U99886
+	move.w	d0,U99882
+	move.w	U99874,U99878
+	move.w	#6,U101066
+	move.w	#5,U101068
 L26178:
-	clr.w	U101072.l
+	clr.w	U101072
 	bsr  	L22312
 	unlk	fp
 	rts
 
 L26192:
 	link	fp,#-4
-	jsr	L16090.l
+	jsr	L16090
 	bsr  	L22348
 	move.l	#U99868,(sp)
 	bsr  	L21016
 	bsr  	L21278
-	move.w	d0,U99880.l
+	move.w	d0,U99880
 	bsr  	L21112
-	move.w	d0,U98412.l
+	move.w	d0,U98412
 	bsr  	L21112
-	move.w	d0,U98410.l
+	move.w	d0,U98410
 	bsr  	L21362
 	unlk	fp
 	rts
 
 L26254:
 	link	fp,#-4
-	jsr	L16090.l
+	jsr	L16090
 	bsr  	L22348
 	move.l	#U99868,(sp)
 	bsr  	L21016
 	bsr  	L21278
-	move.w	d0,U99876.l
-	move.w	d0,U99880.l
+	move.w	d0,U99876
+	move.w	d0,U99880
 	bsr  	L21310
 	tst.w	d0
 	beq.s	L26358
 	clr.w	d0
-	move.w	d0,U99878.l
-	move.w	d0,U99874.l
-	move.w	d0,U99872.l
-	move.w	#11,U101066.l
-	move.w	#3,U101068.l
-	clr.w	U101072.l
-	move.w	#4,U101076.l
+	move.w	d0,U99878
+	move.w	d0,U99874
+	move.w	d0,U99872
+	move.w	#11,U101066
+	move.w	#3,U101068
+	clr.w	U101072
+	move.w	#4,U101076
 	bsr  	L22312
 	bra.s	L26376
 
 L26358:
-	clr.w	U98410.l
-	move.w	#3600,U98412.l
+	clr.w	U98410
+	move.w	#3600,U98412
 	bsr  	L21362
 L26376:
 	unlk	fp
@@ -8583,50 +8583,50 @@ L26376:
 
 L26380:
 	link	fp,#-8
-	jsr	L16090.l
-	move.w	U101130.l,(sp)
-	jsr	L16278.l
+	jsr	L16090
+	move.w	U101130,(sp)
+	jsr	L16278
 	move.w	d0,-2(fp)
 	move.w	-2(fp),(sp)
 	bsr  	L23516
 	move.w	d0,(sp)
-	jsr	L16278.l
+	jsr	L16278
 	move.w	d0,-4(fp)
-	move.w	U101124.l,(sp)
-	jsr	L16278.l
+	move.w	U101124,(sp)
+	jsr	L16278
 	move.w	d0,(sp)
 	move.w	-4(fp),-(sp)
 	move.w	-2(fp),-(sp)
 	bsr  	L21964
 	addq.l	#4,sp
-	jsr	L61834.l
+	jsr	L61834
 	unlk	fp
 	rts
 
 L26464:
 	link	fp,#-4
-	move.w	U91956.l,(sp)
-	jsr	L53070.l
-	move.w	U91958.l,(sp)
-	jsr	L53070.l
-	move.w	U91960.l,(sp)
-	jsr	L53070.l
+	move.w	U91956,(sp)
+	jsr	L53070
+	move.w	U91958,(sp)
+	jsr	L53070
+	move.w	U91960,(sp)
+	jsr	L53070
 	move.w	#3,(sp)
-	jsr	L62166.l
+	jsr	L62166
 	unlk	fp
 	rts
 
 L26518:
 	link	fp,#-2
 	movem.l	d6-d7,-(sp)
-	jsr	L16090.l
+	jsr	L16090
 	bsr  	L22348
 	move.w	#73,-2(fp)
 	clr.w	d7
 	bra.s	L26576
 
 L26546:
-	tst.w	U100896.l
+	tst.w	U100896
 	beq.s	L26582
 	move.w	d7,d0
 	asl.w	#1,d0
@@ -8649,9 +8649,9 @@ L26582:
 L26594:
 	moveq	#6,d0
 L26596:
-	move.w	d0,U101066.l
-	move.w	d7,U101068.l
-	clr.w	U101072.l
+	move.w	d0,U101066
+	move.w	d7,U101068
+	clr.w	U101072
 	bsr  	L22312
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
@@ -8660,85 +8660,85 @@ L26596:
 
 L26628:
 	link	fp,#-4
-	jsr	L16090.l
+	jsr	L16090
 	bsr  	L22348
 	move.l	#U99868,(sp)
 	bsr  	L21016
 	bsr  	L21278
-	move.w	d0,U99872.l
+	move.w	d0,U99872
 	bsr  	L21294
-	move.w	d0,U99874.l
+	move.w	d0,U99874
 	bsr  	L21310
 	tst.w	d0
 	beq.s	L26696
-	clr.w	U101072.l
-	move.w	#5,U101076.l
+	clr.w	U101072
+	move.w	#5,U101076
 	bra.s	L26726
 
 L26696:
-	move.w	#2,U101072.l
-	move.w	#6,U101076.l
-	clr.w	U98410.l
-	move.w	#3600,U98412.l
+	move.w	#2,U101072
+	move.w	#6,U101076
+	clr.w	U98410
+	move.w	#3600,U98412
 L26726:
-	move.w	#11,U101066.l
-	move.w	#2,U101068.l
+	move.w	#11,U101066
+	move.w	#2,U101068
 	bsr  	L22312
 	unlk	fp
 	rts
 
 L26750:
 	link	fp,#-8
-	jsr	L16090.l
-	move.w	U101134.l,(sp)
-	jsr	L16278.l
+	jsr	L16090
+	move.w	U101134,(sp)
+	jsr	L16278
 	move.w	d0,-2(fp)
-	move.w	U101136.l,(sp)
-	jsr	L16278.l
+	move.w	U101136,(sp)
+	jsr	L16278
 	move.w	d0,-4(fp)
-	move.w	U101124.l,(sp)
-	jsr	L16278.l
+	move.w	U101124,(sp)
+	jsr	L16278
 	move.w	d0,(sp)
 	move.w	-4(fp),-(sp)
 	move.w	-2(fp),-(sp)
 	bsr  	L21448
 	addq.l	#4,sp
-	jsr	L61834.l
+	jsr	L61834
 	unlk	fp
 	rts
 
 L26830:
 	link	fp,#-4
-	move.w	U91962.l,(sp)
-	jsr	L53070.l
-	move.w	U91964.l,(sp)
-	jsr	L53070.l
-	jsr	L33352.l
+	move.w	U91962,(sp)
+	jsr	L53070
+	move.w	U91964,(sp)
+	jsr	L53070
+	jsr	L33352
 	move.w	d0,(sp)
-	jsr	L53070.l
+	jsr	L53070
 	move.w	#3,(sp)
-	jsr	L62166.l
+	jsr	L62166
 	unlk	fp
 	rts
 
 L26886:
 	link	fp,#-4
-	move.w	#106,U101066.l
-	clr.w	U101068.l
-	move.w	#1,U101072.l
+	move.w	#106,U101066
+	clr.w	U101068
+	move.w	#1,U101072
 	move.w	#63,(sp)
-	jsr	L61658.l
-	move.w	d0,U98410.l
-	jsr	L37312.l
-	move.w	U98720.l,U92034.l
-	jsr	L61834.l
+	jsr	L61658
+	move.w	d0,U98410
+	jsr	L37312
+	move.w	U98720,U92034
+	jsr	L61834
 	unlk	fp
 	rts
 
 L26954:
 	link	fp,#-4
-	move.w	U92034.l,(sp)
-	jsr	L61926.l
+	move.w	U92034,(sp)
+	jsr	L61926
 	unlk	fp
 	rts
 
@@ -8752,29 +8752,29 @@ L26974:
 	subq.l	#4,(sp)
 	move.l	fp,-(sp)
 	subq.l	#2,(sp)
-	jsr	L37552.l
+	jsr	L37552
 	adda.l	#12,sp
 	move.w	-2(fp),(sp)
-	jsr	L53070.l
+	jsr	L53070
 	move.w	-4(fp),(sp)
-	jsr	L53070.l
+	jsr	L53070
 	move.w	-6(fp),(sp)
-	jsr	L53070.l
+	jsr	L53070
 	move.w	-8(fp),(sp)
-	jsr	L53070.l
-	move.w	U101124.l,(sp)
-	jsr	L53070.l
-	jsr	L37600.l
+	jsr	L53070
+	move.w	U101124,(sp)
+	jsr	L53070
+	jsr	L37600
 	move.l	d0,-(sp)
-	jsr	L81688.l
+	jsr	L81688
 	addq.l	#4,sp
 	move.l	d0,-12(fp)
 	move.l	-12(fp),(sp)
-	jsr	L52972.l
-	move.l	U100900.l,(sp)
-	jsr	L52972.l
+	jsr	L52972
+	move.l	U100900,(sp)
+	jsr	L52972
 	move.w	#7,(sp)
-	jsr	L62166.l
+	jsr	L62166
 	unlk	fp
 	rts
 
@@ -8782,7 +8782,7 @@ L27114:
 	link	fp,#-4
 	move.w	8(fp),(sp)
 	bsr  	L22938
-	move.w	T84996.l,(sp)
+	move.w	T84996,(sp)
 	move.w	#1,-(sp)
 	move.w	#1,-(sp)
 	bsr  	L21964
@@ -8792,7 +8792,7 @@ L27114:
 	move.w	#1,-(sp)
 	bsr  	L21448
 	addq.l	#4,sp
-	tst.w	U101078.l
+	tst.w	U101078
 	bne.s	L27176
 	clr.w	d0
 	bra.s	L27178
@@ -8809,11 +8809,11 @@ L27178:
 
 L27190:
 	link	fp,#-4
-	move.w	#17,U101066.l
-	clr.w	U101068.l
-	move.w	#1,U101072.l
-	move.w	8(fp),U98410.l
-	jsr	L37312.l
+	move.w	#17,U101066
+	clr.w	U101068
+	move.w	#1,U101072
+	move.w	8(fp),U98410
+	jsr	L37312
 	unlk	fp
 	rts
 
@@ -8834,23 +8834,23 @@ L27266:
 L27270:
 	bsr  	L21702
 	move.w	d0,-2(fp)
-	move.w	#6,U101066.l
-	move.w	#2,U101068.l
-	clr.w	U101072.l
-	move.w	U100970.l,d0
+	move.w	#6,U101066
+	move.w	#2,U101068
+	clr.w	U101072
+	move.w	U100970,d0
 	add.w	8(fp),d0
-	move.w	d0,U99868.l
-	move.w	U100972.l,d0
+	move.w	d0,U99868
+	move.w	U100972,d0
 	add.w	10(fp),d0
-	move.w	d0,U99870.l
-	move.w	U100970.l,d0
+	move.w	d0,U99870
+	move.w	U100970,d0
 	add.w	12(fp),d0
-	move.w	d0,U99872.l
-	move.w	U100972.l,d0
+	move.w	d0,U99872
+	move.w	U100972,d0
 	add.w	14(fp),d0
-	move.w	d0,U99874.l
+	move.w	d0,U99874
 	bsr  	L22292
-	move.w	#1,U92038.l
+	move.w	#1,U92038
 	move.w	-2(fp),(sp)
 	bsr  	L21702
 	unlk	fp
@@ -8862,16 +8862,16 @@ L27388:
 	tst.w	d0
 	beq.s	L27476
 	bsr  	L22348
-	move.w	#103,U101066.l
-	move.w	#1,U101068.l
-	move.w	#1,U101072.l
-	move.w	#-1,U98410.l
-	move.w	U100970.l,d0
-	add.w	U99860.l,d0
-	move.w	d0,U99868.l
-	move.w	U100972.l,d0
-	add.w	U100564.l,d0
-	move.w	d0,U99870.l
+	move.w	#103,U101066
+	move.w	#1,U101068
+	move.w	#1,U101072
+	move.w	#-1,U98410
+	move.w	U100970,d0
+	add.w	U99860,d0
+	move.w	d0,U99868
+	move.w	U100972,d0
+	add.w	U100564,d0
+	move.w	d0,U99870
 	bsr  	L22312
 L27476:
 	unlk	fp
@@ -8879,25 +8879,25 @@ L27476:
 
 L27480:
 	link	fp,#-4
-	move.w	#14,U101066.l
-	clr.w	U101068.l
-	move.w	#4,U101072.l
-	move.w	8(fp),U98410.l
-	move.w	10(fp),U98412.l
-	move.w	12(fp),U98414.l
-	move.w	14(fp),U98416.l
-	jsr	L37312.l
+	move.w	#14,U101066
+	clr.w	U101068
+	move.w	#4,U101072
+	move.w	8(fp),U98410
+	move.w	10(fp),U98412
+	move.w	12(fp),U98414
+	move.w	14(fp),U98416
+	jsr	L37312
 	unlk	fp
 	rts
 
 L27548:
 	link	fp,#-4
-	move.w	#26,U101066.l
-	clr.w	U101068.l
-	move.w	#2,U101072.l
-	move.w	8(fp),U98410.l
-	move.w	#1,U98412.l
-	jsr	L37312.l
+	move.w	#26,U101066
+	clr.w	U101068
+	move.w	#2,U101072
+	move.w	8(fp),U98410
+	move.w	#1,U98412
+	jsr	L37312
 	move.l	#U98722,d0
 	unlk	fp
 	rts
@@ -8927,11 +8927,11 @@ L27644:
 L27654:
 	link	fp,#-6
 	movem.l	d4-d7/a5,-(sp)
-	jsr	L34468.l
+	jsr	L34468
 	tst.w	d0
 	beq  	L28016
-	move.w	U91962.l,-6(fp)
-	move.w	U91964.l,-4(fp)
+	move.w	U91962,-6(fp)
+	move.w	U91964,-4(fp)
 	move.w	#-1,(sp)
 	move.w	#1,-(sp)
 	move.w	#1,-(sp)
@@ -8940,7 +8940,7 @@ L27654:
 	move.w	#3,(sp)
 	bsr  	L21702
 	move.w	d0,-2(fp)
-	jsr	L33552.l
+	jsr	L33552
 	move.w	d0,d5
 	addq.w	#3,d5
 	ext.l	d5
@@ -8948,7 +8948,7 @@ L27654:
 	ext.l	d5
 	divs	#15,d5
 	swap	d5
-	jsr	L33552.l
+	jsr	L33552
 	move.w	d0,d6
 	addq.w	#3,d6
 	move.w	d6,d0
@@ -8959,7 +8959,7 @@ L27654:
 	beq.s	L27774
 	eori.w	#15,d5
 L27774:
-	move.w	U101478.l,d0
+	move.w	U101478,d0
 	subq.w	#1,d0
 	muls	#96,d0
 	ext.l	d0
@@ -8970,14 +8970,14 @@ L27774:
 	adda.l	d0,a5
 	adda.l	#T84610,a5
 	subq.l	#1,a5
-	move.w	U100970.l,d0
-	add.w	U99860.l,d0
-	move.w	d0,U99884.l
-	move.w	d0,U99868.l
-	move.w	U100972.l,d0
-	add.w	U100564.l,d0
-	move.w	d0,U99886.l
-	move.w	d0,U99870.l
+	move.w	U100970,d0
+	add.w	U99860,d0
+	move.w	d0,U99884
+	move.w	d0,U99868
+	move.w	U100972,d0
+	add.w	U100564,d0
+	move.w	d0,U99886
+	move.w	d0,U99870
 	moveq	#2,d7
 	bra.s	L27958
 
@@ -8990,9 +8990,9 @@ L27860:
 	bsr  	L27606
 	addq.l	#2,sp
 	move.w	d0,-(sp)
-	move.w	U100970.l,d0
+	move.w	U100970,d0
 	add.w	d0,(sp)
-	move.w	U99860.l,d0
+	move.w	U99860,d0
 	add.w	d0,(sp)
 	movea.w	d7,a0
 	adda.l	a0,a0
@@ -9008,9 +9008,9 @@ L27860:
 	bsr  	L27606
 	addq.l	#2,sp
 	move.w	d0,-(sp)
-	move.w	U100972.l,d0
+	move.w	U100972,d0
 	add.w	d0,(sp)
-	move.w	U100564.l,d0
+	move.w	U100564,d0
 	add.w	d0,(sp)
 	movea.w	d7,a0
 	adda.l	a0,a0
@@ -9020,9 +9020,9 @@ L27860:
 L27958:
 	cmp.w	#8,d7
 	blt.s	L27860
-	move.w	#6,U101066.l
-	move.w	#5,U101068.l
-	clr.w	U101072.l
+	move.w	#6,U101066
+	move.w	#5,U101068
+	clr.w	U101072
 	bsr  	L22292
 	move.w	#-1,(sp)
 	move.w	-4(fp),-(sp)
@@ -9049,7 +9049,7 @@ L28042:
 	link	fp,#-4
 	move.l	#U100970,(sp)
 	bsr.s	L28066
-	move.w	#1,U92038.l
+	move.w	#1,U92038
 	unlk	fp
 	rts
 
@@ -9057,7 +9057,7 @@ L28066:
 	link	fp,#-2
 	movem.l	d7/a5,-(sp)
 	movea.l	8(fp),a5
-	jsr	L33160.l
+	jsr	L33160
 	move.w	d0,(sp)
 	bsr  	L21766
 	move.w	d0,-2(fp)
@@ -9079,111 +9079,111 @@ L28066:
 
 L28146:
 	link	fp,#-4
-	move.b	T84580.l,d0
+	move.b	T84580,d0
 	ext.w	d0
 	unlk	fp
 	rts
 
 L28162:
 	link	fp,#-4
-	move.b	T84582.l,d0
+	move.b	T84582,d0
 	ext.w	d0
 	unlk	fp
 	rts
 
 L28178:
 	link	fp,#-4
-	move.b	T84584.l,d0
+	move.b	T84584,d0
 	ext.w	d0
 	unlk	fp
 	rts
 
 L28194:
 	link	fp,#-4
-	move.b	T84591.l,d0
+	move.b	T84591,d0
 	ext.w	d0
 	unlk	fp
 	rts
 
 	link	fp,#-4
-	move.b	T84592.l,d0
+	move.b	T84592,d0
 	ext.w	d0
 	unlk	fp
 	rts
 
 L28226:
 	link	fp,#-4
-	move.b	T84597.l,d0
+	move.b	T84597,d0
 	ext.w	d0
 	unlk	fp
 	rts
 
 L28242:
 	link	fp,#-4
-	move.b	T84598.l,d0
+	move.b	T84598,d0
 	ext.w	d0
 	unlk	fp
 	rts
 
 L28258:
 	link	fp,#-4
-	move.b	T84599.l,d0
+	move.b	T84599,d0
 	ext.w	d0
 	unlk	fp
 	rts
 
 L28274:
 	link	fp,#-4
-	move.b	T84600.l,d0
+	move.b	T84600,d0
 	ext.w	d0
 	unlk	fp
 	rts
 
 L28290:
 	link	fp,#-4
-	move.b	T84601.l,d0
+	move.b	T84601,d0
 	ext.w	d0
 	unlk	fp
 	rts
 
 L28306:
 	link	fp,#-4
-	move.b	T84602.l,d0
+	move.b	T84602,d0
 	ext.w	d0
 	unlk	fp
 	rts
 
 L28322:
 	link	fp,#-4
-	move.b	T84603.l,d0
+	move.b	T84603,d0
 	ext.w	d0
 	unlk	fp
 	rts
 
 L28338:
 	link	fp,#-4
-	move.b	T84604.l,d0
+	move.b	T84604,d0
 	ext.w	d0
 	unlk	fp
 	rts
 
 L28354:
 	link	fp,#-4
-	move.b	T84605.l,d0
+	move.b	T84605,d0
 	ext.w	d0
 	unlk	fp
 	rts
 
 L28370:
 	link	fp,#-4
-	move.b	T84607.l,d0
+	move.b	T84607,d0
 	ext.w	d0
 	unlk	fp
 	rts
 
 L28386:
 	link	fp,#-4
-	move.b	T84586.l,d0
+	move.b	T84586,d0
 	ext.w	d0
 	unlk	fp
 	rts
@@ -9192,7 +9192,7 @@ L28402:
 	link	fp,#-4
 	move.w	#192,d0
 	ext.l	d0
-	divs	U101478.l,d0
+	divs	U101478,d0
 	unlk	fp
 	rts
 
@@ -9208,37 +9208,37 @@ L28438:
 	link	fp,#-2
 	movem.l	d6-d7/a5,-(sp)
 	movea.l	8(fp),a5
-	jsr	L45356.l
+	jsr	L45356
 	clr.w	(sp)
 	move.l	a5,-(sp)
-	jsr	L77612.l
+	jsr	L77612
 	addq.l	#4,sp
 	cmpi.w	#1,12(fp)
 	bne.s	L28484
-	move.l	T87150.l,(sp)
+	move.l	T87150,(sp)
 	bra.s	L28490
 
 L28484:
-	move.l	T87314.l,(sp)
+	move.l	T87314,(sp)
 L28490:
 	move.l	#T85026,-(sp)
 	move.l	a5,-(sp)
-	jsr	L83706.l
+	jsr	L83706
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	jsr	L83706.l
+	jsr	L83706
 	addq.l	#4,sp
 	clr.b	40(a5)
-	jsr	L48330.l
+	jsr	L48330
 	move.l	fp,(sp)
 	subq.l	#2,(sp)
 	move.l	a5,-(sp)
 	addi.l	#40,(sp)
 	move.l	a5,-(sp)
-	jsr	L1570.l
+	jsr	L1570
 	addq.l	#8,sp
 	move.l	a5,(sp)
-	jsr	L83914.l
+	jsr	L83914
 	move.w	d0,d7
 	bra.s	L28570
 
@@ -9255,7 +9255,7 @@ L28570:
 	move.b	0(a5,d7.w),d0
 	ext.w	d0
 	move.w	d0,-(sp)
-	jsr	L50940.l
+	jsr	L50940
 	addq.l	#2,sp
 	tst.w	d0
 	beq.s	L28560
@@ -9263,7 +9263,7 @@ L28600:
 	move.l	a5,(sp)
 	addi.l	#40,(sp)
 	move.l	a5,-(sp)
-	jsr	L83706.l
+	jsr	L83706
 	addq.l	#4,sp
 	move.w	-2(fp),d0
 	tst.l	(sp)+
@@ -9273,44 +9273,44 @@ L28600:
 
 L28632:
 	link	fp,#-4
-	jsr	L15980.l
-	move.w	d0,U92066.l
-	jsr	L16090.l
-	move.w	U101128.l,(sp)
-	jsr	L16278.l
-	move.w	d0,U92068.l
-	move.w	U101128.l,(sp)
-	jsr	L16278.l
-	move.w	d0,U92070.l
-	move.w	U101128.l,(sp)
-	jsr	L16278.l
+	jsr	L15980
+	move.w	d0,U92066
+	jsr	L16090
+	move.w	U101128,(sp)
+	jsr	L16278
+	move.w	d0,U92068
+	move.w	U101128,(sp)
+	jsr	L16278
+	move.w	d0,U92070
+	move.w	U101128,(sp)
+	jsr	L16278
 	move.w	d0,(sp)
-	move.w	U92070.l,-(sp)
-	move.w	U92068.l,-(sp)
-	move.w	U92066.l,-(sp)
-	jsr	L27480.l
+	move.w	U92070,-(sp)
+	move.w	U92068,-(sp)
+	move.w	U92066,-(sp)
+	jsr	L27480
 	addq.l	#6,sp
-	jsr	L61834.l
+	jsr	L61834
 	unlk	fp
 	rts
 
 L28740:
 	link	fp,#0
 	movem.l	d7/a5,-(sp)
-	jsr	L15980.l
+	jsr	L15980
 	move.w	d0,(sp)
-	jsr	L27548.l
+	jsr	L27548
 	movea.l	d0,a5
 	move.w	(a5),(sp)
-	jsr	L53070.l
+	jsr	L53070
 	addq.l	#2,a5
 	move.w	(a5),(sp)
-	jsr	L53070.l
+	jsr	L53070
 	addq.l	#2,a5
 	move.w	(a5),(sp)
-	jsr	L53070.l
+	jsr	L53070
 	move.w	#3,(sp)
-	jsr	L62166.l
+	jsr	L62166
 	tst.l	(sp)+
 	movem.l	(sp)+,a5
 	unlk	fp
@@ -9321,13 +9321,13 @@ L28812:
 	movem.l	d5-d7,-(sp)
 	move.w	#1,-6(fp)
 	move.w	#1,(sp)
-	jsr	L61064.l
+	jsr	L61064
 	move.w	d0,(sp)
-	jsr	L8638.l
-	jsr	L33352.l
+	jsr	L8638
+	jsr	L33352
 	move.w	d0,-2(fp)
 	move.w	#2,-4(fp)
-	jsr	L33300.l
+	jsr	L33300
 	bra.s	L28896
 
 L28868:
@@ -9335,7 +9335,7 @@ L28868:
 	bra.s	L28912
 
 L28874:
-	jsr	L33160.l
+	jsr	L33160
 	move.w	d0,-2(fp)
 	bra.s	L28912
 
@@ -9353,45 +9353,45 @@ L28896:
 	cmp.w	#3,d0
 	beq.s	L28874
 L28912:
-	jsr	L22348.l
-	jsr	L9350.l
-	jsr	L64224.l
+	jsr	L22348
+	jsr	L9350
+	jsr	L64224
 	move.w	d0,d7
 	bra.s	L28972
 
 L28934:
 	move.w	d7,(sp)
-	jsr	L358.l
-	move.w	d0,U101046.l
-	jsr	L18616.l
+	jsr	L358
+	move.w	d0,U101046
+	jsr	L18616
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d7
 	beq.s	L28972
-	jsr	L76978.l
+	jsr	L76978
 L28972:
 	tst.w	d7
 	bne.s	L28934
-	jsr	L9388.l
+	jsr	L9388
 	move.w	-4(fp),(sp)
-	jsr	L21702.l
+	jsr	L21702
 	move.w	d0,-4(fp)
 	move.w	-2(fp),(sp)
 	bsr  	L29170
-	move.w	#8,U101066.l
-	move.w	#1,U101068.l
-	move.w	U99178.l,U101072.l
-	move.w	U100970.l,d0
-	add.w	U99860.l,d0
-	move.w	d0,U99868.l
-	move.w	U100972.l,d0
-	add.w	U100564.l,d0
-	move.w	d0,U99870.l
+	move.w	#8,U101066
+	move.w	#1,U101068
+	move.w	U99178,U101072
+	move.w	U100970,d0
+	add.w	U99860,d0
+	move.w	d0,U99868
+	move.w	U100972,d0
+	add.w	U100564,d0
+	move.w	d0,U99870
 	clr.w	d6
 	bra.s	L29104
 
 L29070:
-	movea.l	U101030.l,a0
+	movea.l	U101030,a0
 	move.b	(a0),d0
 	ext.w	d0
 	and.w	#255,d0
@@ -9399,23 +9399,23 @@ L29070:
 	adda.l	a1,a1
 	adda.l	#U98410,a1
 	move.w	d0,(a1)
-	addq.l	#1,U101030.l
+	addq.l	#1,U101030
 	addq.w	#1,d6
 L29104:
-	cmp.w	U99178.l,d6
+	cmp.w	U99178,d6
 	bcs.s	L29070
 	tst.w	-6(fp)
 	beq.s	L29126
-	jsr	L22312.l
+	jsr	L22312
 	bra.s	L29144
 
 L29126:
-	jsr	L33100.l
-	jsr	L47940.l
-	jsr	L61834.l
+	jsr	L33100
+	jsr	L47940
+	jsr	L61834
 L29144:
 	move.w	-4(fp),(sp)
-	jsr	L21702.l
+	jsr	L21702
 	move.w	#1,(sp)
 	bsr.s	L29170
 	tst.l	(sp)+
@@ -9425,11 +9425,11 @@ L29144:
 
 L29170:
 	link	fp,#-4
-	move.w	#22,U101066.l
-	clr.w	U101068.l
-	move.w	#1,U101072.l
-	move.w	8(fp),U98410.l
-	jsr	L37312.l
+	move.w	#22,U101066
+	clr.w	U101068
+	move.w	#1,U101072
+	move.w	8(fp),U98410
+	jsr	L37312
 	unlk	fp
 	rts
 
@@ -9443,15 +9443,15 @@ L29214:
 	subq.l	#6,(sp)
 	move.l	fp,-(sp)
 	subq.l	#8,(sp)
-	jsr	L1514.l
+	jsr	L1514
 	adda.l	#12,sp
-	move.w	U100972.l,d0
+	move.w	U100972,d0
 	sub.w	d0,-6(fp)
 	move.w	-6(fp),(sp)
-	move.w	U100970.l,d0
+	move.w	U100970,d0
 	sub.w	d0,-8(fp)
 	move.w	-8(fp),-(sp)
-	jsr	L36410.l
+	jsr	L36410
 	addq.l	#2,sp
 	move.w	d0,-18(fp)
 	beq.s	L29308
@@ -9460,61 +9460,61 @@ L29214:
 	bra  	L29456
 
 L29308:
-	jsr	L33882.l
+	jsr	L33882
 	move.l	d0,-(sp)
-	jsr	L33780.l
+	jsr	L33780
 	move.l	d0,-(sp)
 	move.w	-8(fp),d0
-	move.w	U101120.l,d1
+	move.w	U101120,d1
 	asr.w	#1,d1
 	sub.w	d1,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688.l
+	jsr	L81688
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81572.l
+	jsr	L81572
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	jsr	L81510.l
+	jsr	L81510
 	addq.l	#8,sp
 	move.l	d0,-12(fp)
-	jsr	L33896.l
+	jsr	L33896
 	move.l	d0,-(sp)
-	jsr	L34692.l
+	jsr	L34692
 	move.l	d0,-(sp)
-	jsr	L33780.l
+	jsr	L33780
 	move.l	d0,-(sp)
-	jsr	L81968.l
+	jsr	L81968
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	move.w	U101122.l,d0
+	move.w	U101122,d0
 	asr.w	#1,d0
 	sub.w	-6(fp),d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688.l
+	jsr	L81688
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81572.l
+	jsr	L81572
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	jsr	L81510.l
+	jsr	L81510
 	addq.l	#8,sp
 	move.l	d0,-16(fp)
 L29456:
 	move.l	-12(fp),(sp)
-	jsr	L52972.l
+	jsr	L52972
 	move.l	-16(fp),(sp)
-	jsr	L52972.l
+	jsr	L52972
 	move.w	-4(fp),(sp)
 	andi.w	#1,(sp)
-	jsr	L60886.l
-	jsr	L64746.l
+	jsr	L60886
+	jsr	L64746
 	move.w	-4(fp),(sp)
 	andi.w	#2,(sp)
-	jsr	L60886.l
-	jsr	L64746.l
+	jsr	L60886
+	jsr	L64746
 	tst.w	-18(fp)
 	beq.s	L29526
 	clr.w	(sp)
@@ -9523,10 +9523,10 @@ L29456:
 L29526:
 	move.w	#1,(sp)
 L29530:
-	jsr	L60886.l
-	jsr	L64746.l
+	jsr	L60886
+	jsr	L64746
 	move.w	#5,(sp)
-	jsr	L62166.l
+	jsr	L62166
 	unlk	fp
 	rts
 
@@ -9534,7 +9534,7 @@ L29556:
 	link	fp,#-4
 	move.w	10(fp),d0
 	muls	#24,d0
-	add.l	U92072.l,d0
+	add.l	U92072,d0
 	add.l	#10,d0
 	movea.l	d0,a0
 	move.w	8(fp),(a0)
@@ -9545,7 +9545,7 @@ L29590:
 	link	fp,#-6
 	move.w	8(fp),d0
 	muls	#24,d0
-	add.l	U92072.l,d0
+	add.l	U92072,d0
 	add.l	#10,d0
 	movea.l	d0,a0
 	cmpi.w	#1,(a0)
@@ -9567,23 +9567,23 @@ L29628:
 
 L29650:
 	link	fp,#-4
-	jsr	L9350.l
+	jsr	L9350
 	move.l	8(fp),(sp)
-	jsr	L52972.l
-	jsr	L64224.l
+	jsr	L52972
+	jsr	L64224
 	move.w	d0,(sp)
-	jsr	L54740.l
-	clr.b	U100763.l
+	jsr	L54740
+	clr.b	U100763
 	move.l	#U100754,(sp)
 	movea.l	#ev_adrerr,a0
 	move.w	12(fp),d1
 	muls	#24,d1
-	add.l	U92072.l,d1
+	add.l	U92072,d1
 	movea.l	0(a0,d1.l),a0
 	move.l	(a0),-(sp)
-	jsr	L83880.l
+	jsr	L83880
 	addq.l	#4,sp
-	jsr	L9388.l
+	jsr	L9388
 	unlk	fp
 	rts
 
@@ -9592,27 +9592,27 @@ L29740:
 	movea.l	#ev_adrerr,a0
 	move.w	8(fp),d1
 	muls	#24,d1
-	add.l	U92072.l,d1
+	add.l	U92072,d1
 	movea.l	0(a0,d1.l),a0
 	move.l	(a0),(sp)
-	move.l	U101030.l,-(sp)
-	jsr	L83880.l
+	move.l	U101030,-(sp)
+	jsr	L83880
 	addq.l	#4,sp
-	move.l	U101030.l,(sp)
-	jsr	L62012.l
+	move.l	U101030,(sp)
+	jsr	L62012
 	move.w	d0,(sp)
-	jsr	L9468.l
+	jsr	L9468
 	move.w	d0,-2(fp)
 	movea.l	10(fp),a0
-	move.l	U99602.l,(a0)
+	move.l	U99602,(a0)
 	move.w	-2(fp),d0
 	unlk	fp
 	rts
 
 L29826:
 	link	fp,#-4
-	move.l	8(fp),U92072.l
-	jsr	L34468.l
+	move.l	8(fp),U92072
+	jsr	L34468
 	tst.w	d0
 	beq.s	L29854
 	move.w	#8,(sp)
@@ -9624,24 +9624,24 @@ L29858:
 	move.w	#1,-(sp)
 	bsr  	L29556
 	addq.l	#2,sp
-	jsr	L33300.l
+	jsr	L33300
 	move.w	d0,(sp)
 	addi.w	#12,(sp)
 	move.w	#1,-(sp)
 	bsr  	L29556
 	addq.l	#2,sp
 	move.w	#3,(sp)
-	jsr	L34018.l
+	jsr	L34018
 	move.l	d0,-(sp)
 	bsr  	L29650
 	addq.l	#4,sp
 	move.w	#4,(sp)
-	jsr	L34032.l
+	jsr	L34032
 	move.l	d0,-(sp)
 	bsr  	L29650
 	addq.l	#4,sp
 	move.w	#5,(sp)
-	jsr	L33566.l
+	jsr	L33566
 	move.l	d0,-(sp)
 	bsr  	L29650
 	addq.l	#4,sp
@@ -9651,20 +9651,20 @@ L29858:
 L29948:
 	link	fp,#-12
 	movem.l	d5-d7,-(sp)
-	move.l	8(fp),U92072.l
+	move.l	8(fp),U92072
 	move.w	#16,(sp)
 	bsr  	L29590
 	tst.w	d0
 	beq  	L30266
-	jsr	L48374.l
-	jsr	L48234.l
-	jsr	L46108.l
-	jsr	L48392.l
+	jsr	L48374
+	jsr	L48234
+	jsr	L46108
+	jsr	L48392
 	move.w	#8,(sp)
 	bsr  	L29590
 	tst.w	d0
 	beq.s	L30022
-	jsr	L34440.l
+	jsr	L34440
 	bra.s	L30040
 
 L30022:
@@ -9673,7 +9673,7 @@ L30022:
 	tst.w	d0
 L30032:
 	beq.s	L30040
-	jsr	L34414.l
+	jsr	L34414
 L30040:
 	moveq	#12,d7
 	bra.s	L30046
@@ -9689,19 +9689,19 @@ L30046:
 	bra.s	L30094
 
 L30060:
-	jsr	L33238.l
+	jsr	L33238
 	bra.s	L30118
 
 L30068:
-	jsr	L33212.l
+	jsr	L33212
 	bra.s	L30118
 
 L30076:
-	jsr	L33276.l
+	jsr	L33276
 	bra.s	L30118
 
 L30084:
-	jsr	L33252.l
+	jsr	L33252
 	bra.s	L30118
 
 	bra.s	L30118
@@ -9732,7 +9732,7 @@ L30118:
 	beq.s	L30170
 	move.l	-8(fp),(sp)
 	move.l	-4(fp),-(sp)
-	jsr	L35228.l
+	jsr	L35228
 	addq.l	#4,sp
 L30170:
 	move.l	fp,(sp)
@@ -9744,22 +9744,22 @@ L30170:
 	beq.s	L30258
 	move.l	#-130993,-(sp)
 	move.l	-12(fp),-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	ble.s	L30220
 	move.l	#-130993,-12(fp)
 L30220:
 	move.l	#-130865,-(sp)
 	move.l	-12(fp),-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	bge.s	L30248
 	move.l	#-130865,-12(fp)
 L30248:
 	move.l	-12(fp),(sp)
-	jsr	L33502.l
+	jsr	L33502
 L30258:
-	jsr	L47940.l
+	jsr	L47940
 	bra.s	L30324
 
 L30266:
@@ -9795,28 +9795,28 @@ L30324:
 
 L30334:
 	link	fp,#-4
-	move.l	8(fp),U92072.l
+	move.l	8(fp),U92072
 	move.w	#2,(sp)
-	jsr	L34692.l
+	jsr	L34692
 	move.l	d0,-(sp)
 	bsr  	L29650
 	addq.l	#4,sp
 	move.w	#7,(sp)
-	jsr	L33780.l
+	jsr	L33780
 	move.l	d0,-(sp)
 	bsr  	L29650
 	addq.l	#4,sp
 	move.w	#3,(sp)
-	jsr	L33882.l
+	jsr	L33882
 	move.l	d0,-(sp)
 	bsr  	L29650
 	addq.l	#4,sp
 	move.w	#6,(sp)
-	jsr	L33896.l
+	jsr	L33896
 	move.l	d0,-(sp)
 	bsr  	L29650
 	addq.l	#4,sp
-	jsr	L34634.l
+	jsr	L34634
 	move.w	d0,(sp)
 	addi.w	#11,(sp)
 	move.w	#1,-(sp)
@@ -9827,17 +9827,17 @@ L30334:
 
 L30444:
 	link	fp,#-12
-	move.l	8(fp),U92072.l
+	move.l	8(fp),U92072
 	move.w	#4,(sp)
 	bsr  	L29590
 	tst.w	d0
 	beq  	L30650
-	jsr	L48234.l
+	jsr	L48234
 	move.w	#11,(sp)
 	bsr  	L29590
 	tst.w	d0
 	beq.s	L30496
-	jsr	L34482.l
+	jsr	L34482
 	bra.s	L30534
 
 L30496:
@@ -9845,7 +9845,7 @@ L30496:
 	bsr  	L29590
 	tst.w	d0
 	beq.s	L30516
-	jsr	L34554.l
+	jsr	L34554
 	bra.s	L30534
 
 L30516:
@@ -9853,7 +9853,7 @@ L30516:
 	bsr  	L29590
 	tst.w	d0
 	beq.s	L30534
-	jsr	L34588.l
+	jsr	L34588
 L30534:
 	move.l	fp,(sp)
 	subq.l	#4,(sp)
@@ -9863,7 +9863,7 @@ L30534:
 	tst.w	d0
 	beq.s	L30562
 	move.l	-4(fp),(sp)
-	jsr	L34648.l
+	jsr	L34648
 L30562:
 	move.l	fp,(sp)
 	subq.l	#4,(sp)
@@ -9873,7 +9873,7 @@ L30562:
 	tst.w	d0
 	beq.s	L30590
 	move.l	-4(fp),(sp)
-	jsr	L33736.l
+	jsr	L33736
 L30590:
 	move.l	fp,(sp)
 	subq.l	#4,(sp)
@@ -9891,10 +9891,10 @@ L30590:
 	beq.s	L30642
 	move.l	-8(fp),(sp)
 	move.l	-4(fp),-(sp)
-	jsr	L33794.l
+	jsr	L33794
 	addq.l	#4,sp
 L30642:
-	jsr	L47940.l
+	jsr	L47940
 	bra.s	L30698
 
 L30650:
@@ -9920,48 +9920,48 @@ L30698:
 
 L30702:
 	link	fp,#-16
-	move.w	#8,U92076.l
-	jsr	L25746.l
+	move.w	#8,U92076
+	jsr	L25746
 	move.w	d0,-2(fp)
-	jsr	L25760.l
+	jsr	L25760
 	move.w	d0,-4(fp)
-	jsr	L25774.l
+	jsr	L25774
 	move.w	d0,-6(fp)
-	move.w	U101130.l,(sp)
+	move.w	U101130,(sp)
 	move.w	#8,-(sp)
 	bsr  	L31540
 	addq.l	#2,sp
 	move.w	d0,-(sp)
-	jsr	L50202.l
+	jsr	L50202
 	addq.l	#2,sp
 	move.w	d0,-8(fp)
 	move.w	-8(fp),(sp)
-	jsr	L23516.l
+	jsr	L23516
 	move.w	d0,(sp)
 	move.w	#10,-(sp)
 	bsr  	L31540
 	addq.l	#2,sp
 	move.w	d0,-(sp)
-	jsr	L50202.l
+	jsr	L50202
 	addq.l	#2,sp
 	move.w	d0,-10(fp)
-	move.w	U101126.l,(sp)
+	move.w	U101126,(sp)
 	move.w	#11,-(sp)
 	bsr  	L31540
 	addq.l	#2,sp
 	move.w	d0,-(sp)
-	jsr	L50202.l
+	jsr	L50202
 	addq.l	#2,sp
 	move.w	d0,-12(fp)
 	move.w	-12(fp),(sp)
 	move.w	-10(fp),-(sp)
 	move.w	-8(fp),-(sp)
-	jsr	L21964.l
+	jsr	L21964
 	addq.l	#4,sp
 	move.l	8(fp),(sp)
 	addi.l	#10,(sp)
 	move.w	#2,-(sp)
-	jsr	L22670.l
+	jsr	L22670
 	addq.l	#2,sp
 	movea.l	8(fp),a0
 	move.w	16(a0),(sp)
@@ -9974,14 +9974,14 @@ L30702:
 	move.w	-10(fp),-(sp)
 	move.w	-8(fp),-(sp)
 	move.w	#1,-(sp)
-	jsr	L23682.l
+	jsr	L23682
 	adda.l	#12,sp
 	clr.w	(sp)
-	jsr	L22670.l
+	jsr	L22670
 	move.w	-6(fp),(sp)
 	move.w	-4(fp),-(sp)
 	move.w	-2(fp),-(sp)
-	jsr	L21964.l
+	jsr	L21964
 	addq.l	#4,sp
 	moveq	#16,d0
 	unlk	fp
@@ -9989,46 +9989,46 @@ L30702:
 
 L30972:
 	link	fp,#-16
-	move.w	#13,U92076.l
-	jsr	L25718.l
+	move.w	#13,U92076
+	jsr	L25718
 	move.w	d0,-2(fp)
-	jsr	L25732.l
+	jsr	L25732
 	move.w	d0,-4(fp)
-	jsr	L33352.l
+	jsr	L33352
 	move.w	d0,-6(fp)
-	move.w	U101134.l,(sp)
+	move.w	U101134,(sp)
 	move.w	#13,-(sp)
 	bsr  	L31540
 	addq.l	#2,sp
 	move.w	d0,-(sp)
-	jsr	L50202.l
+	jsr	L50202
 	addq.l	#2,sp
 	move.w	d0,-8(fp)
-	move.w	U101136.l,(sp)
+	move.w	U101136,(sp)
 	move.w	#15,-(sp)
 	bsr  	L31540
 	addq.l	#2,sp
 	move.w	d0,-(sp)
-	jsr	L50202.l
+	jsr	L50202
 	addq.l	#2,sp
 	move.w	d0,-10(fp)
-	move.w	U101124.l,(sp)
+	move.w	U101124,(sp)
 	move.w	#16,-(sp)
 	bsr  	L31540
 	addq.l	#2,sp
 	move.w	d0,-(sp)
-	jsr	L50202.l
+	jsr	L50202
 	addq.l	#2,sp
 	move.w	d0,-12(fp)
 	move.w	-12(fp),(sp)
 	move.w	-10(fp),-(sp)
 	move.w	-8(fp),-(sp)
-	jsr	L21448.l
+	jsr	L21448
 	addq.l	#4,sp
 	move.l	8(fp),(sp)
 	addi.l	#10,(sp)
 	move.w	#2,-(sp)
-	jsr	L22670.l
+	jsr	L22670
 	addq.l	#2,sp
 	movea.l	8(fp),a0
 	move.w	16(a0),(sp)
@@ -10041,7 +10041,7 @@ L30972:
 	clr.w	-(sp)
 	clr.w	-(sp)
 	move.w	#1,-(sp)
-	jsr	L23682.l
+	jsr	L23682
 	adda.l	#12,sp
 	movea.l	8(fp),a0
 	move.w	16(a0),d0
@@ -10060,14 +10060,14 @@ L30972:
 	move.w	12(a0),-(sp)
 	movea.l	8(fp),a0
 	move.w	10(a0),-(sp)
-	jsr	L25788.l
+	jsr	L25788
 	addq.l	#6,sp
 	clr.w	(sp)
-	jsr	L22670.l
+	jsr	L22670
 	move.w	-6(fp),(sp)
 	move.w	-4(fp),-(sp)
 	move.w	-2(fp),-(sp)
-	jsr	L21448.l
+	jsr	L21448
 	addq.l	#4,sp
 	moveq	#16,d0
 	unlk	fp
@@ -10075,21 +10075,21 @@ L30972:
 
 L31302:
 	link	fp,#-6
-	move.w	#17,U92076.l
-	move.w	U101126.l,(sp)
+	move.w	#17,U92076
+	move.w	U101126,(sp)
 	move.w	#17,-(sp)
 	bsr  	L31540
 	addq.l	#2,sp
 	move.w	d0,-(sp)
-	jsr	L50202.l
+	jsr	L50202
 	addq.l	#2,sp
 	move.w	d0,(sp)
-	jsr	L21766.l
+	jsr	L21766
 	move.w	d0,-2(fp)
 	move.l	8(fp),(sp)
 	addi.l	#10,(sp)
 	move.w	#2,-(sp)
-	jsr	L22670.l
+	jsr	L22670
 	addq.l	#2,sp
 	movea.l	8(fp),a0
 	move.w	16(a0),(sp)
@@ -10102,12 +10102,12 @@ L31302:
 	clr.w	-(sp)
 	move.w	#1,-(sp)
 	move.w	#1,-(sp)
-	jsr	L23682.l
+	jsr	L23682
 	adda.l	#12,sp
 	clr.w	(sp)
-	jsr	L22670.l
+	jsr	L22670
 	move.w	-2(fp),(sp)
-	jsr	L21766.l
+	jsr	L21766
 	moveq	#16,d0
 	unlk	fp
 	rts
@@ -10131,10 +10131,10 @@ L31452:
 	movea.l	#ev_adrerr,a0
 	move.w	10(fp),d1
 	muls	#24,d1
-	add.l	U92072.l,d1
+	add.l	U92072,d1
 	movea.l	0(a0,d1.l),a0
 	move.l	(a0),-(sp)
-	jsr	L83880.l
+	jsr	L83880
 	addq.l	#4,sp
 	unlk	fp
 	rts
@@ -10144,24 +10144,24 @@ L31540:
 	movea.l	#ev_adrerr,a0
 	move.w	8(fp),d1
 	muls	#24,d1
-	add.l	U92072.l,d1
+	add.l	U92072,d1
 	movea.l	0(a0,d1.l),a0
 	move.l	(a0),(sp)
 	move.l	fp,-(sp)
 	subq.l	#4,(sp)
-	jsr	L83880.l
+	jsr	L83880
 	addq.l	#4,sp
 	move.l	fp,(sp)
 	subq.l	#4,(sp)
-	jsr	L83596.l
+	jsr	L83596
 	unlk	fp
 	rts
 
 L31596:
 	link	fp,#-4
-	move.l	8(fp),U92072.l
-	move.w	#8,U92076.l
-	jsr	L21310.l
+	move.l	8(fp),U92072
+	move.w	#8,U92076
+	jsr	L21310
 	tst.w	d0
 	beq.s	L31632
 	move.w	#6,(sp)
@@ -10174,59 +10174,59 @@ L31636:
 	bsr  	L29556
 	addq.l	#2,sp
 	move.w	#8,(sp)
-	jsr	L25746.l
+	jsr	L25746
 	move.w	d0,-(sp)
 	bsr  	L31452
 	addq.l	#2,sp
 	move.w	#10,(sp)
-	jsr	L25760.l
+	jsr	L25760
 	move.w	d0,-(sp)
 	bsr  	L31452
 	addq.l	#2,sp
 	move.w	#11,(sp)
-	jsr	L25774.l
+	jsr	L25774
 	move.w	d0,-(sp)
 	bsr  	L31452
 	addq.l	#2,sp
 	move.w	#13,(sp)
-	jsr	L25718.l
+	jsr	L25718
 	move.w	d0,-(sp)
 	bsr  	L31452
 	addq.l	#2,sp
 	move.w	#15,(sp)
-	jsr	L25732.l
+	jsr	L25732
 	move.w	d0,-(sp)
 	bsr  	L31452
 	addq.l	#2,sp
 	move.w	#16,(sp)
-	jsr	L33352.l
+	jsr	L33352
 	move.w	d0,-(sp)
 	bsr  	L31452
 	addq.l	#2,sp
 	move.w	#17,(sp)
-	jsr	L33160.l
+	jsr	L33160
 	move.w	d0,-(sp)
 	bsr  	L31452
 	addq.l	#2,sp
-	move.l	#L30702,U98674.l
-	move.l	#L30972,U99000.l
-	move.l	#L31302,U99008.l
-	movea.l	U92072.l,a0
+	move.l	#L30702,U98674
+	move.l	#L30972,U99000
+	move.l	#L31302,U99008
+	movea.l	U92072,a0
 	adda.l	#222,a0
 	move.w	#24,(a0)
-	movea.l	U92072.l,a0
+	movea.l	U92072,a0
 	adda.l	#342,a0
 	move.w	#24,(a0)
-	movea.l	U92072.l,a0
+	movea.l	U92072,a0
 	adda.l	#438,a0
 	move.w	#24,(a0)
-	movea.l	U92072.l,a0
+	movea.l	U92072,a0
 	adda.l	#228,a0
 	move.l	#U98674,(a0)
-	movea.l	U92072.l,a0
+	movea.l	U92072,a0
 	adda.l	#348,a0
 	move.l	#U99000,(a0)
-	movea.l	U92072.l,a0
+	movea.l	U92072,a0
 	adda.l	#444,a0
 	move.l	#U99008,(a0)
 	unlk	fp
@@ -10234,98 +10234,98 @@ L31636:
 
 L31908:
 	link	fp,#-12
-	move.l	8(fp),U92072.l
+	move.l	8(fp),U92072
 	tst.w	12(fp)
 	beq  	L32264
 	move.w	#6,(sp)
 	bsr  	L29590
 	tst.w	d0
 	beq.s	L31948
-	move.w	U100984.l,-8(fp)
+	move.w	U100984,-8(fp)
 L31948:
 	move.w	#7,(sp)
 	bsr  	L29590
 	tst.w	d0
 	beq.s	L31968
-	move.w	U101186.l,-8(fp)
+	move.w	U101186,-8(fp)
 L31968:
 	move.w	-8(fp),(sp)
-	move.w	U98718.l,-(sp)
-	move.l	T87350.l,-(sp)
-	jsr	L62012.l
+	move.w	U98718,-(sp)
+	move.l	T87350,-(sp)
+	jsr	L62012
 	addq.l	#4,sp
 	move.w	d0,-(sp)
-	jsr	L66062.l
+	jsr	L66062
 	addq.l	#4,sp
-	move.w	U101130.l,(sp)
+	move.w	U101130,(sp)
 	move.w	#8,-(sp)
 	bsr  	L31540
 	addq.l	#2,sp
 	move.w	d0,-(sp)
-	jsr	L50202.l
+	jsr	L50202
 	addq.l	#2,sp
 	move.w	d0,-2(fp)
 	move.w	-2(fp),(sp)
-	jsr	L23516.l
+	jsr	L23516
 	move.w	d0,(sp)
 	move.w	#10,-(sp)
 	bsr  	L31540
 	addq.l	#2,sp
 	move.w	d0,-(sp)
-	jsr	L50202.l
+	jsr	L50202
 	addq.l	#2,sp
 	move.w	d0,-4(fp)
-	move.w	U101126.l,(sp)
+	move.w	U101126,(sp)
 	move.w	#11,-(sp)
 	bsr  	L31540
 	addq.l	#2,sp
 	move.w	d0,-(sp)
-	jsr	L50202.l
+	jsr	L50202
 	addq.l	#2,sp
 	move.w	d0,-6(fp)
 	move.w	-6(fp),(sp)
 	move.w	-4(fp),-(sp)
 	move.w	-2(fp),-(sp)
-	jsr	L21964.l
+	jsr	L21964
 	addq.l	#4,sp
-	move.w	U101134.l,(sp)
+	move.w	U101134,(sp)
 	move.w	#13,-(sp)
 	bsr  	L31540
 	addq.l	#2,sp
 	move.w	d0,-(sp)
-	jsr	L50202.l
+	jsr	L50202
 	addq.l	#2,sp
 	move.w	d0,-2(fp)
-	move.w	U101136.l,(sp)
+	move.w	U101136,(sp)
 	move.w	#15,-(sp)
 	bsr  	L31540
 	addq.l	#2,sp
 	move.w	d0,-(sp)
-	jsr	L50202.l
+	jsr	L50202
 	addq.l	#2,sp
 	move.w	d0,-4(fp)
-	move.w	U101124.l,(sp)
+	move.w	U101124,(sp)
 	move.w	#16,-(sp)
 	bsr  	L31540
 	addq.l	#2,sp
 	move.w	d0,-(sp)
-	jsr	L50202.l
+	jsr	L50202
 	addq.l	#2,sp
 	move.w	d0,-6(fp)
 	move.w	-6(fp),(sp)
 	move.w	-4(fp),-(sp)
 	move.w	-2(fp),-(sp)
-	jsr	L21448.l
+	jsr	L21448
 	addq.l	#4,sp
-	move.w	U101126.l,(sp)
+	move.w	U101126,(sp)
 	move.w	#17,-(sp)
 	bsr  	L31540
 	addq.l	#2,sp
 	move.w	d0,-(sp)
-	jsr	L50202.l
+	jsr	L50202
 	addq.l	#2,sp
 	move.w	d0,(sp)
-	jsr	L33174.l
+	jsr	L33174
 	bra.s	L32300
 
 L32264:
@@ -10350,15 +10350,15 @@ L32304:
 L32308:
 	clr.l	(sp)
 	move.w	#257,-(sp)
-	jsr	L1482.l
+	jsr	L1482
 	addq.l	#2,sp
-	move.w	U92076.l,(sp)
+	move.w	U92076,(sp)
 	move.l	8(fp),-(sp)
-	jsr	L1266.l
+	jsr	L1266
 	addq.l	#4,sp
 	clr.l	(sp)
 	move.w	#256,-(sp)
-	jsr	L1482.l
+	jsr	L1482
 	addq.l	#2,sp
 	move.w	#2,(sp)
 	bsr  	L29590
@@ -10377,170 +10377,170 @@ L32382:
 
 L32390:
 	link	fp,#-8
-	move.w	8(fp),U101120.l
-	move.w	10(fp),U101122.l
-	move.w	U92100.l,-2(fp)
-	move.w	U92104.l,-4(fp)
+	move.w	8(fp),U101120
+	move.w	10(fp),U101122
+	move.w	U92100,-2(fp)
+	move.w	U92104,-4(fp)
 	bsr  	L32752
-	tst.w	U99190.l
+	tst.w	U99190
 	bne  	L32592
-	move.l	U92132.l,-(sp)
+	move.l	U92132,-(sp)
 	move.l	#-2147483582,-(sp)
 	move.w	-2(fp),d0
-	sub.w	U92100.l,d0
+	sub.w	U92100,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688.l
+	jsr	L81688
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81572.l
+	jsr	L81572
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	jsr	L81572.l
+	jsr	L81572
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	move.l	U99808.l,-(sp)
-	jsr	L81510.l
+	move.l	U99808,-(sp)
+	jsr	L81510
 	addq.l	#8,sp
-	move.l	d0,U99808.l
-	move.l	U92136.l,-(sp)
+	move.l	d0,U99808
+	move.l	U92136,-(sp)
 	move.l	#-2147483582,-(sp)
-	move.w	U92104.l,d0
+	move.w	U92104,d0
 	sub.w	-4(fp),d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688.l
+	jsr	L81688
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81572.l
+	jsr	L81572
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	jsr	L81572.l
+	jsr	L81572
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	move.l	U99812.l,-(sp)
-	jsr	L81510.l
+	move.l	U99812,-(sp)
+	jsr	L81510
 	addq.l	#8,sp
-	move.l	d0,U99812.l
+	move.l	d0,U99812
 L32592:
 	unlk	fp
 	rts
 
 L32596:
 	link	fp,#-8
-	tst.w	U99190.l
+	tst.w	U99190
 	bne  	L32748
-	move.w	U99860.l,-2(fp)
-	move.w	U100564.l,-4(fp)
+	move.w	U99860,-2(fp)
+	move.w	U100564,-4(fp)
 	bsr  	L34368
 	move.w	-2(fp),d0
-	cmp.w	U99860.l,d0
+	cmp.w	U99860,d0
 	bne.s	L32654
 	move.w	-2(fp),d0
-	cmp.w	U100564.l,d0
+	cmp.w	U100564,d0
 	beq.s	L32702
 L32654:
-	move.w	-2(fp),U99860.l
-	move.w	-4(fp),U100564.l
-	jsr	L27654.l
-	move.w	U92118.l,U99860.l
-	move.w	U92120.l,U100564.l
-	jsr	L27654.l
+	move.w	-2(fp),U99860
+	move.w	-4(fp),U100564
+	jsr	L27654
+	move.w	U92118,U99860
+	move.w	U92120,U100564
+	jsr	L27654
 L32702:
-	move.w	U100564.l,(sp)
-	move.w	U99860.l,-(sp)
+	move.w	U100564,(sp)
+	move.w	U99860,-(sp)
 	bsr  	L36410
 	addq.l	#2,sp
 	tst.w	d0
 	beq.s	L32748
-	tst.w	U92086.l
+	tst.w	U92086
 	beq.s	L32748
-	jsr	L27654.l
+	jsr	L27654
 	bsr  	L34706
-	jsr	L27654.l
+	jsr	L27654
 L32748:
 	unlk	fp
 	rts
 
 L32752:
 	link	fp,#-4
-	move.w	U101120.l,d0
+	move.w	U101120,d0
 	subq.w	#1,d0
-	move.w	d0,U92100.l
-	move.w	U101122.l,d0
+	move.w	d0,U92100
+	move.w	U101122,d0
 	subq.w	#1,d0
-	move.w	d0,U92104.l
-	move.w	U101120.l,d0
-	move.w	d0,U92106.l
+	move.w	d0,U92104
+	move.w	U101120,d0
+	move.w	d0,U92106
 	neg.w	d0
-	move.w	d0,U92108.l
-	move.w	U101122.l,d0
-	move.w	d0,U92110.l
+	move.w	d0,U92108
+	move.w	U101122,d0
+	move.w	d0,U92110
 	neg.w	d0
-	move.w	d0,U92112.l
-	move.w	U101120.l,d0
+	move.w	d0,U92112
+	move.w	U101120,d0
 	asr.w	#1,d0
-	move.w	d0,U92114.l
-	move.w	U101122.l,d0
+	move.w	d0,U92114
+	move.w	U101122,d0
 	subq.w	#1,d0
 	asr.w	#1,d0
-	move.w	d0,U92116.l
+	move.w	d0,U92116
 	unlk	fp
 	rts
 
 L32858:
 	link	fp,#-4
-	move.w	#1,U92122.l
-	move.l	T85048.l,d0
-	move.l	d0,U92078.l
-	move.l	d0,U99812.l
-	move.l	d0,U99808.l
-	clr.w	U92082.l
-	clr.w	U92084.l
-	clr.w	U92086.l
-	move.l	T85032.l,U92088.l
+	move.w	#1,U92122
+	move.l	T85048,d0
+	move.l	d0,U92078
+	move.l	d0,U99812
+	move.l	d0,U99808
+	clr.w	U92082
+	clr.w	U92084
+	clr.w	U92086
+	move.l	T85032,U92088
 	clr.w	d0
-	move.w	d0,U92102.l
-	move.w	d0,U92098.l
+	move.w	d0,U92102
+	move.w	d0,U92098
 	bsr  	L32752
-	move.w	U101140.l,d0
+	move.w	U101140,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688.l
+	jsr	L81688
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	move.w	U101138.l,d0
+	move.w	U101138,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688.l
+	jsr	L81688
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81572.l
+	jsr	L81572
 	addq.l	#8,sp
 	move.l	d0,(sp)
 	bsr  	L34648
-	move.w	T84998.l,(sp)
+	move.w	T84998,(sp)
 	bsr  	L33174
-	move.w	T84996.l,(sp)
+	move.w	T84996,(sp)
 	bsr  	L33316
 	move.w	#256,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688.l
+	jsr	L81688
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	move.w	T85004.l,d0
+	move.w	T85004,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688.l
+	jsr	L81688
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81572.l
+	jsr	L81572
 	addq.l	#8,sp
 	move.l	d0,(sp)
 	bsr  	L33736
-	move.l	T85048.l,(sp)
-	move.l	T85048.l,-(sp)
+	move.l	T85048,(sp)
+	move.l	T85048,-(sp)
 	bsr  	L33794
 	addq.l	#4,sp
 	bsr  	L33580
@@ -10551,123 +10551,123 @@ L32858:
 
 L33100:
 	link	fp,#-4
-	tst.w	U92122.l
+	tst.w	U92122
 	bne.s	L33126
-	move.w	#1,U92122.l
-	jsr	L27654.l
+	move.w	#1,U92122
+	jsr	L27654
 L33126:
 	unlk	fp
 	rts
 
 L33130:
 	link	fp,#-4
-	clr.w	U92122.l
+	clr.w	U92122
 	unlk	fp
 	rts
 
 L33144:
 	link	fp,#-4
 	bsr.s	L33130
-	jsr	L27654.l
+	jsr	L27654
 	unlk	fp
 	rts
 
 L33160:
 	link	fp,#-4
-	move.w	U92096.l,d0
+	move.w	U92096,d0
 	unlk	fp
 	rts
 
 L33174:
 	link	fp,#-4
-	jsr	L27654.l
+	jsr	L27654
 	move.w	8(fp),d0
-	move.w	d0,U92096.l
+	move.w	d0,U92096
 	move.w	d0,(sp)
-	jsr	L49676.l
-	jsr	L27654.l
+	jsr	L49676
+	jsr	L27654
 	unlk	fp
 	rts
 
 L33212:
 	link	fp,#-4
-	move.b	#1,U92092.l
+	move.b	#1,U92092
 	bsr  	L33352
-	move.b	d0,U92093.l
+	move.b	d0,U92093
 	unlk	fp
 	rts
 
 L33238:
 	link	fp,#-4
-	clr.b	U92092.l
+	clr.b	U92092
 	unlk	fp
 	rts
 
 L33252:
 	link	fp,#-4
-	move.b	#3,U92092.l
+	move.b	#3,U92092
 	bsr.s	L33160
-	move.b	d0,U92093.l
+	move.b	d0,U92093
 	unlk	fp
 	rts
 
 L33276:
 	link	fp,#-4
-	move.b	#2,U92092.l
+	move.b	#2,U92092
 	bsr.s	L33352
-	move.b	d0,U92093.l
+	move.b	d0,U92093
 	unlk	fp
 	rts
 
 L33300:
 	link	fp,#-4
-	move.b	U92092.l,d0
+	move.b	U92092,d0
 	ext.w	d0
 	unlk	fp
 	rts
 
 L33316:
 	link	fp,#-4
-	move.w	8(fp),U92094.l
+	move.w	8(fp),U92094
 	bsr.s	L33300
 	cmp.w	#3,d0
 	beq.s	L33348
-	move.w	U92094.l,d0
-	move.b	d0,U92093.l
+	move.w	U92094,d0
+	move.b	d0,U92093
 L33348:
 	unlk	fp
 	rts
 
 L33352:
 	link	fp,#-4
-	move.w	U92094.l,d0
+	move.w	U92094,d0
 	unlk	fp
 	rts
 
 L33366:
 	link	fp,#-4
-	move.l	U99812.l,-(sp)
+	move.l	U99812,-(sp)
 	move.l	8(fp),-(sp)
-	move.l	U92078.l,-(sp)
-	jsr	L36612.l
+	move.l	U92078,-(sp)
+	jsr	L36612
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81968.l
+	jsr	L81968
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	jsr	L81510.l
+	jsr	L81510
 	addq.l	#8,sp
 	move.l	d0,(sp)
-	move.l	U99808.l,-(sp)
+	move.l	U99808,-(sp)
 	move.l	8(fp),-(sp)
-	move.l	U92078.l,-(sp)
-	jsr	L36642.l
+	move.l	U92078,-(sp)
+	jsr	L36642
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81968.l
+	jsr	L81968
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	jsr	L81510.l
+	jsr	L81510
 	addq.l	#8,sp
 	move.l	d0,-(sp)
 	bsr  	L35228
@@ -10678,8 +10678,8 @@ L33366:
 L33472:
 	link	fp,#-4
 	move.l	8(fp),-(sp)
-	move.l	U92078.l,-(sp)
-	jsr	L81510.l
+	move.l	U92078,-(sp)
+	jsr	L81510
 	addq.l	#8,sp
 	move.l	d0,(sp)
 	bsr.s	L33502
@@ -10688,35 +10688,35 @@ L33472:
 
 L33502:
 	link	fp,#-4
-	jsr	L27654.l
+	jsr	L27654
 	move.l	8(fp),(sp)
 	bsr  	L36300
-	move.l	d0,U92078.l
+	move.l	d0,U92078
 	move.l	d0,-(sp)
-	jsr	L81832.l
+	jsr	L81832
 	addq.l	#4,sp
-	move.w	d0,U92082.l
-	jsr	L27654.l
+	move.w	d0,U92082
+	jsr	L27654
 	unlk	fp
 	rts
 
 L33552:
 	link	fp,#-4
-	move.w	U92082.l,d0
+	move.w	U92082,d0
 	unlk	fp
 	rts
 
 L33566:
 	link	fp,#-4
-	move.l	U92078.l,d0
+	move.l	U92078,d0
 	unlk	fp
 	rts
 
 L33580:
 	link	fp,#-4
-	move.w	U92096.l,(sp)
-	jsr	L28042.l
-	jsr	L27654.l
+	move.w	U92096,(sp)
+	jsr	L28042
+	jsr	L27654
 	unlk	fp
 	rts
 
@@ -10726,32 +10726,32 @@ L33606:
 	move.l	8(fp),-(sp)
 	bsr  	L34046
 	addq.l	#4,sp
-	move.w	U92120.l,(sp)
-	move.w	U92118.l,-(sp)
+	move.w	U92120,(sp)
+	move.w	U92118,-(sp)
 	bsr  	L36258
 	addq.l	#2,sp
 	bsr  	L36234
 	tst.w	d0
 	beq.s	L33726
-	move.w	U92118.l,d0
+	move.w	U92118,d0
 	ext.l	d0
-	divs	U101120.l,d0
+	divs	U101120,d0
 	swap	d0
-	move.w	d0,U92118.l
+	move.w	d0,U92118
 	tst.w	d0
 	bge.s	L33688
-	move.w	U101120.l,d0
-	add.w	d0,U92118.l
+	move.w	U101120,d0
+	add.w	d0,U92118
 L33688:
-	move.w	U92120.l,d0
+	move.w	U92120,d0
 	ext.l	d0
-	divs	U101122.l,d0
+	divs	U101122,d0
 	swap	d0
-	move.w	d0,U92120.l
+	move.w	d0,U92120
 	tst.w	d0
 	bge.s	L33726
-	move.w	U101122.l,d0
-	add.w	d0,U92120.l
+	move.w	U101122,d0
+	add.w	d0,U92120
 L33726:
 	move.l	#U92118,d0
 	unlk	fp
@@ -10759,64 +10759,64 @@ L33726:
 
 L33736:
 	link	fp,#-4
-	move.l	U92088.l,-(sp)
+	move.l	U92088,-(sp)
 	move.l	8(fp),d0
-	move.l	d0,U92132.l
+	move.l	d0,U92132
 	move.l	d0,-(sp)
-	jsr	L81968.l
+	jsr	L81968
 	addq.l	#8,sp
-	move.l	d0,U92136.l
+	move.l	d0,U92136
 	bsr  	L34368
 	unlk	fp
 	rts
 
 L33780:
 	link	fp,#-4
-	move.l	U92132.l,d0
+	move.l	U92132,d0
 	unlk	fp
 	rts
 
 L33794:
 	link	fp,#-4
-	tst.w	U92086.l
+	tst.w	U92086
 	beq.s	L33858
-	move.l	T85048.l,-(sp)
+	move.l	T85048,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	bne.s	L33846
-	move.l	T85048.l,-(sp)
+	move.l	T85048,-(sp)
 	move.l	12(fp),-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	beq.s	L33858
 L33846:
-	jsr	L27654.l
-	jsr	L66832.l
+	jsr	L27654
+	jsr	L66832
 L33858:
-	move.l	8(fp),U92124.l
-	move.l	12(fp),U92128.l
+	move.l	8(fp),U92124
+	move.l	12(fp),U92128
 	bsr  	L34368
 	unlk	fp
 	rts
 
 L33882:
 	link	fp,#-4
-	move.l	U92124.l,d0
+	move.l	U92124,d0
 	unlk	fp
 	rts
 
 L33896:
 	link	fp,#-4
-	move.l	U92128.l,d0
+	move.l	U92128,d0
 	unlk	fp
 	rts
 
 L33910:
 	link	fp,#-4
-	move.l	T85032.l,-(sp)
-	move.l	U92132.l,-(sp)
-	jsr	L81542.l
+	move.l	T85032,-(sp)
+	move.l	U92132,-(sp)
+	jsr	L81542
 	addq.l	#8,sp
 	bne.s	L33942
 	move.l	8(fp),d0
@@ -10824,8 +10824,8 @@ L33910:
 
 L33942:
 	move.l	8(fp),-(sp)
-	move.l	U92132.l,-(sp)
-	jsr	L81968.l
+	move.l	U92132,-(sp)
+	jsr	L81968
 	addq.l	#8,sp
 L33960:
 	unlk	fp
@@ -10833,9 +10833,9 @@ L33960:
 
 L33964:
 	link	fp,#-4
-	move.l	T85032.l,-(sp)
-	move.l	U92136.l,-(sp)
-	jsr	L81542.l
+	move.l	T85032,-(sp)
+	move.l	U92136,-(sp)
+	jsr	L81542
 	addq.l	#8,sp
 	bne.s	L33996
 	move.l	8(fp),d0
@@ -10843,8 +10843,8 @@ L33964:
 
 L33996:
 	move.l	8(fp),-(sp)
-	move.l	U92136.l,-(sp)
-	jsr	L81968.l
+	move.l	U92136,-(sp)
+	jsr	L81968
 	addq.l	#8,sp
 L34014:
 	unlk	fp
@@ -10852,76 +10852,76 @@ L34014:
 
 L34018:
 	link	fp,#-4
-	move.l	U99808.l,d0
+	move.l	U99808,d0
 	unlk	fp
 	rts
 
 L34032:
 	link	fp,#-4
-	move.l	U99812.l,d0
+	move.l	U99812,d0
 	unlk	fp
 	rts
 
 L34046:
 	link	fp,#-12
-	move.l	U92124.l,-(sp)
+	move.l	U92124,-(sp)
 	move.l	8(fp),-(sp)
 	bsr  	L35168
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L82028.l
+	jsr	L82028
 	addq.l	#8,sp
 	move.l	d0,(sp)
 	bsr  	L33910
 	move.l	d0,-(sp)
-	move.w	U92114.l,d0
+	move.w	U92114,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688.l
+	jsr	L81688
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81510.l
+	jsr	L81510
 	addq.l	#8,sp
 	move.l	d0,8(fp)
-	move.l	U92128.l,-(sp)
+	move.l	U92128,-(sp)
 	move.l	12(fp),-(sp)
 	bsr  	L35168
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L82028.l
+	jsr	L82028
 	addq.l	#8,sp
 	move.l	d0,(sp)
 	bsr  	L33964
 	move.l	d0,-(sp)
-	move.w	U92116.l,d0
+	move.w	U92116,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688.l
+	jsr	L81688
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L82028.l
+	jsr	L82028
 	addq.l	#8,sp
 	move.l	d0,12(fp)
 	move.l	8(fp),(sp)
-	jsr	L3058.l
+	jsr	L3058
 	move.l	d0,-4(fp)
 	move.l	12(fp),(sp)
-	jsr	L3058.l
+	jsr	L3058
 	move.l	d0,-8(fp)
-	move.l	T85040.l,-(sp)
+	move.l	T85040,-(sp)
 	move.l	-4(fp),-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	bgt.s	L34250
-	move.l	T85040.l,-(sp)
+	move.l	T85040,-(sp)
 	move.l	-8(fp),-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	ble.s	L34336
 L34250:
 	move.l	-8(fp),-(sp)
 	move.l	-4(fp),-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	ble.s	L34274
 	move.l	-4(fp),-(sp)
@@ -10930,38 +10930,38 @@ L34250:
 L34274:
 	move.l	-8(fp),-(sp)
 L34278:
-	move.l	T85040.l,-(sp)
-	jsr	L81572.l
+	move.l	T85040,-(sp)
+	jsr	L81572
 	addq.l	#8,sp
 	move.l	d0,-4(fp)
 	move.l	-4(fp),-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81968.l
+	jsr	L81968
 	addq.l	#8,sp
 	move.l	d0,8(fp)
 	move.l	-4(fp),-(sp)
 	move.l	12(fp),-(sp)
-	jsr	L81968.l
+	jsr	L81968
 	addq.l	#8,sp
 	move.l	d0,12(fp)
 L34336:
 	move.l	8(fp),(sp)
 	bsr  	L35006
-	move.w	d0,U92118.l
+	move.w	d0,U92118
 	move.l	12(fp),(sp)
 	bsr  	L35006
-	move.w	d0,U92120.l
+	move.w	d0,U92120
 	unlk	fp
 	rts
 
 L34368:
 	link	fp,#-4
-	move.l	U99812.l,(sp)
-	move.l	U99808.l,-(sp)
+	move.l	U99812,(sp)
+	move.l	U99808,-(sp)
 	bsr  	L34046
 	addq.l	#4,sp
-	move.w	U92118.l,U99860.l
-	move.w	U92120.l,U100564.l
+	move.w	U92118,U99860
+	move.w	U92120,U100564
 	unlk	fp
 	rts
 
@@ -10970,8 +10970,8 @@ L34414:
 	bsr.s	L34468
 	tst.w	d0
 	beq.s	L34436
-	jsr	L27654.l
-	clr.w	U92084.l
+	jsr	L27654
+	clr.w	U92084
 L34436:
 	unlk	fp
 	rts
@@ -10981,38 +10981,38 @@ L34440:
 	bsr.s	L34468
 	tst.w	d0
 	bne.s	L34464
-	move.w	#1,U92084.l
-	jsr	L27654.l
+	move.w	#1,U92084
+	jsr	L27654
 L34464:
 	unlk	fp
 	rts
 
 L34468:
 	link	fp,#-4
-	move.w	U92084.l,d0
+	move.w	U92084,d0
 	unlk	fp
 	rts
 
 L34482:
 	link	fp,#-4
-	clr.w	U92086.l
+	clr.w	U92086
 	unlk	fp
 	rts
 
 L34496:
 	link	fp,#-4
-	move.l	T85048.l,-(sp)
-	move.l	U92124.l,-(sp)
-	jsr	L81542.l
+	move.l	T85048,-(sp)
+	move.l	U92124,-(sp)
+	jsr	L81542
 	addq.l	#8,sp
 	bne.s	L34544
-	move.l	T85048.l,-(sp)
-	move.l	U92128.l,-(sp)
-	jsr	L81542.l
+	move.l	T85048,-(sp)
+	move.l	U92128,-(sp)
+	jsr	L81542
 	addq.l	#8,sp
 	beq.s	L34550
 L34544:
-	jsr	L66832.l
+	jsr	L66832
 L34550:
 	unlk	fp
 	rts
@@ -11020,49 +11020,49 @@ L34550:
 L34554:
 	link	fp,#-4
 	bsr.s	L34496
-	jsr	L27654.l
-	move.w	#1,U92086.l
+	jsr	L27654
+	move.w	#1,U92086
 	bsr  	L34706
-	jsr	L27654.l
+	jsr	L27654
 	unlk	fp
 	rts
 
 L34588:
 	link	fp,#-4
-	move.w	U100564.l,(sp)
-	move.w	U99860.l,-(sp)
+	move.w	U100564,(sp)
+	move.w	U99860,-(sp)
 	bsr  	L36410
 	addq.l	#2,sp
 	tst.w	d0
 	beq.s	L34620
-	jsr	L66856.l
+	jsr	L66856
 L34620:
 	bsr.s	L34496
-	move.w	#2,U92086.l
+	move.w	#2,U92086
 	unlk	fp
 	rts
 
 L34634:
 	link	fp,#-4
-	move.w	U92086.l,d0
+	move.w	U92086,d0
 	unlk	fp
 	rts
 
 L34648:
 	link	fp,#-4
-	move.l	U92132.l,-(sp)
+	move.l	U92132,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81968.l
+	jsr	L81968
 	addq.l	#8,sp
-	move.l	d0,U92136.l
-	move.l	8(fp),U92088.l
+	move.l	d0,U92136
+	move.l	8(fp),U92088
 	bsr  	L34368
 	unlk	fp
 	rts
 
 L34692:
 	link	fp,#-4
-	move.l	U92088.l,d0
+	move.l	U92088,d0
 	unlk	fp
 	rts
 
@@ -11071,88 +11071,88 @@ L34706:
 	bra.s	L34772
 
 L34712:
-	move.l	U92132.l,-(sp)
-	move.w	U101120.l,d0
+	move.l	U92132,-(sp)
+	move.w	U101120,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688.l
+	jsr	L81688
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81572.l
+	jsr	L81572
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	move.l	U99808.l,-(sp)
-	jsr	L81510.l
+	move.l	U99808,-(sp)
+	jsr	L81510
 	addq.l	#8,sp
-	move.l	d0,U99808.l
+	move.l	d0,U99808
 	bsr  	L34368
 L34772:
-	tst.w	U99860.l
+	tst.w	U99860
 	blt.s	L34712
 	bra.s	L34842
 
 L34782:
-	move.l	U92132.l,-(sp)
-	move.w	U101120.l,d0
+	move.l	U92132,-(sp)
+	move.w	U101120,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688.l
+	jsr	L81688
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81572.l
+	jsr	L81572
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	move.l	U99808.l,-(sp)
-	jsr	L82028.l
+	move.l	U99808,-(sp)
+	jsr	L82028
 	addq.l	#8,sp
-	move.l	d0,U99808.l
+	move.l	d0,U99808
 	bsr  	L34368
 L34842:
-	move.w	U101120.l,d0
-	cmp.w	U99860.l,d0
+	move.w	U101120,d0
+	cmp.w	U99860,d0
 	ble.s	L34782
 	bra.s	L34918
 
 L34858:
-	move.l	U92136.l,-(sp)
-	move.w	U101122.l,d0
+	move.l	U92136,-(sp)
+	move.w	U101122,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688.l
+	jsr	L81688
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81572.l
+	jsr	L81572
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	move.l	U99812.l,-(sp)
-	jsr	L82028.l
+	move.l	U99812,-(sp)
+	jsr	L82028
 	addq.l	#8,sp
-	move.l	d0,U99812.l
+	move.l	d0,U99812
 	bsr  	L34368
 L34918:
-	tst.w	U100564.l
+	tst.w	U100564
 	blt.s	L34858
 	bra.s	L34988
 
 L34928:
-	move.l	U92136.l,-(sp)
-	move.w	U101122.l,d0
+	move.l	U92136,-(sp)
+	move.w	U101122,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688.l
+	jsr	L81688
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81572.l
+	jsr	L81572
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	move.l	U99812.l,-(sp)
-	jsr	L81510.l
+	move.l	U99812,-(sp)
+	jsr	L81510
 	addq.l	#8,sp
-	move.l	d0,U99812.l
+	move.l	d0,U99812
 	bsr  	L34368
 L34988:
-	move.w	U101122.l,d0
-	cmp.w	U100564.l,d0
+	move.w	U101122,d0
+	cmp.w	U100564,d0
 	ble.s	L34928
 	unlk	fp
 	rts
@@ -11160,46 +11160,46 @@ L34988:
 L35006:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
-	move.l	T85048.l,-(sp)
+	move.l	T85048,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	blt.s	L35088
-	move.l	T85044.l,-(sp)
+	move.l	T85044,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81832.l
+	jsr	L81832
 	addq.l	#4,sp
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688.l
+	jsr	L81688
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81510.l
+	jsr	L81510
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	jsr	L81832.l
+	jsr	L81832
 	addq.l	#4,sp
 	move.w	d0,d7
 	bra.s	L35156
 
 L35088:
-	move.l	T85044.l,-(sp)
+	move.l	T85044,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L82028.l
+	jsr	L82028
 	addq.l	#8,sp
 	move.l	d0,8(fp)
 	move.l	8(fp),-(sp)
-	jsr	L81832.l
+	jsr	L81832
 	addq.l	#4,sp
 	move.w	d0,d7
 	move.l	8(fp),-(sp)
 	move.w	d7,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688.l
+	jsr	L81688
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	bne.s	L35156
 	addq.w	#1,d7
@@ -11215,17 +11215,17 @@ L35168:
 	move.w	#16000,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688.l
+	jsr	L81688
 	addq.l	#4,sp
 	move.l	d0,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L3058.l
+	jsr	L3058
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	ble.s	L35220
-	jsr	L66856.l
+	jsr	L66856
 L35220:
 	move.l	8(fp),d0
 	unlk	fp
@@ -11238,21 +11238,21 @@ L35228:
 	move.l	8(fp),-(sp)
 	bsr  	L34046
 	addq.l	#4,sp
-	move.w	U92120.l,(sp)
-	move.w	U92118.l,-(sp)
+	move.w	U92120,(sp)
+	move.w	U92118,-(sp)
 	bsr  	L36258
 	addq.l	#2,sp
-	jsr	L27654.l
-	move.w	U99860.l,U92140.l
-	move.w	U100564.l,U92142.l
-	move.w	U92118.l,d0
-	move.w	d0,U99860.l
-	move.w	d0,U92144.l
-	move.w	U92120.l,d0
-	move.w	d0,U100564.l
-	move.w	d0,U92146.l
-	move.l	8(fp),U99808.l
-	move.l	12(fp),U99812.l
+	jsr	L27654
+	move.w	U99860,U92140
+	move.w	U100564,U92142
+	move.w	U92118,d0
+	move.w	d0,U99860
+	move.w	d0,U92144
+	move.w	U92120,d0
+	move.w	d0,U100564
+	move.w	d0,U92146
+	move.l	8(fp),U99808
+	move.l	12(fp),U99812
 	bsr  	L36234
 	tst.w	d0
 	beq  	L35524
@@ -11260,19 +11260,19 @@ L35228:
 	tst.w	d0
 	beq  	L35518
 L35366:
-	move.w	U92092.l,(sp)
+	move.w	U92092,(sp)
 	bsr  	L35556
 	move.w	d0,d6
 	move.w	d6,d7
 	asr.w	#1,d7
-	move.w	U92120.l,(sp)
-	move.w	U92118.l,-(sp)
+	move.w	U92120,(sp)
+	move.w	U92118,-(sp)
 	bsr  	L36410
 	addq.l	#2,sp
 	tst.w	d0
 	beq.s	L35518
-	move.w	U92144.l,U92140.l
-	move.w	U92146.l,U92142.l
+	move.w	U92144,U92140
+	move.w	U92146,U92142
 	movea.w	d6,a0
 	adda.l	a0,a0
 	adda.l	#U92106,a0
@@ -11281,8 +11281,8 @@ L35366:
 	adda.l	#U92140,a1
 	move.w	(a0),d0
 	add.w	d0,(a1)
-	move.w	U92118.l,U92144.l
-	move.w	U92120.l,U92146.l
+	move.w	U92118,U92144
+	move.w	U92120,U92146
 	movea.w	d6,a0
 	adda.l	a0,a0
 	adda.l	#U92106,a0
@@ -11291,8 +11291,8 @@ L35366:
 	adda.l	#U92140,a1
 	move.w	(a0),d0
 	add.w	d0,4(a1)
-	move.w	U92144.l,U92118.l
-	move.w	U92146.l,U92120.l
+	move.w	U92144,U92118
+	move.w	U92146,U92120
 	bra  	L35366
 
 L35518:
@@ -11303,10 +11303,10 @@ L35524:
 	bsr  	L33300
 	tst.w	d0
 	beq.s	L35540
-	move.w	U92092.l,(sp)
+	move.w	U92092,(sp)
 	bsr.s	L35556
 L35540:
-	jsr	L27654.l
+	jsr	L27654
 	tst.l	(sp)+
 	movem.l	(sp)+,d6-d7
 	unlk	fp
@@ -11316,10 +11316,10 @@ L35556:
 	link	fp,#0
 	movem.l	d5-d7,-(sp)
 	moveq	#-1,d0
-	move.w	d0,U92152.l
-	move.w	d0,U92150.l
-	move.w	d0,U92154.l
-	clr.w	U92148.l
+	move.w	d0,U92152
+	move.w	d0,U92150
+	move.w	d0,U92154
+	clr.w	U92148
 	moveq	#-1,d6
 	bra  	L35720
 
@@ -11336,7 +11336,7 @@ L35600:
 	adda.l	a1,a0
 	movea.l	#U92140,a1
 	move.w	0(a0,a1.l),d0
-	move.w	d0,U92156.l
+	move.w	d0,U92156
 	movea.w	d7,a1
 	adda.l	a1,a1
 	adda.l	a1,a1
@@ -11349,7 +11349,7 @@ L35600:
 	move.w	d6,-(sp)
 	bsr  	L35836
 	addq.l	#4,sp
-	move.w	d0,U92154.l
+	move.w	d0,U92154
 	bra.s	L35710
 
 L35666:
@@ -11358,14 +11358,14 @@ L35666:
 	adda.l	a0,a0
 	movea.l	#U92098,a1
 	move.w	2(a0,a1.l),d0
-	cmp.w	U92156.l,d0
+	cmp.w	U92156,d0
 	bge.s	L35710
 	move.w	#1,(sp)
 	move.w	d7,-(sp)
 	move.w	d6,-(sp)
 	bsr  	L35836
 	addq.l	#4,sp
-	move.w	d0,U92154.l
+	move.w	d0,U92154
 L35710:
 	addq.w	#1,d7
 	move.w	d7,d0
@@ -11376,29 +11376,29 @@ L35720:
 	move.w	d6,d0
 	cmp.w	#2,d0
 	blt  	L35596
-	tst.w	U92148.l
+	tst.w	U92148
 	bne.s	L35820
-	move.w	U92142.l,(sp)
-	move.w	U92140.l,-(sp)
+	move.w	U92142,(sp)
+	move.w	U92140,-(sp)
 	bsr  	L36410
 	addq.l	#2,sp
 	tst.w	d0
 	bne.s	L35820
-	move.w	U92146.l,(sp)
-	move.w	U92144.l,-(sp)
+	move.w	U92146,(sp)
+	move.w	U92144,-(sp)
 	bsr  	L36410
 	addq.l	#2,sp
 	tst.w	d0
 	bne.s	L35820
 	move.w	8(fp),(sp)
-	move.w	U92146.l,-(sp)
-	move.w	U92144.l,-(sp)
-	move.w	U92142.l,-(sp)
-	move.w	U92140.l,-(sp)
-	jsr	L27234.l
+	move.w	U92146,-(sp)
+	move.w	U92144,-(sp)
+	move.w	U92142,-(sp)
+	move.w	U92140,-(sp)
+	jsr	L27234
 	addq.l	#8,sp
 L35820:
-	move.w	U92154.l,d0
+	move.w	U92154,d0
 	tst.l	(sp)+
 	movem.l	(sp)+,d6-d7
 	unlk	fp
@@ -11416,7 +11416,7 @@ L35836:
 	adda.l	a1,a1
 	adda.l	a1,a0
 	adda.l	#U92098,a0
-	move.w	(a0),U92162.l
+	move.w	(a0),U92162
 	movea.w	d6,a0
 	adda.l	a0,a0
 	adda.l	a0,a0
@@ -11435,7 +11435,7 @@ L35836:
 	adda.l	#U92140,a1
 	move.w	(a1),d1
 	sub.w	d1,d0
-	move.w	d0,U92160.l
+	move.w	d0,U92160
 	beq  	L36122
 	movea.w	d6,a0
 	adda.l	a0,a0
@@ -11446,10 +11446,10 @@ L35836:
 	adda.l	a1,a0
 	adda.l	#U92140,a0
 	move.l	a0,-(sp)
-	move.w	U92160.l,d0
+	move.w	U92160,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688.l
+	jsr	L81688
 	addq.l	#4,sp
 	move.l	d0,-(sp)
 	movea.w	#1,a0
@@ -11474,7 +11474,7 @@ L35836:
 	sub.w	d1,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688.l
+	jsr	L81688
 	addq.l	#4,sp
 	move.l	d0,-(sp)
 	movea.w	d6,a0
@@ -11485,16 +11485,16 @@ L35836:
 	adda.l	a1,a0
 	movea.l	#U92140,a1
 	move.w	0(a0,a1.l),d0
-	sub.w	U92162.l,d0
+	sub.w	U92162,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688.l
+	jsr	L81688
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81968.l
+	jsr	L81968
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	jsr	L81572.l
+	jsr	L81572
 	addq.l	#8,sp
 	move.l	d0,-(sp)
 	bsr  	L35006
@@ -11509,23 +11509,23 @@ L36122:
 	adda.l	a1,a1
 	adda.l	a1,a0
 	adda.l	#U92140,a0
-	move.w	U92162.l,(a0)
+	move.w	U92162,(a0)
 	move.w	d7,d0
 	asl.w	#1,d0
 	add.w	12(fp),d0
-	move.w	d0,U92158.l
-	cmp.w	U92150.l,d0
+	move.w	d0,U92158
+	cmp.w	U92150,d0
 	bne.s	L36176
-	move.w	#1,U92148.l
+	move.w	#1,U92148
 L36176:
-	move.w	U92158.l,d0
-	cmp.w	U92152.l,d0
+	move.w	U92158,d0
+	cmp.w	U92152,d0
 	bne.s	L36198
-	move.w	#1,U92148.l
+	move.w	#1,U92148
 L36198:
-	move.w	U92150.l,U92152.l
-	move.w	U92158.l,U92150.l
-	move.w	U92158.l,d0
+	move.w	U92150,U92152
+	move.w	U92158,U92150
+	move.w	U92158,d0
 	tst.l	(sp)+
 	movem.l	(sp)+,d6-d7
 	unlk	fp
@@ -11533,7 +11533,7 @@ L36198:
 
 L36234:
 	link	fp,#-4
-	cmpi.w	#1,U92086.l
+	cmpi.w	#1,U92086
 	beq.s	L36252
 	clr.w	d0
 	bra.s	L36254
@@ -11546,7 +11546,7 @@ L36254:
 
 L36258:
 	link	fp,#-4
-	cmpi.w	#2,U92086.l
+	cmpi.w	#2,U92086
 	bne.s	L36296
 	move.w	10(fp),(sp)
 	move.w	8(fp),-(sp)
@@ -11554,7 +11554,7 @@ L36258:
 	addq.l	#2,sp
 	tst.w	d0
 	beq.s	L36296
-	jsr	L66856.l
+	jsr	L66856
 L36296:
 	unlk	fp
 	rts
@@ -11564,23 +11564,23 @@ L36300:
 	bra.s	L36328
 
 L36306:
-	move.l	T85036.l,-(sp)
+	move.l	T85036,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L82028.l
+	jsr	L82028
 	addq.l	#8,sp
 	move.l	d0,8(fp)
 L36328:
-	move.l	T85036.l,-(sp)
+	move.l	T85036,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	bge.s	L36306
 	bra.s	L36372
 
 L36350:
-	move.l	T85036.l,-(sp)
+	move.l	T85036,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81510.l
+	jsr	L81510
 	addq.l	#8,sp
 	move.l	d0,8(fp)
 L36372:
@@ -11588,10 +11588,10 @@ L36372:
 	clr.w	d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688.l
+	jsr	L81688
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	bgt.s	L36350
 	move.l	8(fp),d0
@@ -11602,14 +11602,14 @@ L36410:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
 	move.w	8(fp),d7
-	cmp.w	U92098.l,d7
+	cmp.w	U92098,d7
 	blt.s	L36466
-	cmp.w	U92100.l,d7
+	cmp.w	U92100,d7
 	bgt.s	L36466
-	move.w	U92102.l,d0
+	move.w	U92102,d0
 	cmp.w	10(fp),d0
 	bgt.s	L36466
-	move.w	U92104.l,d0
+	move.w	U92104,d0
 	cmp.w	10(fp),d0
 	blt.s	L36466
 	clr.w	d0
@@ -11688,9 +11688,9 @@ L36602:
 
 L36612:
 	link	fp,#-4
-	move.l	T85056.l,-(sp)
+	move.l	T85056,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81510.l
+	jsr	L81510
 	addq.l	#8,sp
 	move.l	d0,(sp)
 	bsr.s	L36642
@@ -11701,44 +11701,44 @@ L36642:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
 	clr.w	d7
-	move.l	8(fp),U92166.l
+	move.l	8(fp),U92166
 	bra.s	L36690
 
 L36662:
-	move.l	T85056.l,-(sp)
-	move.l	U92166.l,-(sp)
-	jsr	L82028.l
+	move.l	T85056,-(sp)
+	move.l	U92166,-(sp)
+	jsr	L82028
 	addq.l	#8,sp
-	move.l	d0,U92166.l
+	move.l	d0,U92166
 	addq.w	#1,d7
 L36690:
-	move.l	T85056.l,-(sp)
-	move.l	U92166.l,-(sp)
-	jsr	L81542.l
+	move.l	T85056,-(sp)
+	move.l	U92166,-(sp)
+	jsr	L81542
 	addq.l	#8,sp
 	bgt.s	L36662
 	btst	#0,d7
 	beq.s	L36744
-	move.l	U92166.l,-(sp)
-	move.l	T85056.l,-(sp)
-	jsr	L82028.l
+	move.l	U92166,-(sp)
+	move.l	T85056,-(sp)
+	jsr	L82028
 	addq.l	#8,sp
-	move.l	d0,U92166.l
+	move.l	d0,U92166
 L36744:
-	move.l	U92166.l,-(sp)
-	move.l	U92166.l,-(sp)
-	jsr	L81832.l
+	move.l	U92166,-(sp)
+	move.l	U92166,-(sp)
+	jsr	L81832
 	addq.l	#4,sp
-	move.w	d0,U92164.l
+	move.w	d0,U92164
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688.l
+	jsr	L81688
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	bne.s	L36818
-	movea.w	U92164.l,a0
+	movea.w	U92164,a0
 	adda.l	a0,a0
 	adda.l	a0,a0
 	movea.l	#T85060,a1
@@ -11746,57 +11746,57 @@ L36744:
 	bra  	L36962
 
 L36818:
-	move.w	U92164.l,d0
+	move.w	U92164,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688.l
+	jsr	L81688
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	move.l	U92166.l,-(sp)
-	jsr	L82028.l
+	move.l	U92166,-(sp)
+	jsr	L82028
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	movea.w	U92164.l,a0
+	movea.w	U92164,a0
 	addq.w	#1,a0
 	adda.l	a0,a0
 	adda.l	a0,a0
 	movea.l	#T85060,a1
 	move.l	0(a0,a1.l),-(sp)
-	jsr	L81968.l
+	jsr	L81968
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	move.l	U92166.l,-(sp)
-	move.w	U92164.l,d0
+	move.l	U92166,-(sp)
+	move.w	U92164,d0
 	addq.w	#1,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688.l
+	jsr	L81688
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L82028.l
+	jsr	L82028
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	movea.w	U92164.l,a0
+	movea.w	U92164,a0
 	adda.l	a0,a0
 	adda.l	a0,a0
 	movea.l	#T85060,a1
 	move.l	0(a0,a1.l),-(sp)
-	jsr	L81968.l
+	jsr	L81968
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	jsr	L81510.l
+	jsr	L81510
 	addq.l	#8,sp
 L36962:
-	move.l	d0,U92166.l
+	move.l	d0,U92166
 	btst	#1,d7
 	beq.s	L36990
-	move.l	U92166.l,-(sp)
-	jsr	L82000.l
+	move.l	U92166,-(sp)
+	jsr	L82000
 	addq.l	#4,sp
 	bra.s	L36996
 
 L36990:
-	move.l	U92166.l,d0
+	move.l	U92166,d0
 L36996:
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
@@ -11806,46 +11806,46 @@ L36996:
 L37006:
 	link	fp,#-4
 	move.l	8(fp),(sp)
-	jsr	L36300.l
+	jsr	L36300
 	move.l	d0,(sp)
-	jsr	L36642.l
+	jsr	L36642
 	unlk	fp
 	rts
 
 L37032:
 	link	fp,#-4
 	move.l	8(fp),(sp)
-	jsr	L36300.l
+	jsr	L36300
 	move.l	d0,(sp)
-	jsr	L36612.l
+	jsr	L36612
 	unlk	fp
 	rts
 
 L37058:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
-	jsr	L77854.l
+	jsr	L77854
 L37072:
-	clr.w	U99852.l
-	clr.w	U100748.l
-	clr.w	U100622.l
-	clr.w	U101006.l
-	clr.w	U100890.l
+	clr.w	U99852
+	clr.w	U100748
+	clr.w	U100622
+	clr.w	U101006
+	clr.w	U100890
 	move.l	#U101158,(sp)
-	jsr	L204.l
+	jsr	L204
 	move.w	d0,d7
 	beq.s	L37156
 	clr.w	d0
-	move.w	d0,U99190.l
-	move.w	d0,U101476.l
+	move.w	d0,U99190
+	move.w	d0,U101476
 	cmp.w	#23,d7
 	bne.s	L37150
-	jsr	L62532.l
-	jsr	L62878.l
+	jsr	L62532
+	jsr	L62878
 L37150:
-	jsr	L58082.l
+	jsr	L58082
 L37156:
-	jsr	L62532.l
+	jsr	L62532
 	bsr.s	L37176
 	bra.s	L37072
 
@@ -11856,48 +11856,48 @@ L37156:
 
 L37176:
 	link	fp,#-4
-	clr.w	U101470.l
-	jsr	L56040.l
+	clr.w	U101470
+	jsr	L56040
 	move.l	#U100656,(sp)
-	jsr	L204.l
+	jsr	L204
 	tst.w	d0
 	beq.s	L37222
-	jsr	L2226.l
-	jsr	L60948.l
+	jsr	L2226
+	jsr	L60948
 	bra.s	L37308
 
 L37222:
 	move.w	#63,(sp)
-	jsr	L50590.l
-	move.l	T87158.l,(sp)
-	jsr	L52220.l
+	jsr	L50590
+	move.l	T87158,(sp)
+	jsr	L52220
 	tst.w	d0
 	beq.s	L37256
-	jsr	L54122.l
+	jsr	L54122
 	bra.s	L37308
 
 L37256:
-	move.l	T87162.l,(sp)
-	jsr	L52220.l
+	move.l	T87162,(sp)
+	jsr	L52220
 	tst.w	d0
 	beq.s	L37280
-	jsr	L49652.l
+	jsr	L49652
 	bra.s	L37308
 
 L37280:
-	move.l	T87166.l,(sp)
-	jsr	L52220.l
+	move.l	T87166,(sp)
+	jsr	L52220
 	tst.w	d0
 	bne.s	L37302
-	clr.w	U98712.l
+	clr.w	U98712
 L37302:
-	jsr	L58142.l
+	jsr	L58142
 L37308:
 	unlk	fp
 	rts
 
 L37312:
-	move.l	#U101066,U92170.l
+	move.l	#U101066,U92170
 	move.l	#U92170,d1
 	moveq	#115,d0
 	trap	#2		; VDI/AES
@@ -11931,48 +11931,48 @@ L37360:
 
 L37392:
 	link	fp,#0
-	move.l	8(fp),U92178.l
+	move.l	8(fp),U92178
 	unlk	fp
 	rts
 
 L37408:
 	link	fp,#0
-	move.l	8(fp),U92174.l
+	move.l	8(fp),U92174
 	unlk	fp
 	rts
 
 L37424:
 	link	fp,#0
-	move.l	8(fp),U92186.l
+	move.l	8(fp),U92186
 	unlk	fp
 	rts
 
 L37440:
 	link	fp,#0
-	move.l	8(fp),U92182.l
+	move.l	8(fp),U92182
 	unlk	fp
 	rts
 
 L37456:
 	link	fp,#0
-	move.l	8(fp),U101080.l
+	move.l	8(fp),U101080
 	unlk	fp
 	rts
 
 L37472:
 	link	fp,#0
-	move.l	8(fp),U101084.l
+	move.l	8(fp),U101084
 	unlk	fp
 	rts
 
 	link	fp,#0
-	move.l	8(fp),U101080.l
+	move.l	8(fp),U101080
 	unlk	fp
 	rts
 
 	link	fp,#0
 	movea.l	8(fp),a0
-	move.l	U101084.l,(a0)
+	move.l	U101084,(a0)
 	unlk	fp
 	rts
 
@@ -11982,7 +11982,7 @@ L37522:
 	subq.l	#4,(sp)
 	move.w	8(fp),-(sp)
 	clr.w	-(sp)
-	jsr	L2070.l
+	jsr	L2070
 	addq.l	#4,sp
 	move.l	-4(fp),d0
 	unlk	fp
@@ -11991,19 +11991,19 @@ L37522:
 L37552:
 	link	fp,#-4
 	movea.l	8(fp),a0
-	move.w	U99096.l,(a0)
+	move.w	U99096,(a0)
 	movea.l	12(fp),a0
-	move.w	U99098.l,(a0)
+	move.w	U99098,(a0)
 	movea.l	16(fp),a0
-	move.w	U99100.l,(a0)
+	move.w	U99100,(a0)
 	movea.l	20(fp),a0
-	move.w	U99102.l,(a0)
+	move.w	U99102,(a0)
 	unlk	fp
 	rts
 
 L37600:
 	link	fp,#-4
-	move.l	U92236.l,d0
+	move.l	U92236,d0
 	unlk	fp
 	rts
 
@@ -12019,8 +12019,8 @@ L37614:
 	move.l	fp,-(sp)
 	subq.l	#2,(sp)
 	move.w	#7,-(sp)
-	move.w	U92266.l,-(sp)
-	jsr	L1780.l
+	move.w	U92266,-(sp)
+	jsr	L1780
 	adda.l	#16,sp
 	bsr  	L45356
 	move.w	-8(fp),(sp)
@@ -12028,15 +12028,15 @@ L37614:
 	move.w	-4(fp),-(sp)
 	move.w	-2(fp),-(sp)
 	move.w	#5,-(sp)
-	move.w	U92266.l,-(sp)
-	jsr	L1860.l
+	move.w	U92266,-(sp)
+	jsr	L1860
 	adda.l	#10,sp
 	move.w	#2,(sp)
 	bsr  	L42772
 	bsr  	L48234
 	bsr  	L46108
 	bsr  	L47940
-	jsr	L61834.l
+	jsr	L61834
 	unlk	fp
 	rts
 
@@ -12062,22 +12062,22 @@ L37732:
 	adda.l	a0,a0
 	movea.l	#U92262,a1
 	move.w	0(a0,a1.l),-(sp)
-	jsr	L1780.l
+	jsr	L1780
 	adda.l	#16,sp
 	move.w	d7,d0
 	muls	#40,d0
 	add.l	#U99016,d0
 	movea.l	d0,a0
 	move.w	#-1,16(a0)
-	cmp.w	U100904.l,d7
+	cmp.w	U100904,d7
 	bne.s	L37844
-	move.w	#-1,U100904.l
+	move.w	#-1,U100904
 L37844:
 	movea.w	d7,a0
 	adda.l	a0,a0
 	movea.l	#U92262,a1
 	move.w	0(a0,a1.l),(sp)
-	jsr	L1732.l
+	jsr	L1732
 	bsr  	L48330
 	tst.l	(sp)+
 	movem.l	(sp)+,d7/a5
@@ -12099,8 +12099,8 @@ L37910:
 	move.w	#1,(sp)
 	movea.l	8(fp),a0
 	move.w	6(a0),-(sp)
-	move.l	U92190.l,-(sp)
-	jsr	L1082.l
+	move.l	U92190,-(sp)
+	jsr	L1082
 	addq.l	#6,sp
 	movea.l	8(fp),a0
 	move.w	8(a0),(sp)
@@ -12120,7 +12120,7 @@ L37952:
 	move.w	#11,-(sp)
 	movea.l	8(fp),a0
 	move.w	6(a0),-(sp)
-	jsr	L1780.l
+	jsr	L1780
 	adda.l	#16,sp
 	bra.s	L38072
 
@@ -12129,7 +12129,7 @@ L37998:
 	subq.l	#8,(sp)
 	move.l	8(fp),-(sp)
 	addq.l	#8,(sp)
-	jsr	L49946.l
+	jsr	L49946
 	addq.l	#4,sp
 	tst.w	d0
 	beq.s	L38032
@@ -12150,7 +12150,7 @@ L38032:
 	move.w	#12,-(sp)
 	movea.l	8(fp),a0
 	move.w	6(a0),-(sp)
-	jsr	L1780.l
+	jsr	L1780
 	adda.l	#16,sp
 L38072:
 	tst.w	-4(fp)
@@ -12165,9 +12165,9 @@ L38088:
 	move.w	#10,-(sp)
 	movea.l	8(fp),a0
 	move.w	6(a0),-(sp)
-	jsr	L1860.l
+	jsr	L1860
 	addq.l	#4,sp
-	move.w	d7,U100904.l
+	move.w	d7,U100904
 	movea.l	8(fp),a0
 	move.w	6(a0),(sp)
 	bsr  	L39356
@@ -12177,12 +12177,12 @@ L38132:
 	bsr  	L45356
 	cmp.w	#1,d7
 	bne.s	L38180
-	btst	#0,U98293.l
+	btst	#0,U98293
 	beq.s	L38160
 	move.w	#58,(sp)
 	bsr  	L39630
 L38160:
-	btst	#1,U98293.l
+	btst	#1,U98293
 	beq.s	L38178
 	move.w	#59,(sp)
 	bsr  	L39630
@@ -12192,7 +12192,7 @@ L38178:
 L38180:
 	cmp.w	#3,d7
 	bne.s	L38202
-	cmp.w	U101462.l,d7
+	cmp.w	U101462,d7
 	bne.s	L38202
 	move.w	#36,(sp)
 	bsr  	L39630
@@ -12213,7 +12213,7 @@ L38212:
 	move.w	#5,-(sp)
 	movea.l	8(fp),a0
 	move.w	6(a0),-(sp)
-	jsr	L1780.l
+	jsr	L1780
 	adda.l	#16,sp
 	move.l	8(fp),(sp)
 	addi.l	#14,(sp)
@@ -12226,13 +12226,13 @@ L38212:
 	move.w	#7,-(sp)
 	movea.l	8(fp),a0
 	move.w	6(a0),-(sp)
-	jsr	L1780.l
+	jsr	L1780
 	adda.l	#16,sp
 	move.l	fp,(sp)
 	subq.l	#8,(sp)
 	move.l	8(fp),-(sp)
 	addq.l	#8,(sp)
-	jsr	L49856.l
+	jsr	L49856
 	addq.l	#4,sp
 	tst.w	d0
 	beq.s	L38394
@@ -12247,22 +12247,22 @@ L38212:
 	move.w	#6,-(sp)
 	movea.l	8(fp),a0
 	move.w	6(a0),-(sp)
-	jsr	L1780.l
+	jsr	L1780
 	adda.l	#16,sp
 L38394:
 	bsr  	L45356
 	movea.l	8(fp),a0
 	move.w	14(a0),(sp)
-	jsr	L28422.l
+	jsr	L28422
 	move.w	d0,-(sp)
-	jsr	L50174.l
+	jsr	L50174
 	addq.l	#2,sp
 	move.w	d0,(sp)
 	movea.l	8(fp),a0
 	move.w	12(a0),-(sp)
-	jsr	L28402.l
+	jsr	L28402
 	move.w	d0,-(sp)
-	jsr	L50174.l
+	jsr	L50174
 	addq.l	#4,sp
 	move.w	d0,-(sp)
 	movea.l	8(fp),a0
@@ -12272,7 +12272,7 @@ L38394:
 	move.w	#5,-(sp)
 	movea.l	8(fp),a0
 	move.w	6(a0),-(sp)
-	jsr	L1860.l
+	jsr	L1860
 	adda.l	#10,sp
 	move.w	d7,d0
 	muls	#40,d0
@@ -12290,7 +12290,7 @@ L38394:
 	bne.s	L38556
 	move.w	d7,(sp)
 	bsr  	L45052
-	jsr	L22560.l
+	jsr	L22560
 	bra.s	L38568
 
 L38556:
@@ -12310,8 +12310,8 @@ L38572:
 	movea.l	8(fp),a1
 	move.w	12(a1),d1
 	add.w	d1,d0
-	move.w	U99180.l,d1
-	add.w	U99182.l,d1
+	move.w	U99180,d1
+	add.w	U99182,d1
 	cmp.w	d1,d0
 	bgt.s	L38646
 	movea.l	8(fp),a0
@@ -12319,13 +12319,13 @@ L38572:
 	movea.l	8(fp),a1
 	move.w	14(a1),d1
 	add.w	d1,d0
-	move.w	U99184.l,d1
-	add.w	U101144.l,d1
+	move.w	U99184,d1
+	add.w	U101144,d1
 	cmp.w	d1,d0
 	ble.s	L38658
 L38646:
 	move.l	#U99096,(sp)
-	jsr	L24328.l
+	jsr	L24328
 L38658:
 	movea.l	8(fp),a0
 	move.w	14(a0),(sp)
@@ -12338,7 +12338,7 @@ L38658:
 	move.w	#5,-(sp)
 	movea.l	8(fp),a0
 	move.w	6(a0),-(sp)
-	jsr	L1860.l
+	jsr	L1860
 	adda.l	#10,sp
 	move.w	d7,d0
 	muls	#40,d0
@@ -12382,7 +12382,7 @@ L38822:
 	bra.s	L38850
 
 L38836:
-	cmp.w	U101462.l,d7
+	cmp.w	U101462,d7
 	bne.s	L38850
 	move.w	d7,(sp)
 	bsr  	L45052
@@ -12395,7 +12395,7 @@ L38854:
 	move.w	#8,-(sp)
 	movea.l	8(fp),a0
 	move.w	6(a0),-(sp)
-	jsr	L1860.l
+	jsr	L1860
 	addq.l	#4,sp
 	clr.w	(sp)
 	movea.l	8(fp),a0
@@ -12417,7 +12417,7 @@ L38918:
 	move.w	#9,-(sp)
 	movea.l	8(fp),a0
 	move.w	6(a0),-(sp)
-	jsr	L1860.l
+	jsr	L1860
 	addq.l	#4,sp
 	clr.w	(sp)
 	movea.l	8(fp),a0
@@ -12467,11 +12467,11 @@ L39036:
 	bra  	L39242
 
 L39074:
-	cmpi.w	#3,U101462.l
+	cmpi.w	#3,U101462
 	bne.s	L39104
 	cmp.w	#3,d7
 	bne.s	L39104
-	jsr	L28274.l
+	jsr	L28274
 	move.w	d0,(sp)
 	bsr  	L46448
 	bra.s	L39140
@@ -12492,11 +12492,11 @@ L39140:
 	bra.s	L39242
 
 L39142:
-	cmpi.w	#3,U101462.l
+	cmpi.w	#3,U101462
 	bne.s	L39172
 	cmp.w	#3,d7
 	bne.s	L39172
-	jsr	L28290.l
+	jsr	L28290
 	move.w	d0,(sp)
 	bsr  	L46448
 	bra.s	L39208
@@ -12611,7 +12611,7 @@ L39360:
 	addi.l	#-16,(sp)
 	move.w	#5,-(sp)
 	move.w	8(fp),-(sp)
-	jsr	L1780.l
+	jsr	L1780
 	adda.l	#16,sp
 	bsr  	L48330
 	move.l	fp,(sp)
@@ -12628,7 +12628,7 @@ L39360:
 	addi.l	#-12,(sp)
 	clr.w	-(sp)
 	clr.w	-(sp)
-	move.l	U101480.l,-(sp)
+	move.l	U101480,-(sp)
 	clr.w	-(sp)
 	clr.w	-(sp)
 	clr.w	-(sp)
@@ -12643,14 +12643,14 @@ L39360:
 	move.w	#1,-(sp)
 	move.w	#1,-(sp)
 	move.w	#21,-(sp)
-	jsr	L790.l
+	jsr	L790
 	adda.l	#56,sp
 	move.w	d0,-14(fp)
-	move.w	U100904.l,d0
+	move.w	U100904,d0
 	muls	#40,d0
 	add.l	#U99016,d0
 	move.l	d0,(sp)
-	jsr	L22840.l
+	jsr	L22840
 	btst	#4,-13(fp)
 	beq.s	L39562
 	move.l	#U99820,(sp)
@@ -12663,29 +12663,29 @@ L39562:
 L39578:
 	cmpi.w	#4,-14(fp)
 	beq.s	L39598
-	tst.w	U92244.l
+	tst.w	U92244
 	bne.s	L39598
 	bra  	L39360
 
 L39598:
 	bsr  	L48260
-	move.w	U101462.l,d0
+	move.w	U101462,d0
 	muls	#40,d0
 	add.l	#U99016,d0
 	move.l	d0,(sp)
-	jsr	L22840.l
+	jsr	L22840
 	unlk	fp
 	rts
 
 L39630:
 	link	fp,#-10
-	move.w	U101462.l,-6(fp)
+	move.w	U101462,-6(fp)
 	move.w	8(fp),d0
 	bra  	L40554
 
 L39650:
 	clr.w	(sp)
-	move.l	U92198.l,d0
+	move.l	U92198,d0
 	move.l	d0,-4(fp)
 	move.l	d0,-(sp)
 	move.l	#L1266,-(sp)
@@ -12697,73 +12697,73 @@ L39650:
 	bra  	L40578
 
 L39692:
-	jsr	L28242.l
+	jsr	L28242
 	move.w	d0,(sp)
 	bsr  	L46448
 	bra  	L40578
 
 L39708:
-	jsr	L28306.l
+	jsr	L28306
 	move.w	d0,(sp)
 	bsr  	L46448
 	bra  	L40578
 
 L39724:
-	jsr	L28258.l
+	jsr	L28258
 	move.w	d0,(sp)
 	bsr  	L46448
 	bra  	L40578
 
 L39740:
-	jsr	L28338.l
+	jsr	L28338
 	move.w	d0,(sp)
 	bsr  	L46448
 	bra  	L40578
 
 L39756:
-	jsr	L28226.l
+	jsr	L28226
 	move.w	d0,(sp)
 	bsr  	L46448
 	bra  	L40578
 
 L39772:
-	jsr	L28322.l
+	jsr	L28322
 	move.w	d0,(sp)
 	bsr  	L46448
 	bra  	L40578
 
 L39788:
-	jsr	L28194.l
+	jsr	L28194
 	move.w	d0,(sp)
 	bsr  	L46448
 	bra  	L40578
 
 L39804:
-	jsr	L28274.l
+	jsr	L28274
 	move.w	d0,(sp)
 	bsr  	L46448
 	bra  	L40578
 
 L39820:
-	jsr	L28290.l
+	jsr	L28290
 	move.w	d0,(sp)
 	bsr  	L46448
 	bra  	L40578
 
 L39836:
-	jsr	L28146.l
+	jsr	L28146
 	move.w	d0,(sp)
 	bsr  	L46448
 	bra  	L40578
 
 L39852:
-	jsr	L28178.l
+	jsr	L28178
 	move.w	d0,(sp)
 	bsr  	L46448
 	bra  	L40578
 
 L39868:
-	jsr	L28162.l
+	jsr	L28162
 	move.w	d0,(sp)
 	bsr  	L46448
 	bra  	L40578
@@ -12773,58 +12773,58 @@ L39884:
 	bra  	L40578
 
 L39892:
-	jsr	L28386.l
+	jsr	L28386
 	move.w	d0,(sp)
 	bsr  	L46448
 	bra  	L40578
 
 L39908:
-	jsr	L28354.l
+	jsr	L28354
 	move.w	d0,(sp)
 	bsr  	L46448
 	bra  	L40578
 
 L39924:
-	move.w	U92234.l,d0
+	move.w	U92234,d0
 	moveq	#1,d1
 	eor.w	d1,d0
 	move.w	d0,(sp)
 	bsr  	L49422
-	move.l	U92236.l,(sp)
-	move.w	U92234.l,d0
-	muls	U92232.l,d0
+	move.l	U92236,(sp)
+	move.w	U92234,d0
+	muls	U92232,d0
 	move.w	d0,-(sp)
-	jsr	L24290.l
+	jsr	L24290
 	addq.l	#2,sp
-	tst.w	U92234.l
+	tst.w	U92234
 	beq.s	L39992
 	bsr  	L48234
 	move.l	#U99096,(sp)
-	jsr	L24328.l
+	jsr	L24328
 L39992:
 	bra  	L40578
 
 L39996:
-	eori.w	#1,U98286.l
-	move.w	U98286.l,(sp)
+	eori.w	#1,U98286
+	move.w	U98286,(sp)
 	move.w	#61,-(sp)
-	move.l	U92190.l,-(sp)
-	jsr	L1002.l
+	move.l	U92190,-(sp)
+	jsr	L1002
 	addq.l	#6,sp
-	cmpi.w	#3,U101462.l
+	cmpi.w	#3,U101462
 	beq.s	L40042
 	bsr  	L47962
 L40042:
 	bra  	L40578
 
 L40046:
-	eori.w	#1,U98288.l
-	move.w	U98288.l,(sp)
+	eori.w	#1,U98288
+	move.w	U98288,(sp)
 	move.w	#60,-(sp)
-	move.l	U92190.l,-(sp)
-	jsr	L1002.l
+	move.l	U92190,-(sp)
+	jsr	L1002
 	addq.l	#6,sp
-	tst.w	U98292.l
+	tst.w	U98292
 	bne.s	L40090
 	bsr  	L47994
 L40090:
@@ -12840,11 +12840,11 @@ L40094:
 L40110:
 	cmpi.w	#19,8(fp)
 	bne.s	L40126
-	move.l	U92218.l,d0
+	move.l	U92218,d0
 	bra.s	L40132
 
 L40126:
-	move.l	U92222.l,d0
+	move.l	U92222,d0
 L40132:
 	move.l	d0,-4(fp)
 	move.l	-4(fp),(sp)
@@ -12853,7 +12853,7 @@ L40132:
 	addq.l	#2,sp
 	move.w	#1,(sp)
 	move.l	#U100678,-(sp)
-	jsr	L28438.l
+	jsr	L28438
 	addq.l	#4,sp
 	tst.w	d0
 	bne.s	L40182
@@ -12876,11 +12876,11 @@ L40196:
 L40216:
 	cmpi.w	#23,8(fp)
 	bne.s	L40232
-	move.l	U92218.l,d0
+	move.l	U92218,d0
 	bra.s	L40238
 
 L40232:
-	move.l	U92222.l,d0
+	move.l	U92222,d0
 L40238:
 	move.l	d0,-4(fp)
 	move.l	-4(fp),(sp)
@@ -12889,7 +12889,7 @@ L40238:
 	addq.l	#2,sp
 	clr.w	(sp)
 	move.l	#U98294,-(sp)
-	jsr	L28438.l
+	jsr	L28438
 	addq.l	#4,sp
 	tst.w	d0
 	beq.s	L40290
@@ -12907,11 +12907,11 @@ L40290:
 L40308:
 	cmpi.w	#21,8(fp)
 	bne.s	L40324
-	move.l	U92214.l,d0
+	move.l	U92214,d0
 	bra.s	L40330
 
 L40324:
-	move.l	U92218.l,d0
+	move.l	U92218,d0
 L40330:
 	move.l	d0,-4(fp)
 	move.l	-4(fp),(sp)
@@ -12920,7 +12920,7 @@ L40330:
 	addq.l	#2,sp
 	move.w	#1,(sp)
 	move.l	#U98294,-(sp)
-	jsr	L28438.l
+	jsr	L28438
 	addq.l	#4,sp
 	tst.w	d0
 	beq.s	L40384
@@ -12936,40 +12936,40 @@ L40384:
 	bra  	L40578
 
 L40402:
-	move.l	U92202.l,(sp)
-	jsr	L29826.l
+	move.l	U92202,(sp)
+	jsr	L29826
 	move.w	#3,(sp)
-	move.l	U92202.l,-(sp)
+	move.l	U92202,-(sp)
 	move.l	#L1266,-(sp)
 	bsr  	L40664
 	addq.l	#8,sp
-	move.l	U92202.l,(sp)
-	jsr	L29948.l
+	move.l	U92202,(sp)
+	jsr	L29948
 	bra  	L40578
 
 L40452:
-	move.l	U92206.l,(sp)
-	jsr	L30334.l
+	move.l	U92206,(sp)
+	jsr	L30334
 	move.w	#2,(sp)
-	move.l	U92206.l,-(sp)
+	move.l	U92206,-(sp)
 	move.l	#L1266,-(sp)
 	bsr  	L40664
 	addq.l	#8,sp
-	move.l	U92206.l,(sp)
-	jsr	L30444.l
+	move.l	U92206,(sp)
+	jsr	L30444
 	bra.s	L40578
 
 L40500:
-	move.l	U92210.l,(sp)
-	jsr	L31596.l
+	move.l	U92210,(sp)
+	jsr	L31596
 	move.w	#8,(sp)
-	move.l	U92210.l,-(sp)
+	move.l	U92210,-(sp)
 	move.l	#L32304,-(sp)
 	bsr  	L40664
 	addq.l	#8,sp
 	move.w	d0,(sp)
-	move.l	U92210.l,-(sp)
-	jsr	L31908.l
+	move.l	U92210,-(sp)
+	jsr	L31908
 	addq.l	#4,sp
 	bra.s	L40578
 
@@ -12986,7 +12986,7 @@ L40554:
 	jmp	(a0)
 
 L40578:
-	move.w	-6(fp),U101462.l
+	move.w	-6(fp),U101462
 	unlk	fp
 	rts
 
@@ -12994,7 +12994,7 @@ L40590:
 	link	fp,#-4
 	movem.l	d6-d7,-(sp)
 	move.l	10(fp),-4(fp)
-	jsr	L28370.l
+	jsr	L28370
 	move.w	d0,(sp)
 	bsr  	L46448
 	move.w	8(fp),(sp)
@@ -13038,15 +13038,15 @@ L40698:
 	movea.l	12(fp),a0
 	adda.l	#22,a0
 	move.w	(a0),d6
-	move.w	U99182.l,d3
+	move.w	U99182,d3
 	asr.w	#1,d3
-	move.w	U101144.l,d0
+	move.w	U101144,d0
 	asr.w	#1,d0
 	move.w	d0,-4(fp)
-	move.w	U99182.l,d5
+	move.w	U99182,d5
 	sub.w	d7,d5
 	asr.w	#1,d5
-	move.w	U101144.l,d4
+	move.w	U101144,d4
 	sub.w	d6,d4
 	asr.w	#1,d4
 	movea.l	12(fp),a0
@@ -13064,7 +13064,7 @@ L40698:
 	move.w	-4(fp),-(sp)
 	move.w	d3,-(sp)
 	clr.w	-(sp)
-	jsr	L1298.l
+	jsr	L1298
 	adda.l	#16,sp
 	move.w	d6,(sp)
 	move.w	d7,-(sp)
@@ -13075,16 +13075,16 @@ L40698:
 	move.w	-4(fp),-(sp)
 	move.w	d3,-(sp)
 	move.w	#1,-(sp)
-	jsr	L1298.l
+	jsr	L1298
 	adda.l	#16,sp
-	move.w	U101144.l,(sp)
-	move.w	U99182.l,-(sp)
+	move.w	U101144,(sp)
+	move.w	U99182,-(sp)
 	clr.w	-(sp)
 	clr.w	-(sp)
 	move.w	#8,-(sp)
 	clr.w	-(sp)
 	move.l	12(fp),-(sp)
-	jsr	L1194.l
+	jsr	L1194
 	adda.l	#14,sp
 	move.w	16(fp),-(sp)
 	move.l	12(fp),-(sp)
@@ -13101,7 +13101,7 @@ L40698:
 	move.w	-4(fp),-(sp)
 	move.w	d3,-(sp)
 	move.w	#2,-(sp)
-	jsr	L1298.l
+	jsr	L1298
 	adda.l	#16,sp
 	move.w	d6,(sp)
 	addq.w	#4,(sp)
@@ -13116,7 +13116,7 @@ L40698:
 	move.w	-4(fp),-(sp)
 	move.w	d3,-(sp)
 	move.w	#3,-(sp)
-	jsr	L1298.l
+	jsr	L1298
 	adda.l	#16,sp
 	move.w	-2(fp),d0
 	tst.l	(sp)+
@@ -13131,68 +13131,68 @@ L41000:
 	bne  	L41248
 	movea.l	10(fp),a0
 	adda.l	#20,a0
-	move.w	(a0),U98350.l
+	move.w	(a0),U98350
 	movea.l	10(fp),a0
 	adda.l	#22,a0
-	move.w	(a0),U98352.l
-	move.w	U99182.l,d0
+	move.w	(a0),U98352
+	move.w	U99182,d0
 	asr.w	#1,d0
-	move.w	d0,U98354.l
-	move.w	U99182.l,d0
-	sub.w	U98350.l,d0
+	move.w	d0,U98354
+	move.w	U99182,d0
+	sub.w	U98350,d0
 	asr.w	#1,d0
-	move.w	d0,U98358.l
-	movea.w	U101478.l,a0
+	move.w	d0,U98358
+	movea.w	U101478,a0
 	adda.l	a0,a0
 	adda.l	#T85516,a0
-	move.w	(a0),U98360.l
-	move.w	U98352.l,d0
+	move.w	(a0),U98360
+	move.w	U98352,d0
 	asr.w	#1,d0
-	add.w	U98360.l,d0
-	move.w	d0,U98356.l
+	add.w	U98360,d0
+	move.w	d0,U98356
 	movea.l	10(fp),a0
 	adda.l	#16,a0
-	move.w	U98358.l,(a0)
+	move.w	U98358,(a0)
 	movea.l	10(fp),a0
 	adda.l	#18,a0
-	move.w	U98360.l,(a0)
-	move.w	U98352.l,(sp)
-	move.w	U98350.l,-(sp)
-	move.w	U98360.l,-(sp)
-	move.w	U98358.l,-(sp)
+	move.w	U98360,(a0)
+	move.w	U98352,(sp)
+	move.w	U98350,-(sp)
+	move.w	U98360,-(sp)
+	move.w	U98358,-(sp)
 	clr.w	-(sp)
 	clr.w	-(sp)
-	move.w	U98356.l,-(sp)
-	move.w	U98354.l,-(sp)
+	move.w	U98356,-(sp)
+	move.w	U98354,-(sp)
 	clr.w	-(sp)
-	jsr	L1298.l
+	jsr	L1298
 	adda.l	#16,sp
-	move.w	U101144.l,(sp)
-	move.w	U99182.l,-(sp)
+	move.w	U101144,(sp)
+	move.w	U99182,-(sp)
 	clr.w	-(sp)
 	clr.w	-(sp)
 	move.w	#8,-(sp)
 	clr.w	-(sp)
 	move.l	10(fp),-(sp)
-	jsr	L1194.l
+	jsr	L1194
 	adda.l	#14,sp
 	bra.s	L41312
 
 L41248:
-	move.w	U98352.l,(sp)
+	move.w	U98352,(sp)
 	addq.w	#4,(sp)
-	move.w	U98350.l,-(sp)
+	move.w	U98350,-(sp)
 	addq.w	#4,(sp)
-	move.w	U98360.l,-(sp)
+	move.w	U98360,-(sp)
 	subq.w	#3,(sp)
-	move.w	U98358.l,-(sp)
+	move.w	U98358,-(sp)
 	subq.w	#3,(sp)
 	clr.w	-(sp)
 	clr.w	-(sp)
-	move.w	U98356.l,-(sp)
-	move.w	U98354.l,-(sp)
+	move.w	U98356,-(sp)
+	move.w	U98354,-(sp)
 	move.w	#3,-(sp)
-	jsr	L1298.l
+	jsr	L1298
 	adda.l	#16,sp
 L41312:
 	unlk	fp
@@ -13213,14 +13213,14 @@ L41316:
 	bsr  	L42230
 	addq.l	#4,sp
 	move.w	8(fp),d0
-	cmp.w	U101462.l,d0
+	cmp.w	U101462,d0
 	bne.s	L41406
 	move.w	8(fp),(sp)
 	bsr  	L45052
 	cmpi.w	#3,8(fp)
 	bne.s	L41406
 	bsr  	L47278
-	jsr	L28194.l
+	jsr	L28194
 	move.w	d0,(sp)
 	bsr  	L46448
 L41406:
@@ -13270,13 +13270,13 @@ L41410:
 	divs	(a1),d0
 	sub.w	d0,(sp)
 	move.w	#1,-(sp)
-	jsr	L50174.l
+	jsr	L50174
 	addq.l	#2,sp
 	move.w	d0,-10(fp)
 	move.l	#1000,-(sp)
 	movea.w	12(fp),a0
 	move.l	a0,-(sp)
-	jsr	L84118.l
+	jsr	L84118
 	addq.l	#8,sp
 	add.l	#500,d0
 	divs	-10(fp),d0
@@ -13289,21 +13289,21 @@ L41410:
 	add.l	#U99016,d0
 	move.l	d0,-(sp)
 	move.w	#8,-(sp)
-	jsr	L50230.l
+	jsr	L50230
 	addq.l	#6,sp
 	move.l	fp,(sp)
 	addi.l	#-20,(sp)
 	move.l	fp,-(sp)
 	addi.l	#-32,(sp)
 	move.w	#8,-(sp)
-	jsr	L50230.l
+	jsr	L50230
 	addq.l	#6,sp
 	move.l	fp,(sp)
 	addi.l	#-24,(sp)
 	move.l	fp,-(sp)
 	addi.l	#-32,(sp)
 	move.w	#4,-(sp)
-	jsr	L50230.l
+	jsr	L50230
 	addq.l	#6,sp
 	move.w	12(fp),d0
 	cmp.w	-4(fp),d0
@@ -13318,7 +13318,7 @@ L41410:
 	move.l	d0,-(sp)
 	move.w	12(fp),-(sp)
 	move.w	-10(fp),-(sp)
-	jsr	L50202.l
+	jsr	L50202
 	addq.l	#4,sp
 	movea.l	(sp)+,a0
 	move.w	d0,28(a0)
@@ -13335,7 +13335,7 @@ L41748:
 	bge.s	L41814
 	move.w	12(fp),(sp)
 	clr.w	-(sp)
-	jsr	L50174.l
+	jsr	L50174
 	addq.l	#2,sp
 	move.w	d0,-(sp)
 	move.w	d6,d0
@@ -13362,7 +13362,7 @@ L41818:
 	add.l	#U99016,d0
 	move.l	d0,(sp)
 	move.w	#2,-(sp)
-	jsr	L22670.l
+	jsr	L22670
 	addq.l	#2,sp
 	move.w	d6,d0
 	muls	#40,d0
@@ -13386,7 +13386,7 @@ L41818:
 	move.w	28(a0,a1.l),(sp)
 	move.w	-4(fp),d0
 	sub.w	d0,(sp)
-	jsr	L50344.l
+	jsr	L50344
 	movea.w	d7,a1
 	adda.l	a1,a1
 	adda.l	#U98270,a1
@@ -13419,7 +13419,7 @@ L41818:
 	move.w	-22(fp),-(sp)
 	move.w	-24(fp),-(sp)
 	move.w	#3,-(sp)
-	jsr	L23836.l
+	jsr	L23836
 	adda.l	#12,sp
 	tst.w	-12(fp)
 	bne.s	L42060
@@ -13463,7 +13463,7 @@ L42092:
 	adda.l	a0,a0
 	movea.l	#U92262,a1
 	move.w	0(a0,a1.l),-(sp)
-	jsr	L1780.l
+	jsr	L1780
 	adda.l	#16,sp
 	move.w	-6(fp),d0
 	cmp.w	-8(fp),d0
@@ -13478,11 +13478,11 @@ L42092:
 	adda.l	a0,a0
 	movea.l	#U92262,a1
 	move.w	0(a0,a1.l),-(sp)
-	jsr	L1860.l
+	jsr	L1860
 	adda.l	#10,sp
 L42212:
 	clr.w	(sp)
-	jsr	L22670.l
+	jsr	L22670
 L42220:
 	tst.l	(sp)+
 	movem.l	(sp)+,d6-d7
@@ -13537,7 +13537,7 @@ L42230:
 	move.w	-4(fp),d0
 	sub.w	d0,(sp)
 	move.w	#1,-(sp)
-	jsr	L50174.l
+	jsr	L50174
 	addq.l	#2,sp
 	move.w	d0,-(sp)
 	move.l	#1000,-(sp)
@@ -13552,7 +13552,7 @@ L42230:
 	move.w	28(a0,a1.l),d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L84118.l
+	jsr	L84118
 	addq.l	#8,sp
 	add.l	#500,d0
 	divs	(sp)+,d0
@@ -13565,7 +13565,7 @@ L42230:
 	adda.l	a0,a0
 	movea.l	#U92262,a1
 	move.w	0(a0,a1.l),-(sp)
-	jsr	L1860.l
+	jsr	L1860
 	addq.l	#4,sp
 	bra.s	L42560
 
@@ -13584,7 +13584,7 @@ L42474:
 	adda.l	a0,a0
 	movea.l	#U92262,a1
 	move.w	0(a0,a1.l),-(sp)
-	jsr	L1780.l
+	jsr	L1780
 	adda.l	#16,sp
 	move.w	-2(fp),(sp)
 	move.w	d6,-(sp)
@@ -13673,14 +13673,14 @@ L42636:
 	divs	(a1),d0
 	sub.w	d0,(sp)
 	move.w	#1,-(sp)
-	jsr	L50174.l
+	jsr	L50174
 	addq.l	#4,sp
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L84118.l
+	jsr	L84118
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	jsr	L83960.l
+	jsr	L83960
 	addq.l	#8,sp
 	unlk	fp
 	rts
@@ -13711,14 +13711,14 @@ L42772:
 	adda.l	a0,a0
 	movea.l	#U92262,a1
 	move.w	0(a0,a1.l),-(sp)
-	jsr	L1780.l
+	jsr	L1780
 	adda.l	#16,sp
 	move.w	8(fp),d0
 	muls	#40,d0
 	add.l	#U99016,d0
 	move.l	d0,(sp)
-	move.l	U98276.l,-(sp)
-	jsr	L49946.l
+	move.l	U98276,-(sp)
+	jsr	L49946
 	addq.l	#4,sp
 	unlk	fp
 	rts
@@ -13742,13 +13742,13 @@ L42946:
 	move.l	#U99024,(sp)
 	move.l	8(fp),-(sp)
 	move.w	#8,-(sp)
-	jsr	L50230.l
+	jsr	L50230
 	addq.l	#6,sp
-	move.w	U99028.l,d0
+	move.w	U99028,d0
 	ext.l	d0
 	divs	#2,d0
 	subq.w	#1,d0
-	move.w	d0,U99028.l
+	move.w	d0,U99028
 	movea.l	8(fp),a0
 	move.w	6(a0),(sp)
 	movea.l	8(fp),a0
@@ -13758,21 +13758,21 @@ L42946:
 	movea.l	8(fp),a0
 	move.w	(a0),-(sp)
 	move.w	#4079,-(sp)
-	jsr	L1620.l
+	jsr	L1620
 	addq.l	#8,sp
-	move.w	d0,U92262.l
+	move.w	d0,U92262
 	move.l	#U99104,(sp)
 	move.l	8(fp),-(sp)
 	move.w	#8,-(sp)
-	jsr	L50230.l
+	jsr	L50230
 	addq.l	#6,sp
-	move.w	U99108.l,d0
+	move.w	U99108,d0
 	ext.l	d0
 	divs	#2,d0
-	move.w	d0,U99108.l
+	move.w	d0,U99108
 	addq.w	#1,d0
-	add.w	d0,U99104.l
-	subq.w	#1,U99108.l
+	add.w	d0,U99104
+	subq.w	#1,U99108
 	movea.l	8(fp),a0
 	move.w	6(a0),(sp)
 	movea.l	8(fp),a0
@@ -13782,25 +13782,25 @@ L42946:
 	movea.l	8(fp),a0
 	move.w	(a0),-(sp)
 	move.w	#47,-(sp)
-	jsr	L1620.l
+	jsr	L1620
 	addq.l	#8,sp
-	move.w	d0,U92266.l
+	move.w	d0,U92266
 	move.l	#U99064,(sp)
 	move.l	8(fp),-(sp)
 	move.w	#8,-(sp)
-	jsr	L50230.l
+	jsr	L50230
 	addq.l	#6,sp
-	move.w	U99070.l,d0
+	move.w	U99070,d0
 	ext.l	d0
 	divs	#2,d0
-	move.w	d0,U99070.l
+	move.w	d0,U99070
 	addq.w	#1,d0
-	add.w	d0,U99066.l
-	move.w	U99068.l,d0
+	add.w	d0,U99066
+	move.w	U99068,d0
 	ext.l	d0
 	divs	#2,d0
 	subq.w	#1,d0
-	move.w	d0,U99068.l
+	move.w	d0,U99068
 	movea.l	8(fp),a0
 	move.w	6(a0),(sp)
 	movea.l	8(fp),a0
@@ -13810,13 +13810,13 @@ L42946:
 	movea.l	8(fp),a0
 	move.w	(a0),-(sp)
 	move.w	#4079,-(sp)
-	jsr	L1620.l
+	jsr	L1620
 	addq.l	#8,sp
-	move.w	d0,U92264.l
+	move.w	d0,U92264
 	move.l	#U99144,(sp)
 	move.l	#U99064,-(sp)
 	move.w	#8,-(sp)
-	jsr	L50230.l
+	jsr	L50230
 	addq.l	#6,sp
 	movea.l	8(fp),a0
 	move.w	6(a0),(sp)
@@ -13827,9 +13827,9 @@ L42946:
 	movea.l	8(fp),a0
 	move.w	(a0),-(sp)
 	move.w	#239,-(sp)
-	jsr	L1620.l
+	jsr	L1620
 	addq.l	#8,sp
-	move.w	d0,U92268.l
+	move.w	d0,U92268
 	clr.w	d7
 	bra.s	L43362
 
@@ -13857,7 +13857,7 @@ L43378:
 	move.w	8(fp),d7
 	clr.l	(sp)
 	move.w	#2,-(sp)
-	jsr	L1482.l
+	jsr	L1482
 	addq.l	#2,sp
 	clr.w	(sp)
 	clr.w	-(sp)
@@ -13867,7 +13867,7 @@ L43378:
 	adda.l	a0,a0
 	movea.l	#U92262,a1
 	move.w	0(a0,a1.l),-(sp)
-	jsr	L1860.l
+	jsr	L1860
 	adda.l	#10,sp
 	move.l	fp,(sp)
 	subq.l	#8,(sp)
@@ -13877,7 +13877,7 @@ L43378:
 	move.l	d0,-(sp)
 	addq.l	#8,(sp)
 	move.w	#8,-(sp)
-	jsr	L50230.l
+	jsr	L50230
 	addq.l	#6,sp
 	move.w	-2(fp),(sp)
 	move.w	-4(fp),-(sp)
@@ -13887,7 +13887,7 @@ L43378:
 	adda.l	a0,a0
 	movea.l	#U92262,a1
 	move.w	0(a0,a1.l),-(sp)
-	jsr	L1676.l
+	jsr	L1676
 	addq.l	#8,sp
 	move.w	d7,(sp)
 	bsr  	L42772
@@ -13965,7 +13965,7 @@ L43626:
 	muls	d1,d0
 	move.w	d0,-(sp)
 	move.l	16(fp),-(sp)
-	jsr	L50304.l
+	jsr	L50304
 	addq.l	#6,sp
 L43790:
 	move.w	d7,(sp)
@@ -13977,7 +13977,7 @@ L43790:
 	clr.w	16(a0)
 	clr.l	(sp)
 	clr.w	-(sp)
-	jsr	L1482.l
+	jsr	L1482
 	addq.l	#2,sp
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
@@ -13986,7 +13986,7 @@ L43790:
 
 L43836:
 	link	fp,#-12
-	tst.w	U99032.l
+	tst.w	U99032
 	bne  	L44066
 	move.l	fp,(sp)
 	subq.l	#2,(sp)
@@ -13997,8 +13997,8 @@ L43836:
 	move.l	fp,-(sp)
 	subq.l	#8,(sp)
 	move.w	#5,-(sp)
-	move.w	U92262.l,-(sp)
-	jsr	L1780.l
+	move.w	U92262,-(sp)
+	jsr	L1780
 	adda.l	#16,sp
 	move.l	fp,(sp)
 	subq.l	#8,(sp)
@@ -14007,15 +14007,15 @@ L43836:
 	add.l	#U99016,d0
 	move.l	d0,-(sp)
 	addq.l	#8,(sp)
-	jsr	L49946.l
+	jsr	L49946
 	addq.l	#4,sp
 	tst.w	d0
 	beq  	L44066
 	move.l	fp,(sp)
 	subq.l	#8,(sp)
-	move.l	U98276.l,-(sp)
+	move.l	U98276,-(sp)
 	move.w	#8,-(sp)
-	jsr	L50230.l
+	jsr	L50230
 	addq.l	#6,sp
 	move.w	-4(fp),d0
 	ext.l	d0
@@ -14032,8 +14032,8 @@ L43836:
 	move.w	-6(fp),-(sp)
 	move.w	-8(fp),-(sp)
 	move.w	#5,-(sp)
-	move.w	U92262.l,-(sp)
-	jsr	L1860.l
+	move.w	U92262,-(sp)
+	jsr	L1860
 	adda.l	#10,sp
 	clr.w	(sp)
 	bsr  	L42772
@@ -14048,7 +14048,7 @@ L43836:
 	move.l	fp,-(sp)
 	subq.l	#8,(sp)
 	move.w	#8,-(sp)
-	jsr	L50230.l
+	jsr	L50230
 	addq.l	#6,sp
 L44066:
 	unlk	fp
@@ -14111,13 +14111,13 @@ L44174:
 	clr.w	-(sp)
 	clr.w	-(sp)
 	move.w	#1,-(sp)
-	jsr	L23682.l
+	jsr	L23682
 	adda.l	#12,sp
 	movea.l	10(fp),a0
 	move.w	4(a0),d0
 	subq.w	#1,d0
 	ext.l	d0
-	divs	U98270.l,d0
+	divs	U98270,d0
 	addq.w	#2,d0
 	move.w	d0,-2(fp)
 	movea.l	10(fp),a0
@@ -14126,18 +14126,18 @@ L44174:
 	move.w	(a1),d1
 	sub.w	(a5),d1
 	ext.l	d1
-	divs	U98270.l,d1
+	divs	U98270,d1
 	swap	d1
 	sub.w	d1,d0
 	move.w	d0,-4(fp)
 	movea.l	10(fp),a0
 	move.w	2(a0),d0
-	sub.w	U98274.l,d0
+	sub.w	U98274,d0
 	movea.l	10(fp),a1
 	move.w	2(a1),d1
 	sub.w	2(a5),d1
 	ext.l	d1
-	divs	U98272.l,d1
+	divs	U98272,d1
 	swap	d1
 	sub.w	d1,d0
 	move.w	d0,-6(fp)
@@ -14145,14 +14145,14 @@ L44174:
 	move.w	2(a0),d0
 	sub.w	2(a5),d0
 	ext.l	d0
-	divs	U98272.l,d0
+	divs	U98272,d0
 	add.w	30(a5),d0
 	muls	36(a5),d0
 	movea.l	10(fp),a1
 	move.w	(a1),d1
 	sub.w	(a5),d1
 	ext.l	d1
-	divs	U98270.l,d1
+	divs	U98270,d1
 	add.w	d1,d0
 	add.w	28(a5),d0
 	move.w	d0,-8(fp)
@@ -14164,14 +14164,14 @@ L44174:
 	move.w	-6(fp),-(sp)
 	move.w	-4(fp),-(sp)
 	move.w	-2(fp),-(sp)
-	move.w	U98272.l,-(sp)
+	move.w	U98272,-(sp)
 	move.w	36(a5),-(sp)
 	move.l	22(a5),d0
 	move.w	-8(fp),d1
 	ext.l	d1
 	add.l	d1,d0
 	move.l	d0,-(sp)
-	jsr	L24012.l
+	jsr	L24012
 	adda.l	#14,sp
 	move.w	d7,(sp)
 	bsr.s	L44486
@@ -14189,26 +14189,26 @@ L44486:
 	adda.l	#U99016,a5
 	tst.w	20(a5)
 	beq.s	L44598
-	move.w	U98272.l,(sp)
-	move.w	U98270.l,-(sp)
+	move.w	U98272,(sp)
+	move.w	U98270,-(sp)
 	move.w	34(a5),d0
 	sub.w	30(a5),d0
 	subq.w	#1,d0
-	muls	U98272.l,d0
+	muls	U98272,d0
 	move.w	d0,-(sp)
 	move.w	2(a5),d0
 	add.w	d0,(sp)
 	move.w	32(a5),d0
 	sub.w	28(a5),d0
 	subq.w	#1,d0
-	muls	U98270.l,d0
+	muls	U98270,d0
 	move.w	d0,-(sp)
 	move.w	(a5),d0
 	add.w	d0,(sp)
 	move.w	#2,-(sp)
 	move.w	#1,-(sp)
 	move.w	#3,-(sp)
-	jsr	L23682.l
+	jsr	L23682
 	adda.l	#12,sp
 L44598:
 	tst.l	(sp)+
@@ -14218,10 +14218,10 @@ L44598:
 
 L44608:
 	link	fp,#-4
-	clr.w	U92244.l
+	clr.w	U92244
 	clr.w	d0
-	move.w	d0,U92240.l
-	move.w	d0,U92242.l
+	move.w	d0,U92240
+	move.w	d0,U92242
 	unlk	fp
 	rts
 
@@ -14230,24 +14230,24 @@ L44636:
 	bra.s	L44654
 
 L44642:
-	move.w	U101462.l,(sp)
+	move.w	U101462,(sp)
 	bsr.s	L44710
 	bsr  	L46108
 L44654:
-	move.w	U101462.l,d0
-	cmp.w	U100904.l,d0
+	move.w	U101462,d0
+	cmp.w	U100904,d0
 	bne.s	L44642
-	move.w	U101462.l,d0
+	move.w	U101462,d0
 	muls	#40,d0
 	add.l	#U99016,d0
 	movea.l	d0,a0
 	tst.w	18(a0)
 	bne.s	L44700
-	jsr	L22368.l
+	jsr	L22368
 	bra.s	L44706
 
 L44700:
-	jsr	L22560.l
+	jsr	L22560
 L44706:
 	unlk	fp
 	rts
@@ -14258,7 +14258,7 @@ L44710:
 	move.w	8(fp),d7
 	bsr  	L45356
 	move.w	d7,d0
-	move.w	d0,U100904.l
+	move.w	d0,U100904
 	muls	#40,d0
 	add.l	#U99016,d0
 	movea.l	d0,a0
@@ -14270,13 +14270,13 @@ L44710:
 	adda.l	a0,a0
 	movea.l	#U92262,a1
 	move.w	0(a0,a1.l),-(sp)
-	jsr	L1860.l
+	jsr	L1860
 	addq.l	#4,sp
 	move.w	d7,d0
 	muls	#40,d0
 	add.l	#U99016,d0
 	move.l	d0,(sp)
-	jsr	L22840.l
+	jsr	L22840
 	bra  	L45042
 
 L44804:
@@ -14295,13 +14295,13 @@ L44810:
 	adda.l	#16,sp
 	clr.w	(sp)
 	move.w	#8,-(sp)
-	move.w	U92262.l,-(sp)
-	jsr	L1860.l
+	move.w	U92262,-(sp)
+	jsr	L1860
 	addq.l	#4,sp
 	clr.w	(sp)
 	move.w	#9,-(sp)
-	move.w	U92262.l,-(sp)
-	jsr	L1860.l
+	move.w	U92262,-(sp)
+	jsr	L1860
 	addq.l	#4,sp
 	bra  	L45042
 
@@ -14389,7 +14389,7 @@ L45118:
 	muls	#40,d0
 	add.l	#U99016,d0
 	move.l	d0,(sp)
-	jsr	L22392.l
+	jsr	L22392
 	bra.s	L45164
 
 	bra.s	L45164
@@ -14416,14 +14416,14 @@ L45164:
 	bsr  	L45414
 	addq.l	#2,sp
 	move.w	d0,-(sp)
-	jsr	L22588.l
+	jsr	L22588
 	addq.l	#6,sp
 L45206:
 	move.w	d7,d0
 	muls	#40,d0
 	add.l	#U99016,d0
 	move.l	d0,(sp)
-	jsr	L22840.l
+	jsr	L22840
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
 	unlk	fp
@@ -14434,7 +14434,7 @@ L45236:
 	movem.l	d6-d7,-(sp)
 	move.w	8(fp),d7
 	move.l	10(fp),(sp)
-	jsr	L22840.l
+	jsr	L22840
 	move.w	d7,d0
 	muls	#40,d0
 	add.l	#U99016,d0
@@ -14449,17 +14449,17 @@ L45236:
 
 L45292:
 	move.l	10(fp),(sp)
-	jsr	L28066.l
-	move.w	U99098.l,(sp)
-	move.w	U99096.l,-(sp)
-	jsr	L24504.l
+	jsr	L28066
+	move.w	U99098,(sp)
+	move.w	U99096,-(sp)
+	jsr	L24504
 	addq.l	#2,sp
 L45322:
-	move.w	U101462.l,d0
+	move.w	U101462,d0
 	muls	#40,d0
 	add.l	#U99016,d0
 	move.l	d0,(sp)
-	jsr	L22840.l
+	jsr	L22840
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
 	unlk	fp
@@ -14467,10 +14467,10 @@ L45322:
 
 L45356:
 	link	fp,#-4
-	cmpi.w	#2,U100904.l
+	cmpi.w	#2,U100904
 	bne.s	L45382
 	move.l	#U99096,(sp)
-	jsr	L24328.l
+	jsr	L24328
 L45382:
 	unlk	fp
 	rts
@@ -14503,10 +14503,10 @@ L45442:
 	movea.l	#U99016,a1
 	move.w	6(a0,a1.l),d0
 	ext.l	d0
-	divs	U98272.l,d0
+	divs	U98272,d0
 	move.w	d0,(sp)
 	move.w	#1,-(sp)
-	jsr	L50174.l
+	jsr	L50174
 	addq.l	#2,sp
 	unlk	fp
 	rts
@@ -14519,10 +14519,10 @@ L45492:
 	movea.l	#U99016,a1
 	move.w	4(a0,a1.l),d0
 	ext.l	d0
-	divs	U98270.l,d0
+	divs	U98270,d0
 	move.w	d0,(sp)
 	move.w	#2,-(sp)
-	jsr	L50174.l
+	jsr	L50174
 	addq.l	#2,sp
 	unlk	fp
 	rts
@@ -14530,13 +14530,13 @@ L45492:
 L45542:
 	link	fp,#-20
 	move.w	#27,-16(fp)
-	move.w	U92266.l,-10(fp)
+	move.w	U92266,-10(fp)
 	move.l	fp,(sp)
 	subq.l	#8,(sp)
 	move.l	8(fp),-(sp)
 	move.w	#47,-(sp)
 	clr.w	-(sp)
-	jsr	L1948.l
+	jsr	L1948
 	addq.l	#8,sp
 	move.l	fp,(sp)
 	addi.l	#-16,(sp)
@@ -14556,10 +14556,10 @@ L45602:
 	sub.w	30(a5),d0
 	move.w	d0,-6(fp)
 	clr.w	(sp)
-	move.w	U100904.l,-(sp)
+	move.w	U100904,-(sp)
 	bsr  	L44070
 	addq.l	#2,sp
-	move.w	U100904.l,(sp)
+	move.w	U100904,(sp)
 	bsr  	L45492
 	move.w	d0,-2(fp)
 	cmp.w	-4(fp),d0
@@ -14573,12 +14573,12 @@ L45678:
 	ext.l	d0
 	divs	#2,d0
 	sub.w	d0,(sp)
-	move.w	U100904.l,-(sp)
+	move.w	U100904,-(sp)
 	clr.w	-(sp)
 	bsr  	L41410
 	addq.l	#6,sp
 L45712:
-	move.w	U100904.l,(sp)
+	move.w	U100904,(sp)
 	bsr  	L45442
 	move.w	d0,-2(fp)
 	cmp.w	-6(fp),d0
@@ -14592,13 +14592,13 @@ L45738:
 	ext.l	d0
 	divs	#2,d0
 	sub.w	d0,(sp)
-	move.w	U100904.l,-(sp)
+	move.w	U100904,-(sp)
 	move.w	#1,-(sp)
 	bsr  	L41410
 	addq.l	#6,sp
 L45774:
 	move.w	#1,(sp)
-	move.w	U100904.l,-(sp)
+	move.w	U100904,-(sp)
 	bsr  	L44070
 	addq.l	#2,sp
 	tst.l	(sp)+
@@ -14612,11 +14612,11 @@ L45800:
 	move.w	10(fp),d7
 	move.w	12(fp),d6
 	bsr  	L44636
-	move.w	U100904.l,d0
+	move.w	U100904,d0
 	muls	#40,d0
 	movea.l	d0,a5
 	adda.l	#U99016,a5
-	move.w	U100904.l,(sp)
+	move.w	U100904,(sp)
 	bsr  	L44486
 	addq.w	#1,32(a5)
 	movea.w	d7,a0
@@ -14628,17 +14628,17 @@ L45800:
 	move.b	9(fp),-1(a0)
 	tst.w	26(a5)
 	beq.s	L45924
-	cmp.w	U98280.l,d6
+	cmp.w	U98280,d6
 	bge.s	L45894
-	move.w	d6,U98280.l
+	move.w	d6,U98280
 L45894:
-	cmp.w	U98282.l,d6
+	cmp.w	U98282,d6
 	ble.s	L45908
-	move.w	d6,U98282.l
+	move.w	d6,U98282
 L45908:
-	cmp.w	U98284.l,d7
+	cmp.w	U98284,d7
 	bge.s	L45922
-	move.w	d7,U98284.l
+	move.w	d7,U98284
 L45922:
 	bra.s	L46004
 
@@ -14646,28 +14646,28 @@ L45924:
 	move.w	d6,d0
 	sub.w	30(a5),d0
 	subq.w	#1,d0
-	muls	U98272.l,d0
+	muls	U98272,d0
 	move.w	d0,(sp)
 	move.w	2(a5),d0
 	add.w	d0,(sp)
 	move.w	d7,d0
 	sub.w	28(a5),d0
 	subq.w	#1,d0
-	muls	U98270.l,d0
+	muls	U98270,d0
 	move.w	d0,-(sp)
 	move.w	(a5),d0
 	add.w	d0,(sp)
 	move.b	9(fp),d0
 	ext.w	d0
 	move.w	d0,-(sp)
-	jsr	L24148.l
+	jsr	L24148
 	addq.l	#4,sp
 	move.l	a5,(sp)
 	move.w	d6,-(sp)
 	move.w	d7,-(sp)
 	bsr  	L45602
 	addq.l	#4,sp
-	move.w	U100904.l,(sp)
+	move.w	U100904,(sp)
 	bsr  	L44486
 L46004:
 	tst.l	(sp)+
@@ -14679,11 +14679,11 @@ L46014:
 	link	fp,#0
 	movem.l	d7/a5,-(sp)
 	bsr  	L44636
-	move.w	U100904.l,d0
+	move.w	U100904,d0
 	muls	#40,d0
 	movea.l	d0,a5
 	adda.l	#U99016,a5
-	move.w	U100904.l,(sp)
+	move.w	U100904,(sp)
 	bsr  	L44486
 	tst.w	26(a5)
 	bne.s	L46076
@@ -14695,7 +14695,7 @@ L46014:
 L46076:
 	move.w	8(fp),32(a5)
 	move.w	10(fp),34(a5)
-	move.w	U100904.l,(sp)
+	move.w	U100904,(sp)
 	bsr  	L44486
 	tst.l	(sp)+
 	movem.l	(sp)+,a5
@@ -14705,17 +14705,17 @@ L46076:
 L46108:
 	link	fp,#-12
 	movem.l	d5-d7/a5,-(sp)
-	move.w	U100904.l,d6
+	move.w	U100904,d6
 	lea 	-12(fp),a5
 L46126:
-	tst.w	U92226.l
+	tst.w	U92226
 	beq.s	L46150
 	bsr  	L48374
 	bsr  	L48392
 	bsr  	L48374
 	bsr  	L48392
 L46150:
-	tst.w	U92226.l
+	tst.w	U92226
 	beq.s	L46162
 	clr.w	d0
 	bra.s	L46164
@@ -14741,7 +14741,7 @@ L46164:
 L46200:
 	clr.w	-(sp)
 L46202:
-	move.l	U101480.l,-(sp)
+	move.l	U101480,-(sp)
 	clr.w	-(sp)
 	clr.w	-(sp)
 	clr.w	-(sp)
@@ -14756,7 +14756,7 @@ L46202:
 	move.w	#1,-(sp)
 	move.w	#1,-(sp)
 	move.w	-2(fp),-(sp)
-	jsr	L790.l
+	jsr	L790
 	adda.l	#56,sp
 	move.w	d0,d7
 	move.l	a5,(sp)
@@ -14766,7 +14766,7 @@ L46202:
 	subq.l	#6,(sp)
 	move.w	#10,-(sp)
 	clr.w	-(sp)
-	jsr	L1780.l
+	jsr	L1780
 	adda.l	#16,sp
 	move.w	-6(fp),(sp)
 	bsr  	L42570
@@ -14777,17 +14777,17 @@ L46202:
 	addi.l	#-10,(sp)
 	move.l	fp,-(sp)
 	subq.l	#8,(sp)
-	jsr	L1514.l
+	jsr	L1514
 	adda.l	#12,sp
 	move.w	-8(fp),d0
-	cmp.w	U92228.l,d0
+	cmp.w	U92228,d0
 	bne.s	L46352
 	move.w	-10(fp),d0
-	cmp.w	U92230.l,d0
+	cmp.w	U92230,d0
 	beq.s	L46374
 L46352:
-	move.w	-8(fp),U92228.l
-	move.w	-10(fp),U92230.l
+	move.w	-8(fp),U92228
+	move.w	-10(fp),U92230
 	bsr  	L48330
 	bra.s	L46388
 
@@ -14800,7 +14800,7 @@ L46374:
 L46388:
 	btst	#0,d7
 	beq.s	L46412
-	jsr	L28370.l
+	jsr	L28370
 	cmp.w	-4(fp),d0
 	beq.s	L46412
 	move.w	-4(fp),(sp)
@@ -14814,7 +14814,7 @@ L46428:
 	bra  	L46126
 
 L46432:
-	move.w	U92244.l,d0
+	move.w	U92244,d0
 	tst.l	(sp)+
 	movem.l	(sp)+,d6-d7/a5
 	unlk	fp
@@ -14823,19 +14823,19 @@ L46432:
 L46448:
 	link	fp,#-6
 	move.w	#1,-2(fp)
-	cmpi.w	#-1,U92244.l
+	cmpi.w	#-1,U92244
 	beq.s	L46526
-	jsr	L28386.l
+	jsr	L28386
 	move.w	8(fp),d1
 	ext.w	d1
 	cmp.w	d1,d0
 	beq.s	L46516
-	jsr	L28354.l
+	jsr	L28354
 	move.w	8(fp),d1
 	ext.w	d1
 	cmp.w	d1,d0
 	beq.s	L46516
-	jsr	L28370.l
+	jsr	L28370
 	move.w	8(fp),d1
 	ext.w	d1
 	cmp.w	d1,d0
@@ -14844,13 +14844,13 @@ L46516:
 	bsr  	L44608
 	move.w	#-1,-2(fp)
 L46526:
-	move.w	U92240.l,d0
-	cmp.w	U92242.l,d0
+	move.w	U92240,d0
+	cmp.w	U92242,d0
 	bne.s	L46548
-	tst.w	U92244.l
+	tst.w	U92244
 	bne.s	L46616
 L46548:
-	movea.w	U92240.l,a0
+	movea.w	U92240,a0
 	adda.l	#U92240,a0
 	move.l	a0,-(sp)
 	move.w	8(fp),-(sp)
@@ -14858,15 +14858,15 @@ L46548:
 	addq.l	#2,sp
 	movea.l	(sp)+,a0
 	move.b	d0,6(a0)
-	addq.w	#1,U92240.l
-	move.w	U92240.l,d0
+	addq.w	#1,U92240
+	move.w	U92240,d0
 	ext.l	d0
 	divs	#16,d0
 	swap	d0
-	move.w	d0,U92240.l
+	move.w	d0,U92240
 	clr.w	d0
 	move.w	-2(fp),d0
-	or.w	d0,U92244.l
+	or.w	d0,U92244
 L46616:
 	unlk	fp
 	rts
@@ -14877,16 +14877,16 @@ L46624:
 	bsr  	L46108
 	tst.w	d0
 	beq.s	L46698
-	movea.w	U92242.l,a0
+	movea.w	U92242,a0
 	adda.l	#U92240,a0
 	move.b	6(a0),-2(fp)
-	addq.w	#1,U92242.l
-	move.w	U92242.l,d0
+	addq.w	#1,U92242
+	move.w	U92242,d0
 	ext.l	d0
 	divs	#16,d0
 	swap	d0
-	move.w	d0,U92242.l
-	cmp.w	U92240.l,d0
+	move.w	d0,U92242
+	cmp.w	U92240,d0
 	bne.s	L46688
 	clr.w	d0
 	bra.s	L46690
@@ -14894,7 +14894,7 @@ L46624:
 L46688:
 	moveq	#1,d0
 L46690:
-	move.w	d0,U92244.l
+	move.w	d0,U92244
 	bra.s	L46700
 
 L46698:
@@ -14911,7 +14911,7 @@ L46714:
 	link	fp,#-10
 	movem.l	d7/a5,-(sp)
 	bsr  	L44636
-	move.w	U100904.l,d0
+	move.w	U100904,d0
 	muls	#40,d0
 	movea.l	d0,a5
 	adda.l	#U99016,a5
@@ -14924,7 +14924,7 @@ L46714:
 	bsr  	L47436
 	move.w	-10(fp),26(a5)
 L46776:
-	move.w	U100904.l,(sp)
+	move.w	U100904,(sp)
 	bsr  	L44486
 	move.l	22(a5),(sp)
 	move.l	22(a5),d0
@@ -14936,7 +14936,7 @@ L46776:
 	subq.w	#1,d0
 	muls	36(a5),d0
 	move.w	d0,-(sp)
-	jsr	L50230.l
+	jsr	L50230
 	addq.l	#6,sp
 	move.w	#32,(sp)
 	move.w	36(a5),-(sp)
@@ -14946,41 +14946,41 @@ L46776:
 	ext.l	d0
 	add.l	22(a5),d0
 	move.l	d0,-(sp)
-	jsr	L50304.l
+	jsr	L50304
 	addq.l	#6,sp
 	move.l	fp,(sp)
 	subq.l	#8,(sp)
 	move.l	a5,-(sp)
 	move.w	#8,-(sp)
-	jsr	L50230.l
+	jsr	L50230
 	addq.l	#6,sp
 	move.w	-2(fp),(sp)
-	move.w	U98272.l,d0
+	move.w	U98272,d0
 	sub.w	d0,(sp)
 	move.w	-4(fp),-(sp)
 	move.w	-6(fp),-(sp)
 	move.w	-8(fp),-(sp)
 	move.w	-6(fp),-(sp)
-	move.w	U98272.l,d0
+	move.w	U98272,d0
 	add.w	d0,(sp)
 	move.w	-8(fp),-(sp)
 	move.w	#3,-(sp)
-	jsr	L23836.l
+	jsr	L23836
 	adda.l	#12,sp
-	move.w	U98272.l,(sp)
+	move.w	U98272,(sp)
 	move.w	-4(fp),-(sp)
 	move.w	-6(fp),-(sp)
 	move.w	-2(fp),d0
 	add.w	d0,(sp)
-	move.w	U98272.l,d0
+	move.w	U98272,d0
 	sub.w	d0,(sp)
 	move.w	-8(fp),-(sp)
 	clr.w	-(sp)
 	clr.w	-(sp)
 	move.w	#1,-(sp)
-	jsr	L23682.l
+	jsr	L23682
 	adda.l	#12,sp
-	move.w	U100904.l,(sp)
+	move.w	U100904,(sp)
 	bsr  	L44486
 	tst.l	(sp)+
 	movem.l	(sp)+,a5
@@ -14990,11 +14990,11 @@ L46776:
 L47004:
 	link	fp,#-16
 	bsr  	L44636
-	move.w	U100904.l,d0
+	move.w	U100904,d0
 	muls	#40,d0
 	add.l	#U99016,d0
 	move.l	d0,-12(fp)
-	move.w	U100904.l,(sp)
+	move.w	U100904,(sp)
 	bsr  	L44486
 	movea.l	-12(fp),a0
 	move.l	22(a0),d0
@@ -15005,63 +15005,63 @@ L47004:
 	move.l	d0,(sp)
 	movea.l	-12(fp),a0
 	move.l	22(a0),-(sp)
-	move.w	U100904.l,-(sp)
+	move.w	U100904,-(sp)
 	bsr  	L45442
 	addq.l	#2,sp
 	subq.w	#1,d0
 	movea.l	-12(fp),a1
 	muls	36(a1),d0
 	move.w	d0,-(sp)
-	jsr	L50230.l
+	jsr	L50230
 	addq.l	#6,sp
 	move.w	#32,(sp)
 	movea.l	-12(fp),a0
 	move.w	36(a0),-(sp)
 	movea.l	-12(fp),a0
 	move.l	22(a0),-(sp)
-	jsr	L50304.l
+	jsr	L50304
 	addq.l	#6,sp
 	move.l	fp,(sp)
 	subq.l	#8,(sp)
 	move.l	-12(fp),-(sp)
 	move.w	#8,-(sp)
-	jsr	L50230.l
+	jsr	L50230
 	addq.l	#6,sp
 	move.w	-2(fp),d0
 	ext.l	d0
-	divs	U98272.l,d0
+	divs	U98272,d0
 	swap	d0
 	sub.w	d0,-2(fp)
 	move.w	-2(fp),(sp)
-	move.w	U98272.l,d0
+	move.w	U98272,d0
 	sub.w	d0,(sp)
 	move.w	-4(fp),-(sp)
 	move.w	-6(fp),-(sp)
-	move.w	U98272.l,d0
+	move.w	U98272,d0
 	add.w	d0,(sp)
 	move.w	-8(fp),-(sp)
 	move.w	-6(fp),-(sp)
 	move.w	-8(fp),-(sp)
 	move.w	#3,-(sp)
-	jsr	L23836.l
+	jsr	L23836
 	adda.l	#12,sp
-	move.w	U98272.l,(sp)
+	move.w	U98272,(sp)
 	move.w	-4(fp),-(sp)
 	move.w	-6(fp),-(sp)
 	move.w	-8(fp),-(sp)
 	clr.w	-(sp)
 	clr.w	-(sp)
 	move.w	#1,-(sp)
-	jsr	L23682.l
+	jsr	L23682
 	adda.l	#12,sp
-	move.w	U100904.l,(sp)
+	move.w	U100904,(sp)
 	bsr  	L44486
 	unlk	fp
 	rts
 
 L47278:
 	link	fp,#-8
-	move.w	U101462.l,d0
+	move.w	U101462,d0
 	muls	#40,d0
 	add.l	#U99016,d0
 	move.l	d0,-4(fp)
@@ -15081,7 +15081,7 @@ L47278:
 	move.w	d0,-(sp)
 	movea.l	-4(fp),a0
 	move.l	22(a0),-(sp)
-	jsr	L50304.l
+	jsr	L50304
 	addq.l	#6,sp
 L47368:
 	bsr  	L44636
@@ -15096,9 +15096,9 @@ L47368:
 	clr.w	-(sp)
 	clr.w	-(sp)
 	move.w	#1,-(sp)
-	jsr	L23682.l
+	jsr	L23682
 	adda.l	#12,sp
-	move.w	U100904.l,(sp)
+	move.w	U100904,(sp)
 	bsr  	L44486
 	unlk	fp
 	rts
@@ -15110,100 +15110,100 @@ L47436:
 	bra  	L47914
 
 L47452:
-	move.w	U100904.l,d0
+	move.w	U100904,d0
 	muls	#40,d0
 	movea.l	d0,a0
 	movea.l	#U99016,a1
 	move.w	26(a0,a1.l),d0
-	move.w	U100904.l,d1
+	move.w	U100904,d1
 	muls	#40,d1
 	add.l	#U99016,d1
 	movea.l	d1,a1
 	addq.w	#1,26(a1)
 	tst.w	d0
 	bne.s	L47584
-	move.w	#-1,U98282.l
-	move.w	U100904.l,d0
+	move.w	#-1,U98282
+	move.w	U100904,d0
 	muls	#40,d0
 	add.l	#U99016,d0
 	movea.l	d0,a0
-	move.w	34(a0),U98280.l
-	move.w	U100904.l,d0
+	move.w	34(a0),U98280
+	move.w	U100904,d0
 	muls	#40,d0
 	add.l	#U99016,d0
 	movea.l	d0,a0
-	move.w	32(a0),U98284.l
-	move.w	U100904.l,(sp)
+	move.w	32(a0),U98284
+	move.w	U100904,(sp)
 	bsr  	L44486
 	clr.w	(sp)
-	move.w	U100904.l,-(sp)
+	move.w	U100904,-(sp)
 	bsr  	L44070
 	addq.l	#2,sp
 L47584:
 	bra  	L47936
 
 L47588:
-	move.w	U100904.l,d0
+	move.w	U100904,d0
 	muls	#40,d0
 	movea.l	d0,a0
 	movea.l	#U99016,a1
 	tst.w	26(a0,a1.l)
 	beq  	L47936
-	move.w	U100904.l,d0
+	move.w	U100904,d0
 	muls	#40,d0
 	add.l	#U99016,d0
 	movea.l	d0,a0
 	move.w	#1,26(a0)
 L47638:
-	move.w	U100904.l,d0
+	move.w	U100904,d0
 	muls	#40,d0
 	add.l	#U99016,d0
 	movea.l	d0,a0
 	tst.w	26(a0)
 	ble  	L47936
-	move.w	U100904.l,d0
+	move.w	U100904,d0
 	muls	#40,d0
 	add.l	#U99016,d0
 	movea.l	d0,a0
 	subq.w	#1,26(a0)
 	bne  	L47910
-	cmpi.w	#-1,U98282.l
+	cmpi.w	#-1,U98282
 	beq  	L47884
 	move.l	fp,(sp)
 	subq.l	#8,(sp)
-	move.w	U100904.l,d0
+	move.w	U100904,d0
 	muls	#40,d0
 	add.l	#U99016,d0
 	move.l	d0,-(sp)
 	move.w	#8,-(sp)
-	jsr	L50230.l
+	jsr	L50230
 	addq.l	#6,sp
-	move.w	U98280.l,d0
-	move.w	U100904.l,d1
+	move.w	U98280,d0
+	move.w	U100904,d1
 	muls	#40,d1
 	add.l	#U99016,d1
 	movea.l	d1,a1
 	move.w	30(a1),d1
 	sub.w	d1,d0
 	subq.w	#1,d0
-	muls	U98272.l,d0
+	muls	U98272,d0
 	add.w	d0,-6(fp)
-	move.w	U98282.l,d0
-	sub.w	U98280.l,d0
+	move.w	U98282,d0
+	sub.w	U98280,d0
 	addq.w	#1,d0
-	muls	U98272.l,d0
+	muls	U98272,d0
 	move.w	d0,-2(fp)
-	cmp.w	U98272.l,d0
+	cmp.w	U98272,d0
 	bne.s	L47868
-	move.w	U98284.l,d0
-	move.w	U100904.l,d1
+	move.w	U98284,d0
+	move.w	U100904,d1
 	muls	#40,d1
 	add.l	#U99016,d1
 	movea.l	d1,a1
 	move.w	28(a1),d1
 	sub.w	d1,d0
 	subq.w	#1,d0
-	muls	U98270.l,d0
+	muls	U98270,d0
 	move.w	d0,-10(fp)
 	move.w	-10(fp),d0
 	add.w	d0,-8(fp)
@@ -15212,15 +15212,15 @@ L47638:
 L47868:
 	move.l	fp,(sp)
 	subq.l	#8,(sp)
-	move.w	U100904.l,-(sp)
+	move.w	U100904,-(sp)
 	bsr  	L44174
 	addq.l	#2,sp
 L47884:
 	move.w	#1,(sp)
-	move.w	U100904.l,-(sp)
+	move.w	U100904,-(sp)
 	bsr  	L44070
 	addq.l	#2,sp
-	move.w	U100904.l,(sp)
+	move.w	U100904,(sp)
 	bsr  	L44486
 L47910:
 	bra.s	L47936
@@ -15241,7 +15241,7 @@ L47936:
 L47940:
 	link	fp,#-4
 	clr.w	d0
-	move.w	d0,U101462.l
+	move.w	d0,U101462
 	move.w	d0,(sp)
 	bsr  	L45052
 	unlk	fp
@@ -15249,9 +15249,9 @@ L47940:
 
 L47962:
 	link	fp,#-4
-	tst.w	U98286.l
+	tst.w	U98286
 	beq.s	L47990
-	tst.w	U99152.l
+	tst.w	U99152
 	bne.s	L47990
 	move.w	#3,(sp)
 	bsr  	L37732
@@ -15261,9 +15261,9 @@ L47990:
 
 L47994:
 	link	fp,#-4
-	tst.w	U98288.l
+	tst.w	U98288
 	beq.s	L48022
-	tst.w	U99072.l
+	tst.w	U99072
 	bne.s	L48022
 	move.w	#1,(sp)
 	bsr  	L37732
@@ -15274,7 +15274,7 @@ L48022:
 L48026:
 	link	fp,#-4
 	moveq	#3,d0
-	move.w	d0,U101462.l
+	move.w	d0,U101462
 	move.w	d0,(sp)
 	bsr  	L45052
 	unlk	fp
@@ -15283,7 +15283,7 @@ L48026:
 L48048:
 	link	fp,#-4
 	moveq	#1,d0
-	move.w	d0,U101462.l
+	move.w	d0,U101462
 	move.w	d0,(sp)
 	bsr  	L45052
 	move.w	#2,(sp)
@@ -15295,7 +15295,7 @@ L48048:
 
 L48084:
 	link	fp,#-4
-	tst.w	U98292.l
+	tst.w	U98292
 	bne.s	L48106
 	bsr.s	L48048
 	bsr  	L47278
@@ -15310,17 +15310,17 @@ L48106:
 L48124:
 	move.w	#59,-(sp)
 L48128:
-	move.l	U92190.l,-(sp)
-	jsr	L1002.l
+	move.l	U92190,-(sp)
+	jsr	L1002
 	addq.l	#6,sp
 	move.w	8(fp),d0
-	or.w	d0,U98292.l
+	or.w	d0,U98292
 	unlk	fp
 	rts
 
 L48156:
 	link	fp,#-4
-	move.w	U98292.l,d0
+	move.w	U98292,d0
 	and.w	8(fp),d0
 	beq.s	L48206
 	clr.w	(sp)
@@ -15332,14 +15332,14 @@ L48156:
 L48188:
 	move.w	#59,-(sp)
 L48192:
-	move.l	U92190.l,-(sp)
-	jsr	L1002.l
+	move.l	U92190,-(sp)
+	jsr	L1002
 	addq.l	#6,sp
 L48206:
 	move.w	8(fp),d0
 	not.w	d0
-	and.w	d0,U98292.l
-	tst.w	U98292.l
+	and.w	d0,U98292
+	tst.w	U98292
 	bne.s	L48230
 	bsr  	L47994
 L48230:
@@ -15349,7 +15349,7 @@ L48230:
 L48234:
 	link	fp,#-4
 	moveq	#2,d0
-	move.w	d0,U101462.l
+	move.w	d0,U101462
 	move.w	d0,(sp)
 	bsr  	L45052
 	bsr  	L44636
@@ -15358,21 +15358,21 @@ L48234:
 
 L48260:
 	link	fp,#-6
-	tst.w	U92226.l
+	tst.w	U92226
 	beq.s	L48326
 	bsr.s	L48374
 	clr.l	(sp)
 	move.w	#256,-(sp)
-	jsr	L1482.l
+	jsr	L1482
 	addq.l	#2,sp
-	clr.w	U92226.l
+	clr.w	U92226
 	move.l	fp,(sp)
 	subq.l	#2,(sp)
 	move.l	fp,-(sp)
 	subq.l	#2,(sp)
 	move.l	#U92230,-(sp)
 	move.l	#U92228,-(sp)
-	jsr	L1514.l
+	jsr	L1514
 	adda.l	#12,sp
 L48326:
 	unlk	fp
@@ -15380,14 +15380,14 @@ L48326:
 
 L48330:
 	link	fp,#-4
-	tst.w	U92226.l
+	tst.w	U92226
 	bne.s	L48370
 	bsr  	L45356
 	clr.l	(sp)
 	move.w	#257,-(sp)
-	jsr	L1482.l
+	jsr	L1482
 	addq.l	#2,sp
-	move.w	#1,U92226.l
+	move.w	#1,U92226
 	bsr.s	L48392
 L48370:
 	unlk	fp
@@ -15396,25 +15396,25 @@ L48370:
 L48374:
 	link	fp,#-4
 	move.w	#1,(sp)
-	jsr	L1924.l
+	jsr	L1924
 	unlk	fp
 	rts
 
 L48392:
 	link	fp,#-4
 	clr.w	(sp)
-	jsr	L1924.l
+	jsr	L1924
 	unlk	fp
 	rts
 
 L48408:
 	link	fp,#-4
 	clr.w	d0
-	move.w	d0,U98290.l
+	move.w	d0,U98290
 	move.w	d0,(sp)
 	move.w	#27,-(sp)
-	move.l	U92190.l,-(sp)
-	jsr	L1042.l
+	move.l	U92190,-(sp)
+	jsr	L1042
 	addq.l	#6,sp
 	unlk	fp
 	rts
@@ -15422,11 +15422,11 @@ L48408:
 L48444:
 	link	fp,#-4
 	moveq	#1,d0
-	move.w	d0,U98290.l
+	move.w	d0,U98290
 	move.w	d0,(sp)
 	move.w	#27,-(sp)
-	move.l	U92190.l,-(sp)
-	jsr	L1042.l
+	move.l	U92190,-(sp)
+	jsr	L1042
 	addq.l	#6,sp
 	unlk	fp
 	rts
@@ -15457,8 +15457,8 @@ L48518:
 	eor.w	d1,d0
 	move.w	d0,(sp)
 	move.w	d7,-(sp)
-	move.l	U92190.l,-(sp)
-	jsr	L1042.l
+	move.l	U92190,-(sp)
+	jsr	L1042
 	addq.l	#6,sp
 	addq.w	#1,d7
 L48546:
@@ -15469,8 +15469,8 @@ L48546:
 L48554:
 	move.w	8(fp),(sp)
 	move.w	d7,-(sp)
-	move.l	U92190.l,-(sp)
-	jsr	L1042.l
+	move.l	U92190,-(sp)
+	jsr	L1042
 	addq.l	#6,sp
 	addq.w	#1,d7
 L48576:
@@ -15485,8 +15485,8 @@ L48586:
 	eor.w	d1,d0
 	move.w	d0,(sp)
 	move.w	d7,-(sp)
-	move.l	U92190.l,-(sp)
-	jsr	L1042.l
+	move.l	U92190,-(sp)
+	jsr	L1042
 	addq.l	#6,sp
 	addq.w	#1,d7
 L48614:
@@ -15494,32 +15494,32 @@ L48614:
 	blt.s	L48586
 	clr.w	(sp)
 	move.w	#22,-(sp)
-	move.l	U92190.l,-(sp)
-	jsr	L1042.l
+	move.l	U92190,-(sp)
+	jsr	L1042
 	addq.l	#6,sp
 	clr.w	(sp)
 	move.w	#25,-(sp)
-	move.l	U92190.l,-(sp)
-	jsr	L1042.l
+	move.l	U92190,-(sp)
+	jsr	L1042
 	addq.l	#6,sp
 	clr.w	(sp)
 	move.w	#56,-(sp)
-	move.l	U92190.l,-(sp)
-	jsr	L1042.l
+	move.l	U92190,-(sp)
+	jsr	L1042
 	addq.l	#6,sp
 	clr.w	(sp)
 	move.w	#38,-(sp)
-	move.l	U92190.l,-(sp)
-	jsr	L1042.l
+	move.l	U92190,-(sp)
+	jsr	L1042
 	addq.l	#6,sp
 	clr.w	(sp)
 	move.w	#43,-(sp)
-	move.l	U92190.l,-(sp)
-	jsr	L1042.l
+	move.l	U92190,-(sp)
+	jsr	L1042
 	addq.l	#6,sp
 	tst.w	8(fp)
 	bne.s	L48742
-	tst.w	U98290.l
+	tst.w	U98290
 	bne.s	L48738
 	bsr  	L48408
 L48738:
@@ -15534,11 +15534,11 @@ L48752:
 	link	fp,#-16
 	move.w	#16,(sp)
 	move.w	#11,-(sp)
-	jsr	L172.l
+	jsr	L172
 	addq.l	#2,sp
-	move.w	d0,U101192.l
-	move.w	#1,U92226.l
-	jsr	L674.l
+	move.w	d0,U101192
+	move.w	#1,U92226
+	jsr	L674
 	tst.w	d0
 	beq.s	L48836
 	move.l	fp,(sp)
@@ -15549,40 +15549,40 @@ L48752:
 	subq.l	#4,(sp)
 	move.l	fp,-(sp)
 	subq.l	#2,(sp)
-	jsr	L1418.l
+	jsr	L1418
 	adda.l	#12,sp
 	move.w	d0,(sp)
-	jsr	L27114.l
+	jsr	L27114
 	tst.w	d0
 	bne.s	L48846
 L48836:
 	move.l	#T85456,(sp)
 	bsr  	L49566
 L48846:
-	jsr	L22628.l
-	move.w	d0,U98270.l
-	jsr	L22642.l
-	move.w	d0,U98272.l
-	jsr	L22656.l
+	jsr	L22628
+	move.w	d0,U98270
+	jsr	L22642
+	move.w	d0,U98272
+	jsr	L22656
 	move.w	d0,-(sp)
-	move.w	U98272.l,d0
+	move.w	U98272,d0
 	sub.w	(sp)+,d0
-	move.w	d0,U98274.l
+	move.w	d0,U98274
 	move.l	#U101144,(sp)
 	move.l	#U99182,-(sp)
 	move.l	#U99184,-(sp)
 	move.l	#U99180,-(sp)
 	move.w	#4,-(sp)
 	clr.w	-(sp)
-	jsr	L1780.l
+	jsr	L1780
 	adda.l	#16,sp
-	move.l	#U99820,U101480.l
+	move.l	#U99820,U101480
 	clr.l	(sp)
 	clr.w	-(sp)
-	jsr	L1482.l
+	jsr	L1482
 	addq.l	#2,sp
 	move.l	#T85962,(sp)
-	jsr	L2046.l
+	jsr	L2046
 	tst.w	d0
 	bne.s	L48982
 	move.l	#T85424,(sp)
@@ -15590,49 +15590,49 @@ L48846:
 L48982:
 	move.w	#2,(sp)
 	bsr  	L37522
-	move.l	d0,U92202.l
+	move.l	d0,U92202
 	move.w	#3,(sp)
 	bsr  	L37522
-	move.l	d0,U92206.l
+	move.l	d0,U92206
 	move.w	#4,(sp)
 	bsr  	L37522
-	move.l	d0,U92198.l
+	move.l	d0,U92198
 	move.w	#1,(sp)
 	bsr  	L37522
-	move.l	d0,U92210.l
+	move.l	d0,U92210
 	move.w	#5,(sp)
 	bsr  	L37522
-	move.l	d0,U92214.l
+	move.l	d0,U92214
 	move.w	#6,(sp)
 	bsr  	L37522
-	move.l	d0,U92218.l
+	move.l	d0,U92218
 	move.w	#7,(sp)
 	bsr  	L37522
-	move.l	d0,U92222.l
-	move.l	#T85492,U101188.l
-	move.l	#T85508,U98276.l
-	move.w	U101144.l,(sp)
-	move.w	U99182.l,-(sp)
-	move.w	U99184.l,-(sp)
-	move.w	U99180.l,-(sp)
-	move.l	U98276.l,-(sp)
-	jsr	L49810.l
+	move.l	d0,U92222
+	move.l	#T85492,U101188
+	move.l	#T85508,U98276
+	move.w	U101144,(sp)
+	move.w	U99182,-(sp)
+	move.w	U99184,-(sp)
+	move.w	U99180,-(sp)
+	move.l	U98276,-(sp)
+	jsr	L49810
 	adda.l	#10,sp
-	move.l	U98276.l,(sp)
+	move.l	U98276,(sp)
 	bsr  	L42912
-	move.w	#-2,U101462.l
-	move.w	#-1,U100904.l
-	jsr	L77804.l
+	move.w	#-2,U101462
+	move.w	#-1,U100904
+	jsr	L77804
 	cmp.l	#57343,d0
 	ble.s	L49210
 	move.l	#32256,(sp)
-	jsr	L77748.l
-	move.l	d0,U92236.l
-	move.w	#1,U92232.l
+	jsr	L77748
+	move.l	d0,U92236
+	move.w	#1,U92232
 	bra.s	L49232
 
 L49210:
-	jsr	L21006.l
+	jsr	L21006
 	tst.w	d0
 	beq.s	L49224
 	moveq	#2,d0
@@ -15641,9 +15641,9 @@ L49210:
 L49224:
 	clr.w	d0
 L49226:
-	move.w	d0,U92232.l
+	move.w	d0,U92232
 L49232:
-	cmpi.w	#1,U92232.l
+	cmpi.w	#1,U92232
 	bne.s	L49246
 	moveq	#1,d0
 	bra.s	L49248
@@ -15651,29 +15651,29 @@ L49232:
 L49246:
 	clr.w	d0
 L49248:
-	move.w	d0,U92234.l
-	move.l	U92236.l,(sp)
-	move.w	U92234.l,d0
-	muls	U92232.l,d0
+	move.w	d0,U92234
+	move.l	U92236,(sp)
+	move.w	U92234,d0
+	muls	U92232,d0
 	move.w	d0,-(sp)
-	jsr	L24290.l
+	jsr	L24290
 	addq.l	#2,sp
-	move.w	#1,U98286.l
-	move.w	#1,U98288.l
-	clr.w	U98292.l
+	move.w	#1,U98286
+	move.w	#1,U98288
+	clr.w	U98292
 	bsr  	L44608
 	clr.l	(sp)
 	move.w	#32,-(sp)
-	jsr	L77356.l
+	jsr	L77356
 	addq.l	#2,sp
-	move.l	d0,U91942.l
-	jsr	L236.l
-	movea.l	U91932.l,a0
+	move.l	d0,U91942
+	jsr	L236
+	movea.l	U91932,a0
 	addq.l	#6,a0
-	move.l	(a0),U91936.l
-	move.l	U91942.l,(sp)
+	move.l	(a0),U91936
+	move.l	U91942,(sp)
 	move.w	#32,-(sp)
-	jsr	L77356.l
+	jsr	L77356
 	addq.l	#2,sp
 	unlk	fp
 	rts
@@ -15682,12 +15682,12 @@ L49370:
 	link	fp,#-4
 	clr.w	(sp)
 	bsr  	L37522
-	move.l	d0,U92190.l
+	move.l	d0,U92190
 	move.w	#1,(sp)
-	move.l	U92190.l,-(sp)
-	jsr	L970.l
+	move.l	U92190,-(sp)
+	jsr	L970
 	addq.l	#4,sp
-	move.w	U92234.l,(sp)
+	move.w	U92234,(sp)
 	bsr.s	L49422
 	bsr  	L48408
 	bsr.s	L49460
@@ -15697,11 +15697,11 @@ L49370:
 L49422:
 	link	fp,#-4
 	move.w	8(fp),d0
-	move.w	d0,U92234.l
+	move.w	d0,U92234
 	move.w	d0,(sp)
 	move.w	#57,-(sp)
-	move.l	U92190.l,-(sp)
-	jsr	L1002.l
+	move.l	U92190,-(sp)
+	jsr	L1002
 	addq.l	#6,sp
 	unlk	fp
 	rts
@@ -15709,7 +15709,7 @@ L49422:
 L49460:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
-	jsr	L21006.l
+	jsr	L21006
 	tst.w	d0
 	bne.s	L49556
 	moveq	#19,d7
@@ -15718,8 +15718,8 @@ L49460:
 L49482:
 	clr.w	(sp)
 	move.w	d7,-(sp)
-	move.l	U92190.l,-(sp)
-	jsr	L1042.l
+	move.l	U92190,-(sp)
+	jsr	L1042
 	addq.l	#6,sp
 	addq.w	#1,d7
 L49502:
@@ -15727,15 +15727,15 @@ L49502:
 	blt.s	L49482
 	clr.w	(sp)
 	move.w	#35,-(sp)
-	move.l	U92190.l,-(sp)
-	jsr	L1042.l
+	move.l	U92190,-(sp)
+	jsr	L1042
 	addq.l	#6,sp
-	tst.w	U92232.l
+	tst.w	U92232
 	bne.s	L49556
 	clr.w	(sp)
 	move.w	#57,-(sp)
-	move.l	U92190.l,-(sp)
-	jsr	L1042.l
+	move.l	U92190,-(sp)
+	jsr	L1042
 	addq.l	#6,sp
 L49556:
 	tst.l	(sp)+
@@ -15748,7 +15748,7 @@ L49566:
 	bsr  	L48330
 	move.l	8(fp),(sp)
 	move.w	#1,-(sp)
-	jsr	L1386.l
+	jsr	L1386
 	addq.l	#2,sp
 	bsr.s	L49596
 	unlk	fp
@@ -15756,16 +15756,16 @@ L49566:
 
 L49596:
 	link	fp,#-4
-	jsr	L290.l
-	move.w	U101192.l,(sp)
+	jsr	L290
+	move.w	U101192,(sp)
 	move.w	#11,-(sp)
-	jsr	L172.l
+	jsr	L172
 	addq.l	#2,sp
-	jsr	L23558.l
-	jsr	L772.l
+	jsr	L23558
+	jsr	L772
 	clr.l	(sp)
 	clr.w	-(sp)
-	jsr	L77356.l
+	jsr	L77356
 	addq.l	#2,sp
 	unlk	fp
 	rts
@@ -15773,7 +15773,7 @@ L49596:
 L49652:
 	link	fp,#-4
 	bsr  	L48330
-	jsr	L69360.l
+	jsr	L69360
 	tst.w	d0
 	beq.s	L49672
 	bsr.s	L49596
@@ -15790,7 +15790,7 @@ L49684:
 	link	fp,#-4
 	move.w	#7,(sp)
 	move.w	#6,-(sp)
-	jsr	L77356.l
+	jsr	L77356
 	addq.l	#2,sp
 	unlk	fp
 	rts
@@ -15799,7 +15799,7 @@ L49708:
 	link	fp,#-4
 	clr.l	(sp)
 	move.w	#17,-(sp)
-	jsr	L77356.l
+	jsr	L77356
 	addq.l	#2,sp
 	unlk	fp
 	rts
@@ -15810,7 +15810,7 @@ L49730:
 	ext.w	d0
 	move.w	d0,(sp)
 	andi.w	#255,(sp)
-	jsr	L77332.l
+	jsr	L77332
 	unlk	fp
 	rts
 
@@ -16071,10 +16071,10 @@ L50376:
 	bne.s	L50404
 	bsr.s	L50456
 L50384:
-	move.b	U101148.l,d0
+	move.b	U101148,d0
 	ext.w	d0
 	move.w	d0,(sp)
-	jsr	L36566.l
+	jsr	L36566
 	tst.w	d0
 	bne.s	L50376
 L50404:
@@ -16083,7 +16083,7 @@ L50404:
 
 L50408:
 	link	fp,#-4
-	cmpi.b	#10,U101148.l
+	cmpi.b	#10,U101148
 	beq.s	L50426
 	clr.w	d0
 	bra.s	L50428
@@ -16096,38 +16096,38 @@ L50428:
 
 L50432:
 	link	fp,#-4
-	move.b	U101148.l,d0
+	move.b	U101148,d0
 	ext.w	d0
 	move.w	d0,(sp)
-	jsr	L74802.l
+	jsr	L74802
 	unlk	fp
 	rts
 
 L50456:
 	link	fp,#-4
-	move.b	U101148.l,U101050.l
-	cmpi.w	#2,U100986.l
+	move.b	U101148,U101050
+	cmpi.w	#2,U100986
 	bne.s	L50486
-	jsr	L19524.l
+	jsr	L19524
 L50486:
-	addq.l	#1,U100962.l
-	movea.l	U100962.l,a0
-	move.b	(a0),U101148.l
+	addq.l	#1,U100962
+	movea.l	U100962,a0
+	move.b	(a0),U101148
 	unlk	fp
 	rts
 
 L50508:
 	link	fp,#-4
-	movea.l	U100962.l,a0
+	movea.l	U100962,a0
 	tst.b	(a0)
 	bne.s	L50564
 	cmpi.b	#62,9(fp)
 	bne.s	L50560
-	move.l	T87170.l,(sp)
+	move.l	T87170,(sp)
 	move.l	#U100162,d0
-	move.l	d0,U100962.l
+	move.l	d0,U100962
 	move.l	d0,-(sp)
-	jsr	L83880.l
+	jsr	L83880
 	addq.l	#4,sp
 	bra.s	L50564
 
@@ -16143,8 +16143,8 @@ L50566:
 
 L50570:
 	link	fp,#-4
-	addq.l	#1,U101030.l
-	subq.w	#1,U99178.l
+	addq.l	#1,U101030
+	subq.w	#1,U99178
 	unlk	fp
 	rts
 
@@ -16152,23 +16152,23 @@ L50590:
 	link	fp,#-4
 	cmpi.w	#32,8(fp)
 	ble.s	L50608
-	jsr	L74840.l
+	jsr	L74840
 L50608:
-	cmpi.w	#2,U100986.l
+	cmpi.w	#2,U100986
 	bne.s	L50706
-	tst.w	U100998.l
+	tst.w	U100998
 	beq.s	L50684
-	jsr	L19370.l
-	clr.w	U101476.l
-	tst.w	U99190.l
+	jsr	L19370
+	clr.w	U101476
+	tst.w	U99190
 	beq.s	L50660
-	jsr	L58082.l
-	clr.w	U99190.l
+	jsr	L58082
+	clr.w	U99190
 	bra.s	L50674
 
 L50660:
 	movea.l	#U100162,a0
-	move.l	a0,U100962.l
+	move.l	a0,U100962
 	clr.b	(a0)
 L50674:
 	move.w	8(fp),(sp)
@@ -16176,13 +16176,13 @@ L50674:
 	bra.s	L50706
 
 L50684:
-	move.w	U100898.l,d0
+	move.w	U100898,d0
 	ext.l	d0
 	add.l	#U100162,d0
 	subq.l	#3,d0
-	move.l	d0,U100962.l
+	move.l	d0,U100962
 L50706:
-	cmpi.w	#1,U100986.l
+	cmpi.w	#1,U100986
 	bne.s	L50748
 	bsr  	L50408
 	tst.w	d0
@@ -16193,39 +16193,39 @@ L50728:
 	bsr  	L50508
 	tst.w	d0
 	beq.s	L50746
-	jsr	L58082.l
+	jsr	L58082
 L50746:
 	bra.s	L50848
 
 L50748:
-	tst.w	U100986.l
+	tst.w	U100986
 	bne.s	L50848
 	cmpi.w	#63,8(fp)
 	bne.s	L50816
-	tst.w	U99188.l
+	tst.w	U99188
 	beq.s	L50778
 	move.w	#33,8(fp)
 L50778:
-	jsr	L64994.l
+	jsr	L64994
 	bra.s	L50806
 
 L50786:
-	jsr	L65014.l
+	jsr	L65014
 	move.w	d0,(sp)
-	jsr	L55354.l
-	jsr	L76978.l
+	jsr	L55354
+	jsr	L76978
 L50806:
-	jsr	L65102.l
+	jsr	L65102
 	tst.w	d0
 	bne.s	L50786
 L50816:
 	tst.w	8(fp)
 	beq.s	L50832
 	move.w	8(fp),(sp)
-	jsr	L74948.l
+	jsr	L74948
 L50832:
-	jsr	L69798.l
-	move.l	#U100162,U100962.l
+	jsr	L69798
+	move.l	#U100162,U100962
 L50848:
 	bsr.s	L50854
 	unlk	fp
@@ -16233,26 +16233,26 @@ L50848:
 
 L50854:
 	link	fp,#-4
-	clr.w	U100892.l
-	movea.l	U100962.l,a0
+	clr.w	U100892
+	movea.l	U100962,a0
 	move.b	(a0),d0
 	ext.w	d0
-	move.w	d0,U100632.l
-	tst.w	U101470.l
+	move.w	d0,U100632
+	tst.w	U101470
 	beq.s	L50912
 	bra.s	L50900
 
 L50890:
 	bsr  	L50456
-	addq.w	#1,U100892.l
+	addq.w	#1,U100892
 L50900:
-	movea.l	U100962.l,a0
+	movea.l	U100962,a0
 	cmpi.b	#32,(a0)
 	beq.s	L50890
 L50912:
-	movea.l	U100962.l,a0
-	move.b	(a0),U101148.l
-	move.b	#10,U101050.l
+	movea.l	U100962,a0
+	move.b	(a0),U101148
+	move.b	#10,U101050
 	bsr  	L51714
 	unlk	fp
 	rts
@@ -16316,7 +16316,7 @@ L51030:
 
 L51056:
 	link	fp,#-4
-	move.b	U101148.l,d0
+	move.b	U101148,d0
 	ext.w	d0
 	move.w	d0,(sp)
 	bsr.s	L50984
@@ -16325,16 +16325,16 @@ L51056:
 
 L51076:
 	link	fp,#-4
-	tst.b	U101050.l
+	tst.b	U101050
 	beq.s	L51098
-	cmpi.b	#41,U101050.l
+	cmpi.b	#41,U101050
 	bne.s	L51102
 L51098:
 	clr.w	d0
 	bra.s	L51116
 
 L51102:
-	move.b	U101050.l,d0
+	move.b	U101050,d0
 	ext.w	d0
 	move.w	d0,(sp)
 	bsr  	L50984
@@ -16367,64 +16367,64 @@ L51160:
 	bsr  	L50432
 	tst.w	d0
 	beq.s	L51182
-	clr.w	U100982.l
+	clr.w	U100982
 	bra  	L51464
 
 L51182:
-	cmpi.b	#34,U101148.l
+	cmpi.b	#34,U101148
 	bne.s	L51204
-	move.w	#2,U100982.l
+	move.w	#2,U100982
 	bra  	L51464
 
 L51204:
-	cmpi.b	#58,U101148.l
+	cmpi.b	#58,U101148
 	bne.s	L51226
-	move.w	#4,U100982.l
+	move.w	#4,U100982
 	bra  	L51464
 
 L51226:
-	cmpi.b	#46,U101148.l
+	cmpi.b	#46,U101148
 	bne.s	L51278
 	bsr  	L51076
 	tst.w	d0
 	beq.s	L51278
-	movea.l	U100962.l,a0
+	movea.l	U100962,a0
 	move.b	1(a0),d0
 	ext.w	d0
 	move.w	d0,(sp)
 	bsr  	L51120
 	tst.w	d0
 	beq.s	L51278
-	move.w	#6,U100982.l
+	move.w	#6,U100982
 	bra  	L51464
 
 L51278:
-	move.b	U101148.l,d0
+	move.b	U101148,d0
 	ext.w	d0
 	move.w	d0,(sp)
 	bsr  	L51120
 	tst.w	d0
 	beq.s	L51308
-	move.w	#6,U100982.l
+	move.w	#6,U100982
 	bra  	L51464
 
 L51308:
-	cmpi.b	#45,U101148.l
+	cmpi.b	#45,U101148
 	bne  	L51456
 	bsr  	L51076
 	tst.w	d0
 	beq  	L51456
-	movea.l	U100962.l,a0
+	movea.l	U100962,a0
 	move.b	1(a0),d0
 	ext.w	d0
 	move.w	d0,(sp)
 	bsr  	L51120
 	tst.w	d0
 	bne.s	L51388
-	movea.l	U100962.l,a0
+	movea.l	U100962,a0
 	cmpi.b	#46,1(a0)
 	bne.s	L51398
-	movea.l	U100962.l,a0
+	movea.l	U100962,a0
 	move.b	2(a0),d0
 	ext.w	d0
 	move.w	d0,(sp)
@@ -16432,14 +16432,14 @@ L51308:
 	tst.w	d0
 	beq.s	L51398
 L51388:
-	move.w	#6,U100982.l
+	move.w	#6,U100982
 	bra.s	L51454
 
 L51398:
-	movea.l	U100962.l,a0
+	movea.l	U100962,a0
 	cmpi.b	#40,1(a0)
 	beq.s	L51438
-	movea.l	U100962.l,a0
+	movea.l	U100962,a0
 	move.b	1(a0),d0
 	ext.w	d0
 	move.w	d0,(sp)
@@ -16452,13 +16452,13 @@ L51398:
 L51438:
 	moveq	#1,d0
 L51440:
-	move.w	d0,U100562.l
-	move.w	#8,U100982.l
+	move.w	d0,U100562
+	move.w	#8,U100982
 L51454:
 	bra.s	L51464
 
 L51456:
-	move.w	#8,U100982.l
+	move.w	#8,U100982
 L51464:
 	unlk	fp
 	rts
@@ -16466,7 +16466,7 @@ L51464:
 L51468:
 	link	fp,#-4
 	bsr  	L50456
-	addq.w	#1,U99178.l
+	addq.w	#1,U99178
 	unlk	fp
 	rts
 
@@ -16475,14 +16475,14 @@ L51486:
 	bra.s	L51526
 
 L51492:
-	cmpi.b	#35,U101148.l
+	cmpi.b	#35,U101148
 	bne.s	L51504
 	bsr.s	L51468
 L51504:
-	move.b	U101148.l,d0
+	move.b	U101148,d0
 	ext.w	d0
 	move.w	d0,(sp)
-	jsr	L74802.l
+	jsr	L74802
 	tst.w	d0
 	bne.s	L51534
 	bsr.s	L51468
@@ -16506,20 +16506,20 @@ L51550:
 	cmp.w	#18,d0
 	ble.s	L51598
 	bsr  	L50456
-	move.l	U100962.l,(sp)
-	move.l	U101030.l,d0
+	move.l	U100962,(sp)
+	move.l	U101030,d0
 	clr.l	d1
-	move.w	U99178.l,d1
+	move.w	U99178,d1
 	add.l	d1,d0
 	move.l	d0,-(sp)
-	jsr	L83880.l
+	jsr	L83880
 	addq.l	#4,sp
 	bra.s	L51602
 
 L51598:
 	bsr  	L51468
 L51602:
-	move.b	U101148.l,d0
+	move.b	U101148,d0
 	ext.w	d0
 	move.w	d0,(sp)
 	bsr  	L51120
@@ -16532,24 +16532,24 @@ L51602:
 	bra.s	L51674
 
 L51632:
-	move.l	U100962.l,(sp)
-	subq.w	#1,U99178.l
+	move.l	U100962,(sp)
+	subq.w	#1,U99178
 	clr.w	d0
-	move.w	U99178.l,d0
+	move.w	U99178,d0
 	swap	d0
 	clr.w	d0
 	swap	d0
-	add.l	U101030.l,d0
+	add.l	U101030,d0
 	move.l	d0,-(sp)
-	jsr	L83880.l
+	jsr	L83880
 	addq.l	#4,sp
 L51674:
 	suba.w	a0,a0
-	movea.w	U99178.l,a0
-	adda.l	U101030.l,a0
+	movea.w	U99178,a0
+	adda.l	U101030,a0
 	cmpi.b	#48,-1(a0)
 	bne.s	L51704
-	tst.w	U99178.l
+	tst.w	U99178
 	bne.s	L51632
 L51704:
 	tst.l	(sp)+
@@ -16560,41 +16560,41 @@ L51704:
 L51714:
 	link	fp,#-4
 	bsr  	L50370
-	cmpi.w	#2,U100986.l
+	cmpi.w	#2,U100986
 	bne.s	L51806
-	movea.w	U100898.l,a0
+	movea.w	U100898,a0
 	adda.l	#U100162,a0
 	cmpi.b	#10,-3(a0)
 	bne.s	L51758
-	jsr	L19524.l
+	jsr	L19524
 L51758:
-	move.w	U100898.l,d0
+	move.w	U100898,d0
 	ext.l	d0
 	add.l	#U100162,d0
 	move.l	d0,(sp)
 	subq.l	#3,(sp)
 	move.l	#U100162,d0
-	move.l	d0,U100962.l
+	move.l	d0,U100962
 	move.l	d0,-(sp)
-	jsr	L83880.l
+	jsr	L83880
 	addq.l	#4,sp
-	move.w	#3,U100898.l
+	move.w	#3,U100898
 L51806:
-	move.l	U100962.l,U101030.l
-	clr.w	U99178.l
-	clr.w	U100562.l
+	move.l	U100962,U101030
+	clr.w	U99178
+	clr.w	U100562
 	bsr  	L51160
 	clr.w	d0
-	move.w	U100982.l,d0
+	move.w	U100982,d0
 	bra  	L52160
 
 L51844:
-	clr.w	U99178.l
+	clr.w	U99178
 	bra  	L52186
 
 L51854:
 	bsr  	L51468
-	move.b	U101148.l,d0
+	move.b	U101148,d0
 	ext.w	d0
 	move.w	d0,(sp)
 	bsr  	L51030
@@ -16613,28 +16613,28 @@ L51898:
 	bra  	L52180
 
 L51906:
-	cmpi.b	#45,U101148.l
+	cmpi.b	#45,U101148
 	bne.s	L51920
 	bsr  	L51468
 L51920:
 	clr.w	(sp)
 	bsr  	L51538
-	cmpi.b	#46,U101148.l
+	cmpi.b	#46,U101148
 	bne.s	L51948
 	bsr  	L51468
 	move.w	#1,(sp)
 	bsr  	L51538
 L51948:
-	move.b	U101148.l,d0
+	move.b	U101148,d0
 	ext.w	d0
 	move.w	d0,(sp)
-	jsr	L36478.l
+	jsr	L36478
 	cmp.w	#69,d0
 	bne.s	L52004
 	bsr  	L51468
-	cmpi.b	#43,U101148.l
+	cmpi.b	#43,U101148
 	beq.s	L51994
-	cmpi.b	#45,U101148.l
+	cmpi.b	#45,U101148
 	bne.s	L51998
 L51994:
 	bsr  	L51468
@@ -16642,19 +16642,19 @@ L51998:
 	clr.w	(sp)
 	bsr  	L51538
 L52004:
-	movea.l	U101030.l,a0
+	movea.l	U101030,a0
 	suba.l	a1,a1
-	movea.w	U99178.l,a1
+	movea.w	U99178,a1
 	adda.l	a1,a0
 	clr.b	(a0)
-	move.l	U101030.l,(sp)
-	jsr	L80660.l
-	move.l	d0,U99602.l
-	movea.l	U101030.l,a0
+	move.l	U101030,(sp)
+	jsr	L80660
+	move.l	d0,U99602
+	movea.l	U101030,a0
 	suba.l	a1,a1
-	movea.w	U99178.l,a1
+	movea.w	U99178,a1
 	adda.l	a1,a0
-	move.b	U101148.l,(a0)
+	move.b	U101148,(a0)
 	bra  	L52186
 
 L52066:
@@ -16663,7 +16663,7 @@ L52066:
 	beq.s	L52152
 	bsr  	L51468
 	move.l	#T86026,(sp)
-	move.b	U101050.l,d0
+	move.b	U101050,d0
 	ext.w	d0
 	move.w	d0,-(sp)
 	bsr  	L50940
@@ -16671,16 +16671,16 @@ L52066:
 	tst.w	d0
 	beq.s	L52150
 	move.l	#T86030,(sp)
-	move.b	U101148.l,d0
+	move.b	U101148,d0
 	ext.w	d0
 	move.w	d0,-(sp)
 	bsr  	L50940
 	addq.l	#2,sp
 	tst.w	d0
 	beq.s	L52150
-	move.b	U101050.l,d0
+	move.b	U101050,d0
 	ext.w	d0
-	cmp.b	U101148.l,d0
+	cmp.b	U101148,d0
 	beq.s	L52150
 	bsr  	L51468
 L52150:
@@ -16702,7 +16702,7 @@ L52160:
 	jmp	(a0)
 
 L52180:
-	clr.b	U101050.l
+	clr.b	U101050
 L52186:
 	unlk	fp
 	rts
@@ -16717,7 +16717,7 @@ L52200:
 	bsr  	L50432
 	tst.w	d0
 	beq.s	L52196
-	move.w	#8,U100982.l
+	move.w	#8,U100982
 	unlk	fp
 	rts
 
@@ -16725,14 +16725,14 @@ L52220:
 	link	fp,#0
 	movem.l	d6-d7/a4-a5,-(sp)
 	movea.l	8(fp),a5
-	cmpi.w	#8,U100982.l
+	cmpi.w	#8,U100982
 	beq.s	L52246
 	clr.w	d0
 	bra.s	L52294
 
 L52246:
-	move.w	U99178.l,d7
-	movea.l	U101030.l,a4
+	move.w	U99178,d7
+	movea.l	U101030,a4
 	bra.s	L52280
 
 L52260:
@@ -16768,7 +16768,7 @@ L52294:
 L52304:
 	link	fp,#-4
 	clr.w	d0
-	move.w	U99178.l,d0
+	move.w	U99178,d0
 	subq.w	#1,d0
 	beq.s	L52324
 	clr.w	d0
@@ -16792,9 +16792,9 @@ L52338:
 
 L52352:
 	link	fp,#-4
-	cmpi.w	#8,U100982.l
+	cmpi.w	#8,U100982
 	bne.s	L52382
-	movea.l	U101030.l,a0
+	movea.l	U101030,a0
 	move.b	(a0),d0
 	ext.w	d0
 	cmp.b	9(fp),d0
@@ -16813,18 +16813,18 @@ L52392:
 	link	fp,#0
 	movem.l	d2-d7/a5,-(sp)
 	move.w	8(fp),d7
-	move.w	U99178.l,d4
-	movea.l	U101030.l,a5
+	move.w	U99178,d4
+	movea.l	U101030,a5
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,(sp)
-	jsr	L358.l
+	jsr	L358
 	move.w	d0,d7
 	bra  	L52542
 
 L52438:
 	move.w	d7,(sp)
-	jsr	L358.l
+	jsr	L358
 	move.w	d0,d3
 	moveq	#-1,d6
 	bra.s	L52522
@@ -16839,7 +16839,7 @@ L52452:
 L52468:
 	move.w	d6,(sp)
 	move.w	d3,-(sp)
-	jsr	L332.l
+	jsr	L332
 	addq.l	#2,sp
 	move.w	d0,d5
 	tst.w	d5
@@ -16876,7 +16876,7 @@ L52522:
 	cmp.w	#4,d0
 	blt.s	L52452
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d7
 L52542:
 	tst.w	d7
@@ -16897,66 +16897,66 @@ L52556:
 L52566:
 	link	fp,#0
 	movem.l	d3-d7,-(sp)
-	jsr	L62588.l
+	jsr	L62588
 	move.w	d0,d7
 	move.w	d7,(sp)
-	jsr	L64090.l
-	jsr	L62588.l
+	jsr	L64090
+	jsr	L62588
 	move.w	d0,d4
 	move.w	d4,(sp)
 	move.w	d7,-(sp)
-	jsr	L65226.l
+	jsr	L65226
 	addq.l	#2,sp
-	jsr	L62588.l
+	jsr	L62588
 	move.w	d0,d5
 	move.w	d5,(sp)
 	move.w	d4,-(sp)
-	jsr	L65186.l
+	jsr	L65186
 	addq.l	#2,sp
-	jsr	L62588.l
+	jsr	L62588
 	move.w	d0,(sp)
 	move.w	d5,-(sp)
-	jsr	L65186.l
+	jsr	L65186
 	addq.l	#2,sp
 	move.w	#8,(sp)
 	move.w	d7,-(sp)
-	jsr	L65186.l
+	jsr	L65186
 	addq.l	#2,sp
 L52662:
 	move.w	d5,(sp)
-	jsr	L358.l
+	jsr	L358
 	move.w	d0,d7
 	moveq	#-1,d6
 	bra  	L52794
 
 L52678:
-	tst.w	U99178.l
+	tst.w	U99178
 	bne.s	L52704
 	clr.w	(sp)
 	clr.w	-(sp)
 	move.w	d7,-(sp)
-	jsr	L418.l
+	jsr	L418
 	addq.l	#4,sp
 	bra  	L52872
 
 L52704:
-	movea.l	U101030.l,a0
+	movea.l	U101030,a0
 	cmpi.b	#35,(a0)
 	bne.s	L52730
-	cmpi.w	#1,U99178.l
+	cmpi.w	#1,U99178
 	bls.s	L52730
 	bsr  	L50570
 L52730:
-	movea.l	U101030.l,a0
+	movea.l	U101030,a0
 	move.b	(a0),d0
 	ext.w	d0
 	move.w	d0,(sp)
 	move.w	d6,-(sp)
 	move.w	d7,-(sp)
-	jsr	L418.l
+	jsr	L418
 	addq.l	#4,sp
-	addq.l	#1,U101030.l
-	subq.w	#1,U99178.l
+	addq.l	#1,U101030
+	subq.w	#1,U99178
 	bne.s	L52794
 	addq.w	#1,d6
 	move.w	d6,d0
@@ -16965,7 +16965,7 @@ L52730:
 	clr.w	(sp)
 	move.w	d6,-(sp)
 	move.w	d7,-(sp)
-	jsr	L418.l
+	jsr	L418
 	addq.l	#4,sp
 L52792:
 	bra.s	L52872
@@ -16976,20 +16976,20 @@ L52794:
 	cmp.w	#4,d0
 	blt.s	L52678
 	clr.w	(sp)
-	jsr	L65694.l
+	jsr	L65694
 	move.w	d0,(sp)
-	jsr	L64090.l
-	jsr	L64160.l
+	jsr	L64090
+	jsr	L64160
 	move.w	d0,(sp)
-	jsr	L65694.l
+	jsr	L65694
 	move.w	d0,(sp)
-	jsr	L64276.l
-	jsr	L64160.l
+	jsr	L64276
+	jsr	L64160
 	move.w	d0,(sp)
 	move.w	d5,-(sp)
-	jsr	L65226.l
+	jsr	L65226
 	addq.l	#2,sp
-	jsr	L64224.l
+	jsr	L64224
 	move.w	d0,d5
 	bra  	L52662
 
@@ -17003,22 +17003,22 @@ L52882:
 	link	fp,#-4
 	bsr  	L52566
 	clr.w	(sp)
-	jsr	L64160.l
+	jsr	L64160
 	move.w	d0,-(sp)
-	jsr	L65496.l
+	jsr	L65496
 	addq.l	#2,sp
 	move.w	d0,(sp)
-	jsr	L64090.l
-	movea.w	U101184.l,a0
+	jsr	L64090
+	movea.w	U101184,a0
 	adda.l	a0,a0
 	movea.l	#U101202,a1
 	move.w	0(a0,a1.l),(sp)
-	jsr	L64224.l
+	jsr	L64224
 	move.w	d0,-(sp)
-	jsr	L65226.l
+	jsr	L65226
 	addq.l	#2,sp
 	move.w	d0,-(sp)
-	movea.w	U101184.l,a0
+	movea.w	U101184,a0
 	adda.l	a0,a0
 	adda.l	#U101202,a0
 	move.w	(sp)+,(a0)
@@ -17027,7 +17027,7 @@ L52882:
 
 L52972:
 	link	fp,#-4
-	move.l	8(fp),U99602.l
+	move.l	8(fp),U99602
 	bsr.s	L52990
 	unlk	fp
 	rts
@@ -17035,18 +17035,18 @@ L52972:
 L52990:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
-	move.l	U99602.l,-(sp)
-	jsr	L81832.l
+	move.l	U99602,-(sp)
+	jsr	L81832
 	addq.l	#4,sp
 	move.w	d0,d7
-	move.l	U99602.l,-(sp)
+	move.l	U99602,-(sp)
 	move.w	d7,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688.l
+	jsr	L81688
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	bne.s	L53052
 	move.w	d7,(sp)
@@ -17054,7 +17054,7 @@ L52990:
 	bra.s	L53060
 
 L53052:
-	move.l	U99602.l,(sp)
+	move.l	U99602,(sp)
 	bsr.s	L53102
 L53060:
 	tst.l	(sp)+
@@ -17066,36 +17066,36 @@ L53070:
 	link	fp,#-4
 	move.w	8(fp),(sp)
 	move.w	#10,-(sp)
-	jsr	L65496.l
+	jsr	L65496
 	addq.l	#2,sp
 	move.w	d0,(sp)
-	jsr	L64090.l
+	jsr	L64090
 	unlk	fp
 	rts
 
 L53102:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
-	move.l	8(fp),U100628.l
-	jsr	L62588.l
+	move.l	8(fp),U100628
+	jsr	L62588
 	move.w	d0,d7
 	move.w	d7,(sp)
-	jsr	L64090.l
-	jsr	L62588.l
+	jsr	L64090
+	jsr	L62588
 	move.w	d0,(sp)
 	move.w	d7,-(sp)
-	jsr	L65226.l
+	jsr	L65226
 	addq.l	#2,sp
 	move.w	#16,(sp)
 	move.w	d7,-(sp)
-	jsr	L65186.l
+	jsr	L65186
 	addq.l	#2,sp
-	move.l	U100628.l,(sp)
+	move.l	U100628,(sp)
 	move.w	d7,-(sp)
-	jsr	L378.l
+	jsr	L378
 	addq.l	#2,sp
 	move.w	d0,-(sp)
-	jsr	L488.l
+	jsr	L488
 	addq.l	#2,sp
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
@@ -17105,15 +17105,15 @@ L53102:
 L53202:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
-	tst.w	U100562.l
+	tst.w	U100562
 	beq.s	L53232
-	move.w	U100888.l,(sp)
-	jsr	L64090.l
+	move.w	U100888,(sp)
+	jsr	L64090
 	bra.s	L53308
 
 L53232:
 	bsr.s	L53318
-	movea.w	U101184.l,a0
+	movea.w	U101184,a0
 	adda.l	a0,a0
 	adda.l	#U101202,a0
 	move.w	(a0),d7
@@ -17121,25 +17121,25 @@ L53232:
 
 L53252:
 	move.w	d7,(sp)
-	jsr	L358.l
+	jsr	L358
 	move.w	d0,(sp)
 	bsr  	L52392
 	tst.w	d0
 	beq.s	L53288
 	move.w	d7,(sp)
-	jsr	L358.l
+	jsr	L358
 	move.w	d0,(sp)
-	jsr	L64090.l
+	jsr	L64090
 	bra.s	L53308
 
 L53288:
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d7
 L53298:
 	tst.w	d7
 	bne.s	L53252
-	jsr	L64732.l
+	jsr	L64732
 L53308:
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
@@ -17149,26 +17149,26 @@ L53308:
 L53318:
 	link	fp,#0
 	movem.l	d7/a5,-(sp)
-	clr.w	U101184.l
-	movea.l	U101030.l,a5
+	clr.w	U101184
+	movea.l	U101030,a5
 L53338:
 	cmpi.b	#35,(a5)
 	bne.s	L53346
 	addq.l	#1,a5
 L53346:
-	move.l	U101030.l,d0
+	move.l	U101030,d0
 	clr.l	d1
-	move.w	U99178.l,d1
+	move.w	U99178,d1
 	add.l	d1,d0
 	cmpa.l	d0,a5
 	bcc.s	L53378
 	move.b	(a5)+,d0
 	ext.w	d0
-	add.w	d0,U101184.l
+	add.w	d0,U101184
 	bra.s	L53338
 
 L53378:
-	andi.w	#127,U101184.l
+	andi.w	#127,U101184
 	tst.l	(sp)+
 	movem.l	(sp)+,a5
 	unlk	fp
@@ -17177,10 +17177,10 @@ L53378:
 L53396:
 	link	fp,#-4
 	bsr  	L53202
-	jsr	L64160.l
+	jsr	L64160
 	tst.w	d0
 	bne.s	L53424
-	jsr	L64180.l
+	jsr	L64180
 	bsr  	L52882
 L53424:
 	unlk	fp
@@ -17188,7 +17188,7 @@ L53424:
 
 L53428:
 	link	fp,#-4
-	cmpi.w	#6,U100982.l
+	cmpi.w	#6,U100982
 	bne.s	L53448
 	bsr  	L52990
 	bra.s	L53450
@@ -17206,7 +17206,7 @@ L53462:
 	bsr  	L53644
 	tst.w	d0
 	beq.s	L53486
-	jsr	L64732.l
+	jsr	L64732
 	bsr  	L53858
 	bra.s	L53530
 
@@ -17216,15 +17216,15 @@ L53486:
 	tst.w	d0
 	beq.s	L53514
 	bsr  	L51714
-	jsr	L64732.l
+	jsr	L64732
 	bsr  	L53858
 	bra.s	L53530
 
 L53514:
-	jsr	L74764.l
+	jsr	L74764
 	bsr.s	L53534
 	bsr.s	L53462
-	jsr	L64470.l
+	jsr	L64470
 L53530:
 	unlk	fp
 	rts
@@ -17262,56 +17262,56 @@ L53582:
 	bsr.s	L53644
 	tst.w	d0
 	beq.s	L53608
-	jsr	L64732.l
+	jsr	L64732
 	bra.s	L53624
 
 L53608:
-	jsr	L74764.l
+	jsr	L74764
 	bsr.s	L53534
 	bsr.s	L53572
-	jsr	L64470.l
+	jsr	L64470
 L53624:
 	unlk	fp
 	rts
 
 L53628:
 	link	fp,#-4
-	clr.w	U101008.l
+	clr.w	U101008
 	bsr.s	L53572
 	unlk	fp
 	rts
 
 L53644:
 	link	fp,#-4
-	tst.w	U101008.l
+	tst.w	U101008
 	beq.s	L53662
 	moveq	#1,d0
 	bra  	L53854
 
 L53662:
-	tst.w	U100982.l
+	tst.w	U100982
 	beq.s	L53758
-	tst.w	U101470.l
+	tst.w	U101470
 	beq.s	L53754
 	bsr  	L52338
 	tst.w	d0
 	beq.s	L53754
 	bsr  	L52190
-	move.w	U101042.l,(sp)
+	move.w	U101042,(sp)
 	bsr  	L53070
-	cmpi.w	#59,U100632.l
+	cmpi.w	#59,U100632
 	bne.s	L53718
-	move.w	U100676.l,(sp)
+	move.w	U100676,(sp)
 	bra.s	L53724
 
 L53718:
-	move.w	U100634.l,(sp)
+	move.w	U100634,(sp)
 L53724:
-	jsr	L64090.l
+	jsr	L64090
 	bsr  	L53396
 	bsr  	L53872
 	bsr  	L51714
-	jsr	L74764.l
+	jsr	L74764
 	bsr.s	L53644
 	bra  	L53854
 
@@ -17320,7 +17320,7 @@ L53754:
 	bra.s	L53854
 
 L53758:
-	tst.w	U101470.l
+	tst.w	U101470
 	bne.s	L53770
 	moveq	#1,d0
 	bra.s	L53854
@@ -17328,7 +17328,7 @@ L53758:
 L53770:
 	move.w	#62,(sp)
 	bsr  	L50590
-	tst.w	U100892.l
+	tst.w	U100892
 	beq.s	L53790
 	clr.w	d0
 	bra.s	L53792
@@ -17336,21 +17336,21 @@ L53770:
 L53790:
 	moveq	#1,d0
 L53792:
-	move.w	d0,U101008.l
+	move.w	d0,U101008
 	beq.s	L53804
 	moveq	#1,d0
 	bra.s	L53854
 
 L53804:
-	move.w	U101042.l,(sp)
+	move.w	U101042,(sp)
 	bsr  	L53070
-	move.w	U100740.l,(sp)
-	jsr	L64090.l
-	move.w	U100892.l,(sp)
+	move.w	U100740,(sp)
+	jsr	L64090
+	move.w	U100892,(sp)
 	bsr  	L53070
 	bsr.s	L53872
-	clr.w	U100892.l
-	jsr	L74764.l
+	clr.w	U100892
+	jsr	L74764
 	bsr  	L53644
 L53854:
 	unlk	fp
@@ -17358,89 +17358,89 @@ L53854:
 
 L53858:
 	link	fp,#-4
-	addq.w	#1,U101042.l
+	addq.w	#1,U101042
 	unlk	fp
 	rts
 
 L53872:
 	link	fp,#-4
-	jsr	L64470.l
-	jsr	L64470.l
-	tst.w	U101034.l
+	jsr	L64470
+	jsr	L64470
+	tst.w	U101034
 	bne.s	L53924
-	jsr	L64160.l
+	jsr	L64160
 	move.w	d0,(sp)
-	jsr	L65694.l
-	move.w	d0,U101010.l
-	move.w	d0,U101034.l
+	jsr	L65694
+	move.w	d0,U101010
+	move.w	d0,U101034
 	bra.s	L53972
 
 L53924:
-	jsr	L64160.l
+	jsr	L64160
 	move.w	d0,(sp)
-	jsr	L65694.l
+	jsr	L65694
 	move.w	d0,(sp)
-	move.w	U101010.l,-(sp)
-	jsr	L65226.l
+	move.w	U101010,-(sp)
+	jsr	L65226
 	addq.l	#2,sp
-	move.w	U101010.l,(sp)
-	jsr	L378.l
-	move.w	d0,U101010.l
+	move.w	U101010,(sp)
+	jsr	L378
+	move.w	d0,U101010
 L53970	equ	*-2
 L53972:
-	jsr	L64180.l
+	jsr	L64180
 	unlk	fp
 	rts
 
 L53982:
 	link	fp,#-4
-	tst.w	U100982.l
+	tst.w	U100982
 	beq.s	L54044
 	bsr  	L52338
 	tst.w	d0
 	bne.s	L54044
-	cmpi.w	#4,U100982.l
+	cmpi.w	#4,U100982
 	bne.s	L54018
 	bsr  	L50570
 	bra.s	L54030
 
 L54018:
-	move.l	U101030.l,(sp)
-	jsr	L67208.l
+	move.l	U101030,(sp)
+	jsr	L67208
 L54030:
 	bsr  	L53428
 	bsr.s	L53982
-	jsr	L64470.l
+	jsr	L64470
 	bra.s	L54050
 
 L54044:
-	jsr	L64732.l
+	jsr	L64732
 L54050:
 	unlk	fp
 	rts
 
 L54054:
 	link	fp,#-4
-	move.l	T87170.l,(sp)
+	move.l	T87170,(sp)
 	bsr  	L52220
 	tst.w	d0
 	beq.s	L54080
-	jsr	L64732.l
+	jsr	L64732
 	bra.s	L54118
 
 L54080:
 	bsr  	L53628
-	jsr	L74764.l
-	jsr	L64160.l
+	jsr	L74764
+	jsr	L64160
 	tst.w	d0
 	bne.s	L54110
-	jsr	L64180.l
+	jsr	L64180
 	bsr.s	L54054
 	bra.s	L54118
 
 L54110:
 	bsr.s	L54054
-	jsr	L64470.l
+	jsr	L64470
 L54118:
 	unlk	fp
 	rts
@@ -17449,75 +17449,75 @@ L54122:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
 	bsr  	L51714
-	cmpi.w	#2,U100982.l
+	cmpi.w	#2,U100982
 	bne.s	L54150
 	bsr  	L50570
 	bra.s	L54170
 
 L54150:
-	cmpi.w	#8,U100982.l
+	cmpi.w	#8,U100982
 	beq.s	L54170
-	jsr	L58102.l
+	jsr	L58102
 	bra  	L54380
 
 L54170:
 	bsr  	L53428
-	jsr	L64160.l
+	jsr	L64160
 	move.w	d0,d7
 	move.w	d7,(sp)
-	jsr	L65878.l
+	jsr	L65878
 	tst.w	d0
 	beq.s	L54220
-	jsr	L61762.l
+	jsr	L61762
 	tst.w	d0
 	beq.s	L54212
-	jsr	L61804.l
+	jsr	L61804
 	bra.s	L54220
 
 L54212:
 	move.w	d7,(sp)
-	jsr	L66904.l
+	jsr	L66904
 L54220:
 	bsr  	L53982
-	move.w	#1,U101470.l
-	clr.w	U101042.l
+	move.w	#1,U101470
+	clr.w	U101042
 	bsr  	L53644
 	bsr  	L54054
-	jsr	L64470.l
-	tst.w	U101034.l
+	jsr	L64470
+	tst.w	U101034
 	bne.s	L54278
-	move.w	U100738.l,(sp)
+	move.w	U100738,(sp)
 	move.w	d7,-(sp)
-	jsr	L66244.l
+	jsr	L66244
 	addq.l	#2,sp
 	bra.s	L54300
 
 L54278:
-	move.w	U101034.l,(sp)
-	move.w	U100738.l,-(sp)
+	move.w	U101034,(sp)
+	move.w	U100738,-(sp)
 	move.w	d7,-(sp)
-	jsr	L66062.l
+	jsr	L66062
 	addq.l	#4,sp
 L54300:
 	move.w	d7,(sp)
-	jsr	L55654.l
-	jsr	L64160.l
+	jsr	L55654
+	jsr	L64160
 	move.w	d0,(sp)
-	move.w	U98716.l,-(sp)
+	move.w	U98716,-(sp)
 	move.w	d7,-(sp)
-	jsr	L66062.l
+	jsr	L66062
 	addq.l	#4,sp
-	jsr	L64180.l
-	tst.w	U99190.l
+	jsr	L64180
+	tst.w	U99190
 	bne.s	L54374
 	move.w	d7,(sp)
 	move.l	#L54682,-(sp)
-	move.l	T87202.l,-(sp)
-	jsr	L54390.l
+	move.l	T87202,-(sp)
+	jsr	L54390
 	addq.l	#8,sp
-	jsr	L74840.l
+	jsr	L74840
 L54374:
-	jsr	L64180.l
+	jsr	L64180
 L54380:
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
@@ -17536,7 +17536,7 @@ L54404:
 	move.b	d7,d0
 	ext.w	d0
 	move.w	d0,(sp)
-	jsr	L74948.l
+	jsr	L74948
 	bra.s	L54468
 
 L54424:
@@ -17571,17 +17571,17 @@ L54484:
 	movem.l	d2-d7,-(sp)
 	move.w	8(fp),d7
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,(sp)
-	jsr	L358.l
+	jsr	L358
 	move.w	d0,d7
 	beq.s	L54542
 	move.w	#1,(sp)
 	move.w	d7,-(sp)
-	jsr	L358.l
+	jsr	L358
 	addq.l	#2,sp
 	move.w	d0,-(sp)
-	jsr	L332.l
+	jsr	L332
 	addq.l	#2,sp
 	move.w	d0,d3
 L54542:
@@ -17589,7 +17589,7 @@ L54542:
 
 L54546:
 	move.w	d7,(sp)
-	jsr	L358.l
+	jsr	L358
 	move.w	d0,d6
 	moveq	#-1,d5
 	bra.s	L54648
@@ -17597,7 +17597,7 @@ L54546:
 L54560:
 	move.w	d5,(sp)
 	move.w	d6,-(sp)
-	jsr	L332.l
+	jsr	L332
 	addq.l	#2,sp
 	move.b	d0,d4
 	beq.s	L54672
@@ -17607,33 +17607,33 @@ L54560:
 	move.b	d4,d0
 	ext.w	d0
 	move.w	d0,-(sp)
-	jsr	L50940.l
+	jsr	L50940
 	addq.l	#2,sp
 	tst.w	d0
 	bne.s	L54626
 	move.b	d4,d0
 	ext.w	d0
 	move.w	d0,(sp)
-	jsr	L50984.l
+	jsr	L50984
 	tst.w	d0
 	beq.s	L54636
 	tst.w	d3
 	beq.s	L54636
 L54626:
 	move.w	#35,(sp)
-	jsr	L74948.l
+	jsr	L74948
 L54636:
 	move.b	d4,d0
 	ext.w	d0
 	move.w	d0,(sp)
-	jsr	L74948.l
+	jsr	L74948
 L54648:
 	addq.w	#1,d5
 	move.w	d5,d0
 	cmp.w	#4,d0
 	blt.s	L54560
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d7
 L54668:
 	tst.w	d7
@@ -17648,10 +17648,10 @@ L54682:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
 	move.w	8(fp),d7
-	tst.w	U100996.l
+	tst.w	U100996
 	beq.s	L54714
 	move.w	d7,(sp)
-	jsr	L65878.l
+	jsr	L65878
 	tst.w	d0
 	beq.s	L54718
 L54714:
@@ -17674,21 +17674,21 @@ L54740:
 	movem.l	d4-d7/a4-a5,-(sp)
 	move.w	8(fp),d7
 	move.w	d7,(sp)
-	jsr	L65532.l
+	jsr	L65532
 	move.l	d0,d6
 	move.l	d6,(sp)
-	jsr	L3058.l
+	jsr	L3058
 	move.l	d0,d5
 	move.l	d6,-(sp)
 	move.l	d6,-(sp)
-	jsr	L81832.l
+	jsr	L81832
 	addq.l	#4,sp
 	move.l	d0,-36(fp)
 	move.l	d0,-(sp)
-	jsr	L81688.l
+	jsr	L81688
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	bne.s	L54822
 	move.l	-36(fp),(sp)
@@ -17698,12 +17698,12 @@ L54740:
 L54822:
 	move.l	#-2095944137,-(sp)
 	move.l	d5,-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	ble.s	L54858
 	move.l	#-1734967208,-(sp)
 	move.l	d5,-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	blt.s	L54884
 L54858:
@@ -17711,7 +17711,7 @@ L54858:
 	move.l	fp,-(sp)
 	addi.l	#-32,(sp)
 	move.l	d6,-(sp)
-	jsr	L80128.l
+	jsr	L80128
 	addq.l	#8,sp
 	movea.l	d0,a4
 	bra.s	L54962
@@ -17721,11 +17721,11 @@ L54884:
 	move.l	fp,-(sp)
 	addi.l	#-32,(sp)
 	move.l	d6,-(sp)
-	jsr	L79618.l
+	jsr	L79618
 	addq.l	#8,sp
 	movea.l	d0,a4
 	move.l	a4,(sp)
-	jsr	L83914.l
+	jsr	L83914
 	ext.l	d0
 	movea.l	d0,a5
 	move.l	a4,d0
@@ -17752,7 +17752,7 @@ L54954:
 	clr.b	(a5)
 L54962:
 	move.l	a4,(sp)
-	jsr	L74902.l
+	jsr	L74902
 L54970:
 	tst.l	(sp)+
 	movem.l	(sp)+,d5-d7/a4-a5
@@ -17766,14 +17766,14 @@ L54980:
 	tst.l	d7
 	bge.s	L55012
 	move.w	#45,(sp)
-	jsr	L74948.l
+	jsr	L74948
 	move.l	d7,d0
 	neg.l	d0
 	move.l	d0,d7
 L55012:
 	move.l	#10,-(sp)
 	move.l	d7,-(sp)
-	jsr	L83960.l
+	jsr	L83960
 	addq.l	#8,sp
 	move.l	d0,d6
 	beq.s	L55036
@@ -17782,12 +17782,12 @@ L55012:
 L55036:
 	move.l	#10,-(sp)
 	move.l	d7,-(sp)
-	jsr	L84202.l
+	jsr	L84202
 	addq.l	#8,sp
 	ext.w	d0
 	move.w	d0,(sp)
 	addi.w	#48,(sp)
-	jsr	L74948.l
+	jsr	L74948
 	tst.l	(sp)+
 	movem.l	(sp)+,d6-d7
 	unlk	fp
@@ -17807,7 +17807,7 @@ L55092:
 	move.w	8(fp),d7
 	bsr  	L55694
 	move.w	d7,(sp)
-	jsr	L65356.l
+	jsr	L65356
 	tst.w	d0
 	beq.s	L55128
 	move.w	d7,(sp)
@@ -17831,30 +17831,30 @@ L55144:
 	beq  	L55328
 L55162:
 	bsr  	L55694
-	jsr	L58044.l
+	jsr	L58044
 	tst.w	d0
 	beq.s	L55204
-	cmp.w	U101006.l,d7
+	cmp.w	U101006,d7
 	bne.s	L55204
-	move.w	U101044.l,U98710.l
-	move.w	U100990.l,U99194.l
+	move.w	U101044,U98710
+	move.w	U100990,U99194
 L55204:
 	move.w	d7,(sp)
-	jsr	L358.l
+	jsr	L358
 	move.w	d0,-2(fp)
 	move.w	d0,(sp)
 	bsr  	L55354
-	jsr	L53858.l
+	jsr	L53858
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d7
 	beq.s	L55328
 	move.w	d7,(sp)
-	jsr	L65266.l
+	jsr	L65266
 	tst.w	d0
 	beq.s	L55274
 	move.l	#T86040,(sp)
-	jsr	L74902.l
+	jsr	L74902
 	move.w	d7,(sp)
 	bsr  	L55092
 	clr.w	d0
@@ -17863,17 +17863,17 @@ L55204:
 L55274:
 	clr.w	d0
 	move.w	-2(fp),d0
-	cmp.w	U100624.l,d0
+	cmp.w	U100624,d0
 	beq.s	L55324
 	clr.w	d0
 	move.w	-2(fp),d0
-	cmp.w	U100888.l,d0
+	cmp.w	U100888,d0
 	beq.s	L55324
 	move.w	d7,(sp)
-	jsr	L358.l
-	cmp.w	U100652.l,d0
+	jsr	L358
+	cmp.w	U100652,d0
 	beq.s	L55324
-	jsr	L76978.l
+	jsr	L76978
 L55324:
 	bra  	L55162
 
@@ -17895,7 +17895,7 @@ L55354:
 	tst.w	d7
 	beq.s	L55390
 	move.w	d7,(sp)
-	jsr	L65266.l
+	jsr	L65266
 	tst.w	d0
 	beq.s	L55390
 	move.w	d7,(sp)
@@ -17904,13 +17904,13 @@ L55354:
 
 L55390:
 	move.w	#91,(sp)
-	jsr	L74948.l
-	jsr	L74764.l
-	jsr	L53858.l
+	jsr	L74948
+	jsr	L74764
+	jsr	L53858
 	move.w	d7,(sp)
 	bsr  	L55144
 	move.w	#93,(sp)
-	jsr	L74948.l
+	jsr	L74948
 L55428:
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
@@ -17921,13 +17921,13 @@ L55438:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
 	move.w	8(fp),d7
-	jsr	L76978.l
+	jsr	L76978
 	move.w	d7,(sp)
-	jsr	L65726.l
+	jsr	L65726
 	tst.w	d0
 	beq.s	L55486
 	move.w	#34,(sp)
-	jsr	L74948.l
+	jsr	L74948
 	move.w	d7,(sp)
 	bsr  	L54682
 	bra.s	L55492
@@ -17948,40 +17948,40 @@ L55502:
 	bsr  	L55092
 	move.w	10(fp),d7
 	move.w	d7,(sp)
-	jsr	L358.l
+	jsr	L358
 	move.w	d0,d7
 	bra.s	L55574
 
 L55534:
-	jsr	L76978.l
+	jsr	L76978
 	move.w	#58,(sp)
-	jsr	L74948.l
+	jsr	L74948
 	move.w	d7,(sp)
-	jsr	L358.l
+	jsr	L358
 	move.w	d0,(sp)
 	bsr  	L55092
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d7
 L55574:
 	tst.w	d7
 	bne.s	L55534
-	move.w	U100738.l,(sp)
+	move.w	U100738,(sp)
 	move.w	8(fp),-(sp)
-	jsr	L66008.l
+	jsr	L66008
 	addq.l	#2,sp
-	move.w	d0,U101034.l
-	clr.w	U101042.l
+	move.w	d0,U101034
+	clr.w	U101042
 	bsr  	L55826
 	tst.w	d0
 	beq.s	L55644
 	bsr  	L55898
 	tst.w	d0
 	beq.s	L55644
-	jsr	L76978.l
+	jsr	L76978
 	bsr  	L55994
 	bsr  	L56014
-	jsr	L74840.l
+	jsr	L74840
 L55644:
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
@@ -17990,12 +17990,12 @@ L55644:
 
 L55654:
 	link	fp,#-4
-	tst.w	U101108.l
+	tst.w	U101108
 	beq.s	L55690
-	move.w	U101108.l,(sp)
-	move.w	U98400.l,-(sp)
+	move.w	U101108,(sp)
+	move.w	U98400,-(sp)
 	move.w	8(fp),-(sp)
-	jsr	L66062.l
+	jsr	L66062
 	addq.l	#4,sp
 L55690:
 	unlk	fp
@@ -18007,17 +18007,17 @@ L55694:
 
 L55702:
 	bsr  	L55922
-	cmp.w	U100740.l,d0
+	cmp.w	U100740,d0
 	bne.s	L55780
 	bsr  	L55958
 	move.w	d0,(sp)
-	jsr	L65532.l
+	jsr	L65532
 	move.l	d0,-(sp)
-	jsr	L81832.l
+	jsr	L81832
 	addq.l	#4,sp
 	move.w	d0,-2(fp)
 	bsr  	L56014
-	jsr	L74840.l
+	jsr	L74840
 	bsr.s	L55826
 	tst.w	d0
 	beq.s	L55768
@@ -18027,22 +18027,22 @@ L55702:
 	subq.w	#1,-2(fp)
 L55768:
 	move.w	-2(fp),(sp)
-	jsr	L76954.l
+	jsr	L76954
 	bra.s	L55816
 
 L55780:
 	bsr  	L55898
 	tst.w	d0
 	beq.s	L55796
-	jsr	L76978.l
+	jsr	L76978
 	bra.s	L55802
 
 L55796:
-	jsr	L74840.l
+	jsr	L74840
 L55802:
 	bsr  	L55994
 	bsr  	L56014
-	jsr	L74840.l
+	jsr	L74840
 L55816:
 	bsr.s	L55826
 	tst.w	d0
@@ -18052,22 +18052,22 @@ L55816:
 
 L55826:
 	link	fp,#-4
-	tst.w	U101034.l
+	tst.w	U101034
 	bne.s	L55842
 	clr.w	d0
 	bra.s	L55894
 
 L55842:
-	move.w	U101034.l,(sp)
-	jsr	L358.l
+	move.w	U101034,(sp)
+	jsr	L358
 	move.w	d0,(sp)
-	jsr	L358.l
+	jsr	L358
 	move.w	d0,(sp)
-	jsr	L65532.l
+	jsr	L65532
 	move.l	d0,-(sp)
-	jsr	L81832.l
+	jsr	L81832
 	addq.l	#4,sp
-	cmp.w	U101042.l,d0
+	cmp.w	U101042,d0
 	beq.s	L55892
 	clr.w	d0
 	bra.s	L55894
@@ -18081,7 +18081,7 @@ L55894:
 L55898:
 	link	fp,#-4
 	bsr.s	L55922
-	cmp.w	U100634.l,d0
+	cmp.w	U100634,d0
 	beq.s	L55916
 	clr.w	d0
 	bra.s	L55918
@@ -18094,23 +18094,23 @@ L55918:
 
 L55922:
 	link	fp,#-4
-	move.w	U101034.l,(sp)
-	jsr	L358.l
+	move.w	U101034,(sp)
+	jsr	L358
 	move.w	d0,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,(sp)
-	jsr	L358.l
+	jsr	L358
 	unlk	fp
 	rts
 
 L55958:
 	link	fp,#-4
-	move.w	U101034.l,(sp)
-	jsr	L358.l
+	move.w	U101034,(sp)
+	jsr	L358
 	move.w	d0,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,(sp)
-	jsr	L378.l
+	jsr	L378
 	unlk	fp
 	rts
 
@@ -18126,31 +18126,31 @@ L55994:
 
 L56014:
 	link	fp,#-4
-	move.w	U101034.l,(sp)
-	jsr	L378.l
-	move.w	d0,U101034.l
+	move.w	U101034,(sp)
+	jsr	L378
+	move.w	d0,U101034
 	unlk	fp
 	rts
 
 L56040:
 	link	fp,#-4
-	clr.w	U101034.l
+	clr.w	U101034
 	unlk	fp
 	rts
 
 L56054:
 	link	fp,#-4
-	move.w	U98718.l,(sp)
+	move.w	U98718,(sp)
 	bsr.s	L56100
 	unlk	fp
 	rts
 
 L56070:
 	link	fp,#-4
-	jsr	L64714.l
-	move.w	U98716.l,(sp)
+	jsr	L64714
+	move.w	U98716,(sp)
 	bsr.s	L56100
-	move.w	U100738.l,(sp)
+	move.w	U100738,(sp)
 	bsr.s	L56100
 	unlk	fp
 	rts
@@ -18162,17 +18162,17 @@ L56100:
 	bra.s	L56204
 
 L56114:
-	jsr	L64160.l
+	jsr	L64160
 	move.w	d0,(sp)
-	jsr	L358.l
+	jsr	L358
 	move.w	d0,d6
 	move.w	d6,(sp)
 	bsr  	L57862
 	tst.w	d0
 	bne.s	L56182
-	move.w	U98400.l,(sp)
+	move.w	U98400,(sp)
 	move.w	d6,-(sp)
-	jsr	L66008.l
+	jsr	L66008
 	addq.l	#2,sp
 	move.w	d0,d5
 	beq.s	L56170
@@ -18183,19 +18183,19 @@ L56114:
 L56170:
 	move.w	d7,(sp)
 	move.w	d6,-(sp)
-	jsr	L66244.l
+	jsr	L66244
 	addq.l	#2,sp
 L56182:
-	jsr	L64160.l
+	jsr	L64160
 	move.w	d0,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,(sp)
-	jsr	L64276.l
+	jsr	L64276
 L56204:
-	jsr	L64160.l
+	jsr	L64160
 	tst.w	d0
 	bne.s	L56114
-	jsr	L64180.l
+	jsr	L64180
 	tst.l	(sp)+
 	movem.l	(sp)+,d5-d7
 	unlk	fp
@@ -18203,14 +18203,14 @@ L56204:
 
 L56230:
 	link	fp,#-4
-	jsr	L64732.l
+	jsr	L64732
 	bsr.s	L56264
 	unlk	fp
 	rts
 
 L56246:
 	link	fp,#-4
-	jsr	L64714.l
+	jsr	L64714
 	bsr.s	L56362
 	bsr.s	L56264
 	unlk	fp
@@ -18218,11 +18218,11 @@ L56246:
 
 L56264:
 	link	fp,#-4
-	move.w	U100736.l,(sp)
+	move.w	U100736,(sp)
 	bsr.s	L56294
-	jsr	L64224.l
+	jsr	L64224
 	move.w	d0,(sp)
-	jsr	L64276.l
+	jsr	L64276
 	unlk	fp
 	rts
 
@@ -18232,14 +18232,14 @@ L56294:
 	move.w	8(fp),d7
 	tst.w	d7
 	beq.s	L56352
-	jsr	L74764.l
+	jsr	L74764
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,(sp)
 	bsr.s	L56294
-	move.w	U98716.l,(sp)
+	move.w	U98716,(sp)
 	move.w	d7,-(sp)
-	jsr	L358.l
+	jsr	L358
 	addq.l	#2,sp
 	move.w	d0,-(sp)
 	bsr  	L57652
@@ -18252,40 +18252,40 @@ L56352:
 
 L56362:
 	link	fp,#-4
-	jsr	L64732.l
-	move.w	U98718.l,(sp)
+	jsr	L64732
+	move.w	U98718,(sp)
 	bsr  	L57456
 	unlk	fp
 	rts
 
 L56386:
 	link	fp,#-4
-	jsr	L69648.l
-	clr.w	U98712.l
-	move.w	#1,U100986.l
-	move.l	U100744.l,d0
+	jsr	L69648
+	clr.w	U98712
+	move.w	#1,U100986
+	move.l	U100744,d0
 	subq.l	#1,d0
-	move.l	d0,U100962.l
-	move.b	#10,U101148.l
-	jsr	L66768.l
+	move.l	d0,U100962
+	move.b	#10,U101148
+	jsr	L66768
 L56438:
-	jsr	L37176.l
-	tst.w	U100986.l
+	jsr	L37176
+	tst.w	U100986
 	beq.s	L56454
 	bra.s	L56438
 
 L56454:
-	jsr	L66800.l
+	jsr	L66800
 	unlk	fp
 	rts
 
 L56464:
 	link	fp,#-4
 	moveq	#1,d0
-	move.w	d0,U100990.l
-	move.w	d0,U98710.l
-	move.w	d0,U99194.l
-	jsr	L61834.l
+	move.w	d0,U100990
+	move.w	d0,U98710
+	move.w	d0,U99194
+	jsr	L61834
 	unlk	fp
 	rts
 
@@ -18293,41 +18293,41 @@ L56498:
 	link	fp,#-4
 	bsr.s	L56464
 	move.l	#U101090,(sp)
-	jsr	L204.l
+	jsr	L204
 	tst.w	d0
 	beq.s	L56526
-	jsr	L67594.l
+	jsr	L67594
 L56526:
-	move.w	#1,U100996.l
-	jsr	L69744.l
-	jsr	L77150.l
+	move.w	#1,U100996
+	jsr	L69744
+	jsr	L77150
 	clr.w	d0
-	move.w	d0,U101200.l
-	movea.l	U100744.l,a1
-	move.l	a1,U101102.l
+	move.w	d0,U101200
+	movea.l	U100744,a1
+	move.l	a1,U101102
 	move.b	d0,(a1)
 	unlk	fp
 	rts
 
 L56572:
 	link	fp,#-4
-	jsr	L77150.l
+	jsr	L77150
 	bsr  	L58068
-	jsr	L69744.l
+	jsr	L69744
 	bra.s	L56620
 
 L56594:
-	subq.l	#1,U99196.l
-	movea.l	U99196.l,a0
-	movea.l	U101102.l,a1
+	subq.l	#1,U99196
+	movea.l	U99196,a0
+	movea.l	U101102,a1
 	move.b	(a1),(a0)
-	subq.l	#1,U101102.l
+	subq.l	#1,U101102
 L56620:
-	move.w	U101200.l,d0
-	subq.w	#1,U101200.l
+	move.w	U101200,d0
+	subq.w	#1,U101200
 	tst.w	d0
 	bne.s	L56594
-	move.l	U99196.l,U101102.l
+	move.l	U99196,U101102
 	unlk	fp
 	rts
 
@@ -18349,24 +18349,24 @@ L56676:
 	bra  	L57342
 
 L56692:
-	jsr	L56040.l
+	jsr	L56040
 	move.w	d7,(sp)
-	jsr	L358.l
-	move.w	d0,U98372.l
+	jsr	L358
+	move.w	d0,U98372
 	move.w	10(fp),d0
 	bra  	L57312
 
 L56720:
-	move.w	U98716.l,(sp)
-	move.w	U98372.l,-(sp)
-	jsr	L66008.l
+	move.w	U98716,(sp)
+	move.w	U98372,-(sp)
+	jsr	L66008
 	addq.l	#2,sp
 	move.w	d0,d6
 	beq  	L56878
 	bsr  	L57364
 	move.w	d6,(sp)
-	move.w	U98372.l,-(sp)
-	jsr	L55502.l
+	move.w	U98372,-(sp)
+	jsr	L55502
 	addq.l	#2,sp
 	cmpi.w	#1,10(fp)
 	bne.s	L56870
@@ -18376,79 +18376,79 @@ L56720:
 L56780:
 	tst.w	-2(fp)
 	bne.s	L56792
-	jsr	L74840.l
+	jsr	L74840
 L56792:
-	cmp.w	U100622.l,d6
+	cmp.w	U100622,d6
 	bne.s	L56810
-	move.w	U100990.l,U99194.l
+	move.w	U100990,U99194
 L56810:
 	move.w	d6,(sp)
-	jsr	L358.l
+	jsr	L358
 	move.w	d0,(sp)
-	jsr	L55144.l
+	jsr	L55144
 	move.w	d0,-2(fp)
 L56830:
 	move.w	d6,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d6
 	bne.s	L56780
-	jsr	L55694.l
-	tst.w	U101006.l
+	jsr	L55694
+	tst.w	U101006
 	bne.s	L56866
-	move.w	U101498.l,U98710.l
+	move.w	U101498,U98710
 L56866:
 	bsr  	L57390
 L56870:
-	jsr	L74840.l
+	jsr	L74840
 	bra.s	L56922
 
 L56878:
-	move.w	U98718.l,(sp)
-	move.w	U98372.l,-(sp)
-	jsr	L65948.l
+	move.w	U98718,(sp)
+	move.w	U98372,-(sp)
+	jsr	L65948
 	addq.l	#2,sp
 	tst.w	d0
 	bne.s	L56922
 	bsr  	L57364
-	move.w	U98372.l,(sp)
-	jsr	L55092.l
+	move.w	U98372,(sp)
+	jsr	L55092
 	bsr  	L57390
 L56922:
 	bra  	L57332
 
 L56926:
-	move.w	U98718.l,(sp)
-	move.w	U98372.l,-(sp)
-	jsr	L65948.l
+	move.w	U98718,(sp)
+	move.w	U98372,-(sp)
+	jsr	L65948
 	addq.l	#2,sp
 	move.w	d0,d6
 	beq  	L57106
 	move.w	d6,(sp)
-	jsr	L358.l
+	jsr	L358
 	move.w	d0,d6
 	bsr  	L58022
 	tst.w	d0
 	beq.s	L57054
-	move.l	T87174.l,(sp)
-	jsr	L74902.l
+	move.l	T87174,(sp)
+	jsr	L74902
 	move.l	#T86068,(sp)
-	jsr	L74902.l
-	move.w	U98372.l,(sp)
-	jsr	L55092.l
-	jsr	L76978.l
+	jsr	L74902
+	move.w	U98372,(sp)
+	jsr	L55092
+	jsr	L76978
 	move.w	d6,(sp)
-	jsr	L65726.l
+	jsr	L65726
 	tst.w	d0
 	beq.s	L57044
 	move.w	#34,(sp)
-	jsr	L74948.l
+	jsr	L74948
 	move.w	d6,(sp)
-	jsr	L55092.l
+	jsr	L55092
 	bra.s	L57052
 
 L57044:
 	move.w	d6,(sp)
-	jsr	L55354.l
+	jsr	L55354
 L57052:
 	bra.s	L57100
 
@@ -18456,21 +18456,21 @@ L57054:
 	move.w	d6,(sp)
 	move.l	#L55354,-(sp)
 	clr.l	d0
-	move.w	U98372.l,d0
+	move.w	U98372,d0
 	moveq	#16,d1
 	asl.l	d1,d0
 	move.l	d0,-(sp)
 	move.l	#L55092,-(sp)
-	move.l	T87286.l,-(sp)
-	jsr	L54390.l
+	move.l	T87286,-(sp)
+	jsr	L54390
 	adda.l	#16,sp
 L57100:
-	jsr	L74840.l
+	jsr	L74840
 L57106:
 	bra  	L57332
 
 L57110:
-	move.w	U98372.l,(sp)
+	move.w	U98372,(sp)
 	bsr  	L57838
 	bra.s	L57184
 
@@ -18478,15 +18478,15 @@ L57122:
 	bsr  	L57986
 	tst.w	d0
 	bne.s	L57184
-	move.l	T87178.l,(sp)
-	jsr	L74902.l
-	move.w	U98372.l,(sp)
-	jsr	L55438.l
-	move.w	U101490.l,(sp)
-	jsr	L55438.l
-	move.w	U101182.l,(sp)
-	jsr	L55438.l
-	jsr	L74840.l
+	move.l	T87178,(sp)
+	jsr	L74902
+	move.w	U98372,(sp)
+	jsr	L55438
+	move.w	U101490,(sp)
+	jsr	L55438
+	move.w	U101182,(sp)
+	jsr	L55438
+	jsr	L74840
 L57184:
 	bsr  	L57902
 	tst.w	d0
@@ -18494,31 +18494,31 @@ L57184:
 	bra  	L57332
 
 L57196:
-	move.l	T87182.l,(sp)
-	jsr	L74902.l
-	move.w	U98400.l,(sp)
-	move.w	U98372.l,-(sp)
-	jsr	L66008.l
+	move.l	T87182,(sp)
+	jsr	L74902
+	move.w	U98400,(sp)
+	move.w	U98372,-(sp)
+	jsr	L66008
 	addq.l	#2,sp
 	move.w	d0,(sp)
-	jsr	L55438.l
-	move.w	U98372.l,(sp)
-	jsr	L55438.l
-	jsr	L74840.l
+	jsr	L55438
+	move.w	U98372,(sp)
+	jsr	L55438
+	jsr	L74840
 	bra.s	L57332
 
 L57256:
-	move.w	U100994.l,(sp)
-	move.w	U98372.l,-(sp)
-	jsr	L66008.l
+	move.w	U100994,(sp)
+	move.w	U98372,-(sp)
+	jsr	L66008
 	addq.l	#2,sp
 	tst.w	d0
 	beq.s	L57310
-	move.l	T87186.l,(sp)
-	jsr	L74902.l
-	move.w	U98372.l,(sp)
-	jsr	L55438.l
-	jsr	L74840.l
+	move.l	T87186,(sp)
+	jsr	L74902
+	move.w	U98372,(sp)
+	jsr	L55438
+	jsr	L74840
 L57310:
 	bra.s	L57332
 
@@ -18533,12 +18533,12 @@ L57312:
 
 L57332:
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d7
 L57342:
 	tst.w	d7
 	bne  	L56692
-	jsr	L56040.l
+	jsr	L56040
 	tst.l	(sp)+
 	movem.l	(sp)+,d6-d7
 	unlk	fp
@@ -18546,28 +18546,28 @@ L57342:
 
 L57364:
 	link	fp,#-4
-	move.l	T87158.l,(sp)
-	jsr	L74902.l
-	jsr	L76978.l
+	move.l	T87158,(sp)
+	jsr	L74902
+	jsr	L76978
 	unlk	fp
 	rts
 
 L57390:
 	link	fp,#-4
-	jsr	L74840.l
-	move.l	T87170.l,(sp)
-	jsr	L74902.l
-	jsr	L74860.l
-	jsr	L74860.l
+	jsr	L74840
+	move.l	T87170,(sp)
+	jsr	L74902
+	jsr	L74860
+	jsr	L74860
 	unlk	fp
 	rts
 
 L57428:
 	link	fp,#-4
 	move.w	8(fp),(sp)
-	jsr	L64160.l
+	jsr	L64160
 	move.w	d0,-(sp)
-	jsr	L65948.l
+	jsr	L65948
 	addq.l	#2,sp
 	unlk	fp
 	rts
@@ -18579,30 +18579,30 @@ L57456:
 
 L57464:
 	move.w	8(fp),(sp)
-	move.w	U100668.l,-(sp)
+	move.w	U100668,-(sp)
 	bsr  	L57652
 	addq.l	#2,sp
 L57480:
 	bsr.s	L57542
 	tst.w	d0
 	bne.s	L57464
-	jsr	L64224.l
+	jsr	L64224
 	move.w	d0,(sp)
-	jsr	L64276.l
+	jsr	L64276
 	unlk	fp
 	rts
 
 L57504:
 	link	fp,#-4
 	clr.w	d0
-	move.w	d0,U99854.l
+	move.w	d0,U99854
 	lsl.w	#1,d0
 	swap	d0
 	clr.w	d0
 	swap	d0
 	add.l	#U101202,d0
 	movea.l	d0,a0
-	move.w	(a0),U100960.l
+	move.w	(a0),U100960
 	unlk	fp
 	rts
 
@@ -18611,9 +18611,9 @@ L57542:
 	bra.s	L57602
 
 L57548:
-	addq.w	#1,U99854.l
+	addq.w	#1,U99854
 	clr.w	d0
-	move.w	U99854.l,d0
+	move.w	U99854,d0
 	cmp.w	#128,d0
 	bcs.s	L57572
 	clr.w	d0
@@ -18621,23 +18621,23 @@ L57548:
 
 L57572:
 	clr.w	d0
-	move.w	U99854.l,d0
+	move.w	U99854,d0
 	lsl.w	#1,d0
 	swap	d0
 	clr.w	d0
 	swap	d0
 	add.l	#U101202,d0
 	movea.l	d0,a0
-	move.w	(a0),U100960.l
+	move.w	(a0),U100960
 L57602:
-	tst.w	U100960.l
+	tst.w	U100960
 	beq.s	L57548
-	move.w	U100960.l,(sp)
-	jsr	L358.l
-	move.w	d0,U100668.l
-	move.w	U100960.l,(sp)
-	jsr	L378.l
-	move.w	d0,U100960.l
+	move.w	U100960,(sp)
+	jsr	L358
+	move.w	d0,U100668
+	move.w	U100960,(sp)
+	jsr	L378
+	move.w	d0,U100960
 	moveq	#1,d0
 L57648:
 	unlk	fp
@@ -18649,7 +18649,7 @@ L57652:
 	move.w	8(fp),d7
 	move.w	10(fp),d6
 	move.w	d7,(sp)
-	jsr	L65726.l
+	jsr	L65726
 	tst.w	d0
 	beq  	L57798
 	cmp.w	#1,d6
@@ -18664,19 +18664,19 @@ L57652:
 L57704:
 	move.w	d6,(sp)
 	move.w	d7,-(sp)
-	jsr	L65948.l
+	jsr	L65948
 	addq.l	#2,sp
 	tst.w	d0
 	beq.s	L57798
 L57720:
-	move.w	U98400.l,(sp)
+	move.w	U98400,(sp)
 	move.w	d7,-(sp)
-	jsr	L66008.l
+	jsr	L66008
 	addq.l	#2,sp
 	move.w	d0,d5
 	move.w	#1,(sp)
-	jsr	L64352.l
-	move.w	d0,U98374.l
+	jsr	L64352
+	move.w	d0,U98374
 	bne.s	L57770
 	tst.w	d5
 	beq.s	L57768
@@ -18689,14 +18689,14 @@ L57768:
 
 L57770:
 	move.w	d5,(sp)
-	move.w	U98374.l,-(sp)
-	jsr	L66568.l
+	move.w	U98374,-(sp)
+	jsr	L66568
 	addq.l	#2,sp
 	tst.w	d0
 	beq.s	L57798
 L57790:
 	move.w	d7,(sp)
-	jsr	L12242.l
+	jsr	L12242
 L57798:
 	tst.l	(sp)+
 	movem.l	(sp)+,d5-d7
@@ -18726,18 +18726,18 @@ L57834:
 L57838:
 	link	fp,#-4
 	move.w	8(fp),(sp)
-	jsr	L66356.l
-	move.w	d0,U100670.l
+	jsr	L66356
+	move.w	d0,U100670
 	unlk	fp
 	rts
 
 L57862:
 	link	fp,#-4
-	move.w	U100994.l,(sp)
+	move.w	U100994,(sp)
 	move.w	8(fp),-(sp)
-	jsr	L66008.l
+	jsr	L66008
 	addq.l	#2,sp
-	cmp.w	U100984.l,d0
+	cmp.w	U100984,d0
 	beq.s	L57896
 	clr.w	d0
 	bra.s	L57898
@@ -18750,23 +18750,23 @@ L57898:
 
 L57902:
 	link	fp,#-4
-	tst.w	U100670.l
+	tst.w	U100670
 	bne.s	L57918
 	clr.w	d0
 	bra.s	L57982
 
 L57918:
-	move.w	U100670.l,(sp)
-	jsr	L358.l
-	move.w	d0,U101490.l
-	move.w	U100670.l,(sp)
-	jsr	L378.l
+	move.w	U100670,(sp)
+	jsr	L358
+	move.w	d0,U101490
+	move.w	U100670,(sp)
+	jsr	L378
 	move.w	d0,(sp)
-	jsr	L358.l
-	move.w	d0,U101182.l
-	move.w	U100670.l,(sp)
-	jsr	L66356.l
-	move.w	d0,U100670.l
+	jsr	L358
+	move.w	d0,U101182
+	move.w	U100670,(sp)
+	jsr	L66356
+	move.w	d0,U100670
 	moveq	#1,d0
 L57982:
 	unlk	fp
@@ -18774,9 +18774,9 @@ L57982:
 
 L57986:
 	link	fp,#-4
-	move.w	U101490.l,(sp)
-	jsr	L9214.l
-	cmpi.b	#46,U100754.l
+	move.w	U101490,(sp)
+	jsr	L9214
+	cmpi.b	#46,U100754
 	beq.s	L58016
 	clr.w	d0
 	bra.s	L58018
@@ -18789,7 +18789,7 @@ L58018:
 
 L58022:
 	link	fp,#-4
-	tst.w	U100996.l
+	tst.w	U100996
 	bne.s	L58038
 	clr.w	d0
 	bra.s	L58040
@@ -18802,7 +18802,7 @@ L58040:
 
 L58044:
 	link	fp,#-4
-	cmpi.w	#1,U100996.l
+	cmpi.w	#1,U100996
 	beq.s	L58062
 	clr.w	d0
 	bra.s	L58064
@@ -18815,38 +18815,38 @@ L58064:
 
 L58068:
 	link	fp,#-4
-	clr.w	U100996.l
+	clr.w	U100996
 	unlk	fp
 	rts
 
 L58082:
 	link	fp,#-4
-	clr.w	U101108.l
-	clr.w	U100986.l
+	clr.w	U101108
+	clr.w	U100986
 	unlk	fp
 	rts
 
 L58102:
 	link	fp,#-4
-	jsr	L74840.l
-	move.l	U101030.l,(sp)
+	jsr	L74840
+	move.l	U101030,(sp)
 	move.l	#L74902,-(sp)
-	move.l	T87206.l,-(sp)
-	jsr	L54390.l
+	move.l	T87206,-(sp)
+	jsr	L54390
 	addq.l	#8,sp
 	unlk	fp
 	rts
 
 L58142:
 	link	fp,#-4
-	jsr	L53628.l
-	jsr	L64160.l
-	move.w	d0,U99864.l
+	jsr	L53628
+	jsr	L64160
+	move.w	d0,U99864
 	move.w	d0,(sp)
-	jsr	L65694.l
-	move.w	d0,U99818.l
+	jsr	L65694
+	move.w	d0,U99818
 	move.w	d0,(sp)
-	jsr	L64276.l
+	jsr	L64276
 	bra.s	L58212
 
 L58188:
@@ -18854,88 +18854,88 @@ L58188:
 	bsr  	L60924
 	tst.w	d0
 	beq.s	L58212
-	jsr	L47940.l
-	jsr	L18690.l
+	jsr	L47940
+	jsr	L18690
 L58212:
-	jsr	L61904.l
+	jsr	L61904
 	tst.w	d0
 	beq.s	L58188
-	jsr	L64180.l
+	jsr	L64180
 	unlk	fp
 	rts
 
 L58232:
 	link	fp,#-4
-	move.w	U98716.l,(sp)
-	move.w	U100636.l,-(sp)
-	jsr	L66008.l
+	move.w	U98716,(sp)
+	move.w	U100636,-(sp)
+	jsr	L66008
 	addq.l	#2,sp
-	move.w	d0,U98376.l
+	move.w	d0,U98376
 	bne.s	L58270
-	jsr	L67690.l
+	jsr	L67690
 L58270:
-	move.w	U101474.l,(sp)
-	jsr	L64090.l
-	move.w	U100636.l,(sp)
-	jsr	L64090.l
-	move.w	U99818.l,(sp)
-	jsr	L64090.l
-	move.w	U98376.l,(sp)
-	jsr	L378.l
+	move.w	U101474,(sp)
+	jsr	L64090
+	move.w	U100636,(sp)
+	jsr	L64090
+	move.w	U99818,(sp)
+	jsr	L64090
+	move.w	U98376,(sp)
+	jsr	L378
 	move.w	d0,(sp)
-	jsr	L64090.l
+	jsr	L64090
 	move.w	#6,(sp)
-	jsr	L64300.l
+	jsr	L64300
 	move.w	#18,(sp)
-	jsr	L64090.l
+	jsr	L64090
 	bsr  	L59950
 	move.l	#U101014,(sp)
-	jsr	L204.l
+	jsr	L204
 	tst.w	d0
 	beq.s	L58380
-	jsr	L61834.l
+	jsr	L61834
 	bsr  	L58830
 	bra  	L58606
 
 L58380:
-	jsr	L64888.l
-	jsr	L64732.l
-	move.w	U98376.l,(sp)
-	jsr	L358.l
+	jsr	L64888
+	jsr	L64732
+	move.w	U98376,(sp)
+	jsr	L358
 	move.w	d0,(sp)
 	bsr  	L59090
-	jsr	L64180.l
+	jsr	L64180
 	move.w	#18,(sp)
-	jsr	L68540.l
-	jsr	L61834.l
+	jsr	L68540
+	jsr	L61834
 	bsr  	L58610
 	tst.w	d0
 	bne  	L58606
 	move.w	#7,(sp)
-	jsr	L64352.l
-	move.w	d0,U99818.l
-	move.w	U99864.l,(sp)
+	jsr	L64352
+	move.w	d0,U99818
+	move.w	U99864,(sp)
 	move.w	#7,-(sp)
-	jsr	L64408.l
+	jsr	L64408
 	addq.l	#2,sp
-	tst.w	U99818.l
+	tst.w	U99818
 	beq.s	L58506
-	move.w	U99818.l,(sp)
-	jsr	L358.l
-	move.w	d0,U99864.l
+	move.w	U99818,(sp)
+	jsr	L358
+	move.w	d0,U99864
 	bsr  	L58878
 L58506:
 	move.w	#18,(sp)
-	jsr	L68540.l
-	tst.w	U101198.l
+	jsr	L68540
+	tst.w	U101198
 	beq.s	L58602
 	bsr  	L60924
 	tst.w	d0
 	beq.s	L58602
 	bsr  	L60968
-	move.w	U101046.l,(sp)
+	move.w	U101046,(sp)
 	move.l	#L55354,-(sp)
-	jsr	L64994.l
+	jsr	L64994
 	swap	d0
 	clr.w	d0
 	swap	d0
@@ -18943,11 +18943,11 @@ L58506:
 	asl.l	d1,d0
 	move.l	d0,-(sp)
 	move.l	#L54682,-(sp)
-	move.l	T87290.l,-(sp)
-	jsr	L54390.l
+	move.l	T87290,-(sp)
+	jsr	L54390
 	adda.l	#16,sp
-	jsr	L74840.l
-	jsr	L47940.l
+	jsr	L74840
+	jsr	L47940
 L58602:
 	bsr  	L58830
 L58606:
@@ -18957,51 +18957,51 @@ L58606:
 L58610:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
-	move.w	U99818.l,(sp)
-	jsr	L378.l
+	move.w	U99818,(sp)
+	jsr	L378
 	tst.w	d0
 	bne  	L58818
-	tst.w	U99864.l
+	tst.w	U99864
 	bne  	L58818
 	move.w	#11,(sp)
-	jsr	L64352.l
+	jsr	L64352
 	cmp.w	#18,d0
 	bne  	L58818
-	jsr	L64994.l
-	jsr	L65148.l
+	jsr	L64994
+	jsr	L65148
 	move.w	#9,(sp)
-	jsr	L64352.l
-	move.w	d0,U100636.l
+	jsr	L64352
+	move.w	d0,U100636
 	move.w	d0,-(sp)
-	jsr	L65014.l
+	jsr	L65014
 	cmp.w	(sp)+,d0
 	bne.s	L58818
-	move.w	U98716.l,(sp)
+	move.w	U98716,(sp)
 	clr.w	d0
-	move.w	U100636.l,d0
-	move.w	d0,U101156.l
+	move.w	U100636,d0
+	move.w	d0,U101156
 	move.w	d0,-(sp)
-	jsr	L66008.l
+	jsr	L66008
 	addq.l	#2,sp
 	move.w	d0,d7
 	beq.s	L58818
 	move.w	d7,(sp)
-	jsr	L378.l
-	move.w	d0,U99818.l
+	jsr	L378
+	move.w	d0,U99818
 	beq.s	L58818
 	move.w	#10,(sp)
-	jsr	L64326.l
-	move.w	U99818.l,(sp)
-	jsr	L358.l
-	move.w	d0,U99864.l
+	jsr	L64326
+	move.w	U99818,(sp)
+	jsr	L358
+	move.w	d0,U99864
 	move.w	#11,(sp)
-	jsr	L64352.l
+	jsr	L64352
 	move.w	d0,(sp)
-	jsr	L64160.l
+	jsr	L64160
 	move.w	d0,-(sp)
 	bsr  	L60088
 	addq.l	#2,sp
-	jsr	L64180.l
+	jsr	L64180
 	moveq	#1,d0
 	bra.s	L58820
 
@@ -19016,11 +19016,11 @@ L58820:
 L58830:
 	link	fp,#-4
 	move.w	#7,(sp)
-	jsr	L64326.l
-	jsr	L66800.l
-	jsr	L64224.l
-	move.w	d0,U101156.l
-	jsr	L64224.l
+	jsr	L64326
+	jsr	L66800
+	jsr	L64224
+	move.w	d0,U101156
+	jsr	L64224
 	move.w	d0,(sp)
 	bsr  	L59986
 	unlk	fp
@@ -19029,40 +19029,40 @@ L58830:
 L58878:
 	link	fp,#-4
 	move.l	#U101014,(sp)
-	jsr	L204.l
+	jsr	L204
 	tst.w	d0
 	bne  	L59086
-	jsr	L64888.l
+	jsr	L64888
 L58906:
 	bsr  	L60948
 	bra.s	L58944
 
 L58912:
 	bsr  	L59916
-	tst.w	U99818.l
+	tst.w	U99818
 	beq  	L59086
-	move.w	U99818.l,(sp)
-	jsr	L358.l
-	move.w	d0,U99864.l
+	move.w	U99818,(sp)
+	jsr	L358
+	move.w	d0,U99864
 L58944:
-	jsr	L61904.l
+	jsr	L61904
 	tst.w	d0
 	bne.s	L58912
-	tst.w	U98398.l
+	tst.w	U98398
 	beq.s	L59078
-	jsr	L64994.l
+	jsr	L64994
 	move.w	d0,(sp)
-	jsr	L66546.l
+	jsr	L66546
 	tst.w	d0
 	beq.s	L59078
-	jsr	L66768.l
+	jsr	L66768
 L58986:
-	jsr	L58082.l
+	jsr	L58082
 	bsr  	L60968
-	jsr	L64160.l
+	jsr	L64160
 	move.w	d0,(sp)
 	move.l	#L65620,-(sp)
-	jsr	L64994.l
+	jsr	L64994
 	swap	d0
 	clr.w	d0
 	swap	d0
@@ -19070,18 +19070,18 @@ L58986:
 	asl.l	d1,d0
 	move.l	d0,-(sp)
 	move.l	#L55354,-(sp)
-	move.l	T87294.l,-(sp)
-	jsr	L54390.l
+	move.l	T87294,-(sp)
+	jsr	L54390
 	adda.l	#16,sp
 	bra.s	L59056
 
 	bra.s	L58986
 
 L59056:
-	jsr	L66800.l
+	jsr	L66800
 	move.w	#2,(sp)
-	jsr	L47436.l
-	jsr	L47940.l
+	jsr	L47436
+	jsr	L47940
 L59078:
 	bsr  	L59366
 	bra  	L58906
@@ -19096,58 +19096,58 @@ L59090:
 	move.w	8(fp),d7
 	tst.w	d7
 	bne.s	L59162
-	tst.w	U101198.l
+	tst.w	U101198
 	beq.s	L59158
 	bsr  	L60968
-	jsr	L64994.l
+	jsr	L64994
 	move.w	d0,(sp)
 	move.l	#L54682,-(sp)
-	move.l	T87210.l,-(sp)
-	jsr	L54390.l
+	move.l	T87210,-(sp)
+	jsr	L54390
 	addq.l	#8,sp
-	jsr	L74840.l
-	jsr	L47940.l
+	jsr	L74840
+	jsr	L47940
 L59158:
 	bra  	L59356
 
 L59162:
-	jsr	L61884.l
+	jsr	L61884
 	tst.w	d0
 	beq.s	L59186
-	jsr	L64994.l
+	jsr	L64994
 	move.w	d0,(sp)
-	jsr	L66942.l
+	jsr	L66942
 L59186:
 	bsr  	L60616
 	bsr  	L60924
 	tst.w	d0
 	bne.s	L59212
-	jsr	L64994.l
+	jsr	L64994
 	move.w	d0,(sp)
-	jsr	L67152.l
+	jsr	L67152
 L59212:
-	jsr	L64746.l
-	jsr	L74764.l
+	jsr	L64746
+	jsr	L74764
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,(sp)
 	bsr  	L59090
-	jsr	L64160.l
+	jsr	L64160
 	move.w	d0,(sp)
 	move.w	d7,-(sp)
-	jsr	L358.l
+	jsr	L358
 	addq.l	#2,sp
 	move.w	d0,-(sp)
-	jsr	L11782.l
+	jsr	L11782
 	addq.l	#2,sp
-	tst.w	U101198.l
+	tst.w	U101198
 	beq.s	L59350
 	bsr  	L60968
-	jsr	L64160.l
+	jsr	L64160
 	move.w	d0,(sp)
 	move.l	#L55354,-(sp)
 	move.w	d7,-(sp)
-	jsr	L358.l
+	jsr	L358
 	addq.l	#2,sp
 	swap	d0
 	clr.w	d0
@@ -19156,13 +19156,13 @@ L59212:
 	asl.l	d1,d0
 	move.l	d0,-(sp)
 	move.l	#L54682,-(sp)
-	move.l	T87286.l,-(sp)
-	jsr	L54390.l
+	move.l	T87286,-(sp)
+	jsr	L54390
 	adda.l	#16,sp
-	jsr	L74840.l
-	jsr	L47940.l
+	jsr	L74840
+	jsr	L47940
 L59350:
-	jsr	L64180.l
+	jsr	L64180
 L59356:
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
@@ -19171,90 +19171,90 @@ L59356:
 
 L59366:
 	link	fp,#-4
-	jsr	L61834.l
-	jsr	L75710.l
-	jsr	L61904.l
+	jsr	L61834
+	jsr	L75710
+	jsr	L61904
 	tst.w	d0
 	bne  	L59726
-	move.w	U99864.l,(sp)
-	jsr	L358.l
-	move.w	d0,U100636.l
+	move.w	U99864,(sp)
+	jsr	L358
+	move.w	d0,U100636
 	move.w	d0,(sp)
-	jsr	L65266.l
+	jsr	L65266
 	tst.w	d0
 	beq  	L59724
-	tst.w	U100636.l
+	tst.w	U100636
 	bne.s	L59448
-	clr.w	U101046.l
+	clr.w	U101046
 	bsr  	L59950
 	bra  	L59722
 
 L59448:
-	move.w	U100636.l,(sp)
-	jsr	L65356.l
+	move.w	U100636,(sp)
+	jsr	L65356
 	tst.w	d0
 	beq.s	L59472
 	bsr  	L59730
 	bra  	L59722
 
 L59472:
-	move.w	U100636.l,(sp)
-	jsr	L65726.l
+	move.w	U100636,(sp)
+	jsr	L65726
 	tst.w	d0
 	beq  	L59710
-	move.w	U100996.l,U98380.l
-	move.w	#-1,U100996.l
-	move.w	U100636.l,(sp)
-	jsr	L9468.l
-	move.w	d0,U98382.l
-	move.w	U98380.l,U100996.l
-	tst.w	U98382.l
+	move.w	U100996,U98380
+	move.w	#-1,U100996
+	move.w	U100636,(sp)
+	jsr	L9468
+	move.w	d0,U98382
+	move.w	U98380,U100996
+	tst.w	U98382
 	beq.s	L59552
 	bsr  	L59730
 	bra  	L59726
 
 L59552:
-	tst.w	U99178.l
+	tst.w	U99178
 	beq.s	L59622
-	jsr	L50570.l
-	cmpi.b	#34,U100754.l
+	jsr	L50570
+	cmpi.b	#34,U100754
 	bne.s	L59590
-	jsr	L61992.l
+	jsr	L61992
 	bsr  	L59950
 	bra  	L59726
 
 L59590:
-	cmpi.b	#58,U100754.l
+	cmpi.b	#58,U100754
 	bne.s	L59622
-	jsr	L61992.l
-	move.w	U101046.l,(sp)
+	jsr	L61992
+	move.w	U101046,(sp)
 	bsr  	L60254
 	bsr  	L59950
 	bra.s	L59726
 
 L59622:
-	move.w	U100636.l,(sp)
-	jsr	L65878.l
-	move.w	d0,U98378.l
+	move.w	U100636,(sp)
+	jsr	L65878
+	move.w	d0,U98378
 	bne.s	L59648
 	bsr  	L58232
 	bra.s	L59726
 
 L59648:
-	move.w	U101460.l,(sp)
-	jsr	L64090.l
-	move.w	U99864.l,U101460.l
+	move.w	U101460,(sp)
+	jsr	L64090
+	move.w	U99864,U101460
 	bsr  	L59950
-	move.w	U98378.l,(sp)
-	jsr	L510.l
-	move.w	U101460.l,U101156.l
-	jsr	L64224.l
-	move.w	d0,U101460.l
+	move.w	U98378,(sp)
+	jsr	L510
+	move.w	U101460,U101156
+	jsr	L64224
+	move.w	d0,U101460
 	bra.s	L59722
 
 L59710:
 	move.l	#T86328,(sp)
-	jsr	L67406.l
+	jsr	L67406
 L59722:
 	bra.s	L59726
 
@@ -19266,7 +19266,7 @@ L59726:
 
 L59730:
 	link	fp,#-4
-	move.w	U100636.l,U101046.l
+	move.w	U100636,U101046
 	bsr  	L59950
 	unlk	fp
 	rts
@@ -19280,67 +19280,67 @@ L59752:
 
 L59768:
 	link	fp,#-4
-	move.w	U99864.l,(sp)
-	jsr	L64090.l
+	move.w	U99864,(sp)
+	jsr	L64090
 	clr.w	d0
-	move.w	U101046.l,d0
-	move.w	d0,U99864.l
+	move.w	U101046,d0
+	move.w	d0,U99864
 	move.w	d0,(sp)
-	jsr	L64090.l
-	jsr	L75710.l
+	jsr	L64090
+	jsr	L75710
 	bra.s	L59816
 
 L59814:
 	bsr.s	L59752
 L59816:
-	jsr	L61904.l
+	jsr	L61904
 	tst.w	d0
 	beq.s	L59814
-	jsr	L64764.l
-	jsr	L64224.l
-	move.w	d0,U99864.l
+	jsr	L64764
+	jsr	L64224
+	move.w	d0,U99864
 	unlk	fp
 	rts
 
 L59848:
 	link	fp,#-4
-	move.w	U99864.l,(sp)
-	jsr	L64090.l
-	move.w	U101046.l,U99864.l
-	jsr	L61834.l
+	move.w	U99864,(sp)
+	jsr	L64090
+	move.w	U101046,U99864
+	jsr	L61834
 	bra.s	L59890
 
 L59882:
 	bsr  	L60948
 	bsr  	L60580
 L59890:
-	jsr	L61904.l
+	jsr	L61904
 	tst.w	d0
 	beq.s	L59882
-	jsr	L64224.l
-	move.w	d0,U99864.l
+	jsr	L64224
+	move.w	d0,U99864
 	unlk	fp
 	rts
 
 L59916:
 	link	fp,#-4
-	tst.w	U99818.l
+	tst.w	U99818
 	beq.s	L59946
-	move.w	U99818.l,(sp)
-	jsr	L378.l
-	move.w	d0,U99818.l
+	move.w	U99818,(sp)
+	jsr	L378
+	move.w	d0,U99818
 L59946:
 	unlk	fp
 	rts
 
 L59950:
 	link	fp,#-4
-	jsr	L61904.l
+	jsr	L61904
 	tst.w	d0
 	bne.s	L59982
-	move.w	U99864.l,(sp)
-	jsr	L378.l
-	move.w	d0,U99864.l
+	move.w	U99864,(sp)
+	jsr	L378
+	move.w	d0,U99864
 L59982:
 	unlk	fp
 	rts
@@ -19351,24 +19351,24 @@ L59986:
 	bra.s	L60064
 
 L59996:
-	tst.w	U101474.l
+	tst.w	U101474
 	bne.s	L60016
 	move.l	#T86331,(sp)
-	jsr	L67406.l
+	jsr	L67406
 L60016:
-	move.w	U101474.l,d7
+	move.w	U101474,d7
 	move.w	d7,(sp)
-	jsr	L358.l
+	jsr	L358
 	move.w	d0,(sp)
-	jsr	L62820.l
-	move.w	U101474.l,(sp)
-	jsr	L378.l
-	move.w	d0,U101474.l
+	jsr	L62820
+	move.w	U101474,(sp)
+	jsr	L378
+	move.w	d0,U101474
 	move.w	d7,(sp)
-	jsr	L62820.l
+	jsr	L62820
 L60064:
 	clr.w	d0
-	move.w	U101474.l,d0
+	move.w	U101474,d0
 	cmp.w	8(fp),d0
 	bne.s	L59996
 	tst.l	(sp)+
@@ -19380,7 +19380,7 @@ L60088:
 	link	fp,#-2
 	movem.l	d5-d7,-(sp)
 	move.w	8(fp),d7
-	move.w	U101474.l,d6
+	move.w	U101474,d6
 	cmp.w	10(fp),d6
 	beq  	L60244
 	clr.w	d0
@@ -19396,27 +19396,27 @@ L60136:
 	tst.w	d7
 	bne.s	L60152
 	move.l	#T86334,(sp)
-	jsr	L67406.l
+	jsr	L67406
 L60152:
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,(sp)
-	jsr	L64090.l
+	jsr	L64090
 	move.w	d7,(sp)
-	jsr	L358.l
+	jsr	L358
 	move.w	d0,(sp)
-	jsr	L62820.l
+	jsr	L62820
 	move.w	d7,(sp)
-	jsr	L62820.l
+	jsr	L62820
 	move.w	d6,(sp)
-	jsr	L378.l
+	jsr	L378
 	cmp.w	-2(fp),d0
 	beq.s	L60216
 	move.w	d6,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d6
 L60216:
-	jsr	L64224.l
+	jsr	L64224
 	move.w	d0,d7
 	cmp.w	10(fp),d7
 	beq.s	L60232
@@ -19425,7 +19425,7 @@ L60216:
 L60232:
 	move.w	d7,(sp)
 	move.w	d6,-(sp)
-	jsr	L65226.l
+	jsr	L65226
 	addq.l	#2,sp
 L60244:
 	tst.l	(sp)+
@@ -19438,32 +19438,32 @@ L60254:
 	movem.l	d5-d7,-(sp)
 	move.w	8(fp),d7
 	move.w	d7,(sp)
-	jsr	L11848.l
+	jsr	L11848
 	move.w	d0,d6
 	bne.s	L60334
 	move.w	d7,(sp)
-	jsr	L65726.l
+	jsr	L65726
 	tst.w	d0
 	beq.s	L60310
-	move.w	U98718.l,(sp)
+	move.w	U98718,(sp)
 	move.w	d7,-(sp)
-	jsr	L65948.l
+	jsr	L65948
 	addq.l	#2,sp
 	move.w	d0,d6
 	bne.s	L60318
 L60310:
 	move.w	d7,(sp)
-	jsr	L67730.l
+	jsr	L67730
 L60318:
 	move.w	d6,(sp)
-	jsr	L358.l
-	move.w	d0,U101046.l
+	jsr	L358
+	move.w	d0,U101046
 	bra.s	L60348
 
 L60334:
 	move.w	d6,(sp)
-	jsr	L378.l
-	move.w	d0,U101046.l
+	jsr	L378
+	move.w	d0,U101046
 L60348:
 	tst.l	(sp)+
 	movem.l	(sp)+,d6-d7
@@ -19487,26 +19487,26 @@ L60384:
 	asl.w	#4,d1
 	ext.l	d1
 	move.l	0(a0,d1.l),(sp)
-	move.w	U100636.l,-(sp)
-	jsr	L62078.l
+	move.w	U100636,-(sp)
+	jsr	L62078
 	addq.l	#2,sp
 	tst.w	d0
 	beq.s	L60522
-	move.w	U100636.l,(sp)
-	jsr	L64090.l
+	move.w	U100636,(sp)
+	jsr	L64090
 	bsr  	L59950
-	jsr	L64160.l
+	jsr	L64160
 	move.w	d0,-(sp)
 	movea.l	8(fp),a0
 	movea.l	12(a0),a0
 	jsr	(a0)
 	addq.l	#2,sp
-	jsr	L64746.l
+	jsr	L64746
 	movea.l	8(fp),a0
 	movea.l	8(a0),a0
 	jsr	(a0)
 	move.w	#1,-(sp)
-	jsr	L64352.l
+	jsr	L64352
 	addq.l	#2,sp
 	move.w	d0,-(sp)
 	movea.l	8(fp),a0
@@ -19519,7 +19519,7 @@ L60384:
 	ext.l	d1
 	movea.l	4(a0,d1.l),a0
 	jsr	(a0)
-	jsr	L64180.l
+	jsr	L64180
 	bra.s	L60546
 
 L60522:
@@ -19539,7 +19539,7 @@ L60546:
 	tst.l	0(a0,d1.l)
 	beq.s	L60576
 L60564:
-	jsr	L61904.l
+	jsr	L61904
 	tst.w	d0
 	beq  	L60376
 L60576:
@@ -19584,9 +19584,9 @@ L60652:
 L60670:
 	link	fp,#-4
 	bsr  	L59366
-	move.w	U99864.l,(sp)
-	jsr	L65840.l
-	move.w	d0,U100636.l
+	move.w	U99864,(sp)
+	jsr	L65840
+	move.w	d0,U100636
 	unlk	fp
 	rts
 
@@ -19596,7 +19596,7 @@ L60700:
 	tst.w	d0
 	bne.s	L60722
 	move.w	8(fp),(sp)
-	jsr	L66942.l
+	jsr	L66942
 L60722:
 	unlk	fp
 	rts
@@ -19607,13 +19607,13 @@ L60726:
 	move.w	8(fp),d7
 	move.w	d7,(sp)
 	bsr.s	L60700
-	move.w	U101046.l,(sp)
-	jsr	L65322.l
+	move.w	U101046,(sp)
+	jsr	L65322
 	tst.w	d0
 	bne.s	L60774
-	move.w	U101046.l,(sp)
+	move.w	U101046,(sp)
 	move.w	d7,-(sp)
-	jsr	L67066.l
+	jsr	L67066
 	addq.l	#2,sp
 L60774:
 	tst.l	(sp)+
@@ -19627,16 +19627,16 @@ L60784:
 	move.w	8(fp),d7
 	move.w	d7,(sp)
 	bsr.s	L60700
-	move.w	U101046.l,(sp)
-	jsr	L65356.l
+	move.w	U101046,(sp)
+	jsr	L65356
 	tst.w	d0
 	bne.s	L60842
-	jsr	L61432.l
+	jsr	L61432
 	tst.w	d0
 	bne.s	L60842
-	move.w	U101046.l,(sp)
+	move.w	U101046,(sp)
 	move.w	d7,-(sp)
-	jsr	L67066.l
+	jsr	L67066
 	addq.l	#2,sp
 L60842:
 	tst.l	(sp)+
@@ -19646,10 +19646,10 @@ L60842:
 
 L60852:
 	link	fp,#-4
-	move.w	U101046.l,(sp)
-	jsr	L64224.l
+	move.w	U101046,(sp)
+	jsr	L64224
 	move.w	d0,-(sp)
-	jsr	L6590.l
+	jsr	L6590
 	addq.l	#2,sp
 	move.w	d0,(sp)
 	bsr.s	L60886
@@ -19661,20 +19661,20 @@ L60886:
 	tst.w	8(fp)
 	beq.s	L60906
 	clr.w	d0
-	move.w	U100984.l,d0
+	move.w	U100984,d0
 	bra.s	L60914
 
 L60906:
 	clr.w	d0
-	move.w	U101186.l,d0
+	move.w	U101186,d0
 L60914:
-	move.w	d0,U101046.l
+	move.w	d0,U101046
 	unlk	fp
 	rts
 
 L60924:
 	link	fp,#-4
-	cmpi.w	#1,U101046.l
+	cmpi.w	#1,U101046
 	bne.s	L60942
 	clr.w	d0
 	bra.s	L60944
@@ -19690,7 +19690,7 @@ L60948:
 	bsr.s	L60924
 	tst.w	d0
 	beq.s	L60964
-	jsr	L67028.l
+	jsr	L67028
 L60964:
 	unlk	fp
 	rts
@@ -19698,9 +19698,9 @@ L60964:
 L60968:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
-	jsr	L48048.l
-	jsr	L74840.l
-	jsr	L64994.l
+	jsr	L48048
+	jsr	L74840
+	jsr	L64994
 	tst.w	d0
 	bne.s	L61002
 	clr.w	d7
@@ -19713,17 +19713,17 @@ L61002:
 L61006:
 	addq.w	#1,d7
 L61008:
-	jsr	L65148.l
-	jsr	L65014.l
+	jsr	L65148
+	jsr	L65014
 	tst.w	d0
 	bne.s	L61006
 L61024:
 	move.w	#91,(sp)
-	jsr	L74948.l
+	jsr	L74948
 	move.w	d7,(sp)
-	jsr	L55076.l
+	jsr	L55076
 	move.l	#T86337,(sp)
-	jsr	L74902.l
+	jsr	L74902
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
 	unlk	fp
@@ -19732,8 +19732,8 @@ L61024:
 L61064:
 	link	fp,#-4
 	clr.w	d0
-	move.w	U100626.l,d0
-	cmp.w	U101460.l,d0
+	move.w	U100626,d0
+	cmp.w	U101460,d0
 	bne.s	L61090
 	move.w	#32767,d0
 	bra.s	L61094
@@ -19774,10 +19774,10 @@ L61132:
 	bsr.s	L61098
 	tst.w	d0
 	beq.s	L61178
-	move.w	U101460.l,(sp)
-	jsr	L358.l
+	move.w	U101460,(sp)
+	jsr	L358
 	move.w	d0,(sp)
-	jsr	L66942.l
+	jsr	L66942
 L61178:
 	move.w	d7,d0
 	tst.l	(sp)+
@@ -19804,20 +19804,20 @@ L61222:
 	bsr  	L61904
 	tst.w	d0
 	beq.s	L61254
-	move.w	U101460.l,(sp)
-	jsr	L358.l
+	move.w	U101460,(sp)
+	jsr	L358
 	move.w	d0,(sp)
-	jsr	L66942.l
+	jsr	L66942
 L61254:
 	movea.l	8(fp),a0
 	jsr	(a0)
-	jsr	L60924.l
+	jsr	L60924
 	tst.w	d0
 	bne.s	L61290
-	move.w	U101460.l,(sp)
-	jsr	L358.l
+	move.w	U101460,(sp)
+	jsr	L358
 	move.w	d0,(sp)
-	jsr	L67152.l
+	jsr	L67152
 L61290:
 	unlk	fp
 	rts
@@ -19826,7 +19826,7 @@ L61294:
 	link	fp,#-4
 	bsr.s	L61190
 	clr.w	d0
-	move.w	U101046.l,d0
+	move.w	U101046,d0
 	unlk	fp
 	rts
 
@@ -19834,10 +19834,10 @@ L61312:
 	link	fp,#-4
 	bsr.s	L61294
 	move.w	d0,(sp)
-	jsr	L65322.l
+	jsr	L65322
 	tst.w	d0
 	beq.s	L61336
-	jsr	L67118.l
+	jsr	L67118
 L61336:
 	unlk	fp
 	rts
@@ -19846,13 +19846,13 @@ L61340:
 	link	fp,#-4
 	bsr.s	L61294
 	move.w	d0,(sp)
-	jsr	L65356.l
+	jsr	L65356
 	tst.w	d0
 	bne.s	L61370
 	bsr.s	L61432
 	tst.w	d0
 	bne.s	L61370
-	jsr	L67118.l
+	jsr	L67118
 L61370:
 	unlk	fp
 	rts
@@ -19860,18 +19860,18 @@ L61370:
 L61374:
 	link	fp,#-4
 	bsr.s	L61340
-	jsr	L64746.l
+	jsr	L64746
 	unlk	fp
 	rts
 
 L61390:
 	link	fp,#-4
 	move.w	8(fp),(sp)
-	jsr	L65266.l
+	jsr	L65266
 	tst.w	d0
 	beq.s	L61422
 	move.w	8(fp),(sp)
-	jsr	L9468.l
+	jsr	L9468
 	tst.w	d0
 	bne.s	L61426
 L61422:
@@ -19887,12 +19887,12 @@ L61428:
 L61432:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
-	move.w	U101046.l,(sp)
+	move.w	U101046,(sp)
 	bsr.s	L61390
 	move.w	d0,d7
 	beq.s	L61464
-	jsr	L52990.l
-	jsr	L64764.l
+	jsr	L52990
+	jsr	L64764
 L61464:
 	move.w	d7,d0
 	tst.l	(sp)+
@@ -19903,8 +19903,8 @@ L61464:
 L61476:
 	link	fp,#-4
 	bsr  	L61340
-	move.w	U101046.l,(sp)
-	jsr	L65532.l
+	move.w	U101046,(sp)
+	jsr	L65532
 	unlk	fp
 	rts
 
@@ -19926,7 +19926,7 @@ L61518:
 L61534:
 	link	fp,#-4
 	bsr.s	L61518
-	jsr	L64746.l
+	jsr	L64746
 	unlk	fp
 	rts
 
@@ -19935,7 +19935,7 @@ L61550:
 	bsr  	L61294
 	tst.w	d0
 	bne.s	L61568
-	jsr	L67118.l
+	jsr	L67118
 L61568:
 	unlk	fp
 	rts
@@ -19944,14 +19944,14 @@ L61572:
 	link	fp,#-4
 	bsr  	L61294
 	move.w	d0,(sp)
-	jsr	L64090.l
+	jsr	L64090
 	unlk	fp
 	rts
 
 L61592:
 	link	fp,#-4
 	bsr.s	L61500
-	jsr	L64746.l
+	jsr	L64746
 	unlk	fp
 	rts
 
@@ -19959,14 +19959,14 @@ L61608:
 	link	fp,#-4
 	bsr  	L61206
 	clr.w	d0
-	move.w	U101046.l,d0
-	cmp.w	U100984.l,d0
+	move.w	U101046,d0
+	cmp.w	U100984,d0
 	beq.s	L61654
 	clr.w	d0
-	move.w	U101046.l,d0
-	cmp.w	U101186.l,d0
+	move.w	U101046,d0
+	cmp.w	U101186,d0
 	beq.s	L61654
-	jsr	L67508.l
+	jsr	L67508
 L61654:
 	unlk	fp
 	rts
@@ -19976,7 +19976,7 @@ L61658:
 	movem.l	d6-d7,-(sp)
 	bsr  	L61476
 	move.l	d0,-(sp)
-	jsr	L81832.l
+	jsr	L81832
 	addq.l	#4,sp
 	move.w	d0,d7
 	blt.s	L61694
@@ -19986,7 +19986,7 @@ L61658:
 	bra.s	L61700
 
 L61694:
-	jsr	L67118.l
+	jsr	L67118
 L61700:
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
@@ -19995,28 +19995,28 @@ L61700:
 
 L61710:
 	link	fp,#-4
-	move.w	U101046.l,(sp)
+	move.w	U101046,(sp)
 	bsr  	L62492
-	move.w	U101046.l,(sp)
-	jsr	L65878.l
+	move.w	U101046,(sp)
+	jsr	L65878
 	tst.w	d0
 	beq.s	L61758
 	bsr.s	L61762
 	tst.w	d0
 	bne.s	L61758
-	move.w	U101046.l,(sp)
-	jsr	L66904.l
+	move.w	U101046,(sp)
+	jsr	L66904
 L61758:
 	unlk	fp
 	rts
 
 L61762:
 	link	fp,#-4
-	move.w	U98718.l,(sp)
-	move.w	U101114.l,-(sp)
-	jsr	L66008.l
+	move.w	U98718,(sp)
+	move.w	U101114,-(sp)
+	jsr	L66008
 	addq.l	#2,sp
-	cmp.w	U100984.l,d0
+	cmp.w	U100984,d0
 	beq.s	L61798
 	clr.w	d0
 	bra.s	L61800
@@ -20029,25 +20029,25 @@ L61800:
 
 L61804:
 	link	fp,#-4
-	move.w	U100742.l,(sp)
-	jsr	L64160.l
+	move.w	U100742,(sp)
+	jsr	L64160
 	move.w	d0,-(sp)
-	jsr	L66244.l
+	jsr	L66244
 	addq.l	#2,sp
 	unlk	fp
 	rts
 
 L61834:
 	link	fp,#-4
-	move.w	#1,U101046.l
+	move.w	#1,U101046
 	unlk	fp
 	rts
 
 L61850:
 	link	fp,#-4
-	move.w	U99864.l,(sp)
-	jsr	L358.l
-	cmp.w	U100652.l,d0
+	move.w	U99864,(sp)
+	jsr	L358
+	cmp.w	U100652,d0
 	beq.s	L61878
 	clr.w	d0
 	bra.s	L61880
@@ -20074,7 +20074,7 @@ L61900:
 
 L61904:
 	link	fp,#-4
-	tst.w	U99864.l
+	tst.w	U99864
 	beq.s	L61920
 	clr.w	d0
 	bra.s	L61922
@@ -20088,42 +20088,42 @@ L61922:
 L61926:
 	link	fp,#-4
 	move.w	8(fp),(sp)
-	jsr	L53070.l
-	jsr	L64764.l
+	jsr	L53070
+	jsr	L64764
 	unlk	fp
 	rts
 
 L61950:
 	link	fp,#-4
 	move.l	8(fp),(sp)
-	jsr	L52972.l
-	jsr	L64764.l
+	jsr	L52972
+	jsr	L64764
 	unlk	fp
 	rts
 
 L61974:
 	link	fp,#-4
-	move.w	#1,U99178.l
+	move.w	#1,U99178
 	bsr.s	L61992
 	unlk	fp
 	rts
 
 L61992:
 	link	fp,#-4
-	jsr	L53396.l
-	jsr	L64764.l
+	jsr	L53396
+	jsr	L64764
 	unlk	fp
 	rts
 
 L62012:
 	link	fp,#-4
 	move.l	8(fp),d0
-	move.l	d0,U101030.l
+	move.l	d0,U101030
 	move.l	d0,(sp)
-	jsr	L83914.l
-	move.w	d0,U99178.l
-	jsr	L53396.l
-	jsr	L64224.l
+	jsr	L83914
+	move.w	d0,U99178
+	jsr	L53396
+	jsr	L64224
 	unlk	fp
 	rts
 
@@ -20132,7 +20132,7 @@ L62056:
 	move.l	8(fp),(sp)
 	bsr.s	L62012
 	move.w	d0,(sp)
-	jsr	L64090.l
+	jsr	L64090
 	unlk	fp
 	rts
 
@@ -20141,17 +20141,17 @@ L62078:
 	movem.l	d6-d7,-(sp)
 	move.w	8(fp),d7
 	move.w	d7,(sp)
-	jsr	L65726.l
+	jsr	L65726
 	tst.w	d0
 	beq.s	L62154
 	move.w	d7,(sp)
-	jsr	L65878.l
+	jsr	L65878
 	move.w	d0,d7
 	beq.s	L62154
-	jsr	L156.l
+	jsr	L156
 	move.l	d0,-(sp)
 	move.w	d7,-(sp)
-	jsr	L378.l
+	jsr	L378
 	addq.l	#2,sp
 	swap	d0
 	clr.w	d0
@@ -20177,24 +20177,24 @@ L62156:
 
 L62166:
 	link	fp,#-4
-	jsr	L64732.l
+	jsr	L64732
 	bra.s	L62184
 
 L62178:
-	jsr	L64470.l
+	jsr	L64470
 L62184:
 	move.w	8(fp),d0
 	subq.w	#1,8(fp)
 	tst.w	d0
 	bne.s	L62178
-	jsr	L64764.l
+	jsr	L64764
 	unlk	fp
 	rts
 
 L62206:
 	link	fp,#-4
-	move.w	U101046.l,(sp)
-	jsr	L65532.l
+	move.w	U101046,(sp)
+	jsr	L65532
 	unlk	fp
 	rts
 
@@ -20202,7 +20202,7 @@ L62226:
 	link	fp,#-4
 	bsr.s	L62206
 	move.l	d0,-(sp)
-	jsr	L81832.l
+	jsr	L81832
 	addq.l	#4,sp
 	unlk	fp
 	rts
@@ -20226,71 +20226,71 @@ L62262:
 L62282:
 	link	fp,#-4
 	clr.w	d0
-	move.w	d0,U99864.l
-	move.w	d0,U99818.l
+	move.w	d0,U99864
+	move.w	d0,U99818
 	bra.s	L62344
 
 L62302:
-	jsr	L64160.l
+	jsr	L64160
 	cmp.w	8(fp),d0
 	bne.s	L62338
-	jsr	L64942.l
+	jsr	L64942
 	move.w	10(fp),(sp)
 	move.l	#U101014,-(sp)
-	jsr	L218.l
+	jsr	L218
 	addq.l	#4,sp
 L62338:
-	jsr	L64028.l
+	jsr	L64028
 L62344:
-	jsr	L64006.l
+	jsr	L64006
 	tst.w	d0
 	beq.s	L62302
 	tst.w	10(fp)
 	beq.s	L62376
-	jsr	L60924.l
+	jsr	L60924
 	tst.w	d0
 	beq.s	L62376
-	jsr	L67028.l
+	jsr	L67028
 L62376:
 	move.w	10(fp),(sp)
 	move.l	#U101158,-(sp)
-	jsr	L218.l
+	jsr	L218
 	addq.l	#4,sp
 	unlk	fp
 	rts
 
 L62398:
 	link	fp,#-4
-	jsr	L64160.l
+	jsr	L64160
 	move.w	d0,(sp)
-	jsr	L65322.l
+	jsr	L65322
 	tst.w	d0
 	bne.s	L62426
-	jsr	L67118.l
+	jsr	L67118
 L62426:
 	unlk	fp
 	rts
 
 L62430:
 	link	fp,#-4
-	tst.w	U101476.l
+	tst.w	U101476
 	beq.s	L62464
-	tst.w	U100998.l
+	tst.w	U100998
 	beq.s	L62458
-	clr.w	U99190.l
+	clr.w	U99190
 	bra.s	L62464
 
 L62458:
-	jsr	L67286.l
+	jsr	L67286
 L62464:
 	unlk	fp
 	rts
 
 L62468:
 	link	fp,#-4
-	cmpi.w	#1,U100986.l
+	cmpi.w	#1,U100986
 	bne.s	L62488
-	jsr	L67334.l
+	jsr	L67334
 L62488:
 	unlk	fp
 	rts
@@ -20300,10 +20300,10 @@ L62492:
 	movem.l	d6-d7,-(sp)
 	move.w	8(fp),d7
 	move.w	d7,(sp)
-	jsr	L65726.l
+	jsr	L65726
 	tst.w	d0
 	bne.s	L62522
-	jsr	L67118.l
+	jsr	L67118
 L62522:
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
@@ -20312,80 +20312,80 @@ L62522:
 
 L62532:
 	link	fp,#-4
-	clr.w	U101460.l
-	clr.w	U101156.l
-	clr.w	U98402.l
-	clr.w	U101474.l
-	clr.w	U99818.l
-	clr.w	U99864.l
-	clr.w	U100674.l
-	jsr	L61834.l
+	clr.w	U101460
+	clr.w	U101156
+	clr.w	U98402
+	clr.w	U101474
+	clr.w	U99818
+	clr.w	U99864
+	clr.w	U100674
+	jsr	L61834
 	unlk	fp
 	rts
 
 L62588:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
-	cmpi.w	#100,U100978.l
+	cmpi.w	#100,U100978
 	bhi.s	L62672
-	jsr	L76064.l
+	jsr	L76064
 	tst.w	d0
 	beq.s	L62630
-	move.l	T87070.l,(sp)
-	jsr	L49566.l
+	move.l	T87070,(sp)
+	jsr	L49566
 	bra.s	L62672
 
 L62630:
-	tst.w	U99188.l
+	tst.w	U99188
 	bne.s	L62672
-	move.w	#1,U99188.l
+	move.w	#1,U99188
 	bsr  	L62878
-	tst.w	U99188.l
+	tst.w	U99188
 	beq.s	L62672
 	bsr.s	L62588
-	move.w	d0,U101004.l
-	jsr	L67254.l
+	move.w	d0,U101004
+	jsr	L67254
 L62672:
-	tst.w	U99186.l
+	tst.w	U99186
 	bne.s	L62770
 	clr.w	d0
-	move.w	U100620.l,d0
-	cmp.w	U100988.l,d0
+	move.w	U100620,d0
+	cmp.w	U100988,d0
 	bcc.s	L62732
 	clr.w	(sp)
-	move.w	U99176.l,d7
+	move.w	U99176,d7
 	move.w	d7,-(sp)
 	bsr  	L65186
 	addq.l	#2,sp
-	addq.w	#1,U99176.l
+	addq.w	#1,U99176
 	move.w	d7,(sp)
 	bsr  	L63932
-	addq.w	#1,U100620.l
+	addq.w	#1,U100620
 	bra.s	L62768
 
 L62732:
-	move.l	T87074.l,(sp)
+	move.l	T87074,(sp)
 	move.w	#1,-(sp)
-	jsr	L1386.l
+	jsr	L1386
 	addq.l	#2,sp
 	move.w	#23,(sp)
 	move.l	#U101158,-(sp)
-	jsr	L218.l
+	jsr	L218
 	addq.l	#4,sp
 L62768:
 	bra.s	L62790
 
 L62770:
-	move.w	U99186.l,d7
+	move.w	U99186,d7
 	move.w	d7,(sp)
-	jsr	L378.l
-	move.w	d0,U99186.l
+	jsr	L378
+	move.w	d0,U99186
 L62790:
 	clr.w	(sp)
 	move.w	d7,-(sp)
 	bsr  	L65226
 	addq.l	#2,sp
-	subq.w	#1,U100978.l
+	subq.w	#1,U100978
 	clr.w	d0
 	move.w	d7,d0
 	tst.l	(sp)+
@@ -20401,12 +20401,12 @@ L62820:
 	move.w	d7,-(sp)
 	bsr  	L65186
 	addq.l	#2,sp
-	move.w	U99186.l,(sp)
+	move.w	U99186,(sp)
 	move.w	d7,-(sp)
 	bsr  	L65226
 	addq.l	#2,sp
-	move.w	d0,U99186.l
-	addq.w	#1,U100978.l
+	move.w	d0,U99186
+	addq.w	#1,U100978
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
 	unlk	fp
@@ -20414,47 +20414,47 @@ L62820:
 
 L62878:
 	link	fp,#-4
-	clr.w	U99186.l
+	clr.w	U99186
 	bsr  	L63344
 	bsr  	L64782
-	move.w	U99864.l,(sp)
+	move.w	U99864,(sp)
 	bsr  	L63544
-	move.w	U99818.l,(sp)
+	move.w	U99818,(sp)
 	bsr  	L63544
-	move.w	U98398.l,(sp)
+	move.w	U98398,(sp)
 	bsr  	L63544
-	move.w	U100736.l,(sp)
+	move.w	U100736,(sp)
 	bsr  	L63544
-	move.w	U100674.l,(sp)
+	move.w	U100674,(sp)
 	bsr  	L63544
-	move.w	U101034.l,(sp)
+	move.w	U101034,(sp)
 	bsr  	L63544
-	move.w	U99862.l,(sp)
+	move.w	U99862,(sp)
 	bsr  	L63544
-	move.w	U101474.l,(sp)
+	move.w	U101474,(sp)
 	bsr  	L63544
-	move.w	U100890.l,(sp)
+	move.w	U100890,(sp)
 	bsr  	L63544
-	move.w	U100888.l,(sp)
+	move.w	U100888,(sp)
 	bsr  	L63444
-	move.w	U100888.l,(sp)
-	jsr	L378.l
+	move.w	U100888,(sp)
+	jsr	L378
 	move.w	d0,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,(sp)
 	bsr  	L63544
-	jsr	L60924.l
+	jsr	L60924
 	tst.w	d0
 	beq.s	L63042
-	move.w	U101046.l,(sp)
+	move.w	U101046,(sp)
 	bsr  	L63544
 L63042:
-	move.w	U101004.l,(sp)
+	move.w	U101004,(sp)
 	bsr  	L63792
 	bsr.s	L63074
-	cmpi.w	#100,U100978.l
+	cmpi.w	#100,U100978
 	bcs.s	L63070
-	clr.w	U99188.l
+	clr.w	U99188
 L63070:
 	unlk	fp
 	rts
@@ -20462,11 +20462,11 @@ L63070:
 L63074:
 	link	fp,#0
 	movem.l	d5-d7,-(sp)
-	move.w	#-1,U98384.l
+	move.w	#-1,U98384
 	bra  	L63228
 
 L63094:
-	movea.w	U98384.l,a0
+	movea.w	U98384,a0
 	adda.l	a0,a0
 	adda.l	#U101202,a0
 	move.w	(a0),d6
@@ -20474,19 +20474,19 @@ L63094:
 
 L63112:
 	move.w	d6,(sp)
-	jsr	L358.l
+	jsr	L358
 	move.w	d0,(sp)
 	bsr  	L63864
 	tst.w	d0
 	bne.s	L63144
 	move.w	d6,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d6
 L63140:
 	tst.w	d6
 	bne.s	L63112
 L63144:
-	movea.w	U98384.l,a0
+	movea.w	U98384,a0
 	adda.l	a0,a0
 	adda.l	#U101202,a0
 	move.w	d6,(a0)
@@ -20495,7 +20495,7 @@ L63144:
 
 L63164:
 	move.w	d7,(sp)
-	jsr	L358.l
+	jsr	L358
 	move.w	d0,(sp)
 	bsr  	L63864
 	tst.w	d0
@@ -20507,33 +20507,33 @@ L63164:
 
 L63192:
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,(sp)
 	move.w	d6,-(sp)
 	bsr  	L65226
 	addq.l	#2,sp
 L63210:
 	move.w	d6,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d7
 	bne.s	L63164
 	move.w	d6,(sp)
 	bsr  	L63792
 L63228:
-	addq.w	#1,U98384.l
-	move.w	U98384.l,d0
+	addq.w	#1,U98384
+	move.w	U98384,d0
 	cmp.w	#128,d0
 	blt  	L63094
 	clr.w	d0
-	move.w	U100988.l,d0
-	sub.w	U100620.l,d0
-	move.w	d0,U100978.l
-	move.w	#-1,U98384.l
+	move.w	U100988,d0
+	sub.w	U100620,d0
+	move.w	d0,U100978
+	move.w	#-1,U98384
 	bra.s	L63314
 
 L63278:
-	move.w	U100734.l,d6
-	add.w	U98384.l,d6
+	move.w	U100734,d6
+	add.w	U98384,d6
 	move.w	d6,(sp)
 	bsr  	L63864
 	tst.w	d0
@@ -20546,9 +20546,9 @@ L63308:
 	move.w	d6,(sp)
 	bsr  	L62820
 L63314:
-	addq.w	#1,U98384.l
-	move.w	U98384.l,d0
-	cmp.w	U100620.l,d0
+	addq.w	#1,U98384
+	move.w	U98384,d0
+	cmp.w	U100620,d0
 	bcs.s	L63278
 	tst.l	(sp)+
 	movem.l	(sp)+,d6-d7
@@ -20570,12 +20570,12 @@ L63356:
 
 L63370:
 	move.w	d7,(sp)
-	jsr	L358.l
+	jsr	L358
 	move.w	d0,d5
 	move.w	d5,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d4
 	beq.s	L63410
 	move.w	d5,(sp)
@@ -20584,7 +20584,7 @@ L63370:
 	bsr  	L63544
 L63410:
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d7
 L63420:
 	tst.w	d7
@@ -20610,10 +20610,10 @@ L63444:
 	move.w	d7,(sp)
 	bsr  	L63792
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d7
 	move.w	d7,(sp)
-	jsr	L358.l
+	jsr	L358
 	move.w	d0,d6
 	move.w	d7,(sp)
 	bsr  	L63792
@@ -20621,13 +20621,13 @@ L63444:
 
 L63500:
 	move.w	d6,(sp)
-	jsr	L358.l
+	jsr	L358
 	move.w	d0,(sp)
 	bsr  	L63792
 	move.w	d6,(sp)
 	bsr  	L63792
 	move.w	d6,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d6
 L63530:
 	tst.w	d6
@@ -20667,7 +20667,7 @@ L63586:
 	tst.w	d0
 	beq.s	L63630
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,(sp)
 	bsr  	L63792
 L63630:
@@ -20686,18 +20686,18 @@ L63644:
 L63648:
 	move.w	d7,(sp)
 	bsr  	L63792
-	jsr	L75962.l
+	jsr	L75962
 	tst.w	d0
 	beq.s	L63666
 	bsr.s	L63706
 L63666:
 	move.w	d7,(sp)
-	jsr	L358.l
+	jsr	L358
 	move.w	d0,(sp)
 	bsr  	L63544
 L63680:
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d7
 L63690:
 	tst.w	d7
@@ -20711,9 +20711,9 @@ L63696:
 L63706:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
-	move.l	T87078.l,(sp)
+	move.l	T87078,(sp)
 	move.w	#1,-(sp)
-	jsr	L1386.l
+	jsr	L1386
 	addq.l	#2,sp
 	moveq	#-1,d7
 	bra.s	L63752
@@ -20721,17 +20721,17 @@ L63706:
 L63736:
 	move.w	d7,(sp)
 	clr.w	d0
-	move.w	U100734.l,d0
+	move.w	U100734,d0
 	add.w	d0,(sp)
 	bsr  	L63932
 L63752:
 	addq.w	#1,d7
 	move.w	d7,d0
-	cmp.w	U100620.l,d0
+	cmp.w	U100620,d0
 	bcs.s	L63736
 	move.w	#1,(sp)
 	move.l	#U101158,-(sp)
-	jsr	L218.l
+	jsr	L218
 	addq.l	#4,sp
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
@@ -20756,7 +20756,7 @@ L63792:
 	swap	d0
 	clr.w	d0
 	swap	d0
-	add.l	U101036.l,d0
+	add.l	U101036,d0
 	movea.l	d0,a0
 	move.b	(a0),d0
 	or.w	(sp)+,d0
@@ -20770,7 +20770,7 @@ L63864:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
 	move.w	8(fp),d7
-	movea.l	U101036.l,a0
+	movea.l	U101036,a0
 	clr.w	d1
 	move.w	d7,d1
 	lsr.w	#3,d1
@@ -20811,7 +20811,7 @@ L63932:
 	swap	d0
 	clr.w	d0
 	swap	d0
-	add.l	U101036.l,d0
+	add.l	U101036,d0
 	movea.l	d0,a0
 	move.b	(a0),d0
 	and.w	(sp)+,d0
@@ -20823,7 +20823,7 @@ L63932:
 
 L64006:
 	link	fp,#-4
-	tst.w	U98402.l
+	tst.w	U98402
 	beq.s	L64022
 	clr.w	d0
 	bra.s	L64024
@@ -20841,15 +20841,15 @@ L64028:
 	bne.s	L64056
 	move.w	#10,(sp)
 	bsr  	L64352
-	move.w	d0,U101474.l
+	move.w	d0,U101474
 L64056:
-	move.w	U98402.l,(sp)
+	move.w	U98402,(sp)
 	bsr  	L64594
 	move.w	d0,(sp)
-	move.w	U98402.l,-(sp)
+	move.w	U98402,-(sp)
 	bsr  	L64544
 	addq.l	#2,sp
-	move.w	d0,U98402.l
+	move.w	d0,U98402
 	unlk	fp
 	rts
 
@@ -20858,16 +20858,16 @@ L64090:
 	movem.l	d6-d7,-(sp)
 	move.w	8(fp),d7
 	move.w	d7,(sp)
-	move.w	U101004.l,-(sp)
+	move.w	U101004,-(sp)
 	bsr  	L65226
 	addq.l	#2,sp
-	move.w	U98402.l,(sp)
-	move.w	U101004.l,-(sp)
+	move.w	U98402,(sp)
+	move.w	U101004,-(sp)
 	bsr  	L65186
 	addq.l	#2,sp
-	move.w	d0,U98402.l
+	move.w	d0,U98402
 	bsr  	L62588
-	move.w	d0,U101004.l
+	move.w	d0,U101004
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
 	unlk	fp
@@ -20875,18 +20875,18 @@ L64090:
 
 L64160:
 	link	fp,#-4
-	move.w	U98402.l,(sp)
-	jsr	L378.l
+	move.w	U98402,(sp)
+	jsr	L378
 	unlk	fp
 	rts
 
 L64180:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
-	move.w	U98402.l,d7
+	move.w	U98402,d7
 	move.w	d7,(sp)
-	jsr	L358.l
-	move.w	d0,U98402.l
+	jsr	L358
+	move.w	d0,U98402
 	move.w	d7,(sp)
 	bsr  	L62820
 	tst.l	(sp)+
@@ -20899,10 +20899,10 @@ L64224:
 	movem.l	d5-d7,-(sp)
 	bsr.s	L64160
 	move.w	d0,d7
-	move.w	U98402.l,d6
+	move.w	U98402,d6
 	move.w	d6,(sp)
-	jsr	L358.l
-	move.w	d0,U98402.l
+	jsr	L358
+	move.w	d0,U98402
 	move.w	d6,(sp)
 	bsr  	L62820
 	clr.w	d0
@@ -20915,7 +20915,7 @@ L64224:
 L64276:
 	link	fp,#-4
 	move.w	8(fp),(sp)
-	move.w	U98402.l,-(sp)
+	move.w	U98402,-(sp)
 	bsr  	L65226
 	addq.l	#2,sp
 	unlk	fp
@@ -20953,12 +20953,12 @@ L64336:
 L64352:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
-	move.w	U98402.l,d7
+	move.w	U98402,d7
 	bra.s	L64378
 
 L64368:
 	move.w	d7,(sp)
-	jsr	L358.l
+	jsr	L358
 	move.w	d0,d7
 L64378:
 	move.w	8(fp),d0
@@ -20966,7 +20966,7 @@ L64378:
 	tst.w	d0
 	bne.s	L64368
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
 	unlk	fp
@@ -20976,12 +20976,12 @@ L64408:
 	link	fp,#0
 	movem.l	d5-d7,-(sp)
 	move.w	10(fp),d7
-	move.w	U98402.l,d6
+	move.w	U98402,d6
 	bra.s	L64438
 
 L64428:
 	move.w	d6,(sp)
-	jsr	L358.l
+	jsr	L358
 	move.w	d0,d6
 L64438:
 	move.w	8(fp),d0
@@ -21001,20 +21001,20 @@ L64440	equ	*-2
 L64470:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
-	move.w	U98402.l,(sp)
-	jsr	L358.l
+	move.w	U98402,(sp)
+	jsr	L358
 	move.w	d0,d7
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,(sp)
-	move.w	U98402.l,-(sp)
+	move.w	U98402,-(sp)
 	bsr  	L65186
 	addq.l	#2,sp
-	move.w	U98402.l,(sp)
+	move.w	U98402,(sp)
 	move.w	d7,-(sp)
 	bsr  	L65226
 	addq.l	#2,sp
-	move.w	d7,U98402.l
+	move.w	d7,U98402
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
 	unlk	fp
@@ -21028,7 +21028,7 @@ L64544:
 
 L64558:
 	move.w	d7,(sp)
-	jsr	L358.l
+	jsr	L358
 	move.w	d0,d7
 L64568:
 	move.w	10(fp),d0
@@ -21047,7 +21047,7 @@ L64594:
 	movem.l	d6-d7,-(sp)
 	move.w	8(fp),d7
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d7
 	cmp.w	#20,d7
 	bne.s	L64626
@@ -21081,16 +21081,16 @@ L64658:
 	tst.w	d7
 	beq.s	L64692
 	move.w	d7,(sp)
-	move.w	U98402.l,-(sp)
+	move.w	U98402,-(sp)
 	bsr  	L64544
 	addq.l	#2,sp
 	move.w	d0,(sp)
 	bra.s	L64698
 
 L64692:
-	move.w	U98402.l,(sp)
+	move.w	U98402,(sp)
 L64698:
-	jsr	L378.l
+	jsr	L378
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
 	unlk	fp
@@ -21113,7 +21113,7 @@ L64732:
 
 L64746:
 	link	fp,#-4
-	move.w	U101046.l,(sp)
+	move.w	U101046,(sp)
 	bsr  	L64090
 	unlk	fp
 	rts
@@ -21121,19 +21121,19 @@ L64746:
 L64764:
 	link	fp,#-4
 	bsr  	L64224
-	move.w	d0,U101046.l
+	move.w	d0,U101046
 	unlk	fp
 	rts
 
 L64782:
 	link	fp,#0
 	movem.l	d5-d7,-(sp)
-	move.w	U98402.l,d6
+	move.w	U98402,d6
 	bra.s	L64874
 
 L64798:
 	move.w	d6,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d7
 	move.w	d7,(sp)
 	bsr  	L63544
@@ -21147,19 +21147,19 @@ L64798:
 L64830:
 	moveq	#1,d0
 L64832:
-	move.w	d0,U98386.l
+	move.w	d0,U98386
 	bra.s	L64858
 
 L64840:
 	move.w	d6,(sp)
-	jsr	L358.l
+	jsr	L358
 	move.w	d0,d7
 	move.w	d6,(sp)
 	bsr  	L63792
 	move.w	d7,d6
 L64858:
-	move.w	U98386.l,d0
-	subq.w	#1,U98386.l
+	move.w	U98386,d0
+	subq.w	#1,U98386
 	tst.w	d0
 	bne.s	L64840
 L64874:
@@ -21220,7 +21220,7 @@ L64978:
 
 L64994:
 	link	fp,#-4
-	move.w	U98402.l,U99866.l
+	move.w	U98402,U99866
 	bsr.s	L65014
 	unlk	fp
 	rts
@@ -21230,30 +21230,30 @@ L65014:
 	bra.s	L65088
 
 L65020:
-	move.w	U99866.l,(sp)
-	jsr	L378.l
+	move.w	U99866,(sp)
+	jsr	L378
 	cmp.w	#22,d0
 	bne.s	L65042
 	clr.w	d0
 	bra.s	L65098
 
 L65042:
-	move.w	U99866.l,(sp)
-	jsr	L378.l
+	move.w	U99866,(sp)
+	jsr	L378
 	cmp.w	#18,d0
 	bne.s	L65086
 	move.w	#9,(sp)
-	move.w	U99866.l,-(sp)
+	move.w	U99866,-(sp)
 	bsr  	L64544
 	addq.l	#2,sp
 	move.w	d0,(sp)
-	jsr	L378.l
+	jsr	L378
 	bra.s	L65098
 
 L65086:
 	bsr.s	L65148
 L65088:
-	tst.w	U99866.l
+	tst.w	U99866
 	bne.s	L65020
 	clr.w	d0
 L65098:
@@ -21265,8 +21265,8 @@ L65102:
 	bra.s	L65134
 
 L65108:
-	move.w	U99866.l,(sp)
-	jsr	L378.l
+	move.w	U99866,(sp)
+	jsr	L378
 	cmp.w	#22,d0
 	bne.s	L65132
 	bsr.s	L65148
@@ -21276,7 +21276,7 @@ L65108:
 L65132:
 	bsr.s	L65148
 L65134:
-	tst.w	U99866.l
+	tst.w	U99866
 	bne.s	L65108
 	clr.w	d0
 L65144:
@@ -21285,13 +21285,13 @@ L65144:
 
 L65148:
 	link	fp,#-4
-	move.w	U99866.l,(sp)
+	move.w	U99866,(sp)
 	bsr  	L64594
 	move.w	d0,(sp)
-	move.w	U99866.l,-(sp)
+	move.w	U99866,-(sp)
 	bsr  	L64544
 	addq.l	#2,sp
-	move.w	d0,U99866.l
+	move.w	d0,U99866
 	unlk	fp
 	rts
 
@@ -21301,7 +21301,7 @@ L65186:
 	move.w	8(fp),d7
 	move.w	10(fp),(sp)
 	move.w	d7,-(sp)
-	jsr	L444.l
+	jsr	L444
 	addq.l	#2,sp
 	clr.w	d0
 	move.w	d7,d0
@@ -21316,7 +21316,7 @@ L65226:
 	move.w	8(fp),d7
 	move.w	10(fp),(sp)
 	move.w	d7,-(sp)
-	jsr	L466.l
+	jsr	L466
 	addq.l	#2,sp
 	clr.w	d0
 	move.w	d7,d0
@@ -21336,7 +21336,7 @@ L65266:
 
 L65286:
 	move.w	d7,(sp)
-	jsr	L358.l
+	jsr	L358
 	move.w	d0,d7
 	tst.w	d7
 	bls.s	L65306
@@ -21377,11 +21377,11 @@ L65356:
 	movem.l	d6-d7,-(sp)
 	move.w	8(fp),d7
 	move.w	d7,(sp)
-	jsr	L358.l
+	jsr	L358
 	cmp.w	#16,d0
 	bhi.s	L65396
 	move.w	d7,(sp)
-	jsr	L358.l
+	jsr	L358
 	cmp.w	#10,d0
 	bcc.s	L65400
 L65396:
@@ -21401,7 +21401,7 @@ L65412:
 	movem.l	d6-d7,-(sp)
 	move.w	8(fp),d7
 	move.w	d7,(sp)
-	jsr	L358.l
+	jsr	L358
 	cmp.w	#10,d0
 	beq.s	L65442
 	clr.w	d0
@@ -21420,7 +21420,7 @@ L65454:
 	movem.l	d6-d7,-(sp)
 	move.w	8(fp),d7
 	move.w	d7,(sp)
-	jsr	L358.l
+	jsr	L358
 	cmp.w	#16,d0
 	beq.s	L65484
 	clr.w	d0
@@ -21457,22 +21457,22 @@ L65532:
 	tst.w	d0
 	beq.s	L65582
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688.l
+	jsr	L81688
 	addq.l	#4,sp
-	move.l	d0,U100628.l
+	move.l	d0,U100628
 	bra.s	L65604
 
 L65582:
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,(sp)
-	jsr	L398.l
-	move.l	d0,U100628.l
+	jsr	L398
+	move.l	d0,U100628
 L65604:
-	move.l	U100628.l,d0
+	move.l	U100628,d0
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
 	unlk	fp
@@ -21486,17 +21486,17 @@ L65620:
 	bsr  	L65266
 	tst.w	d0
 	bne.s	L65684
-	jsr	L56040.l
+	jsr	L56040
 L65648:
 	move.w	d7,(sp)
-	jsr	L358.l
+	jsr	L358
 	move.w	d0,(sp)
-	jsr	L55354.l
+	jsr	L55354
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d7
 	beq.s	L65684
-	jsr	L76978.l
+	jsr	L76978
 	bra.s	L65648
 
 L65684:
@@ -21521,7 +21521,7 @@ L65694:
 L65726:
 	link	fp,#-4
 	move.w	8(fp),(sp)
-	jsr	L65840.l
+	jsr	L65840
 	cmp.w	#8,d0
 	beq.s	L65750
 	clr.w	d0
@@ -21558,7 +21558,7 @@ L65784:
 
 L65796:
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d7
 L65806:
 	cmpi.w	#1,8(fp)
@@ -21567,7 +21567,7 @@ L65806:
 	move	d0,ccr
 	bgt.s	L65784
 	move.w	d7,(sp)
-	jsr	L358.l
+	jsr	L358
 L65830:
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
@@ -21585,7 +21585,7 @@ L65840:
 
 L65860:
 	move.w	d7,(sp)
-	jsr	L358.l
+	jsr	L358
 L65868:
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
@@ -21600,13 +21600,13 @@ L65878:
 
 L65892:
 	move.w	d7,(sp)
-	jsr	L358.l
-	cmp.w	U100742.l,d0
+	jsr	L358
+	cmp.w	U100742,d0
 	bne.s	L65926
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,(sp)
-	jsr	L358.l
+	jsr	L358
 	bra.s	L65938
 
 L65926:
@@ -21629,11 +21629,11 @@ L65948:
 
 L65962:
 	move.w	d7,(sp)
-	jsr	L358.l
+	jsr	L358
 	cmp.w	10(fp),d0
 	bne.s	L65986
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	bra.s	L65998
 
 L65986:
@@ -21653,7 +21653,7 @@ L66008:
 	movem.l	d6-d7,-(sp)
 	move.w	8(fp),d7
 	move.w	d7,(sp)
-	jsr	L65726.l
+	jsr	L65726
 	tst.w	d0
 	beq.s	L66050
 	move.w	10(fp),(sp)
@@ -21677,7 +21677,7 @@ L66062:
 	movem.l	d3-d7,-(sp)
 	move.w	8(fp),d7
 	move.w	d7,(sp)
-	jsr	L65726.l
+	jsr	L65726
 	tst.w	d0
 	bne.s	L66092
 	clr.w	d0
@@ -21685,7 +21685,7 @@ L66062:
 
 L66092:
 	move.w	10(fp),d6
-	cmp.w	U98716.l,d6
+	cmp.w	U98716,d6
 	bne.s	L66124
 	move.w	d7,(sp)
 	bsr  	L66524
@@ -21703,32 +21703,32 @@ L66124:
 	move.w	d0,d5
 	bne.s	L66216
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d4
 	move.w	d4,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,(sp)
 	move.w	12(fp),-(sp)
-	jsr	L65496.l
+	jsr	L65496
 	addq.l	#2,sp
 	move.w	d0,(sp)
-	jsr	L64090.l
-	jsr	L64160.l
+	jsr	L64090
+	jsr	L64160
 	move.w	d0,(sp)
 	move.w	d6,-(sp)
-	jsr	L65496.l
+	jsr	L65496
 	addq.l	#2,sp
 	move.w	d0,(sp)
 	move.w	d4,-(sp)
-	jsr	L65226.l
+	jsr	L65226
 	addq.l	#2,sp
-	jsr	L64180.l
+	jsr	L64180
 	bra.s	L66230
 
 L66216:
 	move.w	12(fp),(sp)
 	move.w	d5,-(sp)
-	jsr	L65186.l
+	jsr	L65186
 	addq.l	#2,sp
 L66230:
 	clr.w	d0
@@ -21745,28 +21745,28 @@ L66244:
 	move.w	8(fp),d7
 	clr.w	d0
 	move.w	10(fp),d0
-	cmp.w	U98716.l,d0
+	cmp.w	U98716,d0
 	bne.s	L66276
 	move.w	d7,(sp)
 	bsr  	L66626
 L66276:
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d6
 	bra.s	L66334
 
 L66288:
 	move.w	d7,(sp)
-	jsr	L358.l
+	jsr	L358
 	cmp.w	10(fp),d0
 	bne.s	L66332
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,(sp)
 	move.w	d6,-(sp)
-	jsr	L65226.l
+	jsr	L65226
 	addq.l	#2,sp
 	bra.s	L66346
 
@@ -21774,7 +21774,7 @@ L66332:
 	move.w	d7,d6
 L66334:
 	move.w	d6,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d7
 	bne.s	L66288
 L66346:
@@ -21788,9 +21788,9 @@ L66356:
 	movem.l	d6-d7,-(sp)
 	move.w	8(fp),d7
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,(sp)
-	jsr	L378.l
+	jsr	L378
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
 	unlk	fp
@@ -21800,40 +21800,40 @@ L66394:
 	link	fp,#0
 	movem.l	d5-d7,-(sp)
 	move.w	8(fp),(sp)
-	jsr	L65694.l
+	jsr	L65694
 	move.w	d0,(sp)
-	jsr	L64090.l
-	tst.w	U100736.l
+	jsr	L64090
+	tst.w	U100736
 	bne.s	L66442
-	jsr	L64224.l
-	move.w	d0,U100736.l
+	jsr	L64224
+	move.w	d0,U100736
 	bra.s	L66514
 
 L66442:
-	move.w	U100736.l,d7
+	move.w	U100736,d7
 	bra.s	L66466
 
 L66450:
 	move.w	d7,(sp)
-	jsr	L358.l
+	jsr	L358
 	cmp.w	10(fp),d0
 	beq.s	L66478
 	move.w	d6,d7
 L66466:
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d6
 	bne.s	L66450
 L66478:
 	move.w	d6,(sp)
-	jsr	L64160.l
+	jsr	L64160
 	move.w	d0,-(sp)
-	jsr	L65226.l
+	jsr	L65226
 	addq.l	#2,sp
-	jsr	L64224.l
+	jsr	L64224
 	move.w	d0,(sp)
 	move.w	d7,-(sp)
-	jsr	L65226.l
+	jsr	L65226
 	addq.l	#2,sp
 L66514:
 	tst.l	(sp)+
@@ -21844,7 +21844,7 @@ L66514:
 L66524:
 	link	fp,#-4
 	move.w	8(fp),(sp)
-	move.w	U100736.l,-(sp)
+	move.w	U100736,-(sp)
 	bsr.s	L66568
 	addq.l	#2,sp
 	unlk	fp
@@ -21853,7 +21853,7 @@ L66524:
 L66546:
 	link	fp,#-4
 	move.w	8(fp),(sp)
-	move.w	U98398.l,-(sp)
+	move.w	U98398,-(sp)
 	bsr.s	L66568
 	addq.l	#2,sp
 	unlk	fp
@@ -21867,7 +21867,7 @@ L66568:
 
 L66582:
 	move.w	d7,(sp)
-	jsr	L358.l
+	jsr	L358
 	cmp.w	10(fp),d0
 	bne.s	L66600
 	moveq	#1,d0
@@ -21875,7 +21875,7 @@ L66582:
 
 L66600:
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d7
 L66610:
 	tst.w	d7
@@ -21890,10 +21890,10 @@ L66616:
 L66626:
 	link	fp,#-4
 	move.w	8(fp),(sp)
-	move.w	U100736.l,-(sp)
+	move.w	U100736,-(sp)
 	bsr.s	L66654
 	addq.l	#2,sp
-	move.w	d0,U100736.l
+	move.w	d0,U100736
 	unlk	fp
 	rts
 
@@ -21908,11 +21908,11 @@ L66654:
 
 L66674:
 	move.w	d7,(sp)
-	jsr	L358.l
+	jsr	L358
 	cmp.w	10(fp),d0
 	bne.s	L66698
 	move.w	d7,(sp)
-	jsr	L378.l
+	jsr	L378
 	bra.s	L66758
 
 L66698:
@@ -21921,17 +21921,17 @@ L66698:
 
 L66702:
 	move.w	d6,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,d5
 	move.w	d5,(sp)
-	jsr	L358.l
+	jsr	L358
 	cmp.w	10(fp),d0
 	bne.s	L66748
 	move.w	d5,(sp)
-	jsr	L378.l
+	jsr	L378
 	move.w	d0,(sp)
 	move.w	d6,-(sp)
-	jsr	L65226.l
+	jsr	L65226
 	addq.l	#2,sp
 	bra.s	L66754
 
@@ -21951,25 +21951,25 @@ L66758:
 
 L66768:
 	link	fp,#-4
-	move.w	U99818.l,(sp)
-	jsr	L64090.l
-	move.w	U99864.l,(sp)
-	jsr	L64090.l
+	move.w	U99818,(sp)
+	jsr	L64090
+	move.w	U99864,(sp)
+	jsr	L64090
 	unlk	fp
 	rts
 
 L66800:
 	link	fp,#-4
-	jsr	L64224.l
-	move.w	d0,U99864.l
-	jsr	L64224.l
-	move.w	d0,U99818.l
+	jsr	L64224
+	move.w	d0,U99864
+	jsr	L64224
+	move.w	d0,U99818
 	unlk	fp
 	rts
 
 L66832:
 	link	fp,#-4
-	move.l	T87086.l,(sp)
+	move.l	T87086,(sp)
 	move.w	#54,-(sp)
 	bsr  	L67928
 	addq.l	#2,sp
@@ -21978,7 +21978,7 @@ L66832:
 
 L66856:
 	link	fp,#-4
-	move.l	T87090.l,(sp)
+	move.l	T87090,(sp)
 	move.w	#34,-(sp)
 	bsr  	L67928
 	addq.l	#2,sp
@@ -21987,7 +21987,7 @@ L66856:
 
 L66880:
 	link	fp,#-4
-	move.l	T87094.l,(sp)
+	move.l	T87094,(sp)
 	move.w	#2,-(sp)
 	bsr  	L67928
 	addq.l	#2,sp
@@ -21997,10 +21997,10 @@ L66880:
 L66904:
 	link	fp,#-4
 	move.w	#6,(sp)
-	jsr	L53070.l
+	jsr	L53070
 	move.w	8(fp),(sp)
-	jsr	L64090.l
-	move.l	T87218.l,(sp)
+	jsr	L64090
+	move.l	T87218,(sp)
 	bsr  	L67956
 	unlk	fp
 	rts
@@ -22008,17 +22008,17 @@ L66904:
 L66942:
 	link	fp,#-4
 	move.w	#29,(sp)
-	jsr	L53070.l
+	jsr	L53070
 	move.w	8(fp),(sp)
-	jsr	L64090.l
-	move.l	T87222.l,(sp)
+	jsr	L64090
+	move.l	T87222,(sp)
 	bsr  	L67956
 	unlk	fp
 	rts
 
 	link	fp,#-4
-	move.w	U101460.l,(sp)
-	jsr	L358.l
+	move.w	U101460,(sp)
+	jsr	L358
 	move.w	d0,(sp)
 	bsr.s	L66942
 	unlk	fp
@@ -22026,7 +22026,7 @@ L66942:
 
 L67004:
 	link	fp,#-4
-	move.l	T87098.l,(sp)
+	move.l	T87098,(sp)
 	move.w	#37,-(sp)
 	bsr  	L67928
 	addq.l	#2,sp
@@ -22036,10 +22036,10 @@ L67004:
 L67028:
 	link	fp,#-4
 	move.w	#38,(sp)
-	jsr	L53070.l
-	move.w	U101046.l,(sp)
+	jsr	L53070
+	move.w	U101046,(sp)
 	bsr  	L67866
-	move.l	T87226.l,(sp)
+	move.l	T87226,(sp)
 	bsr  	L67956
 	unlk	fp
 	rts
@@ -22047,12 +22047,12 @@ L67028:
 L67066:
 	link	fp,#-4
 	move.w	#41,(sp)
-	jsr	L53070.l
+	jsr	L53070
 	move.w	8(fp),(sp)
-	jsr	L64090.l
+	jsr	L64090
 	move.w	10(fp),(sp)
 	bsr  	L67866
-	move.l	T87298.l,(sp)
+	move.l	T87298,(sp)
 	move.w	#2,-(sp)
 	bsr  	L67976
 	addq.l	#2,sp
@@ -22061,9 +22061,9 @@ L67066:
 
 L67118:
 	link	fp,#-4
-	move.w	U101046.l,(sp)
-	move.w	U101460.l,-(sp)
-	jsr	L65840.l
+	move.w	U101046,(sp)
+	move.w	U101460,-(sp)
+	jsr	L65840
 	addq.l	#2,sp
 	move.w	d0,-(sp)
 	bsr.s	L67066
@@ -22074,12 +22074,12 @@ L67118:
 L67152:
 	link	fp,#-4
 	move.w	#42,(sp)
-	jsr	L53070.l
-	move.w	U101156.l,(sp)
-	jsr	L64090.l
+	jsr	L53070
+	move.w	U101156,(sp)
+	jsr	L64090
 	move.w	8(fp),(sp)
-	jsr	L64090.l
-	move.l	T87302.l,(sp)
+	jsr	L64090
+	move.l	T87302,(sp)
 	move.w	#2,-(sp)
 	bsr  	L67976
 	addq.l	#2,sp
@@ -22089,20 +22089,20 @@ L67152:
 L67208:
 	link	fp,#-4
 	move.w	#49,(sp)
-	jsr	L53070.l
+	jsr	L53070
 	move.l	8(fp),(sp)
-	jsr	L62012.l
+	jsr	L62012
 	move.w	d0,(sp)
-	jsr	L64090.l
-	move.l	T87230.l,(sp)
+	jsr	L64090
+	move.l	T87230,(sp)
 	bsr  	L67956
 	unlk	fp
 	rts
 
 L67254:
 	link	fp,#-4
-	move.w	#1,U99188.l
-	move.l	T87102.l,(sp)
+	move.w	#1,U99188
+	move.l	T87102,(sp)
 	move.w	#23,-(sp)
 	bsr  	L67928
 	addq.l	#2,sp
@@ -22112,12 +22112,12 @@ L67254:
 L67286:
 	link	fp,#-4
 	move.w	#50,(sp)
-	jsr	L53070.l
-	move.w	U101460.l,(sp)
-	jsr	L358.l
+	jsr	L53070
+	move.w	U101460,(sp)
+	jsr	L358
 	move.w	d0,(sp)
-	jsr	L64090.l
-	move.l	T87274.l,(sp)
+	jsr	L64090
+	move.l	T87274,(sp)
 	bsr  	L67956
 	unlk	fp
 	rts
@@ -22125,19 +22125,19 @@ L67286:
 L67334:
 	link	fp,#-4
 	move.w	#8,(sp)
-	jsr	L53070.l
-	move.w	U101460.l,(sp)
-	jsr	L358.l
+	jsr	L53070
+	move.w	U101460,(sp)
+	jsr	L358
 	move.w	d0,(sp)
-	jsr	L64090.l
-	move.l	T87278.l,(sp)
+	jsr	L64090
+	move.l	T87278,(sp)
 	bsr  	L67956
 	unlk	fp
 	rts
 
 L67382:
 	link	fp,#-4
-	move.l	T87106.l,(sp)
+	move.l	T87106,(sp)
 	move.w	#13,-(sp)
 	bsr  	L67928
 	addq.l	#2,sp
@@ -22146,19 +22146,19 @@ L67382:
 
 L67406:
 	link	fp,#-4
-	jsr	L47940.l
+	jsr	L47940
 	move.l	8(fp),(sp)
 	move.l	#L74902,-(sp)
-	move.l	T87234.l,-(sp)
-	jsr	L54390.l
+	move.l	T87234,-(sp)
+	jsr	L54390
 	addq.l	#8,sp
-	jsr	L49652.l
+	jsr	L49652
 	unlk	fp
 	rts
 
 L67450:
 	link	fp,#-4
-	move.l	T87110.l,(sp)
+	move.l	T87110,(sp)
 	move.w	#45,-(sp)
 	bsr  	L67928
 	addq.l	#2,sp
@@ -22168,9 +22168,9 @@ L67450:
 L67474:
 	link	fp,#-4
 	move.w	#32,(sp)
-	jsr	L53070.l
-	jsr	L64746.l
-	move.l	T87238.l,(sp)
+	jsr	L53070
+	jsr	L64746
+	move.l	T87238,(sp)
 	bsr  	L67956
 	unlk	fp
 	rts
@@ -22178,17 +22178,17 @@ L67474:
 L67508:
 	link	fp,#-4
 	move.w	#25,(sp)
-	jsr	L53070.l
-	move.w	U101046.l,(sp)
+	jsr	L53070
+	move.w	U101046,(sp)
 	bsr  	L67866
-	move.l	T87242.l,(sp)
+	move.l	T87242,(sp)
 	bsr  	L67956
 	unlk	fp
 	rts
 
 L67546:
 	link	fp,#-4
-	move.l	T87114.l,(sp)
+	move.l	T87114,(sp)
 	move.w	#11,-(sp)
 	bsr  	L67928
 	addq.l	#2,sp
@@ -22197,7 +22197,7 @@ L67546:
 
 L67570:
 	link	fp,#-4
-	move.l	T87118.l,(sp)
+	move.l	T87118,(sp)
 	move.w	#12,-(sp)
 	bsr  	L67928
 	addq.l	#2,sp
@@ -22206,7 +22206,7 @@ L67570:
 
 L67594:
 	link	fp,#-4
-	move.l	T87122.l,(sp)
+	move.l	T87122,(sp)
 	move.w	#46,-(sp)
 	bsr  	L67928
 	addq.l	#2,sp
@@ -22215,7 +22215,7 @@ L67594:
 
 L67618:
 	link	fp,#-4
-	move.l	T87246.l,(sp)
+	move.l	T87246,(sp)
 	move.w	#15,-(sp)
 	bsr  	L67836
 	addq.l	#2,sp
@@ -22224,7 +22224,7 @@ L67618:
 
 L67642:
 	link	fp,#-4
-	move.l	T87250.l,(sp)
+	move.l	T87250,(sp)
 	move.w	#17,-(sp)
 	bsr  	L67836
 	addq.l	#2,sp
@@ -22233,7 +22233,7 @@ L67642:
 
 L67666:
 	link	fp,#-4
-	move.l	T87126.l,(sp)
+	move.l	T87126,(sp)
 	move.w	#47,-(sp)
 	bsr  	L67928
 	addq.l	#2,sp
@@ -22243,10 +22243,10 @@ L67666:
 L67690:
 	link	fp,#-4
 	move.w	#35,(sp)
-	jsr	L53070.l
-	move.w	U100636.l,(sp)
-	jsr	L64090.l
-	move.l	T87254.l,(sp)
+	jsr	L53070
+	move.w	U100636,(sp)
+	jsr	L64090
+	move.l	T87254,(sp)
 	bsr  	L67956
 	unlk	fp
 	rts
@@ -22254,10 +22254,10 @@ L67690:
 L67730:
 	link	fp,#-4
 	move.w	#36,(sp)
-	jsr	L53070.l
+	jsr	L53070
 	move.w	8(fp),(sp)
-	jsr	L64090.l
-	move.l	T87258.l,(sp)
+	jsr	L64090
+	move.l	T87258,(sp)
 	bsr  	L67956
 	unlk	fp
 	rts
@@ -22265,9 +22265,9 @@ L67730:
 L67768:
 	link	fp,#-4
 	move.w	#21,(sp)
-	jsr	L53070.l
-	jsr	L64746.l
-	move.l	T87262.l,(sp)
+	jsr	L53070
+	jsr	L64746
+	move.l	T87262,(sp)
 	bsr  	L67956
 	unlk	fp
 	rts
@@ -22275,9 +22275,9 @@ L67768:
 L67802:
 	link	fp,#-4
 	move.w	#7,(sp)
-	jsr	L53070.l
-	jsr	L64746.l
-	move.l	T87266.l,(sp)
+	jsr	L53070
+	jsr	L64746
+	move.l	T87266,(sp)
 	bsr  	L67956
 	unlk	fp
 	rts
@@ -22285,8 +22285,8 @@ L67802:
 L67836:
 	link	fp,#-4
 	move.w	8(fp),(sp)
-	jsr	L53070.l
-	jsr	L64746.l
+	jsr	L53070
+	jsr	L64746
 	move.l	10(fp),(sp)
 	bsr.s	L67956
 	unlk	fp
@@ -22297,20 +22297,20 @@ L67866:
 	movem.l	d6-d7,-(sp)
 	move.w	8(fp),d7
 	move.w	d7,(sp)
-	jsr	L65322.l
+	jsr	L65322
 	tst.w	d0
 	beq.s	L67910
 	move.w	d7,(sp)
-	jsr	L6858.l
+	jsr	L6858
 	tst.w	d0
 	beq.s	L67910
-	move.w	U100650.l,(sp)
+	move.w	U100650,(sp)
 	bra.s	L67912
 
 L67910:
 	move.w	d7,(sp)
 L67912:
-	jsr	L64090.l
+	jsr	L64090
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
 	unlk	fp
@@ -22319,7 +22319,7 @@ L67912:
 L67928:
 	link	fp,#-4
 	move.w	8(fp),(sp)
-	jsr	L53070.l
+	jsr	L53070
 	move.l	10(fp),(sp)
 	clr.w	-(sp)
 	bsr.s	L67976
@@ -22339,42 +22339,42 @@ L67956:
 L67976:
 	link	fp,#-2
 	movem.l	d6-d7,-(sp)
-	jsr	L33100.l
-	jsr	L47940.l
-	jsr	L58068.l
-	jsr	L58082.l
-	clr.w	U101476.l
-	jsr	L9350.l
+	jsr	L33100
+	jsr	L47940
+	jsr	L58068
+	jsr	L58082
+	clr.w	U101476
+	jsr	L9350
 	move.w	8(fp),d0
 	bra.s	L68124
 
 L68026:
 	move.l	10(fp),(sp)
-	jsr	L74902.l
+	jsr	L74902
 	bra.s	L68140
 
 L68038:
-	jsr	L64224.l
+	jsr	L64224
 	move.w	d0,(sp)
 	move.l	#L55354,-(sp)
 	move.l	10(fp),-(sp)
-	jsr	L54390.l
+	jsr	L54390
 	addq.l	#8,sp
 	bra.s	L68140
 
 L68066:
-	jsr	L64224.l
+	jsr	L64224
 	move.w	d0,-2(fp)
 	move.w	-2(fp),(sp)
 	move.l	#L55354,-(sp)
-	jsr	L64224.l
+	jsr	L64224
 	ext.l	d0
 	moveq	#16,d1
 	asl.l	d1,d0
 	move.l	d0,-(sp)
 	move.l	#L55354,-(sp)
 	move.l	10(fp),-(sp)
-	jsr	L54390.l
+	jsr	L54390
 	adda.l	#16,sp
 	bra.s	L68140
 
@@ -22386,50 +22386,50 @@ L68124:
 	cmp.w	#2,d0
 	beq.s	L68066
 L68140:
-	jsr	L9388.l
-	move.w	#2,U100982.l
-	jsr	L53396.l
-	jsr	L64224.l
+	jsr	L9388
+	move.w	#2,U100982
+	jsr	L53396
+	jsr	L64224
 	move.w	d0,(sp)
-	jsr	L65694.l
+	jsr	L65694
 	move.w	d0,(sp)
-	jsr	L64090.l
-	jsr	L64994.l
-	move.w	d0,U100748.l
+	jsr	L64090
+	jsr	L64994
+	move.w	d0,U100748
 	move.w	d0,(sp)
-	jsr	L64090.l
+	jsr	L64090
 	clr.w	d0
-	move.w	U99818.l,d0
-	move.w	d0,U100622.l
+	move.w	U99818,d0
+	move.w	d0,U100622
 	move.w	d0,(sp)
-	jsr	L65840.l
+	jsr	L65840
 	move.w	d0,(sp)
-	jsr	L64090.l
-	move.w	U101460.l,(sp)
-	jsr	L65840.l
+	jsr	L64090
+	move.w	U101460,(sp)
+	jsr	L65840
 	move.w	d0,(sp)
-	jsr	L64090.l
+	jsr	L64090
 	clr.w	d0
-	move.w	U99864.l,d0
-	move.w	d0,U101006.l
+	move.w	U99864,d0
+	move.w	d0,U101006
 	move.w	d0,(sp)
-	jsr	L65840.l
+	jsr	L65840
 	move.w	d0,(sp)
-	jsr	L65694.l
+	jsr	L65694
 	move.w	d0,(sp)
-	jsr	L64090.l
-	jsr	L64470.l
-	jsr	L64470.l
-	jsr	L64470.l
-	jsr	L64470.l
-	jsr	L64470.l
-	jsr	L64224.l
-	move.w	d0,U100890.l
-	move.w	U98718.l,(sp)
-	move.w	U101500.l,-(sp)
-	jsr	L66008.l
+	jsr	L64090
+	jsr	L64470
+	jsr	L64470
+	jsr	L64470
+	jsr	L64470
+	jsr	L64470
+	jsr	L64224
+	move.w	d0,U100890
+	move.w	U98718,(sp)
+	move.w	U101500,-(sp)
+	jsr	L66008
 	addq.l	#2,sp
-	cmp.w	U100984.l,d0
+	cmp.w	U100984,d0
 	beq.s	L68364
 	clr.w	d0
 	bra.s	L68366
@@ -22439,16 +22439,16 @@ L68364:
 L68366:
 	move.w	d0,d7
 	beq.s	L68376
-	jsr	L2226.l
+	jsr	L2226
 L68376:
 	move.w	#24,(sp)
 	bsr  	L68570
 	tst.w	d0
 	beq.s	L68414
-	jsr	L64942.l
+	jsr	L64942
 	move.w	#1,(sp)
 	move.l	#U101014,-(sp)
-	jsr	L218.l
+	jsr	L218
 	addq.l	#4,sp
 	bra.s	L68422
 
@@ -22465,41 +22465,41 @@ L68422:
 
 L68434:
 	link	fp,#-4
-	jsr	L64006.l
+	jsr	L64006
 	tst.w	d0
 	beq.s	L68508
-	tst.w	U100890.l
+	tst.w	U100890
 	bne.s	L68462
 	move.w	#1,(sp)
 	bra.s	L68494
 
 L68462:
-	move.w	U100890.l,(sp)
-	jsr	L358.l
+	move.w	U100890,(sp)
+	jsr	L358
 	move.w	d0,(sp)
-	jsr	L65532.l
+	jsr	L65532
 	move.l	d0,-(sp)
-	jsr	L81832.l
+	jsr	L81832
 	addq.l	#4,sp
 	move.w	d0,(sp)
 L68494:
 	move.l	#U101158,-(sp)
-	jsr	L218.l
+	jsr	L218
 	addq.l	#4,sp
 L68508:
 	move.w	#22,(sp)
 	bsr.s	L68540
-	jsr	L64942.l
+	jsr	L64942
 	clr.w	(sp)
 	move.l	#U101014,-(sp)
-	jsr	L218.l
+	jsr	L218
 	addq.l	#4,sp
 	unlk	fp
 	rts
 
 L68540:
 	link	fp,#-4
-	jsr	L64160.l
+	jsr	L64160
 	cmp.w	8(fp),d0
 	beq.s	L68566
 	move.l	#T86348,(sp)
@@ -22514,18 +22514,18 @@ L68570:
 	bra.s	L68646
 
 L68580:
-	jsr	L64160.l
+	jsr	L64160
 	cmp.w	#22,d0
 	beq.s	L68656
-	jsr	L64160.l
+	jsr	L64160
 	cmp.w	#20,d0
 	bne.s	L68640
 	move.w	#9,(sp)
-	jsr	L64658.l
+	jsr	L64658
 	move.w	d0,d7
 	cmp.w	8(fp),d7
 	beq.s	L68636
-	cmp.w	U100984.l,d7
+	cmp.w	U100984,d7
 	beq.s	L68636
 	cmp.w	#26,d7
 	bne.s	L68640
@@ -22534,9 +22534,9 @@ L68636:
 	bra.s	L68658
 
 L68640:
-	jsr	L64028.l
+	jsr	L64028
 L68646:
-	jsr	L64006.l
+	jsr	L64006
 	tst.w	d0
 	beq.s	L68580
 L68656:
@@ -22550,10 +22550,10 @@ L68658:
 L68668:
 	link	fp,#-4
 	move.l	#U100754,d0
-	move.l	d0,U101030.l
+	move.l	d0,U101030
 	move.l	d0,(sp)
-	jsr	L83914.l
-	move.w	d0,U99178.l
+	jsr	L83914
+	move.w	d0,U99178
 	unlk	fp
 	rts
 
@@ -22563,7 +22563,7 @@ L68702:
 	movea.l	8(fp),a4
 	movea.l	12(fp),a5
 	move.l	a4,(sp)
-	jsr	L83914.l
+	jsr	L83914
 	ext.l	d0
 	adda.l	d0,a4
 	bra.s	L68760
@@ -22573,7 +22573,7 @@ L68732:
 	move.b	d7,d0
 	ext.w	d0
 	move.w	d0,-(sp)
-	jsr	L50940.l
+	jsr	L50940
 	addq.l	#2,sp
 	tst.w	d0
 	beq.s	L68758
@@ -22608,7 +22608,7 @@ L68788:
 	addq.l	#8,sp
 	move.l	#T86354,(sp)
 	move.l	8(fp),-(sp)
-	jsr	L83706.l
+	jsr	L83706
 	addq.l	#4,sp
 	move.w	12(fp),d0
 	ext.l	d0
@@ -22618,7 +22618,7 @@ L68788:
 	bsr.s	L68894
 L68862:
 	move.l	a5,(sp)
-	jsr	L83914.l
+	jsr	L83914
 	move.w	d0,(sp)
 	move.l	a5,-(sp)
 	move.l	8(fp),-(sp)
@@ -22640,7 +22640,7 @@ L68894:
 	add.l	#U100754,d0
 	move.l	d0,-(sp)
 	subq.l	#3,(sp)
-	jsr	L83880.l
+	jsr	L83880
 	addq.l	#4,sp
 L68938:
 	unlk	fp
@@ -22648,13 +22648,13 @@ L68938:
 
 L68942:
 	link	fp,#-218
-	jsr	L48330.l
-	tst.w	U100748.l
+	jsr	L48330
+	tst.w	U100748
 	bne.s	L69040
 	move.l	#T86362,(sp)
 	move.l	fp,-(sp)
 	addi.l	#-152,(sp)
-	jsr	L83880.l
+	jsr	L83880
 	addq.l	#4,sp
 	move.w	#27,(sp)
 	move.l	fp,-(sp)
@@ -22664,11 +22664,11 @@ L68942:
 	move.l	#T86382,(sp)
 	move.l	fp,-(sp)
 	addi.l	#-152,(sp)
-	jsr	L83706.l
+	jsr	L83706
 	addq.l	#4,sp
 	move.l	d0,(sp)
 	move.w	#1,-(sp)
-	jsr	L1386.l
+	jsr	L1386
 	addq.l	#2,sp
 	bra  	L69344
 
@@ -22676,22 +22676,22 @@ L69040:
 	move.l	#T86389,(sp)
 	move.l	fp,-(sp)
 	addi.l	#-152,(sp)
-	jsr	L83880.l
+	jsr	L83880
 	addq.l	#4,sp
-	clr.b	U100815.l
+	clr.b	U100815
 	move.l	#U100754,(sp)
 	move.l	fp,-(sp)
 	addi.l	#-214,(sp)
-	jsr	L83880.l
+	jsr	L83880
 	addq.l	#4,sp
-	jsr	L9350.l
-	move.w	U100748.l,(sp)
-	jsr	L55354.l
-	jsr	L9388.l
+	jsr	L9350
+	move.w	U100748,(sp)
+	jsr	L55354
+	jsr	L9388
 	move.w	#19,(sp)
 	bsr  	L68894
 	move.l	#U100754,(sp)
-	jsr	L83914.l
+	jsr	L83914
 	move.w	d0,(sp)
 	move.l	#U100754,-(sp)
 	move.l	fp,-(sp)
@@ -22701,12 +22701,12 @@ L69040:
 	move.l	#T86404,(sp)
 	move.l	fp,-(sp)
 	addi.l	#-152,(sp)
-	jsr	L83706.l
+	jsr	L83706
 	addq.l	#4,sp
 	move.l	fp,(sp)
 	addi.l	#-214,(sp)
 	move.l	#U100754,-(sp)
-	jsr	L83880.l
+	jsr	L83880
 	addq.l	#4,sp
 	move.w	#18,(sp)
 	move.l	fp,-(sp)
@@ -22716,14 +22716,14 @@ L69040:
 	move.l	#T86416,(sp)
 	move.l	fp,-(sp)
 	addi.l	#-152,(sp)
-	jsr	L83706.l
+	jsr	L83706
 	addq.l	#4,sp
-	jsr	L9350.l
-	move.w	U100622.l,(sp)
-	jsr	L65840.l
+	jsr	L9350
+	move.w	U100622,(sp)
+	jsr	L65840
 	move.w	d0,(sp)
-	jsr	L65620.l
-	jsr	L9388.l
+	jsr	L65620
+	jsr	L9388
 	move.w	#18,(sp)
 	move.l	fp,-(sp)
 	addi.l	#-152,(sp)
@@ -22732,19 +22732,19 @@ L69040:
 	move.l	#T86428,(sp)
 	move.l	fp,-(sp)
 	addi.l	#-152,(sp)
-	jsr	L83706.l
+	jsr	L83706
 	addq.l	#4,sp
 	move.l	d0,(sp)
 	move.w	#1,-(sp)
-	jsr	L1386.l
+	jsr	L1386
 	addq.l	#2,sp
 	cmp.w	#2,d0
 	bne.s	L69344
-	move.l	T87166.l,(sp)
-	jsr	L76856.l
+	move.l	T87166,(sp)
+	jsr	L76856
 L69344:
-	jsr	L48260.l
-	jsr	L74840.l
+	jsr	L48260
+	jsr	L74840
 	unlk	fp
 	rts
 
@@ -22754,15 +22754,15 @@ L69360:
 	move.l	#T86439,-(sp)
 	move.l	fp,-(sp)
 	addi.l	#-128,(sp)
-	jsr	L83880.l
+	jsr	L83880
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	jsr	L83706.l
+	jsr	L83706
 	addq.l	#4,sp
 	move.l	fp,(sp)
 	addi.l	#-128,(sp)
 	move.w	#1,-(sp)
-	jsr	L1386.l
+	jsr	L1386
 	addq.l	#2,sp
 	cmp.w	#1,d0
 	beq.s	L69432
@@ -22777,9 +22777,9 @@ L69434:
 
 L69438:
 	link	fp,#-4
-	move.l	T87318.l,(sp)
-	move.l	U101030.l,-(sp)
-	jsr	L83748.l
+	move.l	T87318,(sp)
+	move.l	U101030,-(sp)
+	jsr	L83748
 	addq.l	#4,sp
 	tst.w	d0
 	bne.s	L69484
@@ -22800,9 +22800,9 @@ L69500:
 
 L69504:
 	link	fp,#-4
-	move.l	T87318.l,(sp)
-	move.l	U101030.l,-(sp)
-	jsr	L83748.l
+	move.l	T87318,(sp)
+	move.l	U101030,-(sp)
+	jsr	L83748
 	addq.l	#4,sp
 	tst.w	d0
 	bne.s	L69550
@@ -22823,9 +22823,9 @@ L69566:
 
 L69570:
 	link	fp,#-4
-	move.l	T87318.l,(sp)
-	move.l	U101030.l,-(sp)
-	jsr	L83814.l
+	move.l	T87318,(sp)
+	move.l	U101030,-(sp)
+	jsr	L83814
 	addq.l	#4,sp
 	tst.w	d0
 	bne.s	L69616
@@ -22852,21 +22852,21 @@ L69624:
 
 L69648:
 	link	fp,#-4
-	jsr	L62430.l
+	jsr	L62430
 	move.w	#2,(sp)
-	jsr	L47436.l
-	jsr	L48026.l
-	jsr	L48480.l
+	jsr	L47436
+	jsr	L48026
+	jsr	L48480
 	moveq	#1,d0
-	move.w	d0,U100980.l
-	move.w	d0,U98712.l
-	jsr	L77166.l
-	move.l	U100744.l,U99856.l
+	move.w	d0,U100980
+	move.w	d0,U98712
+	jsr	L77166
+	move.l	U100744,U99856
 	clr.w	d0
 	ext.l	d0
-	move.l	d0,U100642.l
-	move.l	d0,U100638.l
-	move.l	U100744.l,(sp)
+	move.l	d0,U100642
+	move.l	d0,U100638
+	move.l	U100744,(sp)
 	bsr  	L69934
 	bsr  	L70038
 	unlk	fp
@@ -22876,14 +22876,14 @@ L69744:
 	link	fp,#-4
 	move.l	fp,d0
 	add.l	#-1527,d0
-	move.l	d0,U99196.l
-	sub.l	U100744.l,d0
-	move.w	d0,U101468.l
+	move.l	d0,U99196
+	sub.l	U100744,d0
+	move.w	d0,U101468
 	cmp.w	#512,d0
 	bge.s	L69786
-	jsr	L67594.l
+	jsr	L67594
 L69786:
-	movea.l	U99196.l,a0
+	movea.l	U99196,a0
 	clr.b	(a0)
 	unlk	fp
 	rts
@@ -22891,36 +22891,36 @@ L69786:
 L69798:
 	link	fp,#-4
 	movea.l	#U100561,a0
-	move.l	a0,U99196.l
+	move.l	a0,U99196
 	clr.b	(a0)
 	move.w	#2,(sp)
-	jsr	L47436.l
-	move.w	#1,U99200.l
+	jsr	L47436
+	move.w	#1,U99200
 	move.l	#U100162,d0
-	move.l	d0,U99856.l
+	move.l	d0,U99856
 	move.l	d0,(sp)
 	bsr.s	L69934
-	tst.w	U101146.l
+	tst.w	U101146
 	beq.s	L69870
 	move.l	#U100162,(sp)
-	jsr	L19024.l
+	jsr	L19024
 L69870:
-	tst.b	U100162.l
+	tst.b	U100162
 	beq.s	L69928
 	clr.w	(sp)
 	bsr  	L74214
-	move.l	#U100162,U99856.l
+	move.l	#U100162,U99856
 	bra.s	L69918
 
 L69896:
-	movea.l	U99856.l,a0
+	movea.l	U99856,a0
 	move.b	(a0),d0
 	ext.w	d0
 	move.w	d0,(sp)
 	bsr  	L74214
-	addq.l	#1,U99856.l
+	addq.l	#1,U99856
 L69918:
-	movea.l	U99856.l,a0
+	movea.l	U99856,a0
 	tst.b	(a0)
 	bne.s	L69896
 L69928:
@@ -22930,83 +22930,83 @@ L69928:
 
 L69934:
 	link	fp,#-6
-	move.w	U101146.l,-2(fp)
-	clr.w	U101146.l
+	move.w	U101146,-2(fp)
+	clr.w	U101146
 	bsr  	L70106
 L69956:
-	movea.l	U99196.l,a0
+	movea.l	U99196,a0
 	move.b	(a0),d0
 	ext.w	d0
 	movea.l	8(fp),a1
 	move.b	d0,(a1)
-	addq.l	#1,U99196.l
+	addq.l	#1,U99196
 	addq.l	#1,8(fp)
 	tst.w	d0
 	bne.s	L69956
-	move.l	8(fp),U99196.l
-	move.w	-2(fp),U101146.l
+	move.l	8(fp),U99196
+	move.w	-2(fp),U101146
 	unlk	fp
 	rts
 
 L70006:
 	link	fp,#-4
-	move.l	#U101040,U99856.l
-	clr.w	U99200.l
+	move.l	#U101040,U99856
+	clr.w	U99200
 	clr.w	(sp)
-	jsr	L47436.l
+	jsr	L47436
 	unlk	fp
 	rts
 
 L70038:
 	link	fp,#-4
-	clr.w	U100980.l
-	jsr	L48494.l
-	jsr	L47962.l
-	jsr	L47940.l
+	clr.w	U100980
+	jsr	L48494
+	jsr	L47962
+	jsr	L47940
 	clr.w	(sp)
-	jsr	L47436.l
+	jsr	L47436
 	unlk	fp
 	rts
 
 L70078:
 	link	fp,#-4
-	tst.w	U99200.l
+	tst.w	U99200
 	beq.s	L70096
-	jsr	L49684.l
+	jsr	L49684
 L70096:
-	move.w	U99200.l,d0
+	move.w	U99200,d0
 	unlk	fp
 	rts
 
 L70106:
 	link	fp,#-10
 	clr.w	d0
-	move.w	d0,U101496.l
-	move.w	d0,U101200.l
-	move.w	#1,U100990.l
-	move.w	U101044.l,U100992.l
-	tst.w	U99200.l
+	move.w	d0,U101496
+	move.w	d0,U101200
+	move.w	#1,U100990
+	move.w	U101044,U100992
+	tst.w	U99200
 	bne.s	L70186
-	move.w	U99194.l,(sp)
+	move.w	U99194,(sp)
 	subq.w	#1,(sp)
 	clr.w	-(sp)
 	bsr  	L72198
 	addq.l	#2,sp
 	bsr  	L73126
 	bsr  	L72348
-	move.w	U98710.l,(sp)
+	move.w	U98710,(sp)
 	subq.w	#1,(sp)
 	bsr  	L71062
 L70186:
 	move.l	#U101090,(sp)
-	jsr	L204.l
+	jsr	L204
 	tst.w	d0
 	beq.s	L70208
-	jsr	L75582.l
+	jsr	L75582
 L70208:
 	bsr  	L73126
-	jsr	L75856.l
-	move.w	U101458.l,d0
+	jsr	L75856
+	move.w	U101458,d0
 	bra  	L70754
 
 L70228:
@@ -23028,7 +23028,7 @@ L70262:
 	bsr  	L72906
 	tst.w	d0
 	bne  	L70778
-	addq.l	#1,U101492.l
+	addq.l	#1,U101492
 	bsr  	L71274
 	bra  	L70778
 
@@ -23052,10 +23052,10 @@ L70318:
 	clr.w	(sp)
 	bsr  	L74214
 L70324:
-	movea.l	U101492.l,a0
+	movea.l	U101492,a0
 	move.b	(a0),-2(fp)
 	beq.s	L70354
-	addq.l	#1,U101492.l
+	addq.l	#1,U101492
 	move.b	-2(fp),d0
 	ext.w	d0
 	move.w	d0,(sp)
@@ -23064,7 +23064,7 @@ L70354:
 	move.b	-2(fp),d0
 	ext.w	d0
 	move.w	d0,(sp)
-	jsr	L74802.l
+	jsr	L74802
 	tst.w	d0
 	bne.s	L70382
 	bsr  	L72984
@@ -23087,10 +23087,10 @@ L70410:
 	bra  	L70778
 
 L70414:
-	tst.w	U99200.l
+	tst.w	U99200
 	beq.s	L70436
 	bsr  	L70792
-	jsr	L74860.l
+	jsr	L74860
 	bra  	L70788
 
 L70436:
@@ -23099,7 +23099,7 @@ L70436:
 	bra  	L70778
 
 L70448:
-	move.w	U101044.l,(sp)
+	move.w	U101044,(sp)
 	bsr  	L71832
 	bra  	L70778
 
@@ -23148,8 +23148,8 @@ L70556:
 	bsr  	L70078
 	tst.w	d0
 	bne.s	L70588
-	move.w	U100672.l,(sp)
-	move.w	U101154.l,d0
+	move.w	U100672,(sp)
+	move.w	U101154,d0
 	sub.w	d0,(sp)
 	move.w	#1,-(sp)
 	bsr  	L72198
@@ -23161,8 +23161,8 @@ L70592:
 	bsr  	L70078
 	tst.w	d0
 	bne.s	L70624
-	move.w	U101154.l,(sp)
-	move.w	U100672.l,d0
+	move.w	U101154,(sp)
+	move.w	U100672,d0
 	add.w	d0,(sp)
 	subq.w	#1,(sp)
 	clr.w	-(sp)
@@ -23197,27 +23197,27 @@ L70672:
 	tst.w	d0
 	bne.s	L70724
 	clr.w	(sp)
-	jsr	L47436.l
-	move.l	U99196.l,-6(fp)
+	jsr	L47436
+	move.l	U99196,-6(fp)
 	clr.w	(sp)
 	bsr  	L74392
 	move.l	-6(fp),(sp)
 	bsr  	L74566
 	bsr  	L74326
 	move.w	#1,(sp)
-	jsr	L47436.l
+	jsr	L47436
 L70724:
 	bra.s	L70778
 
 L70726:
-	tst.w	U101458.l
+	tst.w	U101458
 	ble.s	L70746
-	move.w	U101458.l,(sp)
+	move.w	U101458,(sp)
 	bsr  	L71636
 	bra.s	L70752
 
 L70746:
-	jsr	L49684.l
+	jsr	L49684
 L70752:
 	bra.s	L70778
 
@@ -23232,7 +23232,7 @@ L70754:
 	jmp	(a0)
 
 L70778:
-	jsr	L75582.l
+	jsr	L75582
 	bra  	L70208
 
 L70788:
@@ -23241,7 +23241,7 @@ L70788:
 
 L70792:
 	link	fp,#-4
-	jsr	L75582.l
+	jsr	L75582
 L70802:
 	bsr  	L72596
 	bsr  	L73010
@@ -23264,16 +23264,16 @@ L70830:
 	bne.s	L70862
 	clr.w	(sp)
 	bsr  	L73072
-	add.w	U101496.l,d0
-	cmp.w	U101498.l,d0
+	add.w	U101496,d0
+	cmp.w	U101498,d0
 	blt.s	L70862
 	bsr  	L72808
 L70862:
 	bsr  	L72710
-	addq.l	#1,U99196.l
+	addq.l	#1,U99196
 L70872:
-	move.l	U99196.l,d0
-	cmp.l	U101492.l,d0
+	move.l	U99196,d0
+	cmp.l	U101492,d0
 	bne.s	L70830
 	unlk	fp
 	rts
@@ -23313,8 +23313,8 @@ L70952:
 	clr.w	(sp)
 	bsr  	L73072
 	move.w	d0,(sp)
-	move.w	U101154.l,-(sp)
-	jsr	L77222.l
+	move.w	U101154,-(sp)
+	jsr	L77222
 	addq.l	#2,sp
 	unlk	fp
 	rts
@@ -23330,8 +23330,8 @@ L71000:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
 	clr.w	(sp)
-	jsr	L47436.l
-	jsr	L75548.l
+	jsr	L47436
+	jsr	L75548
 	move.w	d0,d7
 	bra.s	L71034
 
@@ -23344,7 +23344,7 @@ L71034:
 	tst.w	d0
 	bgt.s	L71026
 	move.w	#1,(sp)
-	jsr	L47436.l
+	jsr	L47436
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
 	unlk	fp
@@ -23368,9 +23368,9 @@ L71088:
 	tst.w	d0
 	bne.s	L71068
 L71100:
-	move.w	U101044.l,(sp)
-	move.w	U101154.l,-(sp)
-	jsr	L77222.l
+	move.w	U101044,(sp)
+	move.w	U101154,-(sp)
+	jsr	L77222
 	addq.l	#2,sp
 	unlk	fp
 	rts
@@ -23384,15 +23384,15 @@ L71124:
 
 L71138:
 	link	fp,#-4
-	tst.w	U101200.l
+	tst.w	U101200
 	beq  	L71270
-	tst.w	U101496.l
+	tst.w	U101496
 	beq.s	L71192
 	bsr  	L72616
-	move.w	U101154.l,(sp)
-	subq.w	#1,U101044.l
-	move.w	U101044.l,-(sp)
-	jsr	L46014.l
+	move.w	U101154,(sp)
+	subq.w	#1,U101044
+	move.w	U101044,-(sp)
+	jsr	L46014
 	addq.l	#2,sp
 	bra.s	L71270
 
@@ -23413,17 +23413,17 @@ L71210:
 	move.w	#-1,(sp)
 	bsr  	L73072
 	move.w	d0,(sp)
-	move.w	U101496.l,d0
+	move.w	U101496,d0
 	add.w	d0,(sp)
 	bra.s	L71254
 
 L71246:
-	move.w	U101498.l,(sp)
+	move.w	U101498,(sp)
 	subq.w	#1,(sp)
 L71254:
-	move.w	U101154.l,-(sp)
+	move.w	U101154,-(sp)
 	subq.w	#1,(sp)
-	jsr	L77222.l
+	jsr	L77222
 	addq.l	#2,sp
 L71270:
 	unlk	fp
@@ -23432,30 +23432,30 @@ L71270:
 L71274:
 	link	fp,#-4
 	bsr  	L73250
-	move.l	U100638.l,d0
-	cmp.l	U99196.l,d0
+	move.l	U100638,d0
+	cmp.l	U99196,d0
 	bcs.s	L71320
-	move.l	U100638.l,d0
-	cmp.l	U101492.l,d0
+	move.l	U100638,d0
+	cmp.l	U101492,d0
 	bhi.s	L71320
-	move.l	U101492.l,U100638.l
+	move.l	U101492,U100638
 L71320:
-	move.l	U100642.l,d0
-	cmp.l	U99196.l,d0
+	move.l	U100642,d0
+	cmp.l	U99196,d0
 	bcs.s	L71358
-	move.l	U100642.l,d0
-	cmp.l	U101492.l,d0
+	move.l	U100642,d0
+	cmp.l	U101492,d0
 	bhi.s	L71358
-	move.l	U101492.l,U100642.l
+	move.l	U101492,U100642
 L71358:
-	move.l	U101492.l,U99196.l
+	move.l	U101492,U99196
 	bsr.s	L71374
 	unlk	fp
 	rts
 
 L71374:
 	link	fp,#-4
-	tst.w	U101496.l
+	tst.w	U101496
 	bne  	L71536
 	bsr  	L72984
 	tst.w	d0
@@ -23464,7 +23464,7 @@ L71374:
 	tst.w	d0
 	bne  	L71536
 	bsr  	L72870
-	movea.l	U99856.l,a0
+	movea.l	U99856,a0
 	cmpi.b	#10,-1(a0)
 	bne.s	L71432
 	bsr  	L72808
@@ -23479,25 +23479,25 @@ L71432:
 	bra.s	L71536
 
 L71450:
-	movea.l	U101492.l,a0
+	movea.l	U101492,a0
 	tst.b	(a0)
 	beq.s	L71470
-	addq.l	#1,U101492.l
+	addq.l	#1,U101492
 	bsr  	L73250
 L71470:
-	move.w	U101498.l,(sp)
-	move.w	U101154.l,-(sp)
+	move.w	U101498,(sp)
+	move.w	U101154,-(sp)
 	subq.w	#1,(sp)
-	jsr	L77222.l
+	jsr	L77222
 	addq.l	#2,sp
-	move.w	U101154.l,(sp)
-	move.w	U101044.l,-(sp)
+	move.w	U101154,(sp)
+	move.w	U101044,-(sp)
 	move.w	#32,-(sp)
-	jsr	L45800.l
+	jsr	L45800
 	addq.l	#4,sp
-	move.w	U101154.l,(sp)
-	move.w	U101044.l,-(sp)
-	jsr	L46014.l
+	move.w	U101154,(sp)
+	move.w	U101044,-(sp)
+	jsr	L46014
 	addq.l	#2,sp
 L71536:
 	unlk	fp
@@ -23512,20 +23512,20 @@ L71540:
 
 L71554:
 	link	fp,#-8
-	move.w	U101154.l,-2(fp)
-	move.w	U101044.l,-4(fp)
+	move.w	U101154,-2(fp)
+	move.w	U101044,-4(fp)
 	bsr  	L72596
-	move.l	U99196.l,U101026.l
-	jsr	L47004.l
+	move.l	U99196,U101026
+	jsr	L47004
 	clr.w	(sp)
-	jsr	L47436.l
+	jsr	L47436
 	bsr  	L73832
 	move.w	-4(fp),(sp)
 	move.w	-2(fp),-(sp)
-	jsr	L77222.l
+	jsr	L77222
 	addq.l	#2,sp
 	move.w	#1,(sp)
-	jsr	L47436.l
+	jsr	L47436
 	unlk	fp
 	rts
 
@@ -23539,11 +23539,11 @@ L71636:
 	beq.s	L71664
 	bsr  	L71818
 L71664:
-	subq.l	#1,U99196.l
+	subq.l	#1,U99196
 	move.w	8(fp),d0
-	movea.l	U99196.l,a1
+	movea.l	U99196,a1
 	move.b	d0,(a1)
-	movea.l	U101492.l,a0
+	movea.l	U101492,a0
 	tst.b	(a0)
 	beq.s	L71696
 	bsr  	L73220
@@ -23565,11 +23565,11 @@ L71722:
 L71730:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
-	move.w	U101044.l,d7
+	move.w	U101044,d7
 	clr.w	(sp)
-	jsr	L47436.l
+	jsr	L47436
 	bsr  	L70952
-	tst.w	U101200.l
+	tst.w	U101200
 	beq.s	L71792
 	bsr  	L73032
 	tst.w	d0
@@ -23579,13 +23579,13 @@ L71730:
 
 L71778:
 	bsr  	L72870
-	subq.w	#1,U101154.l
+	subq.w	#1,U101154
 	bsr  	L70952
 L71792:
 	move.w	d7,(sp)
 	bsr  	L72050
 	move.w	#1,(sp)
-	jsr	L47436.l
+	jsr	L47436
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
 	unlk	fp
@@ -23604,7 +23604,7 @@ L71832:
 	tst.w	d0
 	bne  	L72046
 	clr.w	(sp)
-	jsr	L47436.l
+	jsr	L47436
 	bsr  	L70986
 	bsr  	L73172
 	tst.w	d0
@@ -23619,14 +23619,14 @@ L71868:
 	bsr  	L73144
 	tst.w	d0
 	beq.s	L71934
-	move.w	U101154.l,(sp)
-	move.w	U101044.l,-(sp)
+	move.w	U101154,(sp)
+	move.w	U101044,-(sp)
 	move.w	#33,-(sp)
-	jsr	L45800.l
+	jsr	L45800
 	addq.l	#4,sp
-	move.w	U101154.l,(sp)
-	move.w	U101044.l,-(sp)
-	jsr	L46014.l
+	move.w	U101154,(sp)
+	move.w	U101044,-(sp)
+	jsr	L46014
 	addq.l	#2,sp
 	bra.s	L71942
 
@@ -23647,26 +23647,26 @@ L71944:
 	bsr  	L72470
 L71964:
 	bsr  	L72144
-	tst.w	U99200.l
+	tst.w	U99200
 	beq.s	L71986
 	move.w	#2,(sp)
-	jsr	L47436.l
+	jsr	L47436
 L71986:
 	move.w	#1,(sp)
-	addq.w	#1,U101154.l
-	move.w	U101154.l,-(sp)
-	jsr	L77222.l
+	addq.w	#1,U101154
+	move.w	U101154,-(sp)
+	jsr	L77222
 	addq.l	#2,sp
-	tst.w	U99200.l
+	tst.w	U99200
 	beq.s	L72026
 	clr.w	(sp)
-	jsr	L47436.l
+	jsr	L47436
 L72026:
 	bsr  	L70952
 	move.w	8(fp),(sp)
 	bsr.s	L72050
 	move.w	#1,(sp)
-	jsr	L47436.l
+	jsr	L47436
 L72046:
 	unlk	fp
 	rts
@@ -23675,10 +23675,10 @@ L72050:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
 	move.w	8(fp),d7
-	cmp.w	U101044.l,d7
+	cmp.w	U101044,d7
 	ble.s	L72082
 	move.w	d7,(sp)
-	move.w	U101044.l,d0
+	move.w	U101044,d0
 	sub.w	d0,(sp)
 	bra.s	L72084
 
@@ -23698,20 +23698,20 @@ L72098:
 	beq.s	L72114
 	bsr  	L72470
 L72114:
-	movea.l	U99196.l,a0
+	movea.l	U99196,a0
 	move.b	(a0),-2(fp)
 	bsr.s	L72160
 	move.b	-2(fp),d0
 	ext.w	d0
 	move.w	d0,(sp)
-	jsr	L74948.l
+	jsr	L74948
 	unlk	fp
 	rts
 
 L72144:
 	link	fp,#-4
 	bsr.s	L72160
-	addq.w	#1,U101044.l
+	addq.w	#1,U101044
 	unlk	fp
 	rts
 
@@ -23726,7 +23726,7 @@ L72160:
 	bsr  	L72808
 L72184:
 	bsr  	L72710
-	addq.l	#1,U99196.l
+	addq.l	#1,U99196
 	unlk	fp
 	rts
 
@@ -23743,7 +23743,7 @@ L72212:
 	bsr  	L72518
 	tst.w	d0
 	beq.s	L72236
-	jsr	L49684.l
+	jsr	L49684
 	bra.s	L72294
 
 L72236:
@@ -23752,8 +23752,8 @@ L72236:
 	bne.s	L72270
 	clr.w	(sp)
 	bsr  	L73072
-	add.w	U101496.l,d0
-	cmp.w	U101498.l,d0
+	add.w	U101496,d0
+	cmp.w	U101498,d0
 	blt.s	L72270
 	subq.w	#1,d7
 	bsr  	L72808
@@ -23764,7 +23764,7 @@ L72270:
 	beq.s	L72284
 	subq.w	#1,d7
 L72284:
-	addq.l	#1,U99196.l
+	addq.l	#1,U99196
 L72290:
 	tst.w	d7
 	bne.s	L72212
@@ -23779,7 +23779,7 @@ L72294:
 	bne.s	L72338
 L72316:
 	bsr  	L72596
-	jsr	L77166.l
+	jsr	L77166
 	bsr  	L73200
 	tst.w	d7
 	bge.s	L72338
@@ -23792,7 +23792,7 @@ L72338:
 
 L72348:
 	link	fp,#-4
-	move.w	U100672.l,d0
+	move.w	U100672,d0
 	ext.l	d0
 	divs	#2,d0
 	move.w	d0,(sp)
@@ -23815,10 +23815,10 @@ L72382:
 	bra.s	L72382
 
 L72406:
-	jsr	L77166.l
+	jsr	L77166
 	clr.w	(sp)
-	jsr	L47436.l
-	move.l	U101492.l,-4(fp)
+	jsr	L47436
+	move.l	U101492,-4(fp)
 	bsr  	L73200
 	tst.w	8(fp)
 	beq.s	L72456
@@ -23828,11 +23828,11 @@ L72440:
 	bsr  	L70890
 L72444:
 	move.l	-4(fp),d0
-	cmp.l	U99196.l,d0
+	cmp.l	U99196,d0
 	bne.s	L72440
 L72456:
 	move.w	#1,(sp)
-	jsr	L47436.l
+	jsr	L47436
 	unlk	fp
 	rts
 
@@ -23841,12 +23841,12 @@ L72470:
 	bsr.s	L72518
 	tst.w	d0
 	beq.s	L72514
-	jsr	L49684.l
+	jsr	L49684
 	move.w	#2,(sp)
-	jsr	L47436.l
+	jsr	L47436
 	move.w	#1,(sp)
 	move.l	#U101090,-(sp)
-	jsr	L218.l
+	jsr	L218
 	addq.l	#4,sp
 L72514:
 	unlk	fp
@@ -23855,7 +23855,7 @@ L72514:
 L72518:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
-	tst.w	U99200.l
+	tst.w	U99200
 	beq.s	L72538
 	moveq	#6,d0
 	bra.s	L72542
@@ -23864,9 +23864,9 @@ L72538:
 	move.w	#250,d0
 L72542:
 	move.w	d0,d7
-	sub.w	U100990.l,d7
-	move.l	U99196.l,d0
-	sub.l	U99856.l,d0
+	sub.w	U100990,d7
+	move.l	U99196,d0
+	sub.l	U99856,d0
 	cmp.w	#2,d7
 	bge.s	L72572
 	moveq	#2,d1
@@ -23896,51 +23896,51 @@ L72596:
 L72602:
 	bsr.s	L72616
 L72604:
-	tst.w	U101496.l
+	tst.w	U101496
 	bne.s	L72602
 	unlk	fp
 	rts
 
 L72616:
 	link	fp,#-4
-	subq.w	#1,U101200.l
-	subq.w	#1,U101496.l
-	subq.l	#1,U99196.l
-	subq.l	#1,U99856.l
-	movea.l	U99196.l,a0
-	movea.l	U99856.l,a1
+	subq.w	#1,U101200
+	subq.w	#1,U101496
+	subq.l	#1,U99196
+	subq.l	#1,U99856
+	movea.l	U99196,a0
+	movea.l	U99856,a1
 	move.b	(a1),(a0)
-	move.l	U100638.l,d0
-	cmp.l	U99856.l,d0
+	move.l	U100638,d0
+	cmp.l	U99856,d0
 	bne.s	L72682
-	move.l	U99196.l,U100638.l
+	move.l	U99196,U100638
 L72682:
-	move.l	U100642.l,d0
-	cmp.l	U99856.l,d0
+	move.l	U100642,d0
+	cmp.l	U99856,d0
 	bne.s	L72706
-	move.l	U99196.l,U100642.l
+	move.l	U99196,U100642
 L72706:
 	unlk	fp
 	rts
 
 L72710:
 	link	fp,#-4
-	addq.w	#1,U101496.l
-	addq.w	#1,U101200.l
-	move.l	U100638.l,d0
-	cmp.l	U99196.l,d0
+	addq.w	#1,U101496
+	addq.w	#1,U101200
+	move.l	U100638,d0
+	cmp.l	U99196,d0
 	bne.s	L72750
-	move.l	U99856.l,U100638.l
+	move.l	U99856,U100638
 L72750:
-	move.l	U100642.l,d0
-	cmp.l	U99196.l,d0
+	move.l	U100642,d0
+	cmp.l	U99196,d0
 	bne.s	L72774
-	move.l	U99856.l,U100642.l
+	move.l	U99856,U100642
 L72774:
-	movea.l	U99856.l,a0
-	movea.l	U99196.l,a1
+	movea.l	U99856,a0
+	movea.l	U99196,a1
 	move.b	(a1),(a0)
-	addq.l	#1,U99856.l
+	addq.l	#1,U99856
 	bsr  	L72958
 	tst.w	d0
 	beq.s	L72804
@@ -23951,34 +23951,34 @@ L72804:
 
 L72808:
 	link	fp,#-4
-	move.w	U101496.l,d0
-	movea.l	U99856.l,a1
+	move.w	U101496,d0
+	movea.l	U99856,a1
 	move.b	d0,(a1)
-	addq.l	#1,U99856.l
-	clr.w	U101496.l
-	addq.w	#1,U100990.l
-	move.w	U100990.l,d0
-	cmp.w	U100672.l,d0
+	addq.l	#1,U99856
+	clr.w	U101496
+	addq.w	#1,U100990
+	move.w	U100990,d0
+	cmp.w	U100672,d0
 	ble.s	L72866
-	move.w	#1,U100992.l
+	move.w	#1,U100992
 L72866:
 	unlk	fp
 	rts
 
 L72870:
 	link	fp,#-4
-	subq.w	#1,U100990.l
-	subq.l	#1,U99856.l
-	movea.l	U99856.l,a0
+	subq.w	#1,U100990
+	subq.l	#1,U99856
+	movea.l	U99856,a0
 	move.b	(a0),d0
 	ext.w	d0
-	move.w	d0,U101496.l
+	move.w	d0,U101496
 	unlk	fp
 	rts
 
 L72906:
 	link	fp,#-4
-	movea.l	U99196.l,a0
+	movea.l	U99196,a0
 	tst.b	(a0)
 	beq.s	L72924
 	clr.w	d0
@@ -24009,7 +24009,7 @@ L72954:
 
 L72958:
 	link	fp,#-4
-	movea.l	U99196.l,a0
+	movea.l	U99196,a0
 	cmpi.b	#10,(a0)
 	beq.s	L72978
 	clr.w	d0
@@ -24023,17 +24023,17 @@ L72980:
 
 L72984:
 	link	fp,#-4
-	movea.l	U101492.l,a0
+	movea.l	U101492,a0
 	move.b	(a0),d0
 	ext.w	d0
 	move.w	d0,(sp)
-	jsr	L74802.l
+	jsr	L74802
 	unlk	fp
 	rts
 
 L73010:
 	link	fp,#-4
-	tst.w	U101200.l
+	tst.w	U101200
 	beq.s	L73026
 	clr.w	d0
 	bra.s	L73028
@@ -24046,11 +24046,11 @@ L73028:
 
 L73032:
 	link	fp,#-4
-	cmpi.w	#1,U101154.l
+	cmpi.w	#1,U101154
 	bne.s	L73066
 	clr.w	(sp)
 	bsr.s	L73072
-	cmp.w	U101044.l,d0
+	cmp.w	U101044,d0
 	beq.s	L73062
 	clr.w	d0
 	bra.s	L73064
@@ -24068,11 +24068,11 @@ L73068:
 
 L73072:
 	link	fp,#-4
-	move.w	U100990.l,d0
+	move.w	U100990,d0
 	add.w	8(fp),d0
 	cmp.w	#1,d0
 	bgt.s	L73100
-	move.w	U100992.l,d0
+	move.w	U100992,d0
 	bra.s	L73102
 
 L73100:
@@ -24097,14 +24097,14 @@ L73122:
 
 L73126:
 	link	fp,#-4
-	move.l	U99196.l,U101492.l
+	move.l	U99196,U101492
 	unlk	fp
 	rts
 
 L73144:
 	link	fp,#-4
-	move.w	U101044.l,d0
-	cmp.w	U101498.l,d0
+	move.w	U101044,d0
+	cmp.w	U101498,d0
 	bge.s	L73166
 	clr.w	d0
 	bra.s	L73168
@@ -24117,8 +24117,8 @@ L73168:
 
 L73172:
 	link	fp,#-4
-	move.w	U101154.l,d0
-	cmp.w	U100672.l,d0
+	move.w	U101154,d0
+	cmp.w	U100672,d0
 	bge.s	L73194
 	clr.w	d0
 	bra.s	L73196
@@ -24131,23 +24131,23 @@ L73196:
 
 L73200:
 	link	fp,#-4
-	move.l	#U101040,U101492.l
+	move.l	#U101040,U101492
 	bsr.s	L73220
 	unlk	fp
 	rts
 
 L73220:
 	link	fp,#-4
-	move.l	U99196.l,U101026.l
-	move.l	U101492.l,U100750.l
+	move.l	U99196,U101026
+	move.l	U101492,U100750
 	bsr.s	L73280
 	unlk	fp
 	rts
 
 L73250:
 	link	fp,#-4
-	move.l	U101492.l,U101026.l
-	move.l	U99196.l,U100750.l
+	move.l	U101492,U101026
+	move.l	U99196,U100750
 	bsr.s	L73280
 	unlk	fp
 	rts
@@ -24155,41 +24155,41 @@ L73250:
 L73280:
 	link	fp,#-8
 	clr.w	(sp)
-	jsr	L47436.l
-	move.w	U101154.l,d0
+	jsr	L47436
+	move.w	U101154,d0
 	move.w	d0,-2(fp)
-	move.w	d0,U101052.l
-	move.w	U101044.l,-4(fp)
+	move.w	d0,U101052
+	move.w	U101044,-4(fp)
 	bsr.s	L73348
 	move.w	-4(fp),(sp)
 	move.w	-2(fp),-(sp)
-	jsr	L77222.l
+	jsr	L77222
 	addq.l	#2,sp
 	move.w	#1,(sp)
-	jsr	L47436.l
+	jsr	L47436
 	unlk	fp
 	rts
 
 L73348:
 	link	fp,#-4
 	move.l	#U101170,(sp)
-	jsr	L204.l
+	jsr	L204
 	tst.w	d0
 	bne  	L73540
 L73370:
-	movea.l	U101026.l,a0
+	movea.l	U101026,a0
 	tst.b	(a0)
 	beq.s	L73450
-	move.l	U101026.l,d0
-	cmp.l	U100750.l,d0
+	move.l	U101026,d0
+	cmp.l	U100750,d0
 	bne.s	L73412
-	move.w	U101154.l,d0
-	cmp.w	U101052.l,d0
+	move.w	U101154,d0
+	cmp.w	U101052,d0
 	bne.s	L73412
 	bra  	L73540
 
 L73412:
-	movea.l	U100750.l,a0
+	movea.l	U100750,a0
 	tst.b	(a0)
 	beq.s	L73428
 	bsr  	L73686
@@ -24198,7 +24198,7 @@ L73412:
 L73428:
 	bsr  	L73832
 L73432:
-	movea.l	U101026.l,a0
+	movea.l	U101026,a0
 	move.b	(a0),d0
 	ext.w	d0
 	move.w	d0,(sp)
@@ -24206,7 +24206,7 @@ L73432:
 	bra.s	L73492
 
 L73450:
-	movea.l	U100750.l,a0
+	movea.l	U100750,a0
 	tst.b	(a0)
 	beq.s	L73490
 	bsr  	L74120
@@ -24214,7 +24214,7 @@ L73450:
 	tst.w	d0
 	beq.s	L73482
 	bsr  	L74080
-	addq.l	#1,U100750.l
+	addq.l	#1,U100750
 L73482:
 	move.w	#1,(sp)
 	bsr.s	L73544
@@ -24224,19 +24224,19 @@ L73490:
 	bra.s	L73540
 
 L73492:
-	movea.l	U101026.l,a0
+	movea.l	U101026,a0
 	tst.b	(a0)
 	beq.s	L73522
 	bsr  	L74054
 	tst.w	d0
 	beq.s	L73522
-	addq.l	#1,U100750.l
-	addq.w	#1,U101052.l
+	addq.l	#1,U100750
+	addq.w	#1,U101052
 L73522:
 	bsr  	L74028
 	tst.w	d0
 	beq.s	L73536
-	addq.l	#1,U101026.l
+	addq.l	#1,U101026
 L73536:
 	bra  	L73370
 
@@ -24252,35 +24252,35 @@ L73544:
 	bsr  	L73976
 	tst.w	d0
 	beq.s	L73620
-	move.w	U101154.l,(sp)
-	move.w	U101044.l,-(sp)
+	move.w	U101154,(sp)
+	move.w	U101044,-(sp)
 	move.w	#32,-(sp)
-	jsr	L45800.l
+	jsr	L45800
 	addq.l	#4,sp
-	addq.w	#1,U101044.l
+	addq.w	#1,U101044
 	tst.w	8(fp)
 	bne.s	L73618
 	bsr  	L74054
 	tst.w	d0
 	beq.s	L73618
-	jsr	L77150.l
+	jsr	L77150
 	bra.s	L73682
 
 L73618:
 	bra.s	L73650
 
 L73620:
-	move.w	U101154.l,(sp)
-	move.w	U101044.l,-(sp)
+	move.w	U101154,(sp)
+	move.w	U101044,-(sp)
 	move.w	#33,-(sp)
-	jsr	L45800.l
+	jsr	L45800
 	addq.l	#4,sp
-	addq.w	#1,U101044.l
+	addq.w	#1,U101044
 L73650:
 	bsr  	L74054
 	tst.w	d0
 	bne.s	L73664
-	addq.w	#1,U101052.l
+	addq.w	#1,U101052
 L73664:
 	bsr  	L74080
 	bra.s	L73682
@@ -24319,15 +24319,15 @@ L73724:
 	ble.s	L73784
 	move.w	d7,d0
 	ext.l	d0
-	add.l	d0,U100750.l
+	add.l	d0,U100750
 	move.w	d7,d0
 	ext.l	d0
-	add.l	d0,U101026.l
+	add.l	d0,U101026
 	move.w	d7,(sp)
-	move.w	U101044.l,d0
+	move.w	U101044,d0
 	add.w	d0,(sp)
-	move.w	U101154.l,-(sp)
-	jsr	L77222.l
+	move.w	U101154,-(sp)
+	jsr	L77222
 	addq.l	#2,sp
 	bra.s	L73820
 
@@ -24335,13 +24335,13 @@ L73784:
 	bsr  	L73144
 	tst.w	d0
 	bne.s	L73822
-	movea.l	U101026.l,a0
+	movea.l	U101026,a0
 	move.b	(a0),d0
 	ext.w	d0
 	move.w	d0,(sp)
 	bsr  	L74158
-	addq.l	#1,U101026.l
-	addq.l	#1,U100750.l
+	addq.l	#1,U101026
+	addq.l	#1,U100750
 L73820:
 	bra.s	L73694
 
@@ -24359,12 +24359,12 @@ L73838:
 	bsr  	L73144
 	tst.w	d0
 	bne.s	L73874
-	movea.l	U101026.l,a0
+	movea.l	U101026,a0
 	move.b	(a0),d0
 	ext.w	d0
 	move.w	d0,(sp)
 	bsr  	L74158
-	addq.l	#1,U101026.l
+	addq.l	#1,U101026
 L73868:
 	bsr.s	L73976
 	tst.w	d0
@@ -24376,30 +24376,30 @@ L73874:
 L73878:
 	link	fp,#0
 	movem.l	d6-d7/a5,-(sp)
-	movea.l	U101026.l,a5
-	move.l	U100750.l,U98388.l
+	movea.l	U101026,a5
+	move.l	U100750,U98388
 	clr.w	d7
 	bra.s	L73940
 
 L73906:
 	move.w	d7,d0
-	add.w	U101044.l,d0
-	cmp.w	U101498.l,d0
+	add.w	U101044,d0
+	cmp.w	U101498,d0
 	bge.s	L73964
 	move.b	(a5)+,d0
 	ext.w	d0
 	move.w	d0,(sp)
-	jsr	L74802.l
+	jsr	L74802
 	tst.w	d0
 	bne.s	L73964
 	addq.w	#1,d7
 L73940:
-	movea.l	U98388.l,a0
+	movea.l	U98388,a0
 	move.b	(a0),d0
 	ext.w	d0
 	cmp.b	(a5),d0
 	move	sr,d0
-	addq.l	#1,U98388.l
+	addq.l	#1,U98388
 	move	d0,ccr
 	beq.s	L73906
 L73964:
@@ -24411,27 +24411,27 @@ L73964:
 
 L73976:
 	link	fp,#-4
-	movea.l	U101026.l,a0
+	movea.l	U101026,a0
 	move.b	(a0),d0
 	ext.w	d0
 	move.w	d0,(sp)
-	jsr	L74802.l
+	jsr	L74802
 	unlk	fp
 	rts
 
 L74002:
 	link	fp,#-4
-	movea.l	U100750.l,a0
+	movea.l	U100750,a0
 	move.b	(a0),d0
 	ext.w	d0
 	move.w	d0,(sp)
-	jsr	L74802.l
+	jsr	L74802
 	unlk	fp
 	rts
 
 L74028:
 	link	fp,#-4
-	movea.l	U101026.l,a0
+	movea.l	U101026,a0
 	cmpi.b	#10,(a0)
 	beq.s	L74048
 	clr.w	d0
@@ -24445,7 +24445,7 @@ L74050:
 
 L74054:
 	link	fp,#-4
-	movea.l	U100750.l,a0
+	movea.l	U100750,a0
 	cmpi.b	#10,(a0)
 	beq.s	L74074
 	clr.w	d0
@@ -24464,10 +24464,10 @@ L74080:
 	beq.s	L74110
 	move.w	#1,(sp)
 	move.l	#U101170,-(sp)
-	jsr	L218.l
+	jsr	L218
 	addq.l	#4,sp
 L74110:
-	jsr	L74860.l
+	jsr	L74860
 	unlk	fp
 	rts
 
@@ -24481,7 +24481,7 @@ L74126:
 	bne.s	L74154
 	move.w	#32,(sp)
 	bsr.s	L74158
-	addq.l	#1,U100750.l
+	addq.l	#1,U100750
 L74146:
 	bsr  	L74002
 	tst.w	d0
@@ -24500,13 +24500,13 @@ L74158:
 	beq.s	L74196
 	move.w	#1,(sp)
 	move.l	#U101170,-(sp)
-	jsr	L218.l
+	jsr	L218
 	addq.l	#4,sp
 L74196:
 	move.b	9(fp),d0
 	ext.w	d0
 	move.w	d0,(sp)
-	jsr	L74948.l
+	jsr	L74948
 	unlk	fp
 	rts
 
@@ -24514,22 +24514,22 @@ L74214:
 	link	fp,#-4
 	tst.b	9(fp)
 	bne.s	L74236
-	move.l	#U99202,U98392.l
+	move.l	#U99202,U98392
 	bra.s	L74272
 
 L74236:
 	move.l	#U99601,d0
-	cmp.l	U98392.l,d0
+	cmp.l	U98392,d0
 	bhi.s	L74256
 	bsr  	L74702
 	bra.s	L74272
 
 L74256:
-	movea.l	U98392.l,a0
+	movea.l	U98392,a0
 	move.b	9(fp),(a0)
-	addq.l	#1,U98392.l
+	addq.l	#1,U98392
 L74272:
-	movea.l	U98392.l,a0
+	movea.l	U98392,a0
 	clr.b	(a0)
 	unlk	fp
 	rts
@@ -24542,8 +24542,8 @@ L74284:
 
 L74298:
 	link	fp,#-4
-	move.l	U100638.l,U100642.l
-	move.l	U99196.l,U100638.l
+	move.l	U100638,U100642
+	move.l	U99196,U100638
 	unlk	fp
 	rts
 
@@ -24551,8 +24551,8 @@ L74326:
 	link	fp,#0
 	movem.l	d6-d7/a5,-(sp)
 	clr.w	(sp)
-	jsr	L47436.l
-	move.l	U99856.l,U100638.l
+	jsr	L47436
+	move.l	U99856,U100638
 	bsr.s	L74284
 	movea.l	d0,a5
 	bra.s	L74364
@@ -24566,7 +24566,7 @@ L74364:
 	bne.s	L74358
 	bsr.s	L74298
 	move.w	#1,(sp)
-	jsr	L47436.l
+	jsr	L47436
 	tst.l	(sp)+
 	movem.l	(sp)+,d7/a5
 	unlk	fp
@@ -24574,48 +24574,48 @@ L74364:
 
 L74392:
 	link	fp,#-8
-	tst.l	U100638.l
+	tst.l	U100638
 	beq  	L74562
-	tst.l	U100642.l
+	tst.l	U100642
 	beq  	L74562
-	move.l	U100638.l,d0
-	cmp.l	U100642.l,d0
+	move.l	U100638,d0
+	cmp.l	U100642,d0
 	bls.s	L74456
-	move.l	U100638.l,-4(fp)
-	move.l	U100642.l,U100638.l
-	move.l	-4(fp),U100642.l
+	move.l	U100638,-4(fp)
+	move.l	U100642,U100638
+	move.l	-4(fp),U100642
 L74456:
-	move.l	U100638.l,d0
-	cmp.l	U100642.l,d0
+	move.l	U100638,d0
+	cmp.l	U100642,d0
 	beq.s	L74546
-	move.l	U100638.l,(sp)
+	move.l	U100638,(sp)
 	bsr.s	L74566
 	clr.w	(sp)
 	bsr  	L74214
 	bra.s	L74508
 
 L74486:
-	movea.l	U100638.l,a0
+	movea.l	U100638,a0
 	move.b	(a0),d0
 	ext.w	d0
 	move.w	d0,(sp)
 	bsr  	L74214
-	addq.l	#1,U100638.l
+	addq.l	#1,U100638
 L74508:
-	move.l	U100638.l,d0
-	cmp.l	U100642.l,d0
+	move.l	U100638,d0
+	cmp.l	U100642,d0
 	bcs.s	L74486
 	tst.w	8(fp)
 	beq.s	L74542
-	move.l	U100642.l,U99196.l
+	move.l	U100642,U99196
 	bsr  	L73126
 L74542:
 	bsr  	L72348
 L74546:
 	clr.w	d0
 	ext.l	d0
-	move.l	d0,U100642.l
-	move.l	d0,U100638.l
+	move.l	d0,U100642
+	move.l	d0,U100638
 L74562:
 	unlk	fp
 	rts
@@ -24623,16 +24623,16 @@ L74562:
 L74566:
 	link	fp,#-4
 	move.l	8(fp),d0
-	cmp.l	U99856.l,d0
+	cmp.l	U99856,d0
 	bcc.s	L74624
 L74582:
 	bsr  	L73010
 	tst.w	d0
 	bne.s	L74622
 	move.l	8(fp),d0
-	cmp.l	U99856.l,d0
+	cmp.l	U99856,d0
 	bcc.s	L74622
-	tst.w	U101496.l
+	tst.w	U101496
 	beq.s	L74616
 	bsr  	L72616
 	bra.s	L74620
@@ -24647,7 +24647,7 @@ L74622:
 
 L74624:
 	move.l	8(fp),d0
-	cmp.l	U99196.l,d0
+	cmp.l	U99196,d0
 	beq.s	L74698
 	bsr  	L72906
 	tst.w	d0
@@ -24662,13 +24662,13 @@ L74654:
 	bne.s	L74686
 	clr.w	(sp)
 	bsr  	L73072
-	add.w	U101496.l,d0
-	cmp.w	U101498.l,d0
+	add.w	U101496,d0
+	cmp.w	U101498,d0
 	blt.s	L74686
 	bsr  	L72808
 L74686:
 	bsr  	L72710
-	addq.l	#1,U99196.l
+	addq.l	#1,U99196
 	bra.s	L74624
 
 L74698:
@@ -24677,11 +24677,11 @@ L74698:
 
 L74702:
 	link	fp,#-4
-	jsr	L49684.l
-	tst.w	U99200.l
+	jsr	L49684
+	tst.w	U99200
 	bne.s	L74742
 	move.w	#2,(sp)
-	jsr	L47436.l
+	jsr	L47436
 	move.w	#-1,(sp)
 	clr.w	-(sp)
 	bsr  	L72378
@@ -24689,19 +24689,19 @@ L74702:
 L74742:
 	move.w	#1,(sp)
 	move.l	#U101090,-(sp)
-	jsr	L218.l
+	jsr	L218
 	addq.l	#4,sp
 	unlk	fp
 	rts
 
 L74764:
 	link	fp,#-4
-	addq.w	#1,U99852.l
+	addq.w	#1,U99852
 	clr.w	d0
-	move.w	U99852.l,d0
+	move.w	U99852,d0
 	cmp.w	#20,d0
 	bls.s	L74798
-	clr.w	U99852.l
+	clr.w	U99852
 	bsr  	L75710
 L74798:
 	unlk	fp
@@ -24728,7 +24728,7 @@ L74830:
 
 L74840:
 	link	fp,#-4
-	cmpi.w	#1,U101044.l
+	cmpi.w	#1,U101044
 	ble.s	L74856
 	bsr.s	L74860
 L74856:
@@ -24744,8 +24744,8 @@ L74860:
 
 L74874:
 	link	fp,#-4
-	jsr	L58068.l
-	jsr	L47940.l
+	jsr	L58068
+	jsr	L47940
 	bsr.s	L74860
 	move.l	8(fp),(sp)
 	bsr.s	L74902
@@ -24778,61 +24778,61 @@ L74948:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
 	move.b	9(fp),d7
-	tst.w	U98714.l
+	tst.w	U98714
 	beq.s	L75020
-	addq.w	#1,U99178.l
+	addq.w	#1,U99178
 	clr.w	d0
-	move.w	U99178.l,d0
+	move.w	U99178,d0
 	cmp.w	#134,d0
 	bcs.s	L74994
-	jsr	L67450.l
+	jsr	L67450
 L74994:
-	movea.l	U101030.l,a0
+	movea.l	U101030,a0
 	move.b	d7,(a0)
-	addq.l	#1,U101030.l
-	movea.l	U101030.l,a0
+	addq.l	#1,U101030
+	movea.l	U101030,a0
 	clr.b	(a0)
 	bra  	L75538
 
 L75020:
-	cmpi.w	#2,U100996.l
+	cmpi.w	#2,U100996
 	bne.s	L75090
 	cmp.b	#10,d7
 	bne.s	L75068
 	bsr  	L77150
 	move.w	#13,(sp)
-	jsr	L19402.l
+	jsr	L19402
 	move.b	d7,d0
 	ext.w	d0
 	move.w	d0,(sp)
-	jsr	L19402.l
+	jsr	L19402
 	bsr  	L75596
 	bra.s	L75086
 
 L75068:
-	addq.w	#1,U101044.l
+	addq.w	#1,U101044
 	move.b	d7,d0
 	ext.w	d0
 	move.w	d0,(sp)
-	jsr	L19402.l
+	jsr	L19402
 L75086:
 	bra  	L75538
 
 L75090:
-	jsr	L58044.l
+	jsr	L58044
 	tst.w	d0
 	beq  	L75244
-	move.w	U101200.l,d0
-	move.w	U101468.l,d1
+	move.w	U101200,d0
+	move.w	U101468,d1
 	add.w	#-250,d1
 	cmp.w	d1,d0
 	move	sr,d0
-	addq.w	#1,U101200.l
+	addq.w	#1,U101200
 	move	d0,ccr
 	blt.s	L75150
 	move.w	#1,(sp)
 	move.l	#U101090,-(sp)
-	jsr	L218.l
+	jsr	L218
 	addq.l	#4,sp
 L75150:
 	cmp.b	#9,d7
@@ -24845,79 +24845,79 @@ L75150:
 L75170:
 	cmp.b	#10,d7
 	bne.s	L75188
-	addq.w	#1,U100990.l
+	addq.w	#1,U100990
 	bsr  	L77150
 	bra.s	L75226
 
 L75188:
-	move.w	U101044.l,d0
-	cmp.w	U101498.l,d0
+	move.w	U101044,d0
+	cmp.w	U101498,d0
 	move	sr,d0
-	addq.w	#1,U101044.l
+	addq.w	#1,U101044
 	move	d0,ccr
 	blt.s	L75226
-	addq.w	#1,U100990.l
-	move.w	#2,U101044.l
+	addq.w	#1,U100990
+	move.w	#2,U101044
 L75226:
-	addq.l	#1,U101102.l
-	movea.l	U101102.l,a0
+	addq.l	#1,U101102
+	movea.l	U101102,a0
 	move.b	d7,(a0)
 	bra  	L75538
 
 L75244:
-	tst.w	U101146.l
+	tst.w	U101146
 	beq.s	L75264
 	move.b	d7,d0
 	ext.w	d0
 	move.w	d0,(sp)
-	jsr	L19078.l
+	jsr	L19078
 L75264:
 	move.b	d7,d0
 	ext.w	d0
 	bra  	L75506
 
 L75272:
-	move.w	U101154.l,(sp)
+	move.w	U101154,(sp)
 	move.w	#1,-(sp)
-	jsr	L46014.l
+	jsr	L46014
 	addq.l	#2,sp
 	bsr  	L77262
 	tst.w	d0
 	beq.s	L75308
 	move.w	#2,(sp)
-	jsr	L47436.l
+	jsr	L47436
 L75308:
-	jsr	L73172.l
+	jsr	L73172
 	tst.w	d0
 	beq.s	L75326
-	jsr	L46714.l
+	jsr	L46714
 	bra.s	L75332
 
 L75326:
-	addq.w	#1,U101154.l
+	addq.w	#1,U101154
 L75332:
-	move.w	U101154.l,(sp)
+	move.w	U101154,(sp)
 	moveq	#1,d0
-	move.w	d0,U101044.l
+	move.w	d0,U101044
 	move.w	d0,-(sp)
-	jsr	L46014.l
+	jsr	L46014
 	addq.l	#2,sp
 	bsr  	L77262
 	tst.w	d0
 	beq.s	L75376
 	clr.w	(sp)
-	jsr	L47436.l
+	jsr	L47436
 	bsr  	L75596
 L75376:
 	bra  	L75538
 
 L75380:
-	cmpi.w	#1,U101044.l
+	cmpi.w	#1,U101044
 	ble.s	L75416
-	move.w	U101154.l,(sp)
-	subq.w	#1,U101044.l
-	move.w	U101044.l,-(sp)
-	jsr	L46014.l
+	move.w	U101154,(sp)
+	subq.w	#1,U101044
+	move.w	U101044,-(sp)
+	jsr	L46014
 	addq.l	#2,sp
 L75416:
 	bra  	L75538
@@ -24929,24 +24929,24 @@ L75420:
 	bra.s	L75538
 
 L75432:
-	jsr	L73144.l
+	jsr	L73144
 	tst.w	d0
 	beq.s	L75470
-	move.w	U101154.l,(sp)
-	move.w	U101044.l,-(sp)
+	move.w	U101154,(sp)
+	move.w	U101044,-(sp)
 	move.w	#33,-(sp)
-	jsr	L45800.l
+	jsr	L45800
 	addq.l	#4,sp
 	bsr  	L74840
 L75470:
-	move.w	U101154.l,(sp)
-	move.w	U101044.l,-(sp)
+	move.w	U101154,(sp)
+	move.w	U101044,-(sp)
 	move.b	d7,d0
 	ext.w	d0
 	move.w	d0,-(sp)
-	jsr	L45800.l
+	jsr	L45800
 	addq.l	#4,sp
-	addq.w	#1,U101044.l
+	addq.w	#1,U101044
 	bra.s	L75538
 
 	bra.s	L75538
@@ -24970,10 +24970,10 @@ L75538:
 
 L75548:
 	link	fp,#-4
-	move.w	T84994.l,d0
-	move.w	U101044.l,d1
+	move.w	T84994,d0
+	move.w	U101044,d1
 	subq.w	#1,d1
-	move.w	T84994.l,d2
+	move.w	T84994,d2
 	subq.w	#1,d2
 	and.w	d2,d1
 	sub.w	d1,d0
@@ -24982,25 +24982,25 @@ L75548:
 
 L75582:
 	link	fp,#-4
-	clr.w	U101458.l
+	clr.w	U101458
 	unlk	fp
 	rts
 
 L75596:
 	link	fp,#-4
 	movea.l	#6,a0
-	movea.l	U91932.l,a1
+	movea.l	U91932,a1
 	move.l	0(a0,a1.l),d0
-	cmp.l	U91936.l,d0
+	cmp.l	U91936,d0
 	bne.s	L75632
-	tst.w	U91926.l
+	tst.w	U91926
 	beq.s	L75666
 L75632:
-	movea.l	U91932.l,a0
+	movea.l	U91932,a0
 	addq.l	#6,a0
-	move.l	(a0),U91936.l
-	clr.w	U91926.l
-	jsr	L46108.l
+	move.l	(a0),U91936
+	clr.w	U91926
+	jsr	L46108
 	cmp.w	#-1,d0
 	bne.s	L75666
 	bsr.s	L75670
@@ -25010,12 +25010,12 @@ L75666:
 
 L75670:
 	link	fp,#-4
-	jsr	L46620.l
+	jsr	L46620
 	and.w	#255,d0
-	move.b	d0,U101150.l
+	move.b	d0,U101150
 	move.w	d0,(sp)
 	bsr  	L75910
-	move.w	d0,U101458.l
+	move.w	d0,U101458
 	bsr  	L76094
 	unlk	fp
 	rts
@@ -25025,13 +25025,13 @@ L75710:
 	bsr  	L75962
 	tst.w	d0
 	beq.s	L75758
-	move.l	T87082.l,(sp)
+	move.l	T87082,(sp)
 	move.w	#1,-(sp)
-	jsr	L1386.l
+	jsr	L1386
 	addq.l	#2,sp
 	move.w	#1,(sp)
 	move.l	#U101158,-(sp)
-	jsr	L218.l
+	jsr	L218
 	addq.l	#4,sp
 L75758:
 	bsr  	L75596
@@ -25039,7 +25039,7 @@ L75758:
 	tst.w	d0
 	beq.s	L75780
 	bsr  	L75582
-	jsr	L2226.l
+	jsr	L2226
 	bra.s	L75784
 
 L75780:
@@ -25050,7 +25050,7 @@ L75784:
 
 L75788:
 	link	fp,#-4
-	cmpi.w	#-26,U101458.l
+	cmpi.w	#-26,U101458
 	bne.s	L75808
 	bsr.s	L75818
 	tst.w	d0
@@ -25067,11 +25067,11 @@ L75814:
 
 L75818:
 	link	fp,#-4
-	tst.w	U101470.l
+	tst.w	U101470
 	bne.s	L75846
-	tst.w	U101476.l
+	tst.w	U101476
 	bne.s	L75846
-	tst.w	U100980.l
+	tst.w	U100980
 	beq.s	L75850
 L75846:
 	clr.w	d0
@@ -25085,7 +25085,7 @@ L75852:
 
 L75856:
 	link	fp,#-4
-	tst.w	U101458.l
+	tst.w	U101458
 	bne.s	L75872
 	bsr  	L75670
 L75872:
@@ -25095,7 +25095,7 @@ L75872:
 	bsr  	L75582
 	move.w	#1,(sp)
 	move.l	#U100656,-(sp)
-	jsr	L218.l
+	jsr	L218
 	addq.l	#4,sp
 	bra.s	L75906
 
@@ -25135,26 +25135,26 @@ L75952:
 L75962:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
-	cmpi.w	#1,U100986.l
+	cmpi.w	#1,U100986
 	beq.s	L75990
-	cmpi.w	#1,U100996.l
+	cmpi.w	#1,U100996
 	bne.s	L76008
 L75990:
-	move.l	U100744.l,d0
-	move.w	U101468.l,d1
+	move.l	U100744,d0
+	move.w	U101468,d1
 	ext.l	d1
 	add.l	d1,d0
 	bra.s	L76014
 
 L76008:
-	move.l	U100744.l,d0
+	move.l	U100744,d0
 L76014:
 	move.l	d0,d7
 	move.l	fp,d0
 	add.l	#-1719,d0
 	cmp.l	d0,d7
 	bls.s	L76036
-	move.w	#19,U99852.l
+	move.w	#19,U99852
 L76036:
 	move.l	fp,d0
 	add.l	#-503,d0
@@ -25173,9 +25173,9 @@ L76054:
 
 L76064:
 	link	fp,#-4
-	tst.w	U99190.l
+	tst.w	U99190
 	beq.s	L76084
-	tst.w	U101476.l
+	tst.w	U101476
 	beq.s	L76088
 L76084:
 	clr.w	d0
@@ -25189,65 +25189,65 @@ L76090:
 
 L76094:
 	link	fp,#-4
-	cmpi.w	#-7,U101458.l
+	cmpi.w	#-7,U101458
 	bne  	L76344
 	bsr.s	L76064
 	tst.w	d0
 	bne  	L76344
 	bsr  	L75582
 	move.w	#2,(sp)
-	jsr	L47436.l
-	tst.w	U101146.l
+	jsr	L47436
+	tst.w	U101146
 	beq.s	L76156
-	jsr	L49708.l
+	jsr	L49708
 	tst.w	d0
 	bne.s	L76156
-	clr.w	U101146.l
+	clr.w	U101146
 L76156:
-	tst.w	U100980.l
+	tst.w	U100980
 	beq.s	L76206
-	move.w	U100990.l,U99194.l
-	move.w	U101044.l,U98710.l
-	jsr	L70792.l
-	move.l	U99196.l,U101102.l
-	jsr	L70038.l
+	move.w	U100990,U99194
+	move.w	U101044,U98710
+	jsr	L70792
+	move.l	U99196,U101102
+	jsr	L70038
 L76206:
-	jsr	L70006.l
-	move.l	T87066.l,(sp)
+	jsr	L70006
+	move.l	T87066,(sp)
 	bsr  	L76994
 	bra.s	L76316
 
 L76224:
-	jsr	L64160.l
+	jsr	L64160
 	cmp.w	#20,d0
 	bne.s	L76276
 	move.w	#9,(sp)
-	jsr	L64658.l
+	jsr	L64658
 	cmp.w	#26,d0
 	bne.s	L76276
-	jsr	L64942.l
+	jsr	L64942
 	move.w	#2,(sp)
 	move.l	#U101014,-(sp)
-	jsr	L218.l
+	jsr	L218
 	addq.l	#4,sp
 L76276:
-	jsr	L64160.l
+	jsr	L64160
 	cmp.w	#22,d0
 	bne.s	L76310
-	jsr	L64942.l
+	jsr	L64942
 	clr.w	(sp)
 	move.l	#U101014,-(sp)
-	jsr	L218.l
+	jsr	L218
 	addq.l	#4,sp
 L76310:
-	jsr	L64028.l
+	jsr	L64028
 L76316:
-	jsr	L64006.l
+	jsr	L64006
 	tst.w	d0
 	beq.s	L76224
 	move.w	#1,(sp)
 	move.l	#U101158,-(sp)
-	jsr	L218.l
+	jsr	L218
 	addq.l	#4,sp
 L76344:
 	unlk	fp
@@ -25263,7 +25263,7 @@ L76358:
 	movea.w	-6(fp),a1
 	adda.l	a1,a0
 	move.l	a0,-(sp)
-	jsr	L46620.l
+	jsr	L46620
 	movea.l	(sp)+,a0
 	move.b	d0,-10(a0)
 	addq.w	#1,-6(fp)
@@ -25276,27 +25276,27 @@ L76384:
 
 L76400:
 	link	fp,#-4
-	cmpi.w	#-28,U101458.l
+	cmpi.w	#-28,U101458
 	bne  	L76800
 	bsr  	L75818
 	tst.w	d0
 	beq  	L76800
 L76426:
 	bsr  	L75582
-	clr.w	U99200.l
-	jsr	L46620.l
+	clr.w	U99200
+	jsr	L46620
 	bra  	L76724
 
 L76446:
-	jsr	L64006.l
+	jsr	L64006
 	tst.w	d0
 	bne.s	L76482
-	jsr	L64160.l
+	jsr	L64160
 	cmp.w	#22,d0
 	bne.s	L76482
 	bsr  	L74840
 	move.w	#22,(sp)
-	jsr	L62262.l
+	jsr	L62262
 L76482:
 	bra  	L76746
 
@@ -25309,19 +25309,19 @@ L76500:
 	bsr  	L76348
 	move.l	d0,(sp)
 	move.l	#U100754,d0
-	move.l	d0,U101030.l
+	move.l	d0,U101030
 	move.l	d0,-(sp)
-	jsr	L83880.l
+	jsr	L83880
 	addq.l	#4,sp
 	move.l	d0,(sp)
-	jsr	L77692.l
-	move.l	U101030.l,(sp)
+	jsr	L77692
+	move.l	U101030,(sp)
 	move.l	#T86975,-(sp)
 	move.l	#U100162,-(sp)
-	jsr	L83880.l
+	jsr	L83880
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	jsr	L83706.l
+	jsr	L83706
 	addq.l	#4,sp
 	move.l	#U100162,(sp)
 	bsr  	L76856
@@ -25358,7 +25358,7 @@ L76654:
 	bra.s	L76746
 
 L76666:
-	tst.w	U98398.l
+	tst.w	U98398
 	beq.s	L76682
 	move.l	#T87026,(sp)
 	bra.s	L76688
@@ -25370,7 +25370,7 @@ L76688:
 	bra.s	L76746
 
 L76694:
-	tst.w	U101198.l
+	tst.w	U101198
 	beq.s	L76710
 	move.l	#T87040,(sp)
 	bra.s	L76716
@@ -25395,21 +25395,21 @@ L76734:
 
 L76746:
 	bsr  	L75596
-	cmpi.w	#-28,U101458.l
+	cmpi.w	#-28,U101458
 	bne.s	L76764
 	bra  	L76426
 
 L76764:
-	jsr	L64006.l
+	jsr	L64006
 	tst.w	d0
 	bne.s	L76786
-	jsr	L64160.l
+	jsr	L64160
 	cmp.w	#22,d0
 	bne.s	L76800
 L76786:
 	clr.w	(sp)
 	move.w	#22,-(sp)
-	jsr	L62282.l
+	jsr	L62282
 	addq.l	#2,sp
 L76800:
 	unlk	fp
@@ -25421,36 +25421,36 @@ L76804:
 	move.l	d0,(sp)
 	move.l	8(fp),-(sp)
 	move.l	#U100162,-(sp)
-	jsr	L83880.l
+	jsr	L83880
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	jsr	L83706.l
+	jsr	L83706
 	addq.l	#4,sp
 	move.l	d0,(sp)
 	bsr.s	L76856
-	clr.b	U100162.l
+	clr.b	U100162
 	unlk	fp
 	rts
 
 L76856:
 	link	fp,#-4
 	move.w	#26,(sp)
-	jsr	L64090.l
-	jsr	L9760.l
+	jsr	L64090
+	jsr	L9760
 	move.l	#U101014,(sp)
-	jsr	L204.l
+	jsr	L204
 	bra.s	L76932
 
 L76890:
-	clr.w	U100748.l
-	jsr	L68942.l
+	clr.w	U100748
+	jsr	L68942
 	bra.s	L76944
 
 L76904:
-	jsr	L64888.l
-	move.l	8(fp),U100962.l
-	jsr	L50854.l
-	jsr	L58142.l
+	jsr	L64888
+	move.l	8(fp),U100962
+	jsr	L50854
+	jsr	L58142
 L76930:
 	bra.s	L76944
 
@@ -25462,7 +25462,7 @@ L76932:
 	bra.s	L76930
 
 L76944:
-	jsr	L9794.l
+	jsr	L9794
 	unlk	fp
 	rts
 
@@ -25490,8 +25490,8 @@ L76978:
 L76994:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
-	jsr	L47940.l
-	jsr	L64994.l
+	jsr	L47940
+	jsr	L64994
 	move.w	d0,d7
 	beq.s	L77128
 	bsr  	L74840
@@ -25499,26 +25499,26 @@ L76994:
 	move.l	#L55354,-(sp)
 	move.l	8(fp),-(sp)
 	move.l	#L74902,-(sp)
-	move.l	T87306.l,-(sp)
-	jsr	L54390.l
+	move.l	T87306,-(sp)
+	jsr	L54390
 	adda.l	#16,sp
 	move.l	#T87054,(sp)
 	bsr  	L74902
-	tst.w	U99864.l
+	tst.w	U99864
 	beq.s	L77098
-	move.w	U99864.l,(sp)
-	jsr	L358.l
+	move.w	U99864,(sp)
+	jsr	L358
 	move.w	d0,(sp)
-	jsr	L55354.l
+	jsr	L55354
 	bra.s	L77126
 
 L77098:
-	tst.w	U99818.l
+	tst.w	U99818
 	beq.s	L77126
-	move.w	U99818.l,(sp)
-	jsr	L358.l
+	move.w	U99818,(sp)
+	jsr	L358
 	move.w	d0,(sp)
-	jsr	L55354.l
+	jsr	L55354
 L77126:
 	bra.s	L77136
 
@@ -25534,7 +25534,7 @@ L77136:
 
 L77150:
 	link	fp,#-4
-	move.w	#1,U101044.l
+	move.w	#1,U101044
 	unlk	fp
 	rts
 
@@ -25544,9 +25544,9 @@ L77166:
 	tst.w	d0
 	beq.s	L77186
 	move.w	#2,(sp)
-	jsr	L47436.l
+	jsr	L47436
 L77186:
-	jsr	L47278.l
+	jsr	L47278
 	move.w	#1,(sp)
 	move.w	#1,-(sp)
 	bsr.s	L77222
@@ -25555,7 +25555,7 @@ L77186:
 	tst.w	d0
 	beq.s	L77218
 	clr.w	(sp)
-	jsr	L47436.l
+	jsr	L47436
 L77218:
 	unlk	fp
 	rts
@@ -25563,21 +25563,21 @@ L77218:
 L77222:
 	link	fp,#-4
 	move.w	8(fp),d0
-	move.w	d0,U101154.l
+	move.w	d0,U101154
 	move.w	d0,(sp)
 	move.w	10(fp),d0
-	move.w	d0,U101044.l
+	move.w	d0,U101044
 	move.w	d0,-(sp)
-	jsr	L46014.l
+	jsr	L46014
 	addq.l	#2,sp
 	unlk	fp
 	rts
 
 L77262:
 	link	fp,#-4
-	tst.w	U100980.l
+	tst.w	U100980
 	bne.s	L77282
-	tst.w	U99200.l
+	tst.w	U99200
 	beq.s	L77286
 L77282:
 	clr.w	d0
@@ -25611,7 +25611,7 @@ L77332:
 	link	fp,#-4
 	move.w	8(fp),(sp)
 	move.w	#5,-(sp)
-	jsr	L552.l
+	jsr	L552
 	addq.l	#2,sp
 	unlk	fp
 	rts
@@ -25620,7 +25620,7 @@ L77356:
 	link	fp,#-4
 	move.l	10(fp),(sp)
 	move.w	8(fp),-(sp)
-	jsr	L552.l
+	jsr	L552
 	addq.l	#2,sp
 	unlk	fp
 	rts
@@ -25628,7 +25628,7 @@ L77356:
 L77380:
 	link	fp,#-4
 	move.w	#25,(sp)
-	jsr	L552.l
+	jsr	L552
 	unlk	fp
 	rts
 
@@ -25636,7 +25636,7 @@ L77398:
 	link	fp,#-4
 	move.l	8(fp),(sp)
 	move.w	#26,-(sp)
-	jsr	L552.l
+	jsr	L552
 	addq.l	#2,sp
 	unlk	fp
 	rts
@@ -25646,7 +25646,7 @@ L77422:
 	move.w	12(fp),(sp)
 	move.l	8(fp),-(sp)
 	move.w	#78,-(sp)
-	jsr	L552.l
+	jsr	L552
 	addq.l	#6,sp
 	unlk	fp
 	rts
@@ -25654,7 +25654,7 @@ L77422:
 L77450:
 	link	fp,#-6
 	move.w	#79,(sp)
-	jsr	L552.l
+	jsr	L552
 	unlk	fp
 	rts
 
@@ -25663,7 +25663,7 @@ L77468:
 	move.w	12(fp),(sp)
 	move.l	8(fp),-(sp)
 	move.w	#61,-(sp)
-	jsr	L552.l
+	jsr	L552
 	addq.l	#6,sp
 	unlk	fp
 	rts
@@ -25672,7 +25672,7 @@ L77496:
 	link	fp,#-4
 	move.w	8(fp),(sp)
 	move.w	#62,-(sp)
-	jsr	L552.l
+	jsr	L552
 	addq.l	#2,sp
 	unlk	fp
 	rts
@@ -25684,7 +25684,7 @@ L77520:
 	move.l	a0,-(sp)
 	move.w	14(fp),-(sp)
 	move.w	#63,-(sp)
-	jsr	L552.l
+	jsr	L552
 	addq.l	#8,sp
 	unlk	fp
 	rts
@@ -25696,7 +25696,7 @@ L77554:
 	move.l	a0,-(sp)
 	move.w	14(fp),-(sp)
 	move.w	#64,-(sp)
-	jsr	L552.l
+	jsr	L552
 	addq.l	#8,sp
 	unlk	fp
 	rts
@@ -25705,7 +25705,7 @@ L77588:
 	link	fp,#-4
 	move.l	8(fp),(sp)
 	move.w	#59,-(sp)
-	jsr	L552.l
+	jsr	L552
 	addq.l	#2,sp
 	unlk	fp
 	rts
@@ -25715,7 +25715,7 @@ L77612:
 	move.w	12(fp),(sp)
 	move.l	8(fp),-(sp)
 	move.w	#71,-(sp)
-	jsr	L552.l
+	jsr	L552
 	addq.l	#6,sp
 	unlk	fp
 	rts
@@ -25724,7 +25724,7 @@ L77640:
 	link	fp,#-4
 	move.w	8(fp),(sp)
 	move.w	#14,-(sp)
-	jsr	L552.l
+	jsr	L552
 	addq.l	#2,sp
 	unlk	fp
 	rts
@@ -25734,7 +25734,7 @@ L77664:
 	move.w	12(fp),(sp)
 	move.l	8(fp),-(sp)
 	move.w	#60,-(sp)
-	jsr	L552.l
+	jsr	L552
 	addq.l	#6,sp
 	unlk	fp
 	rts
@@ -25743,7 +25743,7 @@ L77692:
 	link	fp,#-4
 	move.l	8(fp),(sp)
 	move.w	#65,-(sp)
-	jsr	L552.l
+	jsr	L552
 	addq.l	#2,sp
 	unlk	fp
 	rts
@@ -25754,7 +25754,7 @@ L77716:
 	move.l	8(fp),-(sp)
 	move.w	-2(fp),-(sp)
 	move.w	#86,-(sp)
-	jsr	L552.l
+	jsr	L552
 	addq.l	#8,sp
 	unlk	fp
 	rts
@@ -25765,7 +25765,7 @@ L77748:
 	andi.l	#-2,8(fp)
 	move.l	8(fp),(sp)
 	move.w	#72,-(sp)
-	jsr	L552.l
+	jsr	L552
 	addq.l	#2,sp
 	move.l	d0,-4(fp)
 	addq.l	#1,-4(fp)
@@ -25778,7 +25778,7 @@ L77804:
 	link	fp,#-4
 	move.l	#-1,(sp)
 	move.w	#72,-(sp)
-	jsr	L552.l
+	jsr	L552
 	addq.l	#2,sp
 	unlk	fp
 	rts
@@ -25787,7 +25787,7 @@ L77830:
 	link	fp,#-4
 	move.l	8(fp),(sp)
 	move.w	#73,-(sp)
-	jsr	L552.l
+	jsr	L552
 	addq.l	#2,sp
 	unlk	fp
 	rts
@@ -25795,65 +25795,65 @@ L77830:
 L77854:
 	link	fp,#-2
 	movem.l	d7/a5,-(sp)
-	jsr	L48752.l
-	move.w	#1,U99190.l
-	jsr	L77318.l
-	move.l	d0,U101110.l
-	jsr	L47940.l
+	jsr	L48752
+	move.w	#1,U99190
+	jsr	L77318
+	move.l	d0,U101110
+	jsr	L47940
 	bsr  	L78342
 	clr.w	d0
-	move.w	d0,U98714.l
-	move.w	d0,U99192.l
-	move.w	d0,U101146.l
-	move.w	d0,U101198.l
-	move.w	d0,U100980.l
+	move.w	d0,U98714
+	move.w	d0,U99192
+	move.w	d0,U101146
+	move.w	d0,U101198
+	move.w	d0,U100980
 	clr.w	d0
-	move.w	d0,U100626.l
-	move.w	d0,U98398.l
-	move.w	d0,U100736.l
+	move.w	d0,U100626
+	move.w	d0,U98398
+	move.w	d0,U100736
 	clr.w	d0
-	move.b	d0,U101040.l
-	move.b	d0,U99202.l
-	clr.b	U101148.l
-	clr.w	U101106.l
-	move.w	#899,U100646.l
-	jsr	L58082.l
-	jsr	L58068.l
-	jsr	L70006.l
-	jsr	L77166.l
-	jsr	L75582.l
-	movea.l	U101110.l,a0
+	move.b	d0,U101040
+	move.b	d0,U99202
+	clr.b	U101148
+	clr.w	U101106
+	move.w	#899,U100646
+	jsr	L58082
+	jsr	L58068
+	jsr	L70006
+	jsr	L77166
+	jsr	L75582
+	movea.l	U101110,a0
 	move.l	4(a0),(sp)
-	jsr	L74902.l
-	jsr	L74860.l
+	jsr	L74902
+	jsr	L74860
 	bsr  	L78494
-	jsr	L48234.l
-	jsr	L32858.l
-	jsr	L47940.l
-	move.w	U100984.l,U99816.l
-	jsr	L164.l
+	jsr	L48234
+	jsr	L32858
+	jsr	L47940
+	move.w	U100984,U99816
+	jsr	L164
 	movea.l	d0,a0
 	tst.b	(a0)
 	beq.s	L78092
-	jsr	L164.l
+	jsr	L164
 	move.l	d0,(sp)
 	addq.l	#1,(sp)
 	bra.s	L78102
 
 L78092:
-	movea.l	U101110.l,a0
+	movea.l	U101110,a0
 	move.l	32(a0),(sp)
 L78102:
 	move.l	#U100754,d0
-	move.l	d0,U101030.l
+	move.l	d0,U101030
 	move.l	d0,-(sp)
-	jsr	L83880.l
+	jsr	L83880
 	addq.l	#4,sp
-	jsr	L20414.l
+	jsr	L20414
 	tst.w	d0
 	beq.s	L78154
-	move.l	U101030.l,(sp)
-	move.l	T87150.l,-(sp)
+	move.l	U101030,(sp)
+	move.l	T87150,-(sp)
 	bsr.s	L78238
 	addq.l	#4,sp
 	tst.w	d0
@@ -25865,22 +25865,22 @@ L78154:
 L78158:
 	moveq	#1,d0
 L78160:
-	move.w	d0,U101476.l
+	move.w	d0,U101476
 	beq.s	L78216
-	movea.l	U101110.l,a0
+	movea.l	U101110,a0
 	move.l	28(a0),(sp)
-	jsr	L74902.l
+	jsr	L74902
 	move.l	#U100754,(sp)
-	jsr	L74902.l
-	jsr	L74860.l
-	jsr	L19286.l
-	jsr	L19594.l
+	jsr	L74902
+	jsr	L74860
+	jsr	L19286
+	jsr	L19594
 	bra.s	L78222
 
 L78216:
-	clr.w	U99190.l
+	clr.w	U99190
 L78222:
-	jsr	L49370.l
+	jsr	L49370
 	tst.l	(sp)+
 	movem.l	(sp)+,a5
 	unlk	fp
@@ -25893,17 +25893,17 @@ L78238:
 	movea.l	12(fp),a4
 	clr.w	d5
 	move.l	a4,(sp)
-	jsr	L83914.l
+	jsr	L83914
 	move.w	d0,d7
 	move.l	a5,(sp)
-	jsr	L83914.l
+	jsr	L83914
 	sub.w	d0,d7
 	clr.w	d6
 	bra.s	L78326
 
 L78280:
 	move.l	a5,(sp)
-	jsr	L83914.l
+	jsr	L83914
 	move.w	d0,(sp)
 	move.l	a5,-(sp)
 	move.l	a4,d0
@@ -25911,7 +25911,7 @@ L78280:
 	ext.l	d1
 	add.l	d1,d0
 	move.l	d0,-(sp)
-	jsr	L83814.l
+	jsr	L83814
 	addq.l	#8,sp
 	tst.w	d0
 	beq.s	L78318
@@ -25937,38 +25937,38 @@ L78330:
 L78342:
 	link	fp,#-4
 	movem.l	d6-d7,-(sp)
-	jsr	L94.l
+	jsr	L94
 	move.l	d0,-4(fp)
-	jsr	L146.l
+	jsr	L146
 	add.l	#-7680,d0
-	move.l	d0,U100744.l
+	move.l	d0,U100744
 	move.l	#33,-(sp)
-	move.l	U100744.l,d0
+	move.l	U100744,d0
 	sub.l	-4(fp),d0
 	move.l	d0,-(sp)
 	subq.l	#1,(sp)
-	jsr	L83960.l
+	jsr	L83960
 	addq.l	#8,sp
 	add.l	-4(fp),d0
 	addq.l	#2,d0
 	and.l	#$00FFFFFE,d0
-	move.l	d0,U101194.l
-	move.l	U100744.l,d7
-	sub.l	U101194.l,d7
+	move.l	d0,U101194
+	move.l	U100744,d7
+	sub.l	U101194,d7
 	asr.l	#2,d7
 	move.l	d7,d0
 	cmp.l	#65535,d0
 	ble.s	L78458
-	move.w	#-1,U100988.l
+	move.w	#-1,U100988
 	bra.s	L78464
 
 L78458:
-	move.w	d7,U100988.l
+	move.w	d7,U100988
 L78464:
 	move.l	-4(fp),d0
 	subq.l	#4,d0
-	move.l	d0,U101036.l
-	move.w	#32,U100734.l
+	move.l	d0,U101036
+	move.w	#32,U100734
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
 	unlk	fp
@@ -25977,8 +25977,8 @@ L78464:
 L78494:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
-	jsr	L75582.l
-	jsr	L74840.l
+	jsr	L75582
+	jsr	L74840
 	clr.w	d7
 	bra.s	L78532
 
@@ -25992,18 +25992,18 @@ L78532:
 	cmp.w	#128,d7
 	blt.s	L78518
 	clr.w	d0
-	move.w	d0,U99186.l
-	move.w	d0,U99862.l
-	clr.w	U99188.l
-	clr.w	U100620.l
-	move.w	U100734.l,U99176.l
-	move.w	U100988.l,U100978.l
-	jsr	L62588.l
-	move.w	d0,U101004.l
-	movea.l	U101110.l,a0
+	move.w	d0,U99186
+	move.w	d0,U99862
+	clr.w	U99188
+	clr.w	U100620
+	move.w	U100734,U99176
+	move.w	U100988,U100978
+	jsr	L62588
+	move.w	d0,U101004
+	movea.l	U101110,a0
 	move.l	48(a0),(sp)
-	jsr	L62012.l
-	move.w	d0,U100742.l
+	jsr	L62012
+	move.w	d0,U100742
 	move.w	d0,(sp)
 	bsr  	L79296
 	bsr.s	L78646
@@ -26017,115 +26017,115 @@ L78532:
 
 L78646:
 	link	fp,#-4
-	move.l	#T91780,U101030.l
-	move.w	#1,U99178.l
-	jsr	L52566.l
-	jsr	L156.l
+	move.l	#T91780,U101030
+	move.w	#1,U99178
+	jsr	L52566
+	jsr	L156
 	move.l	d0,-(sp)
 	move.l	#L3652,d0
 	sub.l	(sp)+,d0
 	move.w	d0,(sp)
 	move.w	#10,-(sp)
-	jsr	L65496.l
+	jsr	L65496
 	addq.l	#2,sp
 	move.w	d0,(sp)
-	move.w	U100742.l,-(sp)
-	jsr	L64224.l
-	move.w	d0,U100888.l
+	move.w	U100742,-(sp)
+	jsr	L64224
+	move.w	d0,U100888
 	move.w	d0,-(sp)
-	jsr	L66062.l
+	jsr	L66062
 	addq.l	#4,sp
 	unlk	fp
 	rts
 
 L78738:
 	link	fp,#-4
-	move.l	T87142.l,(sp)
-	jsr	L62012.l
-	move.w	d0,U100984.l
+	move.l	T87142,(sp)
+	jsr	L62012
+	move.w	d0,U100984
 	move.w	d0,(sp)
 	bsr  	L79296
-	move.l	T87146.l,(sp)
-	jsr	L62012.l
-	move.w	d0,U101186.l
+	move.l	T87146,(sp)
+	jsr	L62012
+	move.w	d0,U101186
 	move.w	d0,(sp)
 	bsr  	L79296
-	movea.l	U101110.l,a0
+	movea.l	U101110,a0
 	move.l	52(a0),(sp)
-	jsr	L62012.l
-	move.w	d0,U98716.l
+	jsr	L62012
+	move.w	d0,U98716
 	move.w	d0,(sp)
 	bsr  	L79296
-	movea.l	U101110.l,a0
+	movea.l	U101110,a0
 	move.l	60(a0),(sp)
-	jsr	L62012.l
-	move.w	d0,U98718.l
+	jsr	L62012
+	move.w	d0,U98718
 	move.w	d0,(sp)
 	bsr  	L79296
-	movea.l	U101110.l,a0
+	movea.l	U101110,a0
 	move.l	84(a0),(sp)
-	jsr	L62012.l
-	move.w	d0,U100738.l
+	jsr	L62012
+	move.w	d0,U100738
 	move.w	d0,(sp)
 	bsr  	L79296
-	movea.l	U101110.l,a0
+	movea.l	U101110,a0
 	move.l	72(a0),(sp)
-	jsr	L62012.l
-	move.w	d0,U100740.l
+	jsr	L62012
+	move.w	d0,U100740
 	move.w	d0,(sp)
 	bsr  	L79296
-	movea.l	U101110.l,a0
+	movea.l	U101110,a0
 	move.l	76(a0),(sp)
-	jsr	L62012.l
-	move.w	d0,U100676.l
+	jsr	L62012
+	move.w	d0,U100676
 	move.w	d0,(sp)
 	bsr  	L79296
-	movea.l	U101110.l,a0
+	movea.l	U101110,a0
 	move.l	80(a0),(sp)
-	jsr	L62012.l
-	move.w	d0,U100634.l
+	jsr	L62012
+	move.w	d0,U100634
 	move.w	d0,(sp)
 	bsr  	L79296
-	movea.l	U101110.l,a0
+	movea.l	U101110,a0
 	move.l	88(a0),(sp)
-	jsr	L62012.l
-	move.w	d0,U100994.l
+	jsr	L62012
+	move.w	d0,U100994
 	move.w	d0,(sp)
 	bsr  	L79296
-	movea.l	U101110.l,a0
+	movea.l	U101110,a0
 	move.l	92(a0),(sp)
-	jsr	L62012.l
-	move.w	d0,U98400.l
+	jsr	L62012
+	move.w	d0,U98400
 	move.w	d0,(sp)
 	bsr  	L79296
-	movea.l	U101110.l,a0
+	movea.l	U101110,a0
 	move.l	96(a0),(sp)
-	jsr	L62012.l
-	move.w	d0,U100648.l
+	jsr	L62012
+	move.w	d0,U100648
 	move.w	d0,(sp)
 	bsr  	L79296
-	movea.l	U101110.l,a0
+	movea.l	U101110,a0
 	move.l	100(a0),(sp)
-	jsr	L62012.l
-	move.w	d0,U101012.l
+	jsr	L62012
+	move.w	d0,U101012
 	move.w	d0,(sp)
 	bsr  	L79296
-	movea.l	U101110.l,a0
+	movea.l	U101110,a0
 	move.l	104(a0),(sp)
-	jsr	L62012.l
-	move.w	d0,U101114.l
+	jsr	L62012
+	move.w	d0,U101114
 	move.w	d0,(sp)
 	bsr  	L79296
-	movea.l	U101110.l,a0
+	movea.l	U101110,a0
 	move.l	108(a0),(sp)
-	jsr	L62012.l
-	move.w	d0,U101500.l
+	jsr	L62012
+	move.w	d0,U101500
 	move.w	d0,(sp)
 	bsr  	L79296
-	movea.l	U101110.l,a0
+	movea.l	U101110,a0
 	move.l	112(a0),(sp)
-	jsr	L62012.l
-	move.w	d0,U100650.l
+	jsr	L62012
+	move.w	d0,U100650
 	move.w	d0,(sp)
 	bsr  	L79296
 	unlk	fp
@@ -26136,12 +26136,12 @@ L79158:
 	movem.l	d7/a5,-(sp)
 	movea.l	8(fp),a5
 L79170:
-	move.l	a5,U101030.l
-	clr.w	U99178.l
+	move.l	a5,U101030
+	clr.w	U99178
 	bra.s	L79192
 
 L79184:
-	addq.w	#1,U99178.l
+	addq.w	#1,U99178
 	addq.l	#1,a5
 L79192:
 	tst.b	(a5)
@@ -26149,22 +26149,22 @@ L79192:
 	cmpi.b	#32,(a5)
 	bne.s	L79184
 L79202:
-	jsr	L53318.l
-	jsr	L52882.l
-	jsr	L156.l
+	jsr	L53318
+	jsr	L52882
+	jsr	L156
 	move.l	d0,-(sp)
 	move.l	12(fp),d0
 	sub.l	(sp)+,d0
 	move.w	d0,(sp)
 	move.w	#10,-(sp)
-	jsr	L65496.l
+	jsr	L65496
 	addq.l	#2,sp
 	move.w	d0,(sp)
-	move.w	U100742.l,-(sp)
-	jsr	L64224.l
-	move.w	d0,U101046.l
+	move.w	U100742,-(sp)
+	jsr	L64224
+	move.w	d0,U101046
 	move.w	d0,-(sp)
-	jsr	L66062.l
+	jsr	L66062
 	addq.l	#4,sp
 	tst.b	(a5)+
 	beq.s	L79278
@@ -26172,7 +26172,7 @@ L79202:
 
 L79278:
 	clr.w	d0
-	move.w	U101046.l,d0
+	move.w	U101046,d0
 	tst.l	(sp)+
 	movem.l	(sp)+,a5
 	unlk	fp
@@ -26180,20 +26180,20 @@ L79278:
 
 L79296:
 	link	fp,#-4
-	move.w	U99862.l,(sp)
+	move.w	U99862,(sp)
 	move.w	8(fp),-(sp)
-	jsr	L65496.l
+	jsr	L65496
 	addq.l	#2,sp
-	move.w	d0,U99862.l
+	move.w	d0,U99862
 	unlk	fp
 	rts
 
 L79328:
 	link	fp,#0
 	movem.l	d6-d7/a5,-(sp)
-	jsr	L77304.l
+	jsr	L77304
 	movea.l	d0,a5
-	jsr	L77292.l
+	jsr	L77292
 	move.w	d0,d7
 	bra.s	L79374
 
@@ -26222,12 +26222,12 @@ L79392:
 	move.l	#T91782,-(sp)
 	bsr  	L79158
 	addq.l	#4,sp
-	move.w	d0,U100624.l
+	move.w	d0,U100624
 	move.l	#L67004,(sp)
 	move.l	#T91784,-(sp)
 	bsr  	L79158
 	addq.l	#4,sp
-	move.w	d0,U100652.l
+	move.w	d0,U100652
 	unlk	fp
 	rts
 
@@ -26235,7 +26235,7 @@ L79448:
 	link	fp,#-4
 	move.l	d7,-(sp)
 	move.l	8(fp),d7
-	jsr	L79472.l
+	jsr	L79472
 	move.l	d7,d0
 	move.l	(sp)+,d7
 	unlk	fp
@@ -26255,7 +26255,7 @@ L79472:
 L79500:
 	not.b	(sp)
 	exg	d6,d7
-	jsr	L82558.l
+	jsr	L82558
 L79510:
 	sub.b	#67,d7
 	neg.b	d7
@@ -26268,7 +26268,7 @@ L79526:
 	lsr.l	d7,d7
 	moveq	#0,d6
 	move.l	#$20000000,d5
-	lea 	X83274.l,a0
+	lea 	X83274,a0
 	moveq	#24,d1
 	moveq	#1,d2
 	bra.s	L79554
@@ -26289,13 +26289,13 @@ L79560:
 	addq.b	#1,d2
 	lsr.l	#1,d3
 	dbf	d1,L79560
-	jsr	L83378.l
+	jsr	L83378
 L79582:
 	move.l	d6,d7
 	tst.b	(sp)+
 	beq.s	L79600
 	move.l	#-921707711,d7
-	jsr	L82294.l
+	jsr	L82294
 L79600:
 	move.b	(sp)+,d6
 	tst.b	d7
@@ -26329,20 +26329,20 @@ L79660:
 	clr.w	d7
 	clr.l	-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	bge.s	L79708
 	movea.l	12(fp),a0
 	move.b	#45,(a0)
 	addq.l	#1,12(fp)
 	move.l	8(fp),-(sp)
-	jsr	L82000.l
+	jsr	L82000
 	addq.l	#4,sp
 	move.l	d0,8(fp)
 L79708:
 	clr.l	-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	ble.s	L79770
 	bra.s	L79750
@@ -26350,14 +26350,14 @@ L79708:
 L79726:
 	move.l	#-1610612668,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81968.l
+	jsr	L81968
 	addq.l	#8,sp
 	move.l	d0,8(fp)
 	subq.w	#1,d7
 L79750:
 	move.l	#-2147483583,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	blt.s	L79726
 L79770:
@@ -26366,14 +26366,14 @@ L79770:
 L79772:
 	move.l	#-1610612668,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81572.l
+	jsr	L81572
 	addq.l	#8,sp
 	move.l	d0,8(fp)
 	addq.w	#1,d7
 L79796:
 	move.l	#-1610612668,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	bge.s	L79772
 	add.w	d7,d4
@@ -26381,7 +26381,7 @@ L79796:
 	move.w	d6,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688.l
+	jsr	L81688
 	addq.l	#4,sp
 	move.l	d0,-8(fp)
 	bra.s	L79864
@@ -26389,7 +26389,7 @@ L79796:
 L79840:
 	move.l	#-1610612668,-(sp)
 	move.l	-8(fp),-(sp)
-	jsr	L81572.l
+	jsr	L81572
 	addq.l	#8,sp
 	move.l	d0,-8(fp)
 	addq.w	#1,d6
@@ -26398,16 +26398,16 @@ L79864:
 	blt.s	L79840
 	move.l	#-2147483582,-(sp)
 	move.l	-8(fp),-(sp)
-	jsr	L81572.l
+	jsr	L81572
 	addq.l	#8,sp
 	move.l	d0,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81510.l
+	jsr	L81510
 	addq.l	#8,sp
 	move.l	d0,8(fp)
 	move.l	#-1610612668,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	blt.s	L79934
 	move.l	#-2147483583,8(fp)
@@ -26442,7 +26442,7 @@ L79990:
 
 L79994:
 	move.l	8(fp),-(sp)
-	jsr	L81832.l
+	jsr	L81832
 	addq.l	#4,sp
 	move.w	d0,d5
 	move.w	d5,d0
@@ -26459,17 +26459,17 @@ L80040:
 	move.w	d5,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688.l
+	jsr	L81688
 	addq.l	#4,sp
 	move.l	d0,-8(fp)
 	move.l	d0,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L82028.l
+	jsr	L82028
 	addq.l	#8,sp
 	move.l	d0,8(fp)
 	move.l	#-1610612668,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81968.l
+	jsr	L81968
 	addq.l	#8,sp
 	move.l	d0,8(fp)
 	addq.w	#1,d6
@@ -26508,20 +26508,20 @@ L80170:
 	clr.w	d7
 	clr.l	-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	bge.s	L80218
 	movea.l	12(fp),a0
 	move.b	#45,(a0)
 	addq.l	#1,12(fp)
 	move.l	8(fp),-(sp)
-	jsr	L82000.l
+	jsr	L82000
 	addq.l	#4,sp
 	move.l	d0,8(fp)
 L80218:
 	clr.l	-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	ble.s	L80280
 	bra.s	L80260
@@ -26529,14 +26529,14 @@ L80218:
 L80236:
 	move.l	#-1610612668,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81968.l
+	jsr	L81968
 	addq.l	#8,sp
 	move.l	d0,8(fp)
 	subq.w	#1,d7
 L80260:
 	move.l	#-2147483583,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	blt.s	L80236
 L80280:
@@ -26545,21 +26545,21 @@ L80280:
 L80282:
 	move.l	#-1610612668,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81572.l
+	jsr	L81572
 	addq.l	#8,sp
 	move.l	d0,8(fp)
 	addq.w	#1,d7
 L80306:
 	move.l	#-1610612668,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	bge.s	L80282
 	moveq	#1,d6
 	move.w	d6,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688.l
+	jsr	L81688
 	addq.l	#4,sp
 	move.l	d0,-8(fp)
 	bra.s	L80372
@@ -26567,7 +26567,7 @@ L80306:
 L80348:
 	move.l	#-1610612668,-(sp)
 	move.l	-8(fp),-(sp)
-	jsr	L81572.l
+	jsr	L81572
 	addq.l	#8,sp
 	move.l	d0,-8(fp)
 	addq.w	#1,d6
@@ -26576,16 +26576,16 @@ L80372:
 	blt.s	L80348
 	move.l	#-2147483582,-(sp)
 	move.l	-8(fp),-(sp)
-	jsr	L81572.l
+	jsr	L81572
 	addq.l	#8,sp
 	move.l	d0,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81510.l
+	jsr	L81510
 	addq.l	#8,sp
 	move.l	d0,8(fp)
 	move.l	#-1610612668,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	blt.s	L80442
 	move.l	#-2147483583,8(fp)
@@ -26596,7 +26596,7 @@ L80442:
 
 L80446:
 	move.l	8(fp),-(sp)
-	jsr	L81832.l
+	jsr	L81832
 	addq.l	#4,sp
 	move.w	d0,d5
 	move.w	d5,d0
@@ -26613,17 +26613,17 @@ L80492:
 	move.w	d5,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688.l
+	jsr	L81688
 	addq.l	#4,sp
 	move.l	d0,-8(fp)
 	move.l	d0,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L82028.l
+	jsr	L82028
 	addq.l	#8,sp
 	move.l	d0,8(fp)
 	move.l	#-1610612668,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81968.l
+	jsr	L81968
 	addq.l	#8,sp
 	move.l	d0,8(fp)
 	addq.w	#1,d6
@@ -26777,7 +26777,7 @@ L80910:
 	move.l	d0,-42(fp)
 	move.l	fp,(sp)
 	addi.l	#-24,(sp)
-	jsr	L83596.l
+	jsr	L83596
 	move.w	d0,-36(fp)
 	tst.w	-32(fp)
 	beq.s	L80964
@@ -26796,11 +26796,11 @@ L80972:
 	bsr.s	L81044
 	addq.l	#2,sp
 	move.l	d0,-(sp)
-	jsr	L81968.l
+	jsr	L81968
 	addq.l	#8,sp
 	move.l	d0,-46(fp)
 	move.l	-46(fp),(sp)
-	jsr	L81258.l
+	jsr	L81258
 	move.l	d0,-28(fp)
 	tst.w	-34(fp)
 	beq.s	L81030
@@ -26822,7 +26822,7 @@ L81044:
 L81064:
 	move.l	#-1610612668,-(sp)
 	move.l	-4(fp),-(sp)
-	jsr	L81572.l
+	jsr	L81572
 	addq.l	#8,sp
 	move.l	d0,-4(fp)
 	addq.w	#1,8(fp)
@@ -26838,7 +26838,7 @@ L81098:
 L81108:
 	move.l	#-1610612668,-(sp)
 	move.l	-4(fp),-(sp)
-	jsr	L81968.l
+	jsr	L81968
 	addq.l	#8,sp
 	move.l	d0,-4(fp)
 	subq.w	#1,8(fp)
@@ -26858,7 +26858,7 @@ L81148:
 L81162:
 	move.l	#-1610612668,-(sp)
 	move.l	-4(fp),-(sp)
-	jsr	L81968.l
+	jsr	L81968
 	addq.l	#8,sp
 	move.l	d0,-4(fp)
 	move.l	-4(fp),-(sp)
@@ -26868,10 +26868,10 @@ L81162:
 	add.w	#-48,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688.l
+	jsr	L81688
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81510.l
+	jsr	L81510
 	addq.l	#8,sp
 	move.l	d0,-4(fp)
 	addq.l	#1,8(fp)
@@ -26892,7 +26892,7 @@ L81258:
 	movem.l	d4-d7,-(sp)
 	clr.l	-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	bne.s	L81288
 	clr.l	d0
@@ -26901,11 +26901,11 @@ L81258:
 L81288:
 	clr.l	-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	bge.s	L81324
 	move.l	8(fp),-(sp)
-	jsr	L82000.l
+	jsr	L82000
 	addq.l	#4,sp
 	move.l	d0,8(fp)
 	moveq	#1,d5
@@ -26921,13 +26921,13 @@ L81330:
 	addq.w	#1,d7
 	move.l	#-2147483582,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81572.l
+	jsr	L81572
 	addq.l	#8,sp
 	move.l	d0,8(fp)
 L81354:
 	move.l	#-2147483583,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	bge.s	L81330
 	bra.s	L81400
@@ -26936,22 +26936,22 @@ L81376:
 	subq.w	#1,d7
 	move.l	#-2147483582,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81968.l
+	jsr	L81968
 	addq.l	#8,sp
 	move.l	d0,8(fp)
 L81400:
 	move.l	#-2147483584,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81542.l
+	jsr	L81542
 	addq.l	#8,sp
 	blt.s	L81376
 	move.l	#-2147483559,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81968.l
+	jsr	L81968
 	addq.l	#8,sp
 	move.l	d0,8(fp)
 	move.l	8(fp),-(sp)
-	jsr	L81832.l
+	jsr	L81832
 	addq.l	#4,sp
 	move.l	d0,-4(fp)
 	move.l	-4(fp),d0
@@ -26978,7 +26978,7 @@ L81510:
 	movem.l	d3-d7,-(sp)
 	move.l	8(fp),d7
 	move.l	12(fp),d6
-	jsr	L82312.l
+	jsr	L82312
 	move.l	d7,d0
 	movem.l	(sp)+,d3-d7
 	unlk	fp
@@ -26989,7 +26989,7 @@ L81542:
 	movem.l	d3-d7,-(sp)
 	move.l	8(fp),d7
 	move.l	12(fp),d6
-	jsr	L82060.l
+	jsr	L82060
 	movem.l	(sp)+,d3-d7
 	unlk	fp
 	rts
@@ -26999,7 +26999,7 @@ L81572:
 	movem.l	d3-d7,-(sp)
 	move.l	8(fp),d7
 	move.l	12(fp),d6
-	jsr	L82558.l
+	jsr	L82558
 	move.l	d7,d0
 	movem.l	(sp)+,d3-d7
 	unlk	fp
@@ -27009,7 +27009,7 @@ L81604:
 	link	fp,#-4
 	movem.l	d3-d7,-(sp)
 	move.l	8(fp),d7
-	jsr	L82100.l
+	jsr	L82100
 	move.l	d7,d0
 	movem.l	(sp)+,d3-d7
 	unlk	fp
@@ -27019,7 +27019,7 @@ L81632:
 	link	fp,#-4
 	movem.l	d7,-(sp)
 	move.l	8(fp),d7
-	jsr	L82710.l
+	jsr	L82710
 	move.l	d7,d0
 	movem.l	(sp)+,d7
 	unlk	fp
@@ -27029,7 +27029,7 @@ L81660:
 	link	fp,#-4
 	movem.l	d7,-(sp)
 	move.l	8(fp),d7
-	jsr	L82928.l
+	jsr	L82928
 	move.l	d7,d0
 	movem.l	(sp)+,d7
 	unlk	fp
@@ -27165,7 +27165,7 @@ L81968:
 	movem.l	d3-d7,-(sp)
 	move.l	8(fp),d7
 	move.l	12(fp),d6
-	jsr	L83136.l
+	jsr	L83136
 	move.l	d7,d0
 	movem.l	(sp)+,d3-d7
 	unlk	fp
@@ -27175,7 +27175,7 @@ L82000:
 	link	fp,#-4
 	movem.l	d3-d7,-(sp)
 	move.l	8(fp),d7
-	jsr	L82284.l
+	jsr	L82284
 	move.l	d7,d0
 	movem.l	(sp)+,d3-d7
 	unlk	fp
@@ -27186,7 +27186,7 @@ L82028:
 	movem.l	d3-d7,-(sp)
 	move.l	8(fp),d7
 	move.l	12(fp),d6
-	jsr	L82294.l
+	jsr	L82294
 	move.l	d7,d0
 	movem.l	(sp)+,d3-d7
 	unlk	fp
@@ -27525,7 +27525,7 @@ L82710:
 	and.b	#127,d7
 	move.l	d7,d2
 	move.l	#-1196803263,d6
-	jsr	L83136.l
+	jsr	L83136
 	bvs.s	L82672
 	move.b	d7,d5
 	move.b	d7,d6
@@ -27540,10 +27540,10 @@ L82710:
 	lsl.l	d5,d7
 	move.b	d6,d7
 	move.l	#-1317922752,d6
-	jsr	L83136.l
+	jsr	L83136
 	move.l	d7,d6
 	move.l	d2,d7
-	jsr	L82294.l
+	jsr	L82294
 	move.l	d7,d2
 	bra.s	L82798
 
@@ -27561,7 +27561,7 @@ L82814:
 	lsr.l	d2,d7
 	moveq	#0,d5
 	move.l	#$26A3D100,d6
-	lea 	X83432.l,a0
+	lea 	X83432,a0
 	moveq	#0,d2
 	moveq	#3,d1
 	bsr.s	L82890
@@ -27579,7 +27579,7 @@ L82814:
 	neg.b	(sp)
 L82862:
 	add.l	d5,d6
-	jsr	L83378.l
+	jsr	L83378
 	move.l	d6,d7
 	add.b	(sp),d7
 	bmi  	L82672
@@ -27621,7 +27621,7 @@ L82940:
 
 L82946:
 	moveq	#-1,d7
-	jmp	L82940.l
+	jmp	L82940
 
 L82954:
 	movem.l	d1-d6/a0,-(sp)
@@ -27629,11 +27629,11 @@ L82954:
 	move.b	#65,d7
 	move.l	#-2147483583,d6
 	move.l	d7,d2
-	jsr	L82312.l
+	jsr	L82312
 	exg	d7,d2
-	jsr	L82294.l
+	jsr	L82294
 	move.l	d2,d6
-	jsr	L82558.l
+	jsr	L82558
 	beq.s	L83074
 	sub.b	#67,d7
 	neg.b	d7
@@ -27644,7 +27644,7 @@ L83010:
 	lsr.l	d7,d7
 	moveq	#0,d6
 	move.l	#$20000000,d5
-	lea 	X83432.l,a0
+	lea 	X83432,a0
 	moveq	#22,d1
 	moveq	#1,d2
 	bra.s	L83038
@@ -27666,7 +27666,7 @@ L83044:
 	lsr.l	#1,d3
 	dbf	d1,L83044
 	moveq	#0,d7
-	jsr	L83378.l
+	jsr	L83378
 	beq.s	L83074
 	addq.b	#1,d6
 	move.l	d6,d7
@@ -27689,9 +27689,9 @@ L83096:
 	and.b	#128,d1
 	or.b	d1,d6
 	move.l	#-1317922752,d7
-	jsr	L83136.l
+	jsr	L83136
 	move.l	d2,d6
-	jsr	L82312.l
+	jsr	L82312
 L83130:
 	movem.l	(sp)+,d1-d6/a0
 	rts
@@ -28022,7 +28022,7 @@ L83960:
 	move.l	8(fp),d7
 	move.l	12(fp),d6
 	bne.s	L84006
-	move.l	#-2147483648,U98682.l
+	move.l	#-2147483648,U98682
 	move.l	#-2147483648,d0
 	divs	#0,d0
 	bra  	L84108
@@ -28078,13 +28078,13 @@ L84080:
 	cmp.w	#1,d3
 	bne.s	L84100
 	neg.l	d7
-	move.l	d7,U98682.l
+	move.l	d7,U98682
 	move.l	d5,d0
 	neg.l	d0
 	bra.s	L84108
 
 L84100:
-	move.l	d7,U98682.l
+	move.l	d7,U98682
 	move.l	d5,d0
 L84108:
 	tst.l	(sp)+
@@ -28127,9 +28127,9 @@ L84202:
 	link	fp,#-2
 	move.l	12(fp),-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L83960.l
+	jsr	L83960
 	cmpm.l	(sp)+,(sp)+
-	move.l	U98682.l,d0
+	move.l	U98682,d0
 	unlk	fp
 	rts
 
