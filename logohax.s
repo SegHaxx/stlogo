@@ -13,42 +13,17 @@ iv_M1_kb_midi	equ	$118
 	andi.b	#$FE,d0
 	movea.l	d0,sp
 
-	move.l	8(a0),U91914	; p_tbase
+	move.l	8(a0),p_tbase
 	move.l	12(a0),d0	; p_tlen
 	add.l	20(a0),d0	; p_dlen
 	add.l	28(a0),d0	; p_blen
 	add.l	#256,d0
 	move.l	d0,-(sp)
 	move.l	a0,-(sp)
-	move.w	d0,-(sp)
+	clr.w	-(sp)
 	move.w	#74,-(sp)	; Mshrink
-.loop:
-	jsr	get_free_mem
-	tst.w	d0
-	beq.s	.do_mshrink
-
-	move.l	d0,-(sp)
-	jsr	Malloc
-	addq.l	#4,sp
-	bra.s	.loop
-
-.do_mshrink:
 	trap	#1		; Gemdos
 	jmp	L37058
-
-alloc_ram:
-	move.l	#2560,-(sp)
-	jsr	Malloc
-	move.l	d0,(sp)
-	jsr	get_free_mem
-	move.l	d0,-(sp)
-	jsr	Malloc
-	addq.l	#4,sp
-	move.l	d0,U91918
-	jsr	Mfree
-	addq.l	#4,sp
-	move.l	U91918,d0
-	rts
 
 L146:
 	move.l	sp,d0
@@ -56,7 +31,7 @@ L146:
 	rts
 
 L156:
-	move.l	U91914,d0
+	move.l	p_tbase,d0
 	rts
 
 L164:
@@ -194,7 +169,7 @@ L510:
 	lsl.l	#2,d0
 	clr.l	d1
 	move.w	2(a0,d0.l),d1
-	add.l	U91914,d1
+	add.l	p_tbase,d1
 	movea.l	d1,a0
 	jmp	(a0)
 
@@ -25438,7 +25413,7 @@ L77854:
 	jsr	L77318
 	move.l	d0,U101110
 	jsr	L47940
-	bsr  	L78342
+	bsr  	alloc_mem
 	clr.w	d0
 	move.w	d0,U98714
 	move.w	d0,U99192
@@ -25572,10 +25547,21 @@ L78330:
 	unlk	fp
 	rts
 
-L78342:
+alloc_mem:
 	link	fp,#-4
 	movem.l	d6-d7,-(sp)
-	jsr	alloc_ram
+
+	jsr	get_free_mem
+	sub.l	#$A00,d0	; leave 2.5k for TOS or bad things happen
+	bge	.pos
+	clr.l	d0
+.pos:
+	; for reference a 512k TOS 1.0 machine originally
+	; allocated 0x44AF6 (0x444B6 in lowres)
+	move.l	d0,-(sp)
+	jsr	Malloc
+	addq.l	#4,sp
+
 	move.l	d0,-4(fp)
 	jsr	L146
 	add.l	#-7680,d0
@@ -29470,10 +29456,8 @@ T91786:
 
 	bss
 
-U91914:
-	ds.b	4
-U91918:
-	ds.b	4
+p_tbase: ds.l	1
+
 U91922:
 	ds.b	4
 U91926:
