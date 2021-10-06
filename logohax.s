@@ -7201,21 +7201,9 @@ L22588:
 	unlk	fp
 	rts
 
-L22628:
-	link	fp,#-4
-	move.w	U91970,d0
-	unlk	fp
-	rts
-
-L22642:
-	link	fp,#-4
-	move.w	U91972,d0
-	unlk	fp
-	rts
-
 L22656:
 	link	fp,#-4
-	move.w	U91980,d0
+	move.w	char_h,d0
 	unlk	fp
 	rts
 
@@ -7286,7 +7274,7 @@ L22862:
 	movea.l	8(fp),a0
 	clr.w	10(a0)
 	movea.l	8(fp),a0
-	move.w	U101478,12(a0)
+	move.w	nplanes,12(a0)
 	movea.l	8(fp),a0
 	move.l	12(fp),(a0)
 	unlk	fp
@@ -7320,10 +7308,10 @@ L22938:
 	jsr	vdi
 	move.w	U98720,d0
 	addq.w	#1,d0
-	move.w	d0,U99806
+	move.w	d0,screen_w
 	move.w	U98722,d0
 	addq.w	#1,d0
-	move.w	d0,U101056
+	move.w	d0,screen_h
 	move.w	U98746,d0
 	subq.w	#1,d0
 	move.w	d0,U101126
@@ -7354,44 +7342,33 @@ L23226:
 	jsr	L81572
 	addq.l	#8,sp
 	move.l	d0,U100900
-	clr.w	U101478
+	clr.w	nplanes
 	move.w	U98746,-2(fp)
 	bra.s	L23326
 
 L23316:
-	addq.w	#1,U101478
+	addq.w	#1,nplanes
 	asr	-2(fp)
 L23326:
 	cmpi.w	#1,-2(fp)
 	bgt.s	L23316
-	move.w	ptsout+2,U91988
 	move.w	#38,contrl	; vqt_attributes
 	clr.w	contrl+2
 	clr.w	contrl+6
 	jsr	vdi
-	move.w	ptsout+2,U91990
-	move.l	#U91976,(sp)
-	move.l	#U91974,-(sp)
-	move.l	#U91984,-(sp)
-	move.l	#U91982,-(sp)
-	move.w	U91988,-(sp)
+	move.l	#cell_h,(sp)
+	move.l	#cell_w,-(sp)
+	move.l	#char_h,-(sp)
+	move.l	#char_w,-(sp)
+	move.w	ptsout+2,-(sp)
 	bsr  	vst_height
 	adda.l	#14,sp
-	move.l	#U91972,(sp)
-	move.l	#U91970,-(sp)
-	move.l	#U91980,-(sp)
-	move.l	#U91978,-(sp)
-	move.w	U91990,-(sp)
-	bsr  	vst_height
-	adda.l	#14,sp
-	move.w	U99806,d0
+	move.w	screen_w,d0
 	ext.l	d0
-	divs	U91970,d0
-	move.w	d0,U91968
-	move.w	U101056,d0
+	divs	cell_w,d0
+	move.w	screen_h,d0
 	ext.l	d0
-	divs	U91972,d0
-	move.w	d0,U91966
+	divs	cell_h,d0
 	clr.w	U92032
 	clr.w	U92034
 	unlk	fp
@@ -7486,14 +7463,14 @@ L23832:
 
 L23836:
 	link	fp,#-4
-	move.w	U101056,(sp)
-	move.w	U99806,-(sp)
+	move.w	screen_h,(sp)
+	move.w	screen_w,-(sp)
 	clr.l	-(sp)
 	move.l	#psrcMFDB,-(sp)
 	bsr  	L22862
 	adda.l	#10,sp
-	move.w	U101056,(sp)
-	move.w	U99806,-(sp)
+	move.w	screen_h,(sp)
+	move.w	screen_w,-(sp)
 	clr.l	-(sp)
 	move.l	#pdesMFDB,-(sp)
 	bsr  	L22862
@@ -7616,8 +7593,8 @@ L24328:
 	clr.w	d0
 	move.w	d0,-6(fp)
 	move.w	d0,-8(fp)
-	move.w	U99806,-4(fp)
-	move.w	U101056,-2(fp)
+	move.w	screen_w,-4(fp)
+	move.w	screen_h,-2(fp)
 	move.l	fp,(sp)
 	subq.l	#8,(sp)
 	move.l	8(fp),-(sp)
@@ -7786,7 +7763,7 @@ L24906:
 	jsr	L69504
 L24942:
 	move.w	-180(fp),d0
-	cmp.w	U101478,d0
+	cmp.w	nplanes,d0
 	beq.s	L24960
 	jsr	L69624
 L24960:
@@ -7841,7 +7818,7 @@ L25076:
 	add.w	#15,d0
 	ext.l	d0
 	divs	#16,d0
-	muls	U101478,d0
+	muls	nplanes,d0
 	asl.w	#1,d0
 	move.w	d0,-186(fp)
 	bra.s	L25228
@@ -7916,7 +7893,7 @@ L25344:
 	bgt.s	L25378
 	jsr	L69438
 L25378:
-	move.w	U101478,-180(fp)
+	move.w	nplanes,-180(fp)
 	move.l	fp,(sp)
 	addi.l	#-178,(sp)
 	move.l	12(fp),-(sp)
@@ -7942,7 +7919,7 @@ L25378:
 	add.w	#15,d0
 	ext.l	d0
 	divs	#16,d0
-	muls	U101478,d0
+	muls	nplanes,d0
 	asl.w	#1,d0
 	move.w	d0,-186(fp)
 	bra.s	L25548
@@ -8572,7 +8549,7 @@ L27654:
 	beq.s	L27774
 	eori.w	#15,d5
 L27774:
-	move.w	U101478,d0
+	move.w	nplanes,d0
 	subq.w	#1,d0
 	muls	#96,d0
 	ext.l	d0
@@ -8805,7 +8782,7 @@ L28402:
 	link	fp,#-4
 	move.w	#192,d0
 	ext.l	d0
-	divs	U101478,d0
+	divs	nplanes,d0
 	unlk	fp
 	rts
 
@@ -11616,7 +11593,7 @@ L37552:
 
 L37600:
 	link	fp,#-4
-	move.l	U92236,d0
+	move.l	grph_buffer,d0
 	unlk	fp
 	rts
 
@@ -11923,8 +11900,8 @@ L38572:
 	movea.l	8(fp),a1
 	move.w	12(a1),d1
 	add.w	d1,d0
-	move.w	U99180,d1
-	add.w	U99182,d1
+	move.w	work_x,d1
+	add.w	work_w,d1
 	cmp.w	d1,d0
 	bgt.s	L38646
 	movea.l	8(fp),a0
@@ -11932,8 +11909,8 @@ L38572:
 	movea.l	8(fp),a1
 	move.w	14(a1),d1
 	add.w	d1,d0
-	move.w	U99184,d1
-	add.w	U101144,d1
+	move.w	work_y,d1
+	add.w	work_h,d1
 	cmp.w	d1,d0
 	ble.s	L38658
 L38646:
@@ -12403,7 +12380,7 @@ L39924:
 	eor.w	d1,d0
 	move.w	d0,(sp)
 	bsr  	L49422
-	move.l	U92236,(sp)
+	move.l	grph_buffer,(sp)
 	move.w	U92234,d0
 	muls	U92232,d0
 	move.w	d0,-(sp)
@@ -12650,15 +12627,15 @@ L40664:
 	movea.l	12(fp),a0
 	adda.l	#22,a0
 	move.w	(a0),d6
-	move.w	U99182,d3
+	move.w	work_w,d3
 	asr.w	#1,d3
-	move.w	U101144,d0
+	move.w	work_h,d0
 	asr.w	#1,d0
 	move.w	d0,-4(fp)
-	move.w	U99182,d5
+	move.w	work_w,d5
 	sub.w	d7,d5
 	asr.w	#1,d5
-	move.w	U101144,d4
+	move.w	work_h,d4
 	sub.w	d6,d4
 	asr.w	#1,d4
 	movea.l	12(fp),a0
@@ -12689,8 +12666,8 @@ L40664:
 	move.w	#1,-(sp)
 	jsr	form_dial
 	adda.l	#16,sp
-	move.w	U101144,(sp)
-	move.w	U99182,-(sp)
+	move.w	work_h,(sp)
+	move.w	work_w,-(sp)
 	clr.w	-(sp)
 	clr.w	-(sp)
 	move.w	#8,-(sp)
@@ -12747,14 +12724,14 @@ L41000:
 	movea.l	10(fp),a0
 	adda.l	#22,a0
 	move.w	(a0),U98352
-	move.w	U99182,d0
+	move.w	work_w,d0
 	asr.w	#1,d0
 	move.w	d0,U98354
-	move.w	U99182,d0
+	move.w	work_w,d0
 	sub.w	U98350,d0
 	asr.w	#1,d0
 	move.w	d0,U98358
-	movea.w	U101478,a0
+	movea.w	nplanes,a0
 	adda.l	a0,a0
 	adda.l	#T85516,a0
 	move.w	(a0),U98360
@@ -12779,8 +12756,8 @@ L41000:
 	clr.w	-(sp)
 	jsr	form_dial
 	adda.l	#16,sp
-	move.w	U101144,(sp)
-	move.w	U99182,-(sp)
+	move.w	work_h,(sp)
+	move.w	work_w,-(sp)
 	clr.w	-(sp)
 	clr.w	-(sp)
 	move.w	#8,-(sp)
@@ -12878,7 +12855,7 @@ L41410:
 	ext.l	d0
 	movea.w	d7,a1
 	adda.l	a1,a1
-	adda.l	#U98270,a1
+	adda.l	#cell_w,a1
 	divs	(a1),d0
 	sub.w	d0,(sp)
 	move.w	#1,-(sp)
@@ -13001,7 +12978,7 @@ L41818:
 	jsr	L50344
 	movea.w	d7,a1
 	adda.l	a1,a1
-	adda.l	#U98270,a1
+	adda.l	#cell_w,a1
 	muls	(a1),d0
 	move.w	d0,-2(fp)
 	movea.w	d7,a0
@@ -13133,7 +13110,7 @@ L42230:
 	ext.l	d0
 	movea.w	d7,a1
 	adda.l	a1,a1
-	adda.l	#U98270,a1
+	adda.l	#cell_w,a1
 	divs	(a1),d0
 	move.w	d0,-4(fp)
 	move.w	d6,d0
@@ -13281,7 +13258,7 @@ L42636:
 	ext.l	d0
 	movea.w	8(fp),a1
 	adda.l	a1,a1
-	adda.l	#U98270,a1
+	adda.l	#cell_w,a1
 	divs	(a1),d0
 	sub.w	d0,(sp)
 	move.w	#1,-(sp)
@@ -13329,7 +13306,7 @@ L42772:
 	muls	#40,d0
 	add.l	#U99016,d0
 	move.l	d0,(sp)
-	move.l	U98276,-(sp)
+	move.l	#work_xywh,-(sp)
 	jsr	L49946
 	addq.l	#4,sp
 	unlk	fp
@@ -13625,7 +13602,7 @@ L43836:
 	beq  	L44066
 	move.l	fp,(sp)
 	subq.l	#8,(sp)
-	move.l	U98276,-(sp)
+	move.l	#work_xywh,-(sp)
 	move.w	#8,-(sp)
 	jsr	L50230
 	addq.l	#6,sp
@@ -13729,7 +13706,7 @@ L44174:
 	move.w	4(a0),d0
 	subq.w	#1,d0
 	ext.l	d0
-	divs	U98270,d0
+	divs	cell_w,d0
 	addq.w	#2,d0
 	move.w	d0,-2(fp)
 	movea.l	10(fp),a0
@@ -13738,18 +13715,18 @@ L44174:
 	move.w	(a1),d1
 	sub.w	(a5),d1
 	ext.l	d1
-	divs	U98270,d1
+	divs	cell_w,d1
 	swap	d1
 	sub.w	d1,d0
 	move.w	d0,-4(fp)
 	movea.l	10(fp),a0
 	move.w	2(a0),d0
-	sub.w	U98274,d0
+	sub.w	cell_pad,d0
 	movea.l	10(fp),a1
 	move.w	2(a1),d1
 	sub.w	2(a5),d1
 	ext.l	d1
-	divs	U98272,d1
+	divs	cell_h,d1
 	swap	d1
 	sub.w	d1,d0
 	move.w	d0,-6(fp)
@@ -13757,14 +13734,14 @@ L44174:
 	move.w	2(a0),d0
 	sub.w	2(a5),d0
 	ext.l	d0
-	divs	U98272,d0
+	divs	cell_h,d0
 	add.w	30(a5),d0
 	muls	36(a5),d0
 	movea.l	10(fp),a1
 	move.w	(a1),d1
 	sub.w	(a5),d1
 	ext.l	d1
-	divs	U98270,d1
+	divs	cell_w,d1
 	add.w	d1,d0
 	add.w	28(a5),d0
 	move.w	d0,-8(fp)
@@ -13776,7 +13753,7 @@ L44174:
 	move.w	-6(fp),-(sp)
 	move.w	-4(fp),-(sp)
 	move.w	-2(fp),-(sp)
-	move.w	U98272,-(sp)
+	move.w	cell_h,-(sp)
 	move.w	36(a5),-(sp)
 	move.l	22(a5),d0
 	move.w	-8(fp),d1
@@ -13801,19 +13778,19 @@ L44486:
 	adda.l	#U99016,a5
 	tst.w	20(a5)
 	beq.s	L44598
-	move.w	U98272,(sp)
-	move.w	U98270,-(sp)
+	move.w	cell_h,(sp)
+	move.w	cell_w,-(sp)
 	move.w	34(a5),d0
 	sub.w	30(a5),d0
 	subq.w	#1,d0
-	muls	U98272,d0
+	muls	cell_h,d0
 	move.w	d0,-(sp)
 	move.w	2(a5),d0
 	add.w	d0,(sp)
 	move.w	32(a5),d0
 	sub.w	28(a5),d0
 	subq.w	#1,d0
-	muls	U98270,d0
+	muls	cell_w,d0
 	move.w	d0,-(sp)
 	move.w	(a5),d0
 	add.w	d0,(sp)
@@ -14115,7 +14092,7 @@ L45442:
 	movea.l	#U99016,a1
 	move.w	6(a0,a1.l),d0
 	ext.l	d0
-	divs	U98272,d0
+	divs	cell_h,d0
 	move.w	d0,(sp)
 	move.w	#1,-(sp)
 	jsr	L50174
@@ -14131,7 +14108,7 @@ L45492:
 	movea.l	#U99016,a1
 	move.w	4(a0,a1.l),d0
 	ext.l	d0
-	divs	U98270,d0
+	divs	cell_w,d0
 	move.w	d0,(sp)
 	move.w	#2,-(sp)
 	jsr	L50174
@@ -14258,14 +14235,14 @@ L45924:
 	move.w	d6,d0
 	sub.w	30(a5),d0
 	subq.w	#1,d0
-	muls	U98272,d0
+	muls	cell_h,d0
 	move.w	d0,(sp)
 	move.w	2(a5),d0
 	add.w	d0,(sp)
 	move.w	d7,d0
 	sub.w	28(a5),d0
 	subq.w	#1,d0
-	muls	U98270,d0
+	muls	cell_w,d0
 	move.w	d0,-(sp)
 	move.w	(a5),d0
 	add.w	d0,(sp)
@@ -14567,24 +14544,24 @@ L46776:
 	jsr	L50230
 	addq.l	#6,sp
 	move.w	-2(fp),(sp)
-	move.w	U98272,d0
+	move.w	cell_h,d0
 	sub.w	d0,(sp)
 	move.w	-4(fp),-(sp)
 	move.w	-6(fp),-(sp)
 	move.w	-8(fp),-(sp)
 	move.w	-6(fp),-(sp)
-	move.w	U98272,d0
+	move.w	cell_h,d0
 	add.w	d0,(sp)
 	move.w	-8(fp),-(sp)
 	move.w	#3,-(sp)
 	jsr	L23836
 	adda.l	#12,sp
-	move.w	U98272,(sp)
+	move.w	cell_h,(sp)
 	move.w	-4(fp),-(sp)
 	move.w	-6(fp),-(sp)
 	move.w	-2(fp),d0
 	add.w	d0,(sp)
-	move.w	U98272,d0
+	move.w	cell_h,d0
 	sub.w	d0,(sp)
 	move.w	-8(fp),-(sp)
 	clr.w	-(sp)
@@ -14641,15 +14618,15 @@ L47004:
 	addq.l	#6,sp
 	move.w	-2(fp),d0
 	ext.l	d0
-	divs	U98272,d0
+	divs	cell_h,d0
 	swap	d0
 	sub.w	d0,-2(fp)
 	move.w	-2(fp),(sp)
-	move.w	U98272,d0
+	move.w	cell_h,d0
 	sub.w	d0,(sp)
 	move.w	-4(fp),-(sp)
 	move.w	-6(fp),-(sp)
-	move.w	U98272,d0
+	move.w	cell_h,d0
 	add.w	d0,(sp)
 	move.w	-8(fp),-(sp)
 	move.w	-6(fp),-(sp)
@@ -14657,7 +14634,7 @@ L47004:
 	move.w	#3,-(sp)
 	jsr	L23836
 	adda.l	#12,sp
-	move.w	U98272,(sp)
+	move.w	cell_h,(sp)
 	move.w	-4(fp),-(sp)
 	move.w	-6(fp),-(sp)
 	move.w	-8(fp),-(sp)
@@ -14798,14 +14775,14 @@ L47638:
 	move.w	30(a1),d1
 	sub.w	d1,d0
 	subq.w	#1,d0
-	muls	U98272,d0
+	muls	cell_h,d0
 	add.w	d0,-6(fp)
 	move.w	U98282,d0
 	sub.w	U98280,d0
 	addq.w	#1,d0
-	muls	U98272,d0
+	muls	cell_h,d0
 	move.w	d0,-2(fp)
-	cmp.w	U98272,d0
+	cmp.w	cell_h,d0
 	bne.s	L47868
 	move.w	U98284,d0
 	move.w	U100904,d1
@@ -14815,7 +14792,7 @@ L47638:
 	move.w	28(a1),d1
 	sub.w	d1,d0
 	subq.w	#1,d0
-	muls	U98270,d0
+	muls	cell_w,d0
 	move.w	d0,-10(fp)
 	move.w	-10(fp),d0
 	add.w	d0,-8(fp)
@@ -15172,23 +15149,21 @@ init:
 	bsr  	L49566
 
 .no_err:
-	jsr	L22628
-	move.w	d0,U98270
-	jsr	L22642
-	move.w	d0,U98272
-	jsr	L22656
-	move.w	d0,-(sp)
-	move.w	U98272,d0
-	sub.w	(sp)+,d0
-	move.w	d0,U98274
-	move.l	#U101144,(sp)
-	move.l	#U99182,-(sp)
-	move.l	#U99184,-(sp)
-	move.l	#U99180,-(sp)
-	move.w	#4,-(sp)
-	clr.w	-(sp)
+	move.w	cell_h,d0
+	sub.w	char_h,d0
+	move.w	d0,cell_pad
+
+	; get working area of desktop window
+	; (everything but the menu bar)
+	move.l	#work_h,(sp)
+	move.l	#work_w,-(sp)
+	move.l	#work_y,-(sp)
+	move.l	#work_x,-(sp)
+	move.w	#4,-(sp)	; WF_WORKXYWH
+	clr.w	-(sp)		; desktop window
 	jsr	wind_get
 	adda.l	#16,sp
+
 	move.l	#U99820,U101480
 	clr.l	(sp)
 	clr.w	-(sp)
@@ -15222,29 +15197,42 @@ init:
 	move.w	#7,(sp)
 	bsr  	L37522
 	move.l	d0,U92222
-	move.l	#T85492,U101188
-	move.l	#T85508,U98276
-	move.w	U101144,(sp)
-	move.w	U99182,-(sp)
-	move.w	U99184,-(sp)
-	move.w	U99180,-(sp)
-	move.l	U98276,-(sp)
-	jsr	L49810
-	adda.l	#10,sp
-	move.l	U98276,(sp)
+
+	move.l	#work_xywh,(sp)
 	bsr  	L42912
+
 	move.w	#-2,U101462
 	move.w	#-1,U100904
 	jsr	get_free_mem
-	cmp.l	#57343,d0
-	ble.s	.L49210
-	move.l	#32256,(sp)
+	cmp.l	#$DFFF,d0
+	ble.s	.not_enough_mem
+
+	; "A good area to place assembly language programs is right after the
+	; screen buffer. This location can be calculated by adding 27,000 to
+	; the location of the screen buffer given in SYSFACTS. There are about
+	; 5,700 free bytes at this location." -- ST Logo Addendum
+
+	; screen buffer was originally fixed at 32256 bytes,
+	; leaving 5256 bytes for asm programs
+
+	; this obviously breaks on extended resolutions
+	; so we do not currently implement this, oh well...
+
+	; figure out how much screen buffer we need
+	clr.l	d1
+	move.w	nplanes,d1
+	mulu.w	work_h,d1
+	mulu.w	work_w,d1
+	lsr.l	#3,d1	; in bytes
+
+	move.l	d1,(sp)	; Allocate graphics buffer
 	jsr	Malloc
-	move.l	d0,U92236
+
+	move.l	d0,grph_buffer	
 	move.w	#1,U92232
 	bra.s	.L49232
 
-.L49210:
+.not_enough_mem:
 	jsr	L21006
 	tst.w	d0
 	beq.s	.L49224
@@ -15265,7 +15253,7 @@ init:
 	clr.w	d0
 .L49248:
 	move.w	d0,U92234
-	move.l	U92236,(sp)
+	move.l	grph_buffer,(sp)
 	move.w	U92234,d0
 	muls	U92232,d0
 	move.w	d0,-(sp)
@@ -15440,19 +15428,6 @@ L49730:
 	movea.l	24(fp),a0
 	movea.l	8(fp),a1
 	move.w	6(a1),(a0)
-	unlk	fp
-	rts
-
-L49810:
-	link	fp,#-4
-	movea.l	8(fp),a0
-	move.w	12(fp),(a0)
-	movea.l	8(fp),a0
-	move.w	14(fp),2(a0)
-	movea.l	8(fp),a0
-	move.w	16(fp),4(a0)
-	movea.l	8(fp),a0
-	move.w	18(fp),6(a0)
 	unlk	fp
 	rts
 
@@ -27975,11 +27950,6 @@ T85060:
 rsrc_err: dc.b '[3][Can''t find logo.rsc][EXIT]',0,0
 init_err: dc.b '[3][I can''t initialize LOGO.][EXIT]',0
 
-T85492:
-	dc.b	255,255,255,255,255,255,0,20
-	dc.b	0,0,0,0,0,0,17,'C'
-T85508:
-	dc.w	0,0,0,0
 T85516:
 	dc.w	100,35,16,100
 	dc.w	16
@@ -29488,30 +29458,12 @@ U91962:
 	ds.b	2
 U91964:
 	ds.b	2
-U91966:
-	ds.b	2
-U91968:
-	ds.b	2
-U91970:
-	ds.b	2
-U91972:
-	ds.b	2
-U91974:
-	ds.b	2
-U91976:
-	ds.b	2
-U91978:
-	ds.b	2
-U91980:
-	ds.b	2
-U91982:
-	ds.b	2
-U91984:
-	ds.b	4
-U91988:
-	ds.b	2
-U91990:
-	ds.b	2
+
+char_w: ds.w 1
+char_h: ds.w 1
+cell_w: ds.w 1
+cell_h: ds.w 1
+cell_pad: ds.w 1
 
 psrcMFDB: ds.b 20
 pdesMFDB: ds.b 20
@@ -29670,8 +29622,9 @@ U92232:
 	ds.b	2
 U92234:
 	ds.b	2
-U92236:
-	ds.l	1
+
+grph_buffer: ds.l 1
+
 U92240:
 	ds.b	2
 U92242:
@@ -29692,14 +29645,6 @@ U94270:
 	ds.b	2000
 U96270:
 	ds.b	2000
-U98270:
-	ds.b	2
-U98272:
-	ds.b	2
-U98274:
-	ds.b	2
-U98276:
-	ds.b	4
 U98280:
 	ds.b	2
 U98282:
@@ -29864,12 +29809,16 @@ U99176:
 	ds.b	2
 U99178:
 	ds.b	2
-U99180:
-	ds.b	2
-U99182:
-	ds.b	2
-U99184:
-	ds.b	2
+
+screen_w: ds.w 1
+screen_h: ds.w 1
+
+work_xywh:
+work_x: ds.w 1
+work_y: ds.w 1
+work_w: ds.w 1
+work_h: ds.w 1
+
 U99186:
 	ds.b	2
 U99188:
@@ -29892,8 +29841,6 @@ U99602:
 	ds.b	4
 U99606:
 	ds.b	200
-U99806:
-	ds.b	2
 U99808:
 	ds.b	4
 U99812:
@@ -30106,8 +30053,6 @@ U101052:
 	ds.b	2
 U101054:
 	ds.b	2
-U101056:
-	ds.b	2
 
 addr_in:
 	ds.l	2
@@ -30150,8 +30095,6 @@ U101140:
 	ds.b	2
 U101142:
 	ds.b	2
-U101144:
-	ds.b	2
 U101146:
 	ds.b	2
 U101148:
@@ -30172,8 +30115,6 @@ U101184:
 	ds.b	2
 U101186:
 	ds.b	2
-U101188:
-	ds.b	4
 U101192:
 	ds.b	2
 U101194:
@@ -30200,8 +30141,9 @@ U101474:
 	ds.b	2
 U101476:
 	ds.b	2
-U101478:
-	ds.b	2
+
+nplanes: ds.w 1
+
 U101480:
 	ds.b	10
 U101490:
@@ -30214,5 +30156,3 @@ U101498:
 	ds.b	2
 U101500:
 	ds.b	2
-U101502:
-	end	
