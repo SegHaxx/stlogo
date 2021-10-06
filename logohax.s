@@ -5393,12 +5393,12 @@ L16396:
 	addq.l	#8,sp
 	bgt.s	L16516
 	jsr	L48234
-	jsr	L27654
+	jsr	turtle_draw
 	move.l	-4(fp),(sp)
 	move.l	-8(fp),-(sp)
 	jsr	L33794
 	addq.l	#4,sp
-	jsr	L27654
+	jsr	turtle_draw
 	bsr  	L18502
 	bra.s	L16522
 
@@ -5834,13 +5834,13 @@ L17846:
 	addq.l	#8,sp
 	ble.s	L18002
 	jsr	L48234
-	jsr	L27654
+	jsr	turtle_draw
 	jsr	L62206
 	move.l	d0,-(sp)
 	movea.l	8(fp),a0
 	jsr	(a0)
 	addq.l	#4,sp
-	jsr	L27654
+	jsr	turtle_draw
 	bsr  	L18502
 	bra.s	L18008
 
@@ -6788,13 +6788,13 @@ L21016:
 	addq.l	#4,sp
 	movea.l	d0,a5
 	move.w	(a5),d0
-	add.w	U100970,d0
+	add.w	U100970_x,d0
 	movea.l	8(fp),a1
 	move.w	d0,(a1)
 	addq.l	#2,8(fp)
 	addq.l	#2,a5
 	move.w	(a5),d0
-	add.w	U100972,d0
+	add.w	U100972_y,d0
 	movea.l	8(fp),a1
 	move.w	d0,(a1)
 	tst.l	(sp)+
@@ -7144,9 +7144,9 @@ L22368:
 L22392:
 	link	fp,#-4
 	movea.l	8(fp),a0
-	move.w	(a0),U100970
+	move.w	(a0),U100970_x
 	movea.l	8(fp),a0
-	move.w	2(a0),U100972
+	move.w	2(a0),U100972_y
 	movea.l	8(fp),a0
 	move.w	4(a0),d0
 	cmp.w	U100974,d0
@@ -7280,7 +7280,7 @@ L22862:
 	unlk	fp
 	rts
 
-L22938:
+init_vdi:
 	link	fp,#-6
 	move.l	#U98410,(sp)
 	jsr	L37408
@@ -7356,6 +7356,7 @@ L23326:
 	clr.w	contrl+2
 	clr.w	contrl+6
 	jsr	vdi
+
 	move.l	#cell_h,(sp)
 	move.l	#cell_w,-(sp)
 	move.l	#char_h,-(sp)
@@ -7363,14 +7364,26 @@ L23326:
 	move.w	ptsout+2,-(sp)
 	bsr  	vst_height
 	adda.l	#14,sp
-	move.w	screen_w,d0
-	ext.l	d0
-	divs	cell_w,d0
-	move.w	screen_h,d0
-	ext.l	d0
-	divs	cell_h,d0
+
 	clr.w	U92032
 	clr.w	U92034
+
+	; set turtle size
+	moveq	#3,d0	; lowres turtle
+	cmp	#640,screen_w
+	blt	.done
+	clr.l	d0	; highres turtle
+	cmp	#400,screen_h
+	bge	.done
+	moveq	#1,d0	; mediumres turtle
+.done:
+	muls	#96,d0
+	ext.l	d0
+	movea.l	d0,a0
+	adda.l	#turtle_table,a0
+	subq.l	#1,a0
+	move.l	a0,turtle_p
+
 	unlk	fp
 	rts
 
@@ -7975,7 +7988,7 @@ L25628:
 	jsr	L48234
 	move.l	fp,(sp)
 	subq.l	#8,(sp)
-	move.l	#U100970,-(sp)
+	move.l	#U100970_x,-(sp)
 	move.w	#8,-(sp)
 	jsr	L50230
 	addq.l	#6,sp
@@ -8371,7 +8384,7 @@ L26974:
 L27114:
 	link	fp,#-4
 	move.w	8(fp),(sp)
-	bsr  	L22938
+	bsr  	init_vdi
 	move.w	T84996,(sp)
 	move.w	#1,-(sp)
 	move.w	#1,-(sp)
@@ -8427,16 +8440,16 @@ L27270:
 	move.w	#6,contrl
 	move.w	#2,contrl+2
 	clr.w	contrl+6
-	move.w	U100970,d0
+	move.w	U100970_x,d0
 	add.w	8(fp),d0
 	move.w	d0,ptsin
-	move.w	U100972,d0
+	move.w	U100972_y,d0
 	add.w	10(fp),d0
 	move.w	d0,ptsin+2
-	move.w	U100970,d0
+	move.w	U100970_x,d0
 	add.w	12(fp),d0
 	move.w	d0,ptsin+4
-	move.w	U100972,d0
+	move.w	U100972_y,d0
 	add.w	14(fp),d0
 	move.w	d0,ptsin+6
 	bsr  	L22292
@@ -8456,10 +8469,10 @@ L27388:
 	move.w	#1,contrl+2
 	move.w	#1,contrl+6
 	move.w	#-1,U98410
-	move.w	U100970,d0
+	move.w	U100970_x,d0
 	add.w	U99860,d0
 	move.w	d0,ptsin
-	move.w	U100972,d0
+	move.w	U100972_y,d0
 	add.w	U100564,d0
 	move.w	d0,ptsin+2
 	bsr  	L22312
@@ -8514,12 +8527,12 @@ L27644:
 	unlk	fp
 	rts
 
-L27654:
+turtle_draw:
 	link	fp,#-6
-	movem.l	d4-d7/a5,-(sp)
-	jsr	L34468
-	tst.w	d0
-	beq  	L28016
+	move.l	d7,-(sp)
+
+	tst.w	turtle_show_flag
+	beq  	.return
 	move.w	U91962,-6(fp)
 	move.w	U91964,-4(fp)
 	move.w	#-1,(sp)
@@ -8530,57 +8543,47 @@ L27654:
 	move.w	#3,(sp)
 	bsr  	vswr_mode
 	move.w	d0,-2(fp)
-	jsr	L33552
-	move.w	d0,d5
-	addq.w	#3,d5
-	ext.l	d5
-	divs	#6,d5
-	ext.l	d5
-	divs	#15,d5
-	swap	d5
-	jsr	L33552
-	move.w	d0,d6
-	addq.w	#3,d6
-	move.w	d6,d0
+	move.w	U92082,d1
+	addq.w	#3,d1
+	ext.l	d1
+	divs	#6,d1
+	ext.l	d1
+	divs	#15,d1
+	swap	d1
+	move.w	U92082,d2
+	addq.w	#3,d2
+	move.w	d2,d0
 	ext.l	d0
 	divs	#90,d0
-	move.w	d0,d6
+	move.w	d0,d2
 	and.w	#1,d0
-	beq.s	L27774
-	eori.w	#15,d5
-L27774:
-	move.w	nplanes,d0
-	subq.w	#1,d0
-	muls	#96,d0
-	ext.l	d0
-	movea.l	d0,a5
-	move.w	d5,d0
-	muls	#6,d0
-	ext.l	d0
-	adda.l	d0,a5
-	adda.l	#T84610,a5
-	subq.l	#1,a5
-	move.w	U100970,d0
+	beq.s	.L27774
+	eori.w	#15,d1
+.L27774:
+	muls	#6,d1
+	ext.l	d1
+	move.l	d1,a1
+	add.l	turtle_p,a1
+	move.w	U100970_x,d0
 	add.w	U99860,d0
-	move.w	d0,ptsin+16
 	move.w	d0,ptsin
-	move.w	U100972,d0
+	move.w	d0,ptsin+16
+	move.w	U100972_y,d0
 	add.w	U100564,d0
-	move.w	d0,ptsin+18
 	move.w	d0,ptsin+2
+	move.w	d0,ptsin+18
 	moveq	#2,d7
-	bra.s	L27958
-
-L27860:
-	move.w	d6,(sp)
-	addq.l	#1,a5
-	move.b	(a5),d0
+	bra.s	.L27958
+.L27860:
+	move.w	d2,(sp)
+	addq.l	#1,a1
+	move.b	(a1),d0
 	ext.w	d0
 	move.w	d0,-(sp)
 	bsr  	L27606
 	addq.l	#2,sp
 	move.w	d0,-(sp)
-	move.w	U100970,d0
+	move.w	U100970_x,d0
 	add.w	d0,(sp)
 	move.w	U99860,d0
 	add.w	d0,(sp)
@@ -8589,16 +8592,16 @@ L27860:
 	adda.l	#ptsin,a0
 	move.w	(sp)+,(a0)
 	addq.w	#1,d7
-	move.w	d6,(sp)
+	move.w	d2,(sp)
 	addq.w	#1,(sp)
-	addq.l	#1,a5
-	move.b	(a5),d0
+	addq.l	#1,a1
+	move.b	(a1),d0
 	ext.w	d0
 	move.w	d0,-(sp)
 	bsr  	L27606
 	addq.l	#2,sp
 	move.w	d0,-(sp)
-	move.w	U100972,d0
+	move.w	U100972_y,d0
 	add.w	d0,(sp)
 	move.w	U100564,d0
 	add.w	d0,(sp)
@@ -8607,10 +8610,10 @@ L27860:
 	adda.l	#ptsin,a0
 	move.w	(sp)+,(a0)
 	addq.w	#1,d7
-L27958:
+.L27958:
 	cmp.w	#8,d7
-	blt.s	L27860
-	move.w	#6,contrl
+	blt.s	.L27860
+	move.w	#6,contrl	; v_pline
 	move.w	#5,contrl+2
 	clr.w	contrl+6
 	bsr  	L22292
@@ -8621,23 +8624,14 @@ L27958:
 	addq.l	#4,sp
 	move.w	-2(fp),(sp)
 	bsr  	vswr_mode
-L28016:
-	tst.l	(sp)+
-	movem.l	(sp)+,d5-d7/a5
-	unlk	fp
-	rts
-
-	link	fp,#-4
-	unlk	fp
-	rts
-
-	link	fp,#-4
+.return:
+	move.l	(sp)+,d7
 	unlk	fp
 	rts
 
 L28042:
 	link	fp,#-4
-	move.l	#U100970,(sp)
+	move.l	#U100970_x,(sp)
 	bsr.s	L28066
 	move.w	#1,U92038
 	unlk	fp
@@ -8971,10 +8965,10 @@ L28972:
 	move.w	#8,contrl
 	move.w	#1,contrl+2
 	move.w	U99178,contrl+6
-	move.w	U100970,d0
+	move.w	U100970_x,d0
 	add.w	U99860,d0
 	move.w	d0,ptsin
-	move.w	U100972,d0
+	move.w	U100972_y,d0
 	add.w	U100564,d0
 	move.w	d0,ptsin+2
 	clr.w	d6
@@ -9035,10 +9029,10 @@ L29214:
 	subq.l	#8,(sp)
 	jsr	graf_mkstate
 	adda.l	#12,sp
-	move.w	U100972,d0
+	move.w	U100972_y,d0
 	sub.w	d0,-6(fp)
 	move.w	-6(fp),(sp)
-	move.w	U100970,d0
+	move.w	U100970_x,d0
 	sub.w	d0,-8(fp)
 	move.w	-8(fp),-(sp)
 	jsr	L36410
@@ -10032,10 +10026,10 @@ L32596:
 L32654:
 	move.w	-2(fp),U99860
 	move.w	-4(fp),U100564
-	jsr	L27654
+	jsr	turtle_draw
 	move.w	U92118,U99860
 	move.w	U92120,U100564
-	jsr	L27654
+	jsr	turtle_draw
 L32702:
 	move.w	U100564,(sp)
 	move.w	U99860,-(sp)
@@ -10045,9 +10039,9 @@ L32702:
 	beq.s	L32748
 	tst.w	U92086
 	beq.s	L32748
-	jsr	L27654
+	jsr	turtle_draw
 	bsr  	L34706
-	jsr	L27654
+	jsr	turtle_draw
 L32748:
 	unlk	fp
 	rts
@@ -10086,7 +10080,7 @@ L32858:
 	move.l	d0,U99812
 	move.l	d0,U99808
 	clr.w	U92082
-	clr.w	U92084
+	clr.w	turtle_show_flag
 	clr.w	U92086
 	move.l	T85032,U92088
 	clr.w	d0
@@ -10144,7 +10138,7 @@ L33100:
 	tst.w	U92122
 	bne.s	L33126
 	move.w	#1,U92122
-	jsr	L27654
+	jsr	turtle_draw
 L33126:
 	unlk	fp
 	rts
@@ -10158,7 +10152,7 @@ L33130:
 L33144:
 	link	fp,#-4
 	bsr.s	L33130
-	jsr	L27654
+	jsr	turtle_draw
 	unlk	fp
 	rts
 
@@ -10170,12 +10164,12 @@ L33160:
 
 L33174:
 	link	fp,#-4
-	jsr	L27654
+	jsr	turtle_draw
 	move.w	8(fp),d0
 	move.w	d0,U92096
 	move.w	d0,(sp)
 	jsr	L49676
-	jsr	L27654
+	jsr	turtle_draw
 	unlk	fp
 	rts
 
@@ -10278,7 +10272,7 @@ L33472:
 
 L33502:
 	link	fp,#-4
-	jsr	L27654
+	jsr	turtle_draw
 	move.l	8(fp),(sp)
 	bsr  	L36300
 	move.l	d0,U92078
@@ -10286,13 +10280,7 @@ L33502:
 	jsr	L81832
 	addq.l	#4,sp
 	move.w	d0,U92082
-	jsr	L27654
-	unlk	fp
-	rts
-
-L33552:
-	link	fp,#-4
-	move.w	U92082,d0
+	jsr	turtle_draw
 	unlk	fp
 	rts
 
@@ -10306,7 +10294,7 @@ L33580:
 	link	fp,#-4
 	move.w	U92096,(sp)
 	jsr	L28042
-	jsr	L27654
+	jsr	turtle_draw
 	unlk	fp
 	rts
 
@@ -10381,7 +10369,7 @@ L33794:
 	addq.l	#8,sp
 	beq.s	L33858
 L33846:
-	jsr	L27654
+	jsr	turtle_draw
 	jsr	L66832
 L33858:
 	move.l	8(fp),U92124
@@ -10560,8 +10548,8 @@ L34414:
 	bsr.s	L34468
 	tst.w	d0
 	beq.s	L34436
-	jsr	L27654
-	clr.w	U92084
+	jsr	turtle_draw
+	clr.w	turtle_show_flag
 L34436:
 	unlk	fp
 	rts
@@ -10571,15 +10559,15 @@ L34440:
 	bsr.s	L34468
 	tst.w	d0
 	bne.s	L34464
-	move.w	#1,U92084
-	jsr	L27654
+	move.w	#1,turtle_show_flag
+	jsr	turtle_draw
 L34464:
 	unlk	fp
 	rts
 
 L34468:
 	link	fp,#-4
-	move.w	U92084,d0
+	move.w	turtle_show_flag,d0
 	unlk	fp
 	rts
 
@@ -10610,10 +10598,10 @@ L34550:
 L34554:
 	link	fp,#-4
 	bsr.s	L34496
-	jsr	L27654
+	jsr	turtle_draw
 	move.w	#1,U92086
 	bsr  	L34706
-	jsr	L27654
+	jsr	turtle_draw
 	unlk	fp
 	rts
 
@@ -10832,7 +10820,7 @@ L35228:
 	move.w	U92118,-(sp)
 	bsr  	L36258
 	addq.l	#2,sp
-	jsr	L27654
+	jsr	turtle_draw
 	move.w	U99860,U92140
 	move.w	U100564,U92142
 	move.w	U92118,d0
@@ -10896,7 +10884,7 @@ L35524:
 	move.w	U92092,(sp)
 	bsr.s	L35556
 L35540:
-	jsr	L27654
+	jsr	turtle_draw
 	tst.l	(sp)+
 	movem.l	(sp)+,d6-d7
 	unlk	fp
@@ -27812,7 +27800,8 @@ T84605:
 	dc.b	26,127
 T84607:
 	dc.b	255,0,0
-T84610:
+
+turtle_table:
 	dc.b	10,6,0,242,246,6,10,8
 	dc.b	2,242,246,4,8,8,2,242
 	dc.b	244,4,8,8,4,242,244,2
@@ -29508,8 +29497,9 @@ U92078:
 	ds.b	4
 U92082:
 	ds.b	2
-U92084:
-	ds.b	2
+
+turtle_show_flag: ds.w 1
+
 U92086:
 	ds.b	2
 U92088:
@@ -29963,12 +29953,11 @@ U100900:
 	ds.b	4
 U100904:
 	ds.b	2
-control:
-	ds.w	4
-int_in:
-	ds.w	16
-int_out:
-	ds.w	1
+
+control: ds.w 4
+int_in: ds.w 16
+int_out: ds.w 1
+
 U100948:
 	ds.b	2
 U100950:
@@ -29985,10 +29974,11 @@ U100960:
 	ds.b	2
 U100962:
 	ds.b	8
-U100970:
-	ds.b	2
-U100972:
-	ds.b	2
+
+turtle_p: ds.l 1
+U100970_x: ds.w 1
+U100972_y: ds.w 1
+
 U100974:
 	ds.b	2
 U100976:
