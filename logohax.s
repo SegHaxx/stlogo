@@ -398,7 +398,8 @@ rsrc_load:
 	unlk	fp
 	rts
 
-rsrc_gaddr:
+	public _rsrc_gaddr
+_rsrc_gaddr:
 	link	fp,#-4
 	move.w	8(fp),int_in
 	move.w	10(fp),int_in+2
@@ -7129,7 +7130,7 @@ init_vdi:
 	jsr	vdi
 
 	move.l	#cell_h,(sp)
-	move.l	#cell_w,-(sp)
+	move.l	#_cell_w,-(sp)
 	move.l	#char_h,-(sp)
 	move.l	#char_w,-(sp)
 	move.w	ptsout+2,-(sp)
@@ -11162,18 +11163,6 @@ vdi:
 	trap	#2
 	rts
 
-L37522:
-	link	fp,#-8
-	move.l	fp,(sp)
-	subq.l	#4,(sp)
-	move.w	8(fp),-(sp)
-	clr.w	-(sp)
-	jsr	rsrc_gaddr
-	addq.l	#4,sp
-	move.l	-4(fp),d0
-	unlk	fp
-	rts
-
 L37552:
 	link	fp,#-4
 	movea.l	8(fp),a0
@@ -11849,7 +11838,7 @@ L39630:
 	bra  	.switch
 .L39650:
 	clr.w	(sp)
-	move.l	dialog_about,d0
+	move.l	_dialog_about,d0
 	move.l	d0,-4(fp)
 	move.l	d0,-(sp)
 	move.l	#_form_do,-(sp)
@@ -12073,37 +12062,37 @@ L39630:
 	addq.l	#2,sp
 	bra  	.L40578
 .L40402:
-	move.l	U92202,(sp)
+	move.l	_dialog_turtle_settings,(sp)
 	jsr	L29826
 	move.w	#3,(sp)
-	move.l	U92202,-(sp)
+	move.l	_dialog_turtle_settings,-(sp)
 	move.l	#_form_do,-(sp)
 	jsr  	_form_doer
 	addq.l	#8,sp
-	move.l	U92202,(sp)
+	move.l	_dialog_turtle_settings,(sp)
 	jsr	L29948
 	bra  	.L40578
 .L40452:
-	move.l	U92206,(sp)
+	move.l	_dialog_screen_settings,(sp)
 	jsr	L30334
 	move.w	#2,(sp)
-	move.l	U92206,-(sp)
+	move.l	_dialog_screen_settings,-(sp)
 	move.l	#_form_do,-(sp)
 	jsr  	_form_doer
 	addq.l	#8,sp
-	move.l	U92206,(sp)
+	move.l	_dialog_screen_settings,(sp)
 	jsr	L30444
 	bra.s	.L40578
 .L40500:
-	move.l	U92210,(sp)
+	move.l	_dialog_graphics_settings,(sp)
 	jsr	dialog_graphics_setup
 	move.w	#8,(sp)
-	move.l	U92210,-(sp)
+	move.l	_dialog_graphics_settings,-(sp)
 	move.l	#dialog_graphics_handler,-(sp)
 	jsr  	_form_doer
 	addq.l	#8,sp
 	move.w	d0,(sp)
-	move.l	U92210,-(sp)
+	move.l	_dialog_graphics_settings,-(sp)
 	jsr	L31908
 	addq.l	#4,sp
 	bra.s	.L40578
@@ -12319,7 +12308,7 @@ L41410:
 	ext.l	d0
 	movea.w	d7,a1
 	adda.l	a1,a1
-	adda.l	#cell_w,a1
+	adda.l	#_cell_w,a1
 	divs	(a1),d0
 	sub.w	d0,(sp)
 	move.w	#1,-(sp)
@@ -12442,7 +12431,7 @@ L41818:
 	jsr	L50344
 	movea.w	d7,a1
 	adda.l	a1,a1
-	adda.l	#cell_w,a1
+	adda.l	#_cell_w,a1
 	muls	(a1),d0
 	move.w	d0,-2(fp)
 	movea.w	d7,a0
@@ -12574,7 +12563,7 @@ L42230:
 	ext.l	d0
 	movea.w	d7,a1
 	adda.l	a1,a1
-	adda.l	#cell_w,a1
+	adda.l	#_cell_w,a1
 	divs	(a1),d0
 	move.w	d0,-4(fp)
 	move.w	d6,d0
@@ -12722,7 +12711,7 @@ L42636:
 	ext.l	d0
 	movea.w	8(fp),a1
 	adda.l	a1,a1
-	adda.l	#cell_w,a1
+	adda.l	#_cell_w,a1
 	divs	(a1),d0
 	sub.w	d0,(sp)
 	move.w	#1,-(sp)
@@ -13170,7 +13159,7 @@ L44174:
 	move.w	4(a0),d0
 	subq.w	#1,d0
 	ext.l	d0
-	divs	cell_w,d0
+	divs	_cell_w,d0
 	addq.w	#2,d0
 	move.w	d0,-2(fp)
 	movea.l	10(fp),a0
@@ -13179,7 +13168,7 @@ L44174:
 	move.w	(a1),d1
 	sub.w	(a5),d1
 	ext.l	d1
-	divs	cell_w,d1
+	divs	_cell_w,d1
 	swap	d1
 	sub.w	d1,d0
 	move.w	d0,-4(fp)
@@ -13205,7 +13194,7 @@ L44174:
 	move.w	(a1),d1
 	sub.w	(a5),d1
 	ext.l	d1
-	divs	cell_w,d1
+	divs	_cell_w,d1
 	add.w	d1,d0
 	add.w	28(a5),d0
 	move.w	d0,-8(fp)
@@ -13243,7 +13232,7 @@ L44486:
 	tst.w	20(a5)
 	beq.s	L44598
 	move.w	cell_h,(sp)
-	move.w	cell_w,-(sp)
+	move.w	_cell_w,-(sp)
 	move.w	34(a5),d0
 	sub.w	30(a5),d0
 	subq.w	#1,d0
@@ -13254,7 +13243,7 @@ L44486:
 	move.w	32(a5),d0
 	sub.w	28(a5),d0
 	subq.w	#1,d0
-	muls	cell_w,d0
+	muls	_cell_w,d0
 	move.w	d0,-(sp)
 	move.w	(a5),d0
 	add.w	d0,(sp)
@@ -13572,7 +13561,7 @@ L45492:
 	movea.l	#U99016,a1
 	move.w	4(a0,a1.l),d0
 	ext.l	d0
-	divs	cell_w,d0
+	divs	_cell_w,d0
 	move.w	d0,(sp)
 	move.w	#2,-(sp)
 	jsr	L50174
@@ -13706,7 +13695,7 @@ L45924:
 	move.w	d7,d0
 	sub.w	28(a5),d0
 	subq.w	#1,d0
-	muls	cell_w,d0
+	muls	_cell_w,d0
 	move.w	d0,-(sp)
 	move.w	(a5),d0
 	add.w	d0,(sp)
@@ -14252,7 +14241,7 @@ L47638:
 	move.w	28(a1),d1
 	sub.w	d1,d0
 	subq.w	#1,d0
-	muls	cell_w,d0
+	muls	_cell_w,d0
 	move.w	d0,-10(fp)
 	move.w	-10(fp),d0
 	add.w	d0,-8(fp)
@@ -14647,26 +14636,16 @@ init:
 	bsr  	alert
 
 .L48982:
-	move.w	#2,(sp)
-	bsr  	L37522
-	move.l	d0,U92202
-	move.w	#3,(sp)
-	bsr  	L37522
-	move.l	d0,U92206
-	move.w	#4,(sp)
-	bsr  	L37522
-	move.l	d0,dialog_about
-	move.w	#1,(sp)
-	bsr  	L37522
-	move.l	d0,U92210
+	jsr	_dialog_init
+	; set up banners
 	move.w	#5,(sp)
-	bsr  	L37522
+	jsr  	_rsrc_gaddr_tree
 	move.l	d0,U92214
 	move.w	#6,(sp)
-	bsr  	L37522
+	jsr  	_rsrc_gaddr_tree
 	move.l	d0,U92218
 	move.w	#7,(sp)
-	bsr  	L37522
+	jsr  	_rsrc_gaddr_tree
 	move.l	d0,U92222
 
 	move.l	#work_xywh,(sp)
@@ -14754,7 +14733,7 @@ init:
 L49370:
 	link	fp,#-4
 	clr.w	(sp)
-	bsr  	L37522
+	jsr  	_rsrc_gaddr_tree
 	move.l	d0,U92190
 	move.w	#1,(sp)
 	move.l	U92190,-(sp)
@@ -28409,7 +28388,8 @@ U91964:
 
 char_w: ds.w 1
 char_h: ds.w 1
-cell_w: ds.w 1
+	public _cell_w
+_cell_w: ds.w 1
 cell_h: ds.w 1
 cell_pad: ds.w 1
 
@@ -28539,15 +28519,6 @@ p_ptsout: ds.l 1
 
 U92190:
 	ds.b	8
-
-dialog_about: ds.l 1
-
-U92202:
-	ds.b	4
-U92206:
-	ds.b	4
-U92210:
-	ds.b	4
 U92214:
 	ds.b	4
 U92218:
