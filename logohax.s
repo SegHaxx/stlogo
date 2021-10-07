@@ -194,7 +194,8 @@ menu_tnormal:
 	unlk	fp
 	rts
 
-objc_draw:
+	xdef _objc_draw
+_objc_draw:
 	link	fp,#-4
 	move.l	8(fp),addr_in
 	move.w	12(fp),int_in
@@ -208,7 +209,8 @@ objc_draw:
 	unlk	fp
 	rts
 
-form_do:
+	xdef _form_do
+_form_do:
 	link	fp,#-4
 	move.l	8(fp),addr_in
 	move.w	12(fp),int_in
@@ -217,7 +219,8 @@ form_do:
 	unlk	fp
 	rts
 
-form_dial:
+	xdef _form_dial
+_form_dial:
 	link	fp,#-4
 	move.w	8(fp),int_in
 	move.w	10(fp),int_in+2
@@ -5920,7 +5923,7 @@ L18928:
 	bra.s	L18988
 
 L18936:
-	jsr	mouse_show
+	jsr	_mouse_show
 	move.l	T87058,(sp)
 	move.w	#2,-(sp)
 	jsr	form_alert
@@ -5934,7 +5937,7 @@ L18970:
 	moveq	#1,d0
 L18972:
 	move.w	d0,-2(fp)
-	jsr	mouse_hide
+	jsr	_mouse_hide
 	tst.w	-2(fp)
 	bne.s	L19006
 L18988:
@@ -6890,7 +6893,7 @@ L22282:
 
 lock_and_vdi:
 	link	fp,#-4
-	jsr	mouse_hide
+	jsr	_mouse_hide
 	jsr	vdi
 	unlk	fp
 	rts
@@ -7288,7 +7291,7 @@ L24012:
 	link	fp,#0
 	movem.l	d6-d7/a5,-(sp)
 	movea.l	8(fp),a5
-	jsr	mouse_hide
+	jsr	_mouse_hide
 	move.w	#8,contrl
 	move.w	#1,contrl+2
 	move.w	16(fp),contrl+6
@@ -7329,7 +7332,7 @@ L24012:
 
 vdi_putchar:
 	link	fp,#-4
-	jsr	mouse_hide
+	jsr	_mouse_hide
 	move.w	10(fp),ptsin
 	move.w	char_h,d0
 	add.w	12(fp),d0
@@ -8555,7 +8558,7 @@ L28438:
 	link	fp,#-2
 	movem.l	d6-d7/a5,-(sp)
 	movea.l	8(fp),a5
-	jsr	L45356
+	jsr	_L45356
 	clr.w	(sp)
 	move.l	a5,-(sp)
 	jsr	Dgetpath
@@ -8576,7 +8579,7 @@ L28490:
 	jsr	L83706
 	addq.l	#4,sp
 	clr.b	40(a5)
-	jsr	mouse_show
+	jsr	_mouse_show
 
 	move.l	fp,(sp)
 	subq.l	#2,(sp)
@@ -9671,7 +9674,7 @@ L32300:
 	unlk	fp
 	rts
 
-L32304:
+dialog_graphics_handler:
 	link	fp,#-6
 .loop:
 	clr.l	(sp)
@@ -9680,7 +9683,7 @@ L32304:
 	addq.l	#2,sp
 	move.w	U92076,(sp)
 	move.l	8(fp),-(sp)
-	jsr	form_do
+	jsr	_form_do
 	addq.l	#4,sp
 	clr.l	(sp)
 	move.w	#256,-(sp)
@@ -11199,7 +11202,7 @@ L37614:
 	move.w	U92266,-(sp)
 	jsr	wind_get
 	adda.l	#16,sp
-	bsr  	L45356
+	bsr  	_L45356
 	move.w	-8(fp),(sp)
 	move.w	-6(fp),-(sp)
 	move.w	-4(fp),-(sp)
@@ -11221,7 +11224,7 @@ L37732:
 	link	fp,#0
 	movem.l	d6-d7/a5,-(sp)
 	move.w	8(fp),d7
-	bsr  	mouse_hide
+	bsr  	_mouse_hide
 	move.w	d7,d0
 	muls	#40,d0
 	movea.l	d0,a5
@@ -11255,7 +11258,7 @@ L37732:
 	movea.l	#U92262,a1
 	move.w	0(a0,a1.l),(sp)
 	jsr	wind_close
-	bsr  	mouse_show
+	bsr  	_mouse_show
 	tst.l	(sp)+
 	movem.l	(sp)+,d7/a5
 	unlk	fp
@@ -11283,7 +11286,7 @@ L37878:
 	bsr  	L39630
 	bra  	.L39270
 .L37952:
-	bsr  	mouse_hide
+	bsr  	_mouse_hide
 	move.l	fp,(sp)
 	subq.l	#2,(sp)
 	move.l	fp,-(sp)
@@ -11346,7 +11349,7 @@ L37878:
 	bsr  	L39356
 	bra  	.L39270
 .L38132:
-	bsr  	L45356
+	bsr  	_L45356
 	cmp.w	#1,d7
 	bne.s	.L38180
 	btst	#0,U98293
@@ -11420,7 +11423,7 @@ L37878:
 	jsr	wind_get
 	adda.l	#16,sp
 .L38394:
-	bsr  	L45356
+	bsr  	_L45356
 	movea.l	8(fp),a0
 	move.w	14(a0),(sp)
 	jsr	L28422
@@ -11479,7 +11482,7 @@ L37878:
 	move.w	12(a1),d1
 	add.w	d1,d0
 	move.w	work_x,d1
-	add.w	work_w,d1
+	add.w	_work_w,d1
 	cmp.w	d1,d0
 	bgt.s	.L38646
 	movea.l	8(fp),a0
@@ -11488,7 +11491,7 @@ L37878:
 	move.w	14(a1),d1
 	add.w	d1,d0
 	move.w	work_y,d1
-	add.w	work_h,d1
+	add.w	_work_h,d1
 	cmp.w	d1,d0
 	ble.s	.L38658
 .L38646:
@@ -11694,7 +11697,7 @@ L37878:
 	movea.l	0(a0,d0.w),a0
 	jmp	(a0)
 .L39270:
-	bsr  	mouse_show
+	bsr  	_mouse_show
 	movea.l	8(fp),a0
 	clr.w	(a0)
 	tst.l	(sp)+
@@ -11776,7 +11779,7 @@ L39356:
 	move.w	8(fp),-(sp)
 	jsr	wind_get
 	adda.l	#16,sp
-	bsr  	mouse_show
+	bsr  	_mouse_show
 	move.l	fp,(sp)
 	subq.l	#2,(sp)
 	move.l	fp,-(sp)
@@ -11830,7 +11833,7 @@ L39356:
 	bne.s	.L39598
 	bra  	.L39360
 .L39598:
-	bsr  	mouse_hide
+	bsr  	_mouse_hide
 	move.w	U101462,d0
 	muls	#40,d0
 	add.l	#U99016,d0
@@ -11849,8 +11852,8 @@ L39630:
 	move.l	dialog_about,d0
 	move.l	d0,-4(fp)
 	move.l	d0,-(sp)
-	move.l	#form_do,-(sp)
-	bsr  	form_doer
+	move.l	#_form_do,-(sp)
+	jsr  	_form_doer
 	addq.l	#8,sp
 	movea.l	-4(fp),a0
 	adda.l	#154,a0
@@ -12074,8 +12077,8 @@ L39630:
 	jsr	L29826
 	move.w	#3,(sp)
 	move.l	U92202,-(sp)
-	move.l	#form_do,-(sp)
-	bsr  	form_doer
+	move.l	#_form_do,-(sp)
+	jsr  	_form_doer
 	addq.l	#8,sp
 	move.l	U92202,(sp)
 	jsr	L29948
@@ -12085,8 +12088,8 @@ L39630:
 	jsr	L30334
 	move.w	#2,(sp)
 	move.l	U92206,-(sp)
-	move.l	#form_do,-(sp)
-	bsr  	form_doer
+	move.l	#_form_do,-(sp)
+	jsr  	_form_doer
 	addq.l	#8,sp
 	move.l	U92206,(sp)
 	jsr	L30444
@@ -12096,8 +12099,8 @@ L39630:
 	jsr	dialog_graphics_setup
 	move.w	#8,(sp)
 	move.l	U92210,-(sp)
-	move.l	#L32304,-(sp)
-	bsr  	form_doer
+	move.l	#dialog_graphics_handler,-(sp)
+	jsr  	_form_doer
 	addq.l	#8,sp
 	move.w	d0,(sp)
 	move.l	U92210,-(sp)
@@ -12174,113 +12177,9 @@ L40590:
 	unlk	fp
 	rts
 
-form_doer:
-	link	fp,#-4
-	movem.l	d2-d7,-(sp)
-	bsr  	L45356
-	move.l	8(fp),d0
-	cmp.l	#form_do,d0
-	bne.s	.L40694
-	bsr  	mouse_show
-	bra.s	.L40698
-.L40694:
-	bsr  	mouse_hide
-.L40698:
-	movea.l	12(fp),a0
-	adda.l	#20,a0
-	move.w	(a0),d7
-	movea.l	12(fp),a0
-	adda.l	#22,a0
-	move.w	(a0),d6
-	move.w	work_w,d3
-	asr.w	#1,d3
-	move.w	work_h,d0
-	asr.w	#1,d0
-	move.w	d0,-4(fp)
-	move.w	work_w,d5
-	sub.w	d7,d5
-	asr.w	#1,d5
-	move.w	work_h,d4
-	sub.w	d6,d4
-	asr.w	#1,d4
-	movea.l	12(fp),a0
-	adda.l	#16,a0
-	move.w	d5,(a0)
-	movea.l	12(fp),a0
-	adda.l	#18,a0
-	move.w	d4,(a0)
-	move.w	d6,(sp)
-	move.w	d7,-(sp)
-	move.w	d4,-(sp)
-	move.w	d5,-(sp)
-	clr.w	-(sp)
-	clr.w	-(sp)
-	move.w	-4(fp),-(sp)
-	move.w	d3,-(sp)
-	clr.w	-(sp)
-	jsr	form_dial
-	adda.l	#16,sp
-	move.w	d6,(sp)
-	move.w	d7,-(sp)
-	move.w	d4,-(sp)
-	move.w	d5,-(sp)
-	clr.w	-(sp)
-	clr.w	-(sp)
-	move.w	-4(fp),-(sp)
-	move.w	d3,-(sp)
-	move.w	#1,-(sp)
-	jsr	form_dial
-	adda.l	#16,sp
-	move.w	work_h,(sp)
-	move.w	work_w,-(sp)
-	clr.w	-(sp)
-	clr.w	-(sp)
-	move.w	#8,-(sp)
-	clr.w	-(sp)
-	move.l	12(fp),-(sp)
-	jsr	objc_draw
-	adda.l	#14,sp
-	move.w	16(fp),-(sp)
-	move.l	12(fp),-(sp)
-	movea.l	8(fp),a0
-	jsr	(a0)
-	addq.l	#6,sp
-	move.w	d0,-2(fp)
-	move.w	d6,(sp)
-	move.w	d7,-(sp)
-	move.w	d4,-(sp)
-	move.w	d5,-(sp)
-	clr.w	-(sp)
-	clr.w	-(sp)
-	move.w	-4(fp),-(sp)
-	move.w	d3,-(sp)
-	move.w	#2,-(sp)
-	jsr	form_dial
-	adda.l	#16,sp
-	move.w	d6,(sp)
-	addq.w	#4,(sp)
-	move.w	d7,-(sp)
-	addq.w	#4,(sp)
-	move.w	d4,-(sp)
-	subq.w	#3,(sp)
-	move.w	d5,-(sp)
-	subq.w	#3,(sp)
-	clr.w	-(sp)
-	clr.w	-(sp)
-	move.w	-4(fp),-(sp)
-	move.w	d3,-(sp)
-	move.w	#3,-(sp)
-	jsr	form_dial
-	adda.l	#16,sp
-	move.w	-2(fp),d0
-	tst.l	(sp)+
-	movem.l	(sp)+,d3-d7
-	unlk	fp
-	rts
-
 L41000:
 	link	fp,#-10
-	bsr  	mouse_show
+	bsr  	_mouse_show
 	tst.w	8(fp)
 	bne  	L41248
 	movea.l	10(fp),a0
@@ -12289,10 +12188,10 @@ L41000:
 	movea.l	10(fp),a0
 	adda.l	#22,a0
 	move.w	(a0),U98352
-	move.w	work_w,d0
+	move.w	_work_w,d0
 	asr.w	#1,d0
 	move.w	d0,U98354
-	move.w	work_w,d0
+	move.w	_work_w,d0
 	sub.w	U98350,d0
 	asr.w	#1,d0
 	move.w	d0,U98358
@@ -12319,16 +12218,16 @@ L41000:
 	move.w	U98356,-(sp)
 	move.w	U98354,-(sp)
 	clr.w	-(sp)
-	jsr	form_dial
+	jsr	_form_dial
 	adda.l	#16,sp
-	move.w	work_h,(sp)
-	move.w	work_w,-(sp)
+	move.w	_work_h,(sp)
+	move.w	_work_w,-(sp)
 	clr.w	-(sp)
 	clr.w	-(sp)
 	move.w	#8,-(sp)
 	clr.w	-(sp)
 	move.l	10(fp),-(sp)
-	jsr	objc_draw
+	jsr	_objc_draw
 	adda.l	#14,sp
 	bra.s	L41312
 
@@ -12346,7 +12245,7 @@ L41248:
 	move.w	U98356,-(sp)
 	move.w	U98354,-(sp)
 	move.w	#3,-(sp)
-	jsr	form_dial
+	jsr	_form_dial
 	adda.l	#16,sp
 L41312:
 	unlk	fp
@@ -13410,7 +13309,7 @@ L44710:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
 	move.w	8(fp),d7
-	bsr  	L45356
+	bsr  	_L45356
 	move.w	d7,d0
 	move.w	d0,U100904
 	muls	#40,d0
@@ -13618,7 +13517,8 @@ L45236:
 	unlk	fp
 	rts
 
-L45356:
+	xdef _L45356
+_L45356:
 	link	fp,#-4
 	cmpi.w	#2,U100904
 	bne.s	L45382
@@ -13939,7 +13839,7 @@ L46108:
 .L46352:
 	move.w	-8(fp),mouse_x
 	move.w	-10(fp),mouse_y
-	bsr  	mouse_show
+	bsr  	_mouse_show
 	bra.s	.L46388
 .L46374:
 	move.w	d7,d0
@@ -14503,7 +14403,8 @@ L48234:
 	addq	#2,sp
 	rts
 
-mouse_hide:
+	xdef _mouse_hide
+_mouse_hide:
 	link	fp,#-6
 	tst.w	draw_lock_flag
 	beq.s	.return
@@ -14529,12 +14430,13 @@ mouse_hide:
 	unlk	fp
 	rts
 
-mouse_show:
+	xdef _mouse_show
+_mouse_show:
 	link	fp,#-4
 	tst.w	draw_lock_flag
 	bne.s	.return
 
-	bsr  	L45356
+	bsr  	_L45356
 
 	clr.l	(sp)
 	move.w	#257,-(sp)	; M_ON
@@ -14720,8 +14622,8 @@ init:
 
 	; get working area of desktop window
 	; (everything but the menu bar)
-	move.l	#work_h,(sp)
-	move.l	#work_w,-(sp)
+	move.l	#_work_h,(sp)
+	move.l	#_work_w,-(sp)
 	move.l	#work_y,-(sp)
 	move.l	#work_x,-(sp)
 	move.w	#4,-(sp)	; WF_WORKXYWH
@@ -14791,8 +14693,8 @@ init:
 	; figure out how much screen buffer we need
 	clr.l	d1
 	move.w	nplanes,d1
-	mulu.w	work_h,d1
-	mulu.w	work_w,d1
+	mulu.w	_work_h,d1
+	mulu.w	_work_w,d1
 	lsr.l	#3,d1	; in bytes
 
 	move.l	d1,(sp)	; Allocate graphics buffer
@@ -14916,7 +14818,7 @@ L49460:
 
 alert:
 	link	fp,#-4
-	bsr  	mouse_show
+	bsr  	_mouse_show
 	move.l	8(fp),(sp)
 	move.w	#1,-(sp)
 	jsr	form_alert
@@ -14943,7 +14845,7 @@ L49596:
 
 L49652:
 	link	fp,#-4
-	bsr  	mouse_show
+	bsr  	_mouse_show
 	jsr	L69360
 	tst.w	d0
 	beq.s	L49672
@@ -21418,7 +21320,7 @@ L68938:
 
 L68942:
 	link	fp,#-218
-	jsr	mouse_show
+	jsr	_mouse_show
 	tst.w	U100748
 	bne.s	L69040
 	move.l	#T86362,(sp)
@@ -21513,7 +21415,7 @@ L69040:
 	move.l	T87166,(sp)
 	jsr	L76856
 L69344:
-	jsr	mouse_hide
+	jsr	_mouse_hide
 	jsr	L74840
 	unlk	fp
 	rts
@@ -28821,8 +28723,10 @@ screen_h: ds.w 1
 work_xywh:
 work_x: ds.w 1
 work_y: ds.w 1
-work_w: ds.w 1
-work_h: ds.w 1
+	xdef _work_w
+_work_w: ds.w 1
+	xdef _work_h
+_work_h: ds.w 1
 
 U99188: ds.w 1
 
