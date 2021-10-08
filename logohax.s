@@ -74,7 +74,8 @@ L290:
 
 ******* AES bindings
 
-crys_if:
+	public _crys_if
+_crys_if:
 	move.w	4(sp),d0
 	move.w	d0,control
 
@@ -98,7 +99,7 @@ crys_if:
 	move.w	#200,d0
 	trap	#2	; AES
 
-	move.w	int_out,d0
+	move.w	_int_out,d0
 	rts
 
 appl_init:
@@ -106,13 +107,13 @@ appl_init:
 	move.l	#control,U98686
 	move.l	#U100590,U98690
 	move.l	#int_in,U98694
-	move.l	#int_out,U98698
-	move.l	#addr_in,U98702
+	move.l	#_int_out,U98698
+	move.l	#_addr_in,U98702
 	move.l	#U101464,U98706
 	move.l	#U98686,aespb
 	move.w	#10,(sp)
-	bsr  	crys_if
-	move.w	int_out,U101048
+	bsr  	_crys_if
+	move.w	_int_out,U101048
 	moveq	#1,d0
 	unlk	fp
 	rts
@@ -120,7 +121,7 @@ appl_init:
 appl_exit:
 	link	fp,#-4
 	move.w	#19,(sp)
-	bsr  	crys_if
+	bsr  	_crys_if
 	moveq	#1,d0
 	unlk	fp
 	rts
@@ -141,63 +142,63 @@ evnt_multi:
 	move.w	30(fp),int_in+22
 	move.w	32(fp),int_in+24
 	move.w	34(fp),int_in+26
-	move.l	36(fp),addr_in
+	move.l	36(fp),_addr_in
 	move.w	40(fp),int_in+28
 	move.w	42(fp),int_in+30
 	move.w	#25,(sp)
-	bsr  	crys_if
+	bsr  	_crys_if
 	movea.l	60(fp),a0
-	move.w	int_out+10,(a0)
+	move.w	_int_out+10,(a0)
 	movea.l	64(fp),a0
-	move.w	int_out+12,(a0)
+	move.w	_int_out+12,(a0)
 	clr.w	d0
-	move.w	int_out,d0
+	move.w	_int_out,d0
 	unlk	fp
 	rts
 
 menu_bar:
 	link	fp,#-4
-	move.l	8(fp),addr_in
+	move.l	8(fp),_addr_in
 	move.w	12(fp),int_in
 	move.w	#30,(sp)
-	bsr  	crys_if
+	bsr  	_crys_if
 	unlk	fp
 	rts
 
 menu_icheck:
 	link	fp,#-4
-	move.l	8(fp),addr_in
+	move.l	8(fp),_addr_in
 	move.w	12(fp),int_in
 	move.w	14(fp),int_in+2
 	move.w	#31,(sp)
-	bsr  	crys_if
+	bsr  	_crys_if
 	unlk	fp
 	rts
 
 menu_ienable:
 	link	fp,#-4
-	move.l	8(fp),addr_in
+	move.l	8(fp),_addr_in
 	move.w	12(fp),int_in
 	move.w	14(fp),int_in+2
 	move.w	#32,(sp)
-	bsr  	crys_if
+	bsr  	_crys_if
 	unlk	fp
 	rts
 
 menu_tnormal:
 	link	fp,#-4
-	move.l	8(fp),addr_in
+	move.l	8(fp),_addr_in
 	move.w	12(fp),int_in
 	move.w	14(fp),int_in+2
 	move.w	#33,(sp)
-	bsr  	crys_if
+	bsr  	_crys_if
 	unlk	fp
 	rts
 
 	xdef _objc_draw
 _objc_draw:
 	link	fp,#-4
-	move.l	8(fp),addr_in
+	move.l	8(fp),_addr_in
 	move.w	12(fp),int_in
 	move.w	14(fp),int_in+2
 	move.w	16(fp),int_in+4
@@ -205,17 +206,17 @@ _objc_draw:
 	move.w	20(fp),int_in+8
 	move.w	22(fp),int_in+10
 	move.w	#42,(sp)
-	bsr  	crys_if
+	bsr  	_crys_if
 	unlk	fp
 	rts
 
 	xdef _form_do
 _form_do:
 	link	fp,#-4
-	move.l	8(fp),addr_in
+	move.l	8(fp),_addr_in
 	move.w	12(fp),int_in
 	move.w	#50,(sp)
-	bsr  	crys_if
+	bsr  	_crys_if
 	unlk	fp
 	rts
 
@@ -232,69 +233,69 @@ _form_dial:
 	move.w	22(fp),int_in+14
 	move.w	24(fp),int_in+16
 	move.w	#51,(sp)
-	bsr  	crys_if
+	bsr  	_crys_if
 	unlk	fp
 	rts
 
 form_alert:
 	link	fp,#-4
 	move.w	8(fp),int_in
-	move.l	10(fp),addr_in
+	move.l	10(fp),_addr_in
 	move.w	#52,(sp)
-	bsr  	crys_if
+	bsr  	_crys_if
 	unlk	fp
 	rts
 
 graf_handle:
 	link	fp,#-4
 	move.w	#77,(sp)
-	bsr  	crys_if
+	bsr  	_crys_if
 	movea.l	8(fp),a0
-	move.w	int_out+2,(a0)
+	move.w	_int_out+2,(a0)
 	movea.l	12(fp),a0
-	move.w	int_out+4,(a0)
+	move.w	_int_out+4,(a0)
 	movea.l	16(fp),a0
-	move.w	int_out+6,(a0)
+	move.w	_int_out+6,(a0)
 	movea.l	20(fp),a0
-	move.w	int_out+8,(a0)
+	move.w	_int_out+8,(a0)
 	clr.w	d0
-	move.w	int_out,d0
+	move.w	_int_out,d0
 	unlk	fp
 	rts
 
 graf_mouse:
 	link	fp,#-4
 	move.w	8(fp),int_in
-	move.l	10(fp),addr_in
+	move.l	10(fp),_addr_in
 	move.w	#78,(sp)
-	bsr  	crys_if
+	bsr  	_crys_if
 	unlk	fp
 	rts
 
 graf_mkstate:
 	link	fp,#-4
 	move.w	#79,(sp)
-	bsr  	crys_if
+	bsr  	_crys_if
 	movea.l	8(fp),a0
-	move.w	int_out+2,(a0)
+	move.w	_int_out+2,(a0)
 	movea.l	12(fp),a0
-	move.w	int_out+4,(a0)
+	move.w	_int_out+4,(a0)
 	movea.l	16(fp),a0
-	move.w	int_out+6,(a0)
+	move.w	_int_out+6,(a0)
 	movea.l	20(fp),a0
-	move.w	int_out+8,(a0)
+	move.w	_int_out+8,(a0)
 	unlk	fp
 	rts
 
 fsel_input:
-	move.l	4(sp),addr_in
-	move.l	8(sp),addr_in+4
+	move.l	4(sp),_addr_in
+	move.l	8(sp),_addr_in+4
 	move.w	#90,-(sp)
-	bsr  	crys_if
+	bsr  	_crys_if
 	addq	#2,sp
 	movea.l	12(sp),a0
-	move.w	int_out,d0
-	move.w	int_out+2,(a0)
+	move.w	_int_out,d0
+	move.w	_int_out+2,(a0)
 	rts
 
 wind_create:
@@ -305,7 +306,7 @@ wind_create:
 	move.w	14(fp),int_in+6
 	move.w	16(fp),int_in+8
 	move.w	#100,(sp)
-	bsr  	crys_if
+	bsr  	_crys_if
 	unlk	fp
 	rts
 
@@ -317,7 +318,7 @@ wind_open:
 	move.w	14(fp),int_in+6
 	move.w	16(fp),int_in+8
 	move.w	#101,(sp)
-	bsr  	crys_if
+	bsr  	_crys_if
 	unlk	fp
 	rts
 
@@ -325,7 +326,7 @@ wind_close:
 	link	fp,#-4
 	move.w	8(fp),int_in
 	move.w	#102,(sp)
-	bsr  	crys_if
+	bsr  	_crys_if
 	unlk	fp
 	rts
 
@@ -334,16 +335,16 @@ wind_get:
 	move.w	8(fp),int_in
 	move.w	10(fp),int_in+2
 	move.w	#104,(sp)
-	bsr  	crys_if
+	bsr  	_crys_if
 	movea.l	12(fp),a0
-	move.w	int_out+2,(a0)
+	move.w	_int_out+2,(a0)
 	movea.l	16(fp),a0
-	move.w	int_out+4,(a0)
+	move.w	_int_out+4,(a0)
 	movea.l	20(fp),a0
-	move.w	int_out+6,(a0)
+	move.w	_int_out+6,(a0)
 	movea.l	24(fp),a0
-	move.w	int_out+8,(a0)
-	move.w	int_out,d0
+	move.w	_int_out+8,(a0)
+	move.w	_int_out,d0
 	unlk	fp
 	rts
 
@@ -356,7 +357,7 @@ wind_set:
 	move.w	16(fp),int_in+8
 	move.w	18(fp),int_in+10
 	move.w	#105,(sp)
-	bsr  	crys_if
+	bsr  	_crys_if
 	unlk	fp
 	rts
 
@@ -364,7 +365,7 @@ wind_update:
 	link	fp,#-4
 	move.w	8(fp),int_in
 	move.w	#107,(sp)
-	bsr  	crys_if
+	bsr  	_crys_if
 	unlk	fp
 	rts
 
@@ -380,11 +381,11 @@ wind_calc:
 	move.w	(a5)+,int_in+8
 	move.w	(a5),int_in+10
 	move.w	#108,(sp)
-	bsr  	crys_if
-	move.w	int_out+2,(a4)+
-	move.w	int_out+4,(a4)+
-	move.w	int_out+6,(a4)+
-	move.w	int_out+8,(a4)
+	bsr  	_crys_if
+	move.w	_int_out+2,(a4)+
+	move.w	_int_out+4,(a4)+
+	move.w	_int_out+6,(a4)+
+	move.w	_int_out+8,(a4)
 	tst.l	(sp)+
 	movem.l	(sp)+,a4-a5
 	unlk	fp
@@ -392,9 +393,9 @@ wind_calc:
 
 rsrc_load:
 	link	fp,#-4
-	move.l	8(fp),addr_in
+	move.l	8(fp),_addr_in
 	move.w	#110,(sp)
-	bsr  	crys_if
+	bsr  	_crys_if
 	unlk	fp
 	rts
 
@@ -404,11 +405,11 @@ _rsrc_gaddr:
 	move.w	8(fp),int_in
 	move.w	10(fp),int_in+2
 	move.w	#112,(sp)
-	bsr  	crys_if
+	bsr  	_crys_if
 	movea.l	12(fp),a0
 	move.l	U101464,(a0)
 	clr.w	d0
-	move.w	int_out,d0
+	move.w	_int_out,d0
 	unlk	fp
 	rts
 
@@ -7082,7 +7083,7 @@ init_vdi:
 
 	move.w	intout+2,d0
 	addq.w	#1,d0
-	move.w	d0,screen_h
+	move.w	d0,_screen_h
 
 	move.w	intout+26,d0	; number of colors
 	subq.w	#1,d0
@@ -7129,7 +7130,7 @@ init_vdi:
 	clr.w	contrl+6
 	jsr	vdi
 
-	move.l	#cell_h,(sp)
+	move.l	#_cell_h,(sp)
 	move.l	#_cell_w,-(sp)
 	move.l	#char_h,-(sp)
 	move.l	#char_w,-(sp)
@@ -7145,7 +7146,7 @@ init_vdi:
 	cmp	#640,screen_w
 	blt	.done
 	clr.l	d0	; highres turtle
-	cmp	#400,screen_h
+	cmp	#400,_screen_h
 	bge	.done
 	moveq	#1,d0	; mediumres turtle
 .done:
@@ -7249,14 +7250,14 @@ L23832:
 L23836:
 	link	fp,#-4
 
-	move.w	screen_h,(sp)
+	move.w	_screen_h,(sp)
 	move.w	screen_w,-(sp)
 	clr.l	-(sp)
 	move.l	#psrcMFDB,-(sp)
 	bsr  	set_mfdb
 	adda.l	#10,sp
 
-	move.w	screen_h,(sp)
+	move.w	_screen_h,(sp)
 	move.w	screen_w,-(sp)
 	clr.l	-(sp)
 	move.l	#pdesMFDB,-(sp)
@@ -7380,7 +7381,7 @@ L24328:
 	move.w	d0,-6(fp)
 	move.w	d0,-8(fp)
 	move.w	screen_w,-4(fp)
-	move.w	screen_h,-2(fp)
+	move.w	_screen_h,-2(fp)
 	move.l	fp,(sp)
 	subq.l	#8,(sp)
 	move.l	8(fp),-(sp)
@@ -11981,7 +11982,7 @@ L39630:
 	move.l	d0,-4(fp)
 	move.l	-4(fp),(sp)
 	clr.w	-(sp)
-	bsr  	L41000
+	jsr	_draw_banner
 	addq.l	#2,sp
 	move.w	#1,(sp)
 	move.l	#U100678,-(sp)
@@ -11990,12 +11991,12 @@ L39630:
 	tst.w	d0
 	bne.s	.L40182
 	move.w	#1,(sp)
-	bsr  	L41000
+	jsr	_draw_banner
 	bra  	.L40578
 .L40182:
 	move.l	-4(fp),(sp)
 	move.w	#1,-(sp)
-	bsr  	L41000
+	jsr	_draw_banner
 	addq.l	#2,sp
 .L40196:
 	move.l	#U100678,(sp)
@@ -12014,7 +12015,7 @@ L39630:
 	move.l	d0,-4(fp)
 	move.l	-4(fp),(sp)
 	clr.w	-(sp)
-	bsr  	L41000
+	jsr	_draw_banner
 	addq.l	#2,sp
 	clr.w	(sp)
 	move.l	#U98294,-(sp)
@@ -12029,7 +12030,7 @@ L39630:
 .L40290:
 	move.l	-4(fp),(sp)
 	move.w	#1,-(sp)
-	bsr  	L41000
+	jsr	_draw_banner
 	addq.l	#2,sp
 	bra  	.L40578
 .L40308:
@@ -12043,7 +12044,7 @@ L39630:
 	move.l	d0,-4(fp)
 	move.l	-4(fp),(sp)
 	clr.w	-(sp)
-	bsr  	L41000
+	jsr	_draw_banner
 	addq.l	#2,sp
 	move.w	#1,(sp)
 	move.l	#U98294,-(sp)
@@ -12058,7 +12059,7 @@ L39630:
 .L40384:
 	move.l	-4(fp),(sp)
 	move.w	#1,-(sp)
-	bsr  	L41000
+	jsr	_draw_banner
 	addq.l	#2,sp
 	bra  	.L40578
 .L40402:
@@ -12163,80 +12164,6 @@ L40590:
 .return:
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
-	unlk	fp
-	rts
-
-L41000:
-	link	fp,#-10
-	bsr  	_mouse_show
-	tst.w	8(fp)
-	bne  	L41248
-	movea.l	10(fp),a0
-	adda.l	#20,a0
-	move.w	(a0),U98350
-	movea.l	10(fp),a0
-	adda.l	#22,a0
-	move.w	(a0),U98352
-	move.w	_work_w,d0
-	asr.w	#1,d0
-	move.w	d0,U98354
-	move.w	_work_w,d0
-	sub.w	U98350,d0
-	asr.w	#1,d0
-	move.w	d0,U98358
-	movea.w	nplanes,a0
-	adda.l	a0,a0
-	adda.l	#T85516,a0
-	move.w	(a0),U98360
-	move.w	U98352,d0
-	asr.w	#1,d0
-	add.w	U98360,d0
-	move.w	d0,U98356
-	movea.l	10(fp),a0
-	adda.l	#16,a0
-	move.w	U98358,(a0)
-	movea.l	10(fp),a0
-	adda.l	#18,a0
-	move.w	U98360,(a0)
-	move.w	U98352,(sp)
-	move.w	U98350,-(sp)
-	move.w	U98360,-(sp)
-	move.w	U98358,-(sp)
-	clr.w	-(sp)
-	clr.w	-(sp)
-	move.w	U98356,-(sp)
-	move.w	U98354,-(sp)
-	clr.w	-(sp)
-	jsr	_form_dial
-	adda.l	#16,sp
-	move.w	_work_h,(sp)
-	move.w	_work_w,-(sp)
-	clr.w	-(sp)
-	clr.w	-(sp)
-	move.w	#8,-(sp)
-	clr.w	-(sp)
-	move.l	10(fp),-(sp)
-	jsr	_objc_draw
-	adda.l	#14,sp
-	bra.s	L41312
-
-L41248:
-	move.w	U98352,(sp)
-	addq.w	#4,(sp)
-	move.w	U98350,-(sp)
-	addq.w	#4,(sp)
-	move.w	U98360,-(sp)
-	subq.w	#3,(sp)
-	move.w	U98358,-(sp)
-	subq.w	#3,(sp)
-	clr.w	-(sp)
-	clr.w	-(sp)
-	move.w	U98356,-(sp)
-	move.w	U98354,-(sp)
-	move.w	#3,-(sp)
-	jsr	_form_dial
-	adda.l	#16,sp
-L41312:
 	unlk	fp
 	rts
 
@@ -13179,7 +13106,7 @@ L44174:
 	move.w	2(a1),d1
 	sub.w	2(a5),d1
 	ext.l	d1
-	divs	cell_h,d1
+	divs	_cell_h,d1
 	swap	d1
 	sub.w	d1,d0
 	move.w	d0,-6(fp)
@@ -13187,7 +13114,7 @@ L44174:
 	move.w	2(a0),d0
 	sub.w	2(a5),d0
 	ext.l	d0
-	divs	cell_h,d0
+	divs	_cell_h,d0
 	add.w	30(a5),d0
 	muls	36(a5),d0
 	movea.l	10(fp),a1
@@ -13206,7 +13133,7 @@ L44174:
 	move.w	-6(fp),-(sp)
 	move.w	-4(fp),-(sp)
 	move.w	-2(fp),-(sp)
-	move.w	cell_h,-(sp)
+	move.w	_cell_h,-(sp)
 	move.w	36(a5),-(sp)
 	move.l	22(a5),d0
 	move.w	-8(fp),d1
@@ -13231,12 +13158,12 @@ L44486:
 	adda.l	#U99016,a5
 	tst.w	20(a5)
 	beq.s	L44598
-	move.w	cell_h,(sp)
+	move.w	_cell_h,(sp)
 	move.w	_cell_w,-(sp)
 	move.w	34(a5),d0
 	sub.w	30(a5),d0
 	subq.w	#1,d0
-	muls	cell_h,d0
+	muls	_cell_h,d0
 	move.w	d0,-(sp)
 	move.w	2(a5),d0
 	add.w	d0,(sp)
@@ -13545,7 +13472,7 @@ L45442:
 	movea.l	#U99016,a1
 	move.w	6(a0,a1.l),d0
 	ext.l	d0
-	divs	cell_h,d0
+	divs	_cell_h,d0
 	move.w	d0,(sp)
 	move.w	#1,-(sp)
 	jsr	L50174
@@ -13688,7 +13615,7 @@ L45924:
 	move.w	d6,d0
 	sub.w	30(a5),d0
 	subq.w	#1,d0
-	muls	cell_h,d0
+	muls	_cell_h,d0
 	move.w	d0,(sp)
 	move.w	2(a5),d0
 	add.w	d0,(sp)
@@ -13993,24 +13920,24 @@ L46776:
 	jsr	memmove
 	addq.l	#6,sp
 	move.w	-2(fp),(sp)
-	move.w	cell_h,d0
+	move.w	_cell_h,d0
 	sub.w	d0,(sp)
 	move.w	-4(fp),-(sp)
 	move.w	-6(fp),-(sp)
 	move.w	-8(fp),-(sp)
 	move.w	-6(fp),-(sp)
-	move.w	cell_h,d0
+	move.w	_cell_h,d0
 	add.w	d0,(sp)
 	move.w	-8(fp),-(sp)
 	move.w	#3,-(sp)
 	jsr	L23836
 	adda.l	#12,sp
-	move.w	cell_h,(sp)
+	move.w	_cell_h,(sp)
 	move.w	-4(fp),-(sp)
 	move.w	-6(fp),-(sp)
 	move.w	-2(fp),d0
 	add.w	d0,(sp)
-	move.w	cell_h,d0
+	move.w	_cell_h,d0
 	sub.w	d0,(sp)
 	move.w	-8(fp),-(sp)
 	clr.w	-(sp)
@@ -14067,15 +13994,15 @@ L47004:
 	addq.l	#6,sp
 	move.w	-2(fp),d0
 	ext.l	d0
-	divs	cell_h,d0
+	divs	_cell_h,d0
 	swap	d0
 	sub.w	d0,-2(fp)
 	move.w	-2(fp),(sp)
-	move.w	cell_h,d0
+	move.w	_cell_h,d0
 	sub.w	d0,(sp)
 	move.w	-4(fp),-(sp)
 	move.w	-6(fp),-(sp)
-	move.w	cell_h,d0
+	move.w	_cell_h,d0
 	add.w	d0,(sp)
 	move.w	-8(fp),-(sp)
 	move.w	-6(fp),-(sp)
@@ -14083,7 +14010,7 @@ L47004:
 	move.w	#3,-(sp)
 	jsr	L23836
 	adda.l	#12,sp
-	move.w	cell_h,(sp)
+	move.w	_cell_h,(sp)
 	move.w	-4(fp),-(sp)
 	move.w	-6(fp),-(sp)
 	move.w	-8(fp),-(sp)
@@ -14224,14 +14151,14 @@ L47638:
 	move.w	30(a1),d1
 	sub.w	d1,d0
 	subq.w	#1,d0
-	muls	cell_h,d0
+	muls	_cell_h,d0
 	add.w	d0,-6(fp)
 	move.w	U98282,d0
 	sub.w	U98280,d0
 	addq.w	#1,d0
-	muls	cell_h,d0
+	muls	_cell_h,d0
 	move.w	d0,-2(fp)
-	cmp.w	cell_h,d0
+	cmp.w	_cell_h,d0
 	bne.s	L47868
 	move.w	U98284,d0
 	move.w	U100904,d1
@@ -14605,7 +14532,7 @@ init:
 	bsr  	alert
 
 .no_err:
-	move.w	cell_h,d0
+	move.w	_cell_h,d0
 	sub.w	char_h,d0
 	move.w	d0,cell_pad
 
@@ -15164,82 +15091,78 @@ L50570:
 L50590:
 	link	fp,#-4
 	cmpi.w	#32,8(fp)
-	ble.s	L50608
+	ble.s	.L50608
 	jsr	L74840
-L50608:
+.L50608:
 	cmpi.w	#2,U100986
-	bne.s	L50706
+	bne.s	.L50706
 	tst.w	U100998
-	beq.s	L50684
+	beq.s	.L50684
 	jsr	L19370
 	clr.w	U101476
 	tst.w	U99190
-	beq.s	L50660
+	beq.s	.L50660
 	jsr	L58082
 	clr.w	U99190
-	bra.s	L50674
-
-L50660:
+	bra.s	.L50674
+.L50660:
 	movea.l	#U100162,a0
 	move.l	a0,U100962
 	clr.b	(a0)
-L50674:
+.L50674:
 	move.w	8(fp),(sp)
 	bsr  	L50508
-	bra.s	L50706
-
-L50684:
+	bra.s	.L50706
+.L50684:
 	move.w	U100898,d0
 	ext.l	d0
 	add.l	#U100162,d0
 	subq.l	#3,d0
 	move.l	d0,U100962
-L50706:
+.L50706:
 	cmpi.w	#1,U100986
-	bne.s	L50748
+	bne.s	.L50748
 	bsr  	L50408
 	tst.w	d0
-	beq.s	L50728
+	beq.s	.L50728
 	bsr  	L50456
-L50728:
+.L50728:
 	move.w	8(fp),(sp)
 	bsr  	L50508
 	tst.w	d0
-	beq.s	L50746
+	beq.s	.L50746
 	jsr	L58082
-L50746:
-	bra.s	L50848
-
-L50748:
+.L50746:
+	bra.s	.L50848
+.L50748:
 	tst.w	U100986
-	bne.s	L50848
+	bne.s	.L50848
 	cmpi.w	#63,8(fp)
-	bne.s	L50816
+	bne.s	.L50816
 	tst.w	U99188
-	beq.s	L50778
+	beq.s	.L50778
 	move.w	#33,8(fp)
-L50778:
+.L50778:
 	jsr	L64994
-	bra.s	L50806
-
-L50786:
+	bra.s	.L50806
+.L50786:
 	jsr	L65014
 	move.w	d0,(sp)
 	jsr	L55354
 	jsr	L76978
-L50806:
+.L50806:
 	jsr	L65102
 	tst.w	d0
-	bne.s	L50786
-L50816:
+	bne.s	.L50786
+.L50816:
 	tst.w	8(fp)
-	beq.s	L50832
+	beq.s	.L50832
 	move.w	8(fp),(sp)
 	jsr	L74948
-L50832:
+.L50832:
 	jsr	L69798
 	move.l	#U100162,U100962
-L50848:
+.L50848:
 	bsr.s	L50854
 	unlk	fp
 	rts
@@ -15252,17 +15175,16 @@ L50854:
 	ext.w	d0
 	move.w	d0,U100632
 	tst.w	U101470
-	beq.s	L50912
-	bra.s	L50900
-
-L50890:
+	beq.s	.L50912
+	bra.s	.L50900
+.L50890:
 	bsr  	L50456
 	addq.w	#1,U100892
-L50900:
+.L50900:
 	movea.l	U100962,a0
 	cmpi.b	#32,(a0)
-	beq.s	L50890
-L50912:
+	beq.s	.L50890
+.L50912:
 	movea.l	U100962,a0
 	move.b	(a0),U101148
 	move.b	#10,U101050
@@ -26927,8 +26849,6 @@ T85060:	; beware these are fast floats
 rsrc_err: dc.b '[3][Can''t find LOGOHAX.RSC][EXIT]',0
 init_err: dc.b '[3][I can''t initialize LOGO.][EXIT]',0
 
-T85516: dc.w 100,35,16,100,16
-
 T85866:
 	dc.b	'[3][Not enough windows to run LOGO][exit]',0
 T85908:
@@ -28390,7 +28310,8 @@ char_w: ds.w 1
 char_h: ds.w 1
 	public _cell_w
 _cell_w: ds.w 1
-cell_h: ds.w 1
+	public _cell_h
+_cell_h: ds.w 1
 cell_pad: ds.w 1
 
 psrcMFDB: ds.b 20
@@ -28576,18 +28497,6 @@ U98293:
 	ds.b	1
 U98294:
 	ds.b	56
-U98350:
-	ds.b	2
-U98352:
-	ds.b	2
-U98354:
-	ds.b	2
-U98356:
-	ds.b	2
-U98358:
-	ds.b	2
-U98360:
-	ds.b	2
 U98362:
 	ds.b	10
 U98372:
@@ -28689,7 +28598,8 @@ U99178:
 	ds.b	2
 
 screen_w: ds.w 1
-screen_h: ds.w 1
+	public _screen_h
+_screen_h: ds.w 1
 
 work_xywh:
 work_x: ds.w 1
@@ -28847,7 +28757,8 @@ U100904:
 
 control: ds.w 4
 int_in:  ds.w 16
-int_out: ds.w 7
+	public _int_out
+_int_out: ds.w 7
 
 U100960: ds.w 1
 
@@ -28927,7 +28838,8 @@ U101052:
 U101054:
 	ds.b	2
 
-addr_in:
+	public _addr_in
+_addr_in:
 	ds.l	2
 contrl:
 	ds.w	12
