@@ -1,17 +1,10 @@
 #include "aes.h"
-
-extern int16_t screen_h;
-extern int16_t work_w, work_h;
-extern int16_t cell_w, cell_h;
+#include "logohax.h"
 
 OBJECT* dialog_about;
 OBJECT* dialog_graphics_settings;
 OBJECT* dialog_turtle_settings;
 OBJECT* dialog_screen_settings;
-
-extern void L45356(void);
-extern void mouse_show(void);
-extern void mouse_hide(void);
 
 static char version[]="Sep 11 2021";
 static char credit[]="Patched by Seg <seg@haxxed.com>";

@@ -16,7 +16,7 @@ logohax.o: logohax.s
 	$(VASM) -Faout -nowarn=2061 $< -o $@ -L $@.lst
 
 dialog.o: dialog.c
-	$(MINT_PREFIX)-gcc -Os -mshort -c $< -o $@
+	$(MINT_PREFIX)-gcc -Wall -Os -mshort -c $< -o $@
 
 EXAMPLES=HANOI.LOG MANDEL.LOG SNOWFLAK.LOG SQUIRAL.LOG TEST.LOG TEST_TT.LOG TETRA.LOG WUFF.LOG
 
