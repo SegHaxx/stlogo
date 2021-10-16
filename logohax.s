@@ -7,27 +7,32 @@ iv_M1_kb_midi	equ	$118
 
 	movea.l	4(sp),a0	; BASEPAGE
 
-	move.l	a0,d0
-	addi.l	#128,d0
-	move.l	d0,U91922
-
-	move.l	4(a0),d0	; p_hitpa
-	andi.b	#$FE,d0
-	movea.l	d0,sp
+	moveq	#-128,d0
+	add.l	a0,d0
+	move.l	d0,p_cmdlin
 
 	move.l	8(a0),p_tbase
 	move.l	12(a0),d0	; p_tlen
 	add.l	20(a0),d0	; p_dlen
 	add.l	28(a0),d0	; p_blen
-	add.l	#256,d0
+	add.l	a0,d0
+	andi.b	#$FE,d0
+	add.l	#$100,d0	; chicken factor
+	move.l	d0,_edit_buffer_start
+	add.l	#$2000-$100,d0	; 8k stack
+	move.l	d0,sp
+	sub.l	a0,d0
+
 	move.l	d0,-(sp)
 	move.l	a0,-(sp)
 	clr.w	-(sp)
 	move.w	#74,-(sp)	; Mshrink
 	trap	#1		; Gemdos
-	jmp	L37058
+	lea	12(sp),sp
 
-L204:
+	jmp	main
+
+_stack_save:
 	movea.l	4(sp),a0
 	move.l	sp,(a0)+
 	move.l	fp,(a0)+
@@ -35,7 +40,7 @@ L204:
 	clr.l	d0
 	rts
 
-L218:
+_stack_restore:
 	movea.l	4(sp),a0
 	move.w	8(sp),d0
 	ext.l	d0
@@ -362,7 +367,7 @@ rsrc_load:
 
 L332_2d:
 	clr.l	d2
-	movea.l	U101194,a0
+	movea.l	_node_base,a0
 	move.w	d0,d2
 	lsl.l	#2,d2
 	or.w	d1,d2
@@ -372,7 +377,7 @@ L332_2d:
 
 L358_1d:
 	clr.l	d1
-	movea.l	U101194,a0
+	movea.l	_node_base,a0
 	move.w	d0,d1
 	lsl.l	#2,d1
 	move.w	0(a0,d1.l),d0
@@ -380,7 +385,7 @@ L358_1d:
 
 L378_1d:
 	clr.l	d1
-	movea.l	U101194,a0
+	movea.l	_node_base,a0
 	move.w	d0,d1
 	lsl.l	#2,d1
 	move.w	2(a0,d1.l),d0
@@ -392,7 +397,7 @@ L66356_1d:
 
 L398:
 	clr.l	d0
-	movea.l	U101194,a0
+	movea.l	_node_base,a0
 	move.w	4(sp),d0
 	lsl.l	#2,d0
 	move.l	0(a0,d0.l),d0
@@ -400,7 +405,7 @@ L398:
 
 L418:
 	clr.l	d0
-	movea.l	U101194,a0
+	movea.l	_node_base,a0
 	move.w	4(sp),d0
 	lsl.l	#2,d0
 	or.w	6(sp),d0
@@ -409,7 +414,7 @@ L418:
 
 L488:
 	clr.l	d0
-	movea.l	U101194,a0
+	movea.l	_node_base,a0
 	move.w	4(sp),d0
 	lsl.l	#2,d0
 	move.l	6(sp),0(a0,d0.l)
@@ -417,7 +422,7 @@ L488:
 
 L510:
 	clr.l	d0
-	movea.l	U101194,a0
+	movea.l	_node_base,a0
 	move.w	4(sp),d0
 	lsl.l	#2,d0
 	clr.l	d1
@@ -426,7 +431,8 @@ L510:
 	movea.l	d1,a0
 	jmp	(a0)
 
-U101194: dc.l 0
+	public _node_base
+_node_base: dc.l 0
 
 ******* Nodes end
 
@@ -478,7 +484,7 @@ L2282:
 
 L2290:
 	move.l	#U101014,(sp)
-	jsr	L204
+	jsr	_stack_save
 	tst.w	d0
 	beq.s	L2276
 	move.w	#22,(sp)
@@ -3027,7 +3033,7 @@ L9702:
 L9724:
 	link	fp,#-4
 	move.l	#U101014,(sp)
-	jsr	L204
+	jsr	_stack_save
 	tst.w	d0
 	bne.s	L9756
 	jsr	L64888
@@ -3078,7 +3084,7 @@ L9862:
 	jsr	L64942
 	move.w	#1,(sp)
 	move.l	#U101014,-(sp)
-	jsr	L218
+	jsr	_stack_restore
 	addq.l	#4,sp
 L9922:
 	jsr	L64006
@@ -3094,7 +3100,7 @@ L9940:
 	bne.s	L9974
 	move.w	#1,(sp)
 	move.l	#U101158,-(sp)
-	jsr	L218
+	jsr	_stack_restore
 	addq.l	#4,sp
 L9974:
 	jsr	L67768
@@ -3143,7 +3149,7 @@ L10088:
 	jsr	L64942
 	clr.w	(sp)
 	move.l	#U101014,-(sp)
-	jsr	L218
+	jsr	_stack_restore
 	addq.l	#4,sp
 L10142:
 	jsr	L61904
@@ -4301,7 +4307,7 @@ L13796:
 	unlk	fp
 	rts
 
-L13800:
+word_edall:
 	link	fp,#-4
 	bsr  	L15576
 	jsr	L64714
@@ -4349,7 +4355,7 @@ L13932:
 	unlk	fp
 	rts
 
-L13976:
+word_edit:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
 	jsr	L61884
@@ -4370,11 +4376,11 @@ L13976:
 L14038:
 	tst.w	U98712
 	beq.s	L14058
-	move.l	U101102,U99196
+	move.l	U101102,_edit_buffer_end
 	bra.s	L14064
 
 L14058:
-	jsr	L69744
+	jsr	edit_buffer_alloc
 L14064:
 	bra  	L14200
 
@@ -5507,7 +5513,7 @@ L17756:
 
 L17760:
 	link	fp,#-4
-	jsr	L46108
+	jsr	_do_event_loop
 	move.w	d0,(sp)
 	jsr	L60886
 	unlk	fp
@@ -5805,7 +5811,7 @@ L18722:
 	link	fp,#-4
 	jsr	L62430
 	move.l	#U100656,(sp)
-	jsr	L204
+	jsr	_stack_save
 	tst.w	d0
 	beq.s	L18756
 	jsr	L2226
@@ -5827,7 +5833,7 @@ L18796:
 L18800:
 	link	fp,#-4
 	move.l	#U100656,(sp)
-	jsr	L204
+	jsr	_stack_save
 	tst.w	d0
 	beq.s	L18828
 	jsr	L2226
@@ -5847,7 +5853,7 @@ L18870:
 	link	fp,#-4
 	jsr	L62430
 	move.l	#U100656,(sp)
-	jsr	L204
+	jsr	_stack_save
 	tst.w	d0
 	beq.s	L18904
 	jsr	L2226
@@ -6132,13 +6138,13 @@ L19676:
 	link	fp,#-6
 	move.l	fp,d0
 	add.l	#9,d0
-	sub.l	U100744,d0
+	sub.l	_edit_buffer_start,d0
 	add.l	#-1536,d0
 	move.w	d0,-2(fp)
 	cmp.w	#128,d0
-	bge.s	L19716
-	jsr	L67594
-L19716:
+	bge.s	.L19716
+	jsr	do_err_edit_buffer
+.L19716:
 	move.w	-2(fp),d0
 	unlk	fp
 	rts
@@ -6155,17 +6161,16 @@ L19724:
 	addq.l	#4,sp
 	move.w	d0,U101054
 	cmp.w	#-1,d0
-	bgt.s	L19782
+	bgt.s	.L19782
 	bsr  	L19328
-L19782:
-	move.l	U100744,U101102
+.L19782:
+	move.l	_edit_buffer_start,U101102
 	bsr.s	L19676
 	move.w	d0,-2(fp)
 	clr.w	U100998
 	clr.w	U101200
-	bra.s	L19856
-
-L19812:
+	bra.s	.L19856
+.L19812:
 	addq.l	#1,U101102
 	move.l	U101102,-(sp)
 	bsr  	L19448
@@ -6173,33 +6178,32 @@ L19812:
 	move.b	d0,(a0)
 	move.w	U101200,d0
 	cmp.w	-2(fp),d0
-	ble.s	L19850
-	jsr	L67594
-L19850:
+	ble.s	.L19850
+	jsr	do_err_edit_buffer
+.L19850:
 	addq.w	#1,U101200
-L19856:
+.L19856:
 	tst.w	U100998
-	beq.s	L19812
+	beq.s	.L19812
 	bsr  	L19370
 	jsr	L56464
 	jsr	L56572
 	jsr	L69648
 	jsr	L70038
 	bsr  	L19328
-	move.l	U100744,U101102
-	bra.s	L19930
-
-L19908:
+	move.l	_edit_buffer_start,U101102
+	bra.s	.L19930
+.L19908:
 	movea.l	U101102,a0
 	move.b	(a0),d0
 	ext.w	d0
 	move.w	d0,(sp)
 	bsr  	L19402
 	addq.l	#1,U101102
-L19930:
+.L19930:
 	movea.l	U101102,a0
 	tst.b	(a0)
-	bne.s	L19908
+	bne.s	.L19908
 	bsr  	L19370
 	unlk	fp
 	rts
@@ -6996,7 +7000,7 @@ set_mfdb: ; (*mfdb, *fd_addr, i16 fd_w, i16 fd_h)
 	unlk	fp
 	rts
 
-init_vdi:
+do_init_vdi:
 	link	fp,#-6
 	move.l	#contrl,p_contrl
 	move.l	#intin,p_intin
@@ -8089,10 +8093,10 @@ word_sysfacts:
 	unlk	fp
 	rts
 
-L27114:
+init_vdi:
 	link	fp,#-4
 	move.w	8(fp),(sp)
-	bsr  	init_vdi
+	bsr  	do_init_vdi
 	move.w	#1,(sp)
 	move.w	#1,-(sp)
 	move.w	#1,-(sp)
@@ -8107,7 +8111,6 @@ L27114:
 	bne.s	.L27176
 	clr.w	d0
 	bra.s	.L27178
-
 .L27176:
 	moveq	#1,d0
 .L27178:
@@ -8497,7 +8500,7 @@ L28422:
 	unlk	fp
 	rts
 
-L28438:
+_do_fsel_input:
 	link	fp,#-2
 	movem.l	d6-d7/a5,-(sp)
 	movea.l	8(fp),a5
@@ -8935,7 +8938,7 @@ L29948:
 	beq  	L30266
 	jsr	wind_update_begin
 	jsr	L48234
-	jsr	L46108
+	jsr	_do_event_loop
 	jsr	wind_update_end
 	move.w	#8,(sp)
 	bsr  	L29590
@@ -11024,18 +11027,18 @@ L37032:
 	unlk	fp
 	rts
 
-L37058:
+main:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
-	jsr	L77854
-.L37072:
+	jsr	init
+.loop:
 	clr.w	U99852
 	clr.w	U100748
 	clr.w	U100622
 	clr.w	U101006
 	clr.w	U100890
 	move.l	#U101158,(sp)
-	jsr	L204
+	jsr	_stack_save
 	move.w	d0,d7
 	beq.s	.L37156
 	clr.w	d0
@@ -11050,19 +11053,14 @@ L37058:
 .L37156:
 	jsr	L62532
 	bsr.s	L37176
-	bra.s	.L37072
-
-	tst.l	(sp)+
-	movem.l	(sp)+,d7
-	unlk	fp
-	rts
+	bra.s	.loop
 
 L37176:
 	link	fp,#-4
 	clr.w	U101470
 	clr.w	U101034
 	move.l	#U100656,(sp)
-	jsr	L204
+	jsr	_stack_save
 	tst.w	d0
 	beq.s	L37222
 	jsr	L2226
@@ -11145,13 +11143,13 @@ L37614:
 	move.w	#2,(sp)
 	bsr  	L42772
 	bsr  	L48234
-	bsr  	L46108
+	bsr  	_do_event_loop
 	bsr  	L47940
 	jsr	L61834
 	unlk	fp
 	rts
 
-L37732:
+window_closed:
 	link	fp,#0
 	movem.l	d6-d7/a5,-(sp)
 	move.w	8(fp),d7
@@ -11195,7 +11193,7 @@ L37732:
 	unlk	fp
 	rts
 
-L37878:
+event_msg:
 	link	fp,#-8
 	movem.l	d6-d7,-(sp)
 	movea.l	8(fp),a0
@@ -11214,7 +11212,7 @@ L37878:
 	addq.l	#6,sp
 	movea.l	8(fp),a0
 	move.w	8(a0),(sp)
-	bsr  	L39630
+	bsr  	_handle_menu_item
 	bra  	.L39270
 .L37952:
 	bsr  	_mouse_hide
@@ -11286,12 +11284,12 @@ L37878:
 	btst	#0,U98293
 	beq.s	.L38160
 	move.w	#58,(sp)
-	bsr  	L39630
+	bsr  	_handle_menu_item
 .L38160:
 	btst	#1,U98293
 	beq.s	.L38178
 	move.w	#59,(sp)
-	bsr  	L39630
+	bsr  	_handle_menu_item
 .L38178:
 	bra.s	.L38202
 .L38180:
@@ -11300,10 +11298,10 @@ L37878:
 	cmp.w	U101462,d7
 	bne.s	.L38202
 	move.w	#36,(sp)
-	bsr  	L39630
+	bsr  	_handle_menu_item
 .L38202:
 	move.w	d7,(sp)
-	bsr  	L37732
+	bsr  	window_closed
 	bra  	.L39270
 .L38212:
 	move.l	fp,(sp)
@@ -11567,7 +11565,7 @@ L37878:
 	bne.s	.L39104
 	jsr	L28274
 	move.w	d0,(sp)
-	bsr  	L46448
+	bsr  	event_key
 	bra.s	.L39140
 .L39104:
 	move.w	#1,(sp)
@@ -11590,7 +11588,7 @@ L37878:
 	bne.s	.L39172
 	jsr	L28290
 	move.w	d0,(sp)
-	bsr  	L46448
+	bsr  	event_key
 	bra.s	.L39208
 .L39172:
 	move.w	#1,(sp)
@@ -11648,10 +11646,18 @@ L37878:
 	dc.l	.L38918,.L38394
 	dc.l	.L38572
 
-L39290:
+_key_translate_scancode:
 	link	fp,#-4
 	move.w	8(fp),d0
-	bra.s	.switch
+	ext.l	d0
+	movea.l	#.T85602,a0
+	moveq	#6,d1
+.loop:
+	cmp.l	(a0)+,d0
+	dbeq	d1,.loop
+	movea.l	24(a0),a0
+	jmp	(a0)
+
 .L39300:
 	moveq	#6,d0
 	bra.s	.return
@@ -11670,16 +11676,6 @@ L39290:
 .L39320:
 	moveq	#15,d0
 	bra.s	.return
-	bra.s	.L39348
-.switch:
-	ext.l	d0
-	movea.l	#.T85602,a0
-	moveq	#6,d1
-.loop:
-	cmp.l	(a0)+,d0
-	dbeq	d1,.loop
-	movea.l	24(a0),a0
-	jmp	(a0)
 .L39348:
 	move.w	8(fp),d0
 .return:
@@ -11751,16 +11747,16 @@ L39356:
 	btst	#4,-13(fp)
 	beq.s	.L39562
 	move.l	#U99820,(sp)
-	bsr  	L37878
+	bsr  	event_msg
 .L39562:
 	btst	#0,-13(fp)
 	beq.s	.L39578
 	move.w	-4(fp),(sp)
-	bsr  	L46448
+	bsr  	event_key
 .L39578:
 	cmpi.w	#4,-14(fp)
 	beq.s	.L39598
-	tst.w	U92244
+	tst.w	_do_event_loop_returnval
 	bne.s	.L39598
 	bra  	.L39360
 .L39598:
@@ -11773,7 +11769,7 @@ L39356:
 	unlk	fp
 	rts
 
-L39630:
+_handle_menu_item:
 	link	fp,#-10
 	move.w	U101462,-6(fp)
 	move.w	8(fp),d0
@@ -11789,80 +11785,80 @@ L39630:
 	movea.l	-4(fp),a0
 	adda.l	#154,a0
 	clr.w	(a0)
-	bra  	.L40578
+	bra  	.return
 .L39692:
 	jsr	L28242
 	move.w	d0,(sp)
-	bsr  	L46448
-	bra  	.L40578
+	bsr  	event_key
+	bra  	.return
 .L39708:
 	jsr	L28306
 	move.w	d0,(sp)
-	bsr  	L46448
-	bra  	.L40578
+	bsr  	event_key
+	bra  	.return
 .L39724:
 	jsr	L28258
 	move.w	d0,(sp)
-	bsr  	L46448
-	bra  	.L40578
+	bsr  	event_key
+	bra  	.return
 .L39740:
 	jsr	L28338
 	move.w	d0,(sp)
-	bsr  	L46448
-	bra  	.L40578
+	bsr  	event_key
+	bra  	.return
 .L39756:
 	jsr	L28226
 	move.w	d0,(sp)
-	bsr  	L46448
-	bra  	.L40578
+	bsr  	event_key
+	bra  	.return
 .L39772:
 	jsr	L28322
 	move.w	d0,(sp)
-	bsr  	L46448
-	bra  	.L40578
+	bsr  	event_key
+	bra  	.return
 .L39788:
 	jsr	L28194
 	move.w	d0,(sp)
-	bsr  	L46448
-	bra  	.L40578
+	bsr  	event_key
+	bra  	.return
 .L39804:
 	jsr	L28274
 	move.w	d0,(sp)
-	bsr  	L46448
-	bra  	.L40578
+	bsr  	event_key
+	bra  	.return
 .L39820:
 	jsr	L28290
 	move.w	d0,(sp)
-	bsr  	L46448
-	bra  	.L40578
+	bsr  	event_key
+	bra  	.return
 .L39836:
 	jsr	L28146
 	move.w	d0,(sp)
-	bsr  	L46448
-	bra  	.L40578
+	bsr  	event_key
+	bra  	.return
 .L39852:
 	jsr	L28178
 	move.w	d0,(sp)
-	bsr  	L46448
-	bra  	.L40578
+	bsr  	event_key
+	bra  	.return
 .L39868:
 	jsr	L28162
 	move.w	d0,(sp)
-	bsr  	L46448
-	bra  	.L40578
+	bsr  	event_key
+	bra  	.return
 .L39884:
 	bsr  	L49652
-	bra  	.L40578
+	bra  	.return
 .L39892:
 	jsr	L28386
 	move.w	d0,(sp)
-	bsr  	L46448
-	bra  	.L40578
+	bsr  	event_key
+	bra  	.return
 .L39908:
 	jsr	L28354
 	move.w	d0,(sp)
-	bsr  	L46448
-	bra  	.L40578
+	bsr  	event_key
+	bra  	.return
 .L39924:
 	move.w	U92234,d0
 	moveq	#1,d1
@@ -11881,7 +11877,7 @@ L39630:
 	move.l	#U99096,(sp)
 	jsr	L24328
 .L39992:
-	bra  	.L40578
+	bra  	.return
 .L39996:
 	eori.w	#1,U98286
 	move.w	U98286,(sp)
@@ -11893,7 +11889,7 @@ L39630:
 	beq.s	.L40042
 	bsr  	L47962
 .L40042:
-	bra  	.L40578
+	bra  	.return
 .L40046:
 	eori.w	#1,U98288
 	move.w	U98288,(sp)
@@ -11905,13 +11901,13 @@ L39630:
 	bne.s	.L40090
 	bsr  	L47994
 .L40090:
-	bra  	.L40578
+	bra  	.return
 .L40094:
 	clr.l	(sp)
 	move.w	8(fp),-(sp)
-	bsr  	L40590
+	bsr  	_do_menu_item
 	addq.l	#2,sp
-	bra  	.L40578
+	bra  	.return
 .L40110:
 	cmpi.w	#19,8(fp)
 	bne.s	.L40126
@@ -11921,30 +11917,32 @@ L39630:
 	move.l	_banner_save_file,d0
 .L40132:
 	move.l	d0,-4(fp)
-	move.l	-4(fp),(sp)
+	move.l	d0,(sp)
 	clr.w	-(sp)
 	jsr	_draw_banner
 	addq.l	#2,sp
-	move.w	#1,(sp)
+
+	move.w	#1,-(sp)
 	move.l	#U100678,-(sp)
-	jsr	L28438
-	addq.l	#4,sp
+	jsr	_do_fsel_input
+	addq.l	#6,sp
+
 	tst.w	d0
 	bne.s	.L40182
-	move.w	#1,(sp)
+
+	move.w	#1,-(sp)
 	jsr	_draw_banner
-	bra  	.L40578
+	bra  	.return
 .L40182:
-	move.l	-4(fp),(sp)
 	move.w	#1,-(sp)
 	jsr	_draw_banner
 	addq.l	#2,sp
 .L40196:
 	move.l	#U100678,(sp)
 	move.w	8(fp),-(sp)
-	bsr  	L40590
+	bsr  	_do_menu_item
 	addq.l	#2,sp
-	bra  	.L40578
+	bra  	.return
 .L40216:
 	cmpi.w	#23,8(fp)
 	bne.s	.L40232
@@ -11960,20 +11958,20 @@ L39630:
 	addq.l	#2,sp
 	clr.w	(sp)
 	move.l	#U98294,-(sp)
-	jsr	L28438
+	jsr	_do_fsel_input
 	addq.l	#4,sp
 	tst.w	d0
 	beq.s	.L40290
 	move.l	#U98294,(sp)
 	move.w	8(fp),-(sp)
-	bsr  	L40590
+	bsr  	_do_menu_item
 	addq.l	#2,sp
 .L40290:
 	move.l	-4(fp),(sp)
 	move.w	#1,-(sp)
 	jsr	_draw_banner
 	addq.l	#2,sp
-	bra  	.L40578
+	bra  	.return
 .L40308:
 	cmpi.w	#21,8(fp)
 	bne.s	.L40324
@@ -11989,20 +11987,20 @@ L39630:
 	addq.l	#2,sp
 	move.w	#1,(sp)
 	move.l	#U98294,-(sp)
-	jsr	L28438
+	jsr	_do_fsel_input
 	addq.l	#4,sp
 	tst.w	d0
 	beq.s	.L40384
 	move.l	#U98294,(sp)
 	move.w	8(fp),-(sp)
-	bsr  	L40590
+	bsr  	_do_menu_item
 	addq.l	#2,sp
 .L40384:
 	move.l	-4(fp),(sp)
 	move.w	#1,-(sp)
 	jsr	_draw_banner
 	addq.l	#2,sp
-	bra  	.L40578
+	bra  	.return
 .L40402:
 	move.l	_dialog_turtle_settings,(sp)
 	jsr	L29826
@@ -12013,7 +12011,7 @@ L39630:
 	addq.l	#8,sp
 	move.l	_dialog_turtle_settings,(sp)
 	jsr	L29948
-	bra  	.L40578
+	bra  	.return
 .L40452:
 	move.l	_dialog_screen_settings,(sp)
 	jsr	L30334
@@ -12024,7 +12022,7 @@ L39630:
 	addq.l	#8,sp
 	move.l	_dialog_screen_settings,(sp)
 	jsr	L30444
-	bra.s	.L40578
+	bra.s	.return
 .L40500:
 	move.l	_dialog_graphics_settings,(sp)
 	jsr	dialog_graphics_setup
@@ -12037,58 +12035,58 @@ L39630:
 	move.l	_dialog_graphics_settings,-(sp)
 	jsr	L31908
 	addq.l	#4,sp
-	bra.s	.L40578
-	bra.s	.L40578
+	bra.s	.return
+	bra.s	.return
 .switch:
 	sub.w	#10,d0
 	cmp.w	#51,d0
-	bhi.s	.L40578
+	bhi.s	.return
 	asl.w	#2,d0
 	movea.l	#.T85658,a0
 	movea.l	0(a0,d0.w),a0
 	jmp	(a0)
-.L40578:
+.return:
 	move.w	-6(fp),U101462
 	unlk	fp
 	rts
 
 .T85658:
-	dc.l	.L39650,.L40578
-	dc.l	.L40578,.L40578
-	dc.l	.L40578,.L40578
-	dc.l	.L40578,.L40578
-	dc.l	.L40578,.L40110
+	dc.l	.L39650,.return
+	dc.l	.return,.return
+	dc.l	.return,.return
+	dc.l	.return,.return
+	dc.l	.return,.L40110
 	dc.l	.L40110,.L40308
-	dc.l	.L40578,.L40216
-	dc.l	.L40216,.L40578
+	dc.l	.return,.L40216
+	dc.l	.L40216,.return
 	dc.l	.L39884,.L40196
-	dc.l	.L40578,.L39892
+	dc.l	.return,.L39892
 	dc.l	.L40094,.L40094
-	dc.l	.L39908,.L40578
+	dc.l	.L39908,.return
 	dc.l	.L40094,.L40308
 	dc.l	.L39868,.L39892
-	dc.l	.L40578,.L39692
+	dc.l	.return,.L39692
 	dc.l	.L39708,.L39724
-	dc.l	.L39740,.L40578
+	dc.l	.L39740,.return
 	dc.l	.L39756,.L39772
 	dc.l	.L39788,.L39804
-	dc.l	.L39820,.L40578
+	dc.l	.L39820,.return
 	dc.l	.L39836,.L39852
-	dc.l	.L40578,.L40500
+	dc.l	.return,.L40500
 	dc.l	.L40402,.L40452
-	dc.l	.L40578,.L39924
+	dc.l	.return,.L39924
 	dc.l	.L40094,.L40094
 	dc.l	.L40046,.L39996
 
-L40590:
+_do_menu_item:
 	link	fp,#-4
 	movem.l	d6-d7,-(sp)
 	move.l	10(fp),-4(fp)
 	jsr	L28370
 	move.w	d0,(sp)
-	bsr  	L46448
+	bsr  	event_key
 	move.w	8(fp),(sp)
-	bsr  	L46448
+	bsr  	event_key
 	tst.l	-4(fp)
 	beq.s	.return
 	clr.w	d7
@@ -12097,7 +12095,7 @@ L40590:
 	move.b	-4(fp,d7.w),d0
 	ext.w	d0
 	move.w	d0,(sp)
-	bsr  	L46448
+	bsr  	event_key
 	addq.w	#1,d7
 .L40648:
 	cmp.w	#4,d7
@@ -12132,7 +12130,7 @@ L41316:
 	bsr  	L47278
 	jsr	L28194
 	move.w	d0,(sp)
-	bsr  	L46448
+	bsr  	event_key
 L41406:
 	unlk	fp
 	rts
@@ -12590,7 +12588,7 @@ L42636:
 	jsr	L84118
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	jsr	L83960
+	jsr	_div32
 	addq.l	#8,sp
 	unlk	fp
 	rts
@@ -13128,10 +13126,10 @@ L44598:
 
 L44608:
 	link	fp,#-4
-	clr.w	U92244
+	clr.w	_do_event_loop_returnval
 	clr.w	d0
-	move.w	d0,U92240
-	move.w	d0,U92242
+	move.w	d0,_event_key_counter
+	move.w	d0,_event_loop_counter
 	unlk	fp
 	rts
 
@@ -13142,7 +13140,7 @@ L44636:
 L44642:
 	move.w	U101462,(sp)
 	bsr.s	L44710
-	bsr  	L46108
+	bsr  	_do_event_loop
 L44654:
 	move.w	U101462,d0
 	cmp.w	U100904,d0
@@ -13173,7 +13171,7 @@ L44710:
 	add.l	#U99016,d0
 	movea.l	d0,a0
 	tst.w	16(a0)
-	bne.s	L44804
+	bne.s	.L44804
 	clr.w	(sp)
 	move.w	#10,-(sp)
 	movea.w	d7,a0
@@ -13187,19 +13185,17 @@ L44710:
 	add.l	#U99016,d0
 	move.l	d0,(sp)
 	jsr	L22840
-	bra  	L45042
-
-L44804:
+	bra  	.return
+.L44804:
 	move.w	d7,d0
-	bra  	L45016
-
-L44810:
+	bra  	.L45016
+.L44810:
 	move.w	#80,(sp)
 	move.w	#25,-(sp)
 	move.w	#1,-(sp)
 	move.l	#U92270,-(sp)
 	clr.w	-(sp)
-	move.l	#T85908,-(sp)
+	move.l	#window_title_dialogue,-(sp)
 	clr.w	-(sp)
 	bsr  	L43378
 	adda.l	#16,sp
@@ -13213,9 +13209,8 @@ L44810:
 	move.w	U92262,-(sp)
 	jsr	wind_set
 	addq.l	#4,sp
-	bra  	L45042
-
-L44892:
+	bra  	.return
+.L44892:
 	move.w	#3,(sp)
 	bsr  	L43836
 	move.w	#80,(sp)
@@ -13223,21 +13218,19 @@ L44892:
 	move.w	#1,-(sp)
 	move.l	#U94270,-(sp)
 	clr.w	-(sp)
-	move.l	#T85922,-(sp)
+	move.l	#window_title_editor,-(sp)
 	move.w	#3,-(sp)
 	bsr  	L43378
 	adda.l	#16,sp
-	bra.s	L45042
-
-L44942:
+	bra.s	.return
+.L44942:
 	move.w	#1,(sp)
-	move.l	#T85934,-(sp)
+	move.l	#window_title_graphics,-(sp)
 	move.w	#2,-(sp)
 	bsr  	L43378
 	addq.l	#6,sp
-	bra.s	L45042
-
-L44964:
+	bra.s	.return
+.L44964:
 	move.w	#1,(sp)
 	bsr  	L43836
 	move.w	#80,(sp)
@@ -13245,24 +13238,21 @@ L44964:
 	move.w	#1,-(sp)
 	move.l	#U96270,-(sp)
 	clr.w	-(sp)
-	move.l	#T85951,-(sp)
+	move.l	#window_title_debug,-(sp)
 	move.w	#1,-(sp)
 	bsr  	L43378
 	adda.l	#16,sp
-	bra.s	L45042
-
-	bra.s	L45042
-
-L45016:
+	bra.s	.return
+.L45016:
 	tst.w	d0
-	beq  	L44810
+	beq  	.L44810
 	cmp.w	#1,d0
-	beq.s	L44964
+	beq.s	.L44964
 	cmp.w	#2,d0
-	beq.s	L44942
+	beq.s	.L44942
 	cmp.w	#3,d0
-	beq  	L44892
-L45042:
+	beq  	.L44892
+.return:
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
 	unlk	fp
@@ -13378,10 +13368,10 @@ L45236:
 _L45356:
 	link	fp,#-4
 	cmpi.w	#2,U100904
-	bne.s	L45382
+	bne.s	.return
 	move.l	#U99096,(sp)
 	jsr	L24328
-L45382:
+.return:
 	unlk	fp
 	rts
 
@@ -13450,8 +13440,8 @@ L45542:
 	addq.l	#8,sp
 	move.l	fp,(sp)
 	addi.l	#-16,(sp)
-	bsr  	L37878
-	bsr  	L46108
+	bsr  	event_msg
+	bsr  	_do_event_loop
 	unlk	fp
 	rts
 
@@ -13612,12 +13602,12 @@ L46076:
 	unlk	fp
 	rts
 
-L46108:
+_do_event_loop:
 	link	fp,#-12
 	movem.l	d5-d7/a5,-(sp)
 	move.w	U100904,d6
 	lea 	-12(fp),a5
-.L46126:
+.loop:
 	tst.w	draw_lock_flag
 	beq.s	.L46150
 	bsr  	wind_update_begin
@@ -13703,7 +13693,7 @@ L46108:
 	and.w	#-33,d0
 	bne.s	.L46388
 	cmp.w	#-2,d6
-	bne.s	.L46432
+	bne.s	.return
 .L46388:
 	btst	#0,d7
 	beq.s	.L46412
@@ -13711,88 +13701,88 @@ L46108:
 	cmp.w	-4(fp),d0
 	beq.s	.L46412
 	move.w	-4(fp),(sp)
-	bsr.s	L46448
+	bsr.s	event_key
 .L46412:
 	btst	#4,d7
 	beq.s	.L46428
 	move.l	#U99820,(sp)
-	bsr  	L37878
+	bsr  	event_msg
 .L46428:
-	bra  	.L46126
-.L46432:
-	move.w	U92244,d0
+	bra  	.loop
+.return:
+	move.w	_do_event_loop_returnval,d0
 	tst.l	(sp)+
 	movem.l	(sp)+,d6-d7/a5
 	unlk	fp
 	rts
 
-L46448:
+event_key:
 	link	fp,#-6
 	move.w	#1,-2(fp)
-	cmpi.w	#-1,U92244
-	beq.s	L46526
+	cmpi.w	#-1,_do_event_loop_returnval
+	beq.s	.L46526
 	jsr	L28386
 	move.w	8(fp),d1
 	ext.w	d1
 	cmp.w	d1,d0
-	beq.s	L46516
+	beq.s	.L46516
 	jsr	L28354
 	move.w	8(fp),d1
 	ext.w	d1
 	cmp.w	d1,d0
-	beq.s	L46516
+	beq.s	.L46516
 	jsr	L28370
 	move.w	8(fp),d1
 	ext.w	d1
 	cmp.w	d1,d0
-	bne.s	L46526
-L46516:
+	bne.s	.L46526
+.L46516:
 	bsr  	L44608
 	move.w	#-1,-2(fp)
-L46526:
-	move.w	U92240,d0
-	cmp.w	U92242,d0
-	bne.s	L46548
-	tst.w	U92244
-	bne.s	L46616
-L46548:
-	movea.w	U92240,a0
-	adda.l	#U92240,a0
+.L46526:
+	move.w	_event_key_counter,d0
+	cmp.w	_event_loop_counter,d0
+	bne.s	.L46548
+	tst.w	_do_event_loop_returnval
+	bne.s	.return
+.L46548:
+	movea.w	_event_key_counter,a0
+	adda.l	#_event_key_counter,a0
 	move.l	a0,-(sp)
 	move.w	8(fp),-(sp)
-	bsr  	L39290
+	bsr  	_key_translate_scancode
 	addq.l	#2,sp
 	movea.l	(sp)+,a0
 	move.b	d0,6(a0)
-	addq.w	#1,U92240
-	move.w	U92240,d0
+	addq.w	#1,_event_key_counter
+	move.w	_event_key_counter,d0
 	ext.l	d0
 	divs	#16,d0
 	swap	d0
-	move.w	d0,U92240
+	move.w	d0,_event_key_counter
 	clr.w	d0
 	move.w	-2(fp),d0
-	or.w	d0,U92244
-L46616:
+	or.w	d0,_do_event_loop_returnval
+.return:
 	unlk	fp
 	rts
 
 L46620:
 	link	fp,#-6
 L46624:
-	bsr  	L46108
+	bsr  	_do_event_loop
 	tst.w	d0
 	beq.s	L46698
-	movea.w	U92242,a0
-	adda.l	#U92240,a0
+	movea.w	_event_loop_counter,a0
+	adda.l	#_event_key_counter,a0
 	move.b	6(a0),-2(fp)
-	addq.w	#1,U92242
-	move.w	U92242,d0
+	addq.w	#1,_event_loop_counter
+	move.w	_event_loop_counter,d0
 	ext.l	d0
 	divs	#16,d0
 	swap	d0
-	move.w	d0,U92242
-	cmp.w	U92240,d0
+	move.w	d0,_event_loop_counter
+	cmp.w	_event_key_counter,d0
 	bne.s	L46688
 	clr.w	d0
 	bra.s	L46690
@@ -13800,7 +13790,7 @@ L46624:
 L46688:
 	moveq	#1,d0
 L46690:
-	move.w	d0,U92244
+	move.w	d0,_do_event_loop_returnval
 	bra.s	L46700
 
 L46698:
@@ -14159,7 +14149,7 @@ L47962:
 	tst.w	U99152
 	bne.s	L47990
 	move.w	#3,(sp)
-	bsr  	L37732
+	bsr  	window_closed
 L47990:
 	unlk	fp
 	rts
@@ -14171,7 +14161,7 @@ L47994:
 	tst.w	U99072
 	bne.s	L48022
 	move.w	#1,(sp)
-	bsr  	L37732
+	bsr  	window_closed
 L48022:
 	unlk	fp
 	rts
@@ -14465,7 +14455,7 @@ init_gem:
 	jsr	graf_handle
 	adda.l	#12,sp
 	move.w	d0,(sp)
-	jsr	L27114
+	jsr	init_vdi
 	tst.w	d0
 	bne.s	.no_err
 
@@ -14495,7 +14485,7 @@ init_gem:
 	jsr	graf_mouse
 	addq.l	#2,sp
 
-	move.l	#T85962,(sp)
+	move.l	#rsc_filename,(sp)
 	jsr	rsrc_load
 	tst.w	d0
 	bne.s	.L48982
@@ -14512,7 +14502,7 @@ init_gem:
 	move.w	#-2,U101462
 	move.w	#-1,U100904
 
-	jsr	get_free_mem
+	jsr	_get_free_mem
 	cmp.l	#$DFFF,d0
 	ble.s	.not_enough_mem
 
@@ -14535,7 +14525,7 @@ init_gem:
 	lsr.l	#3,d1	; in bytes
 
 	move.l	d1,(sp)	; Allocate graphics buffer
-	jsr	Malloc
+	jsr	_Malloc
 
 	move.l	d0,grph_buffer
 	move.w	#1,U92232
@@ -16572,7 +16562,7 @@ L54980:
 L55012:
 	move.l	#10,-(sp)
 	move.l	d7,-(sp)
-	jsr	L83960
+	jsr	_div32
 	addq.l	#8,sp
 	move.l	d0,d6
 	beq.s	L55036
@@ -17036,18 +17026,17 @@ L56386:
 	jsr	L69648
 	clr.w	U98712
 	move.w	#1,U100986
-	move.l	U100744,d0
+	move.l	_edit_buffer_start,d0
 	subq.l	#1,d0
 	move.l	d0,U100962
 	move.b	#10,U101148
 	jsr	L66768
-L56438:
+.L56438:
 	jsr	L37176
 	tst.w	U100986
-	beq.s	L56454
-	bra.s	L56438
-
-L56454:
+	beq.s	.L56454
+	bra.s	.L56438
+.L56454:
 	jsr	L66800
 	unlk	fp
 	rts
@@ -17065,18 +17054,18 @@ L56464:
 L56498:
 	link	fp,#-4
 	bsr.s	L56464
-	move.l	#U101090,(sp)
-	jsr	L204
+	move.l	#_edit_buffer_savedregs,(sp)
+	jsr	_stack_save
 	tst.w	d0
-	beq.s	L56526
-	jsr	L67594
-L56526:
+	beq.s	.L56526
+	jsr	do_err_edit_buffer
+.L56526:
 	move.w	#1,U100996
-	jsr	L69744
+	jsr	edit_buffer_alloc
 	jsr	L77150
 	clr.w	d0
 	move.w	d0,U101200
-	movea.l	U100744,a1
+	movea.l	_edit_buffer_start,a1
 	move.l	a1,U101102
 	move.b	d0,(a1)
 	unlk	fp
@@ -17086,21 +17075,20 @@ L56572:
 	link	fp,#-4
 	jsr	L77150
 	bsr  	L58068
-	jsr	L69744
-	bra.s	L56620
-
-L56594:
-	subq.l	#1,U99196
-	movea.l	U99196,a0
+	jsr	edit_buffer_alloc
+	bra.s	.L56620
+.L56594:
+	subq.l	#1,_edit_buffer_end
+	movea.l	_edit_buffer_end,a0
 	movea.l	U101102,a1
 	move.b	(a1),(a0)
 	subq.l	#1,U101102
-L56620:
+.L56620:
 	move.w	U101200,d0
 	subq.w	#1,U101200
 	tst.w	d0
-	bne.s	L56594
-	move.l	U99196,U101102
+	bne.s	.L56594
+	move.l	_edit_buffer_end,U101102
 	unlk	fp
 	rts
 
@@ -17657,7 +17645,7 @@ L58232:
 	jsr	L64090
 	bsr  	L59950
 	move.l	#U101014,(sp)
-	jsr	L204
+	jsr	_stack_save
 	tst.w	d0
 	beq.s	.L58380
 	jsr	L61834
@@ -17794,7 +17782,7 @@ L58830:
 L58878:
 	link	fp,#-4
 	move.l	#U101014,(sp)
-	jsr	L204
+	jsr	_stack_save
 	tst.w	d0
 	bne  	.return
 	jsr	L64888
@@ -17930,7 +17918,7 @@ L59090:
 L59366:
 	link	fp,#-4
 	jsr	L61834
-	jsr	L75710
+	jsr	stack_check
 	jsr	L61904
 	tst.w	d0
 	bne  	L59726
@@ -18045,7 +18033,7 @@ L59768:
 	move.w	d0,U99864
 	move.w	d0,(sp)
 	jsr	L64090
-	jsr	L75710
+	jsr	stack_check
 	bra.s	L59816
 
 L59814:
@@ -18949,7 +18937,7 @@ L62302:
 	jsr	L64942
 	move.w	10(fp),(sp)
 	move.l	#U101014,-(sp)
-	jsr	L218
+	jsr	_stack_restore
 	addq.l	#4,sp
 L62338:
 	jsr	L64028
@@ -18966,7 +18954,7 @@ L62344:
 L62376:
 	move.w	10(fp),(sp)
 	move.l	#U101158,-(sp)
-	jsr	L218
+	jsr	_stack_restore
 	addq.l	#4,sp
 	unlk	fp
 	rts
@@ -19051,7 +19039,7 @@ node_add:
 	rts
 
 .eq	move.w	U100620,d0
-	cmp.w	nodes_max,d0
+	cmp.w	_nodes_max,d0
 	bcc.s	.err_nodes
 	clr.w	d1
 	move.w	U99176,d7
@@ -19087,7 +19075,7 @@ node_add:
 
 	move.w	#23,(sp)
 	move.l	#U101158,-(sp)
-	jsr	L218
+	jsr	_stack_restore
 	addq.l	#4,sp
 	bra	.L62790
 
@@ -19217,13 +19205,13 @@ do_recycle:
 	move.w	U98384,d0
 	cmp.w	#128,d0
 	blt  	.L63094
-	move.w	nodes_max,d0
+	move.w	_nodes_max,d0
 	sub.w	U100620,d0
 	move.w	d0,nodes_free
 	move.w	#-1,U98384
 	bra.s	.L63314
 .L63278:
-	move.w	U100734,d6
+	move.w	_node_bitmap_offset,d6
 	add.w	U98384,d6
 	move.w	d6,(sp)
 	bsr  	L63864
@@ -19366,7 +19354,7 @@ L63544:
 .L63648:
 	move.w	d7,(sp)
 	bsr  	L63792
-	jsr	L75962
+	jsr	do_stack_check
 	tst.w	d0
 	beq.s	.L63666
 	bsr.s	do_err_stackgc
@@ -19398,7 +19386,7 @@ do_err_stackgc:
 .L63736:
 	move.w	d7,(sp)
 	clr.w	d0
-	move.w	U100734,d0
+	move.w	_node_bitmap_offset,d0
 	add.w	d0,(sp)
 	bsr  	L63932
 .L63752:
@@ -19408,7 +19396,7 @@ do_err_stackgc:
 	bcs.s	.L63736
 	move.w	#1,(sp)
 	move.l	#U101158,-(sp)
-	jsr	L218
+	jsr	_stack_restore
 	addq.l	#4,sp
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
@@ -19424,7 +19412,7 @@ L63792:
 	and.l	d0,d2
 	move.b	0(a0,d2.w),d2
 
-	movea.l	U101036,a0
+	movea.l	_nodes_minus4,a0
 	lsr.w	#3,d0
 	or.b	d2,0(a0,d0.l)
 
@@ -19434,7 +19422,7 @@ L63864:
 	move.w	4(sp),d2
 
 	move.w	d2,d1
-	movea.l	U101036,a0
+	movea.l	_nodes_minus4,a0
 	lsr.w	#3,d1
 	move.b	0(a0,d1.w),d0
 
@@ -19455,7 +19443,7 @@ L63932:
 	move.b	0(a0,d0.w),d0
 
 	not.w	d0
-	movea.l	U101036,a0
+	movea.l	_nodes_minus4,a0
 	move.w	d0,d1
 	lsr.w	#3,d2
 	and.b	d1,0(a0,d2.w)
@@ -19909,7 +19897,7 @@ L65148:
 
 L65186_2d: ; L444 inlined
 	clr.l	d2
-	movea.l	U101194,a0
+	movea.l	_node_base,a0
 	move.w	d0,d2
 	lsl.l	#2,d2
 	move.w	d1,0(a0,d2.l)
@@ -19917,7 +19905,7 @@ L65186_2d: ; L444 inlined
 
 L65226_2d: ; L466 inlined
 	clr.l	d2
-	movea.l	U101194,a0
+	movea.l	_node_base,a0
 	move.w	d0,d2
 	lsl.l	#2,d2
 	move.w	d1,2(a0,d2.l)
@@ -20709,9 +20697,9 @@ L67570:
 	unlk	fp
 	rts
 
-L67594:
+do_err_edit_buffer:
 	link	fp,#-4
-	move.l	T87122,(sp)
+	move.l	err_edit_buffer,(sp)
 	move.w	#46,-(sp)
 	bsr  	L67928
 	addq.l	#2,sp
@@ -20952,7 +20940,7 @@ L68376:
 	jsr	L64942
 	move.w	#1,(sp)
 	move.l	#U101014,-(sp)
-	jsr	L218
+	jsr	_stack_restore
 	addq.l	#4,sp
 	bra.s	L68422
 
@@ -20988,7 +20976,7 @@ L68462:
 	move.w	d0,(sp)
 L68494:
 	move.l	#U101158,-(sp)
-	jsr	L218
+	jsr	_stack_restore
 	addq.l	#4,sp
 L68508:
 	move.w	#22,(sp)
@@ -20996,7 +20984,7 @@ L68508:
 	jsr	L64942
 	clr.w	(sp)
 	move.l	#U101014,-(sp)
-	jsr	L218
+	jsr	_stack_restore
 	addq.l	#4,sp
 	unlk	fp
 	rts
@@ -21365,29 +21353,29 @@ L69648:
 	move.w	d0,U100980
 	move.w	d0,U98712
 	jsr	L77166
-	move.l	U100744,U99856
+	move.l	_edit_buffer_start,U99856
 	clr.w	d0
 	ext.l	d0
 	move.l	d0,U100642
 	move.l	d0,U100638
-	move.l	U100744,(sp)
+	move.l	_edit_buffer_start,(sp)
 	bsr  	L69934
 	bsr  	L70038
 	unlk	fp
 	rts
 
-L69744:
+edit_buffer_alloc:
 	link	fp,#-4
 	move.l	fp,d0
 	add.l	#-1527,d0
-	move.l	d0,U99196
-	sub.l	U100744,d0
-	move.w	d0,U101468
+	move.l	d0,_edit_buffer_end
+	sub.l	_edit_buffer_start,d0
+	move.w	d0,_edit_buffer_size
 	cmp.w	#512,d0
-	bge.s	L69786
-	jsr	L67594
-L69786:
-	movea.l	U99196,a0
+	bge.s	.L69786
+	jsr	do_err_edit_buffer
+.L69786:
+	movea.l	_edit_buffer_end,a0
 	clr.b	(a0)
 	unlk	fp
 	rts
@@ -21395,7 +21383,7 @@ L69786:
 L69798:
 	link	fp,#-4
 	movea.l	#U100561,a0
-	move.l	a0,U99196
+	move.l	a0,_edit_buffer_end
 	clr.b	(a0)
 	move.w	#2,(sp)
 	jsr	L47436
@@ -21438,16 +21426,16 @@ L69934:
 	clr.w	U101146
 	bsr  	L70106
 L69956:
-	movea.l	U99196,a0
+	movea.l	_edit_buffer_end,a0
 	move.b	(a0),d0
 	ext.w	d0
 	movea.l	8(fp),a1
 	move.b	d0,(a1)
-	addq.l	#1,U99196
+	addq.l	#1,_edit_buffer_end
 	addq.l	#1,8(fp)
 	tst.w	d0
 	bne.s	L69956
-	move.l	8(fp),U99196
+	move.l	8(fp),_edit_buffer_end
 	move.w	-2(fp),U101146
 	unlk	fp
 	rts
@@ -21502,8 +21490,8 @@ L70106:
 	subq.w	#1,(sp)
 	bsr  	L71062
 L70186:
-	move.l	#U101090,(sp)
-	jsr	L204
+	move.l	#_edit_buffer_savedregs,(sp)
+	jsr	_stack_save
 	tst.w	d0
 	beq.s	L70208
 	jsr	L75582
@@ -21702,7 +21690,7 @@ L70672:
 	bne.s	L70724
 	clr.w	(sp)
 	jsr	L47436
-	move.l	U99196,-6(fp)
+	move.l	_edit_buffer_end,-6(fp)
 	clr.w	(sp)
 	bsr  	L74392
 	move.l	-6(fp),(sp)
@@ -21774,9 +21762,9 @@ L70830:
 	bsr  	L72808
 L70862:
 	bsr  	L72710
-	addq.l	#1,U99196
+	addq.l	#1,_edit_buffer_end
 L70872:
-	move.l	U99196,d0
+	move.l	_edit_buffer_end,d0
 	cmp.l	U101492,d0
 	bne.s	L70830
 	unlk	fp
@@ -21937,7 +21925,7 @@ L71274:
 	link	fp,#-4
 	bsr  	L73250
 	move.l	U100638,d0
-	cmp.l	U99196,d0
+	cmp.l	_edit_buffer_end,d0
 	bcs.s	L71320
 	move.l	U100638,d0
 	cmp.l	U101492,d0
@@ -21945,14 +21933,14 @@ L71274:
 	move.l	U101492,U100638
 L71320:
 	move.l	U100642,d0
-	cmp.l	U99196,d0
+	cmp.l	_edit_buffer_end,d0
 	bcs.s	L71358
 	move.l	U100642,d0
 	cmp.l	U101492,d0
 	bhi.s	L71358
 	move.l	U101492,U100642
 L71358:
-	move.l	U101492,U99196
+	move.l	U101492,_edit_buffer_end
 	bsr.s	L71374
 	unlk	fp
 	rts
@@ -22019,7 +22007,7 @@ L71554:
 	move.w	U101154,-2(fp)
 	move.w	U101044,-4(fp)
 	bsr  	L72596
-	move.l	U99196,U101026
+	move.l	_edit_buffer_end,U101026
 	jsr	L47004
 	clr.w	(sp)
 	jsr	L47436
@@ -22043,9 +22031,9 @@ L71636:
 	beq.s	L71664
 	bsr  	L71818
 L71664:
-	subq.l	#1,U99196
+	subq.l	#1,_edit_buffer_end
 	move.w	8(fp),d0
-	movea.l	U99196,a1
+	movea.l	_edit_buffer_end,a1
 	move.b	d0,(a1)
 	movea.l	U101492,a0
 	tst.b	(a0)
@@ -22202,7 +22190,7 @@ L72098:
 	beq.s	L72114
 	bsr  	L72470
 L72114:
-	movea.l	U99196,a0
+	movea.l	_edit_buffer_end,a0
 	move.b	(a0),-2(fp)
 	bsr.s	L72160
 	move.b	-2(fp),d0
@@ -22230,7 +22218,7 @@ L72160:
 	bsr  	L72808
 L72184:
 	bsr  	L72710
-	addq.l	#1,U99196
+	addq.l	#1,_edit_buffer_end
 	unlk	fp
 	rts
 
@@ -22268,7 +22256,7 @@ L72270:
 	beq.s	L72284
 	subq.w	#1,d7
 L72284:
-	addq.l	#1,U99196
+	addq.l	#1,_edit_buffer_end
 L72290:
 	tst.w	d7
 	bne.s	L72212
@@ -22332,7 +22320,7 @@ L72440:
 	bsr  	L70890
 L72444:
 	move.l	-4(fp),d0
-	cmp.l	U99196,d0
+	cmp.l	_edit_buffer_end,d0
 	bne.s	L72440
 L72456:
 	move.w	#1,(sp)
@@ -22349,8 +22337,8 @@ L72470:
 	move.w	#2,(sp)
 	jsr	L47436
 	move.w	#1,(sp)
-	move.l	#U101090,-(sp)
-	jsr	L218
+	move.l	#_edit_buffer_savedregs,-(sp)
+	jsr	_stack_restore
 	addq.l	#4,sp
 L72514:
 	unlk	fp
@@ -22369,7 +22357,7 @@ L72538:
 L72542:
 	move.w	d0,d7
 	sub.w	U100990,d7
-	move.l	U99196,d0
+	move.l	_edit_buffer_end,d0
 	sub.l	U99856,d0
 	cmp.w	#2,d7
 	bge.s	L72572
@@ -22409,20 +22397,20 @@ L72616:
 	link	fp,#-4
 	subq.w	#1,U101200
 	subq.w	#1,U101496
-	subq.l	#1,U99196
+	subq.l	#1,_edit_buffer_end
 	subq.l	#1,U99856
-	movea.l	U99196,a0
+	movea.l	_edit_buffer_end,a0
 	movea.l	U99856,a1
 	move.b	(a1),(a0)
 	move.l	U100638,d0
 	cmp.l	U99856,d0
 	bne.s	L72682
-	move.l	U99196,U100638
+	move.l	_edit_buffer_end,U100638
 L72682:
 	move.l	U100642,d0
 	cmp.l	U99856,d0
 	bne.s	L72706
-	move.l	U99196,U100642
+	move.l	_edit_buffer_end,U100642
 L72706:
 	unlk	fp
 	rts
@@ -22432,24 +22420,24 @@ L72710:
 	addq.w	#1,U101496
 	addq.w	#1,U101200
 	move.l	U100638,d0
-	cmp.l	U99196,d0
-	bne.s	L72750
+	cmp.l	_edit_buffer_end,d0
+	bne.s	.L72750
 	move.l	U99856,U100638
-L72750:
+.L72750:
 	move.l	U100642,d0
-	cmp.l	U99196,d0
-	bne.s	L72774
+	cmp.l	_edit_buffer_end,d0
+	bne.s	.L72774
 	move.l	U99856,U100642
-L72774:
+.L72774:
 	movea.l	U99856,a0
-	movea.l	U99196,a1
+	movea.l	_edit_buffer_end,a1
 	move.b	(a1),(a0)
 	addq.l	#1,U99856
 	bsr  	L72958
 	tst.w	d0
-	beq.s	L72804
+	beq.s	.return
 	bsr.s	L72808
-L72804:
+.return:
 	unlk	fp
 	rts
 
@@ -22482,7 +22470,7 @@ L72870:
 
 L72906:
 	link	fp,#-4
-	movea.l	U99196,a0
+	movea.l	_edit_buffer_end,a0
 	tst.b	(a0)
 	beq.s	L72924
 	clr.w	d0
@@ -22513,7 +22501,7 @@ L72954:
 
 L72958:
 	link	fp,#-4
-	movea.l	U99196,a0
+	movea.l	_edit_buffer_end,a0
 	cmpi.b	#10,(a0)
 	beq.s	L72978
 	clr.w	d0
@@ -22601,7 +22589,7 @@ L73122:
 
 L73126:
 	link	fp,#-4
-	move.l	U99196,U101492
+	move.l	_edit_buffer_end,U101492
 	unlk	fp
 	rts
 
@@ -22642,7 +22630,7 @@ L73200:
 
 L73220:
 	link	fp,#-4
-	move.l	U99196,U101026
+	move.l	_edit_buffer_end,U101026
 	move.l	U101492,U100750
 	bsr.s	L73280
 	unlk	fp
@@ -22651,7 +22639,7 @@ L73220:
 L73250:
 	link	fp,#-4
 	move.l	U101492,U101026
-	move.l	U99196,U100750
+	move.l	_edit_buffer_end,U100750
 	bsr.s	L73280
 	unlk	fp
 	rts
@@ -22677,7 +22665,7 @@ L73280:
 L73348:
 	link	fp,#-4
 	move.l	#U101170,(sp)
-	jsr	L204
+	jsr	_stack_save
 	tst.w	d0
 	bne  	L73540
 L73370:
@@ -22968,7 +22956,7 @@ L74080:
 	beq.s	L74110
 	move.w	#1,(sp)
 	move.l	#U101170,-(sp)
-	jsr	L218
+	jsr	_stack_restore
 	addq.l	#4,sp
 L74110:
 	jsr	L74860
@@ -23004,7 +22992,7 @@ L74158:
 	beq.s	L74196
 	move.w	#1,(sp)
 	move.l	#U101170,-(sp)
-	jsr	L218
+	jsr	_stack_restore
 	addq.l	#4,sp
 L74196:
 	move.b	9(fp),d0
@@ -23047,7 +23035,7 @@ L74284:
 L74298:
 	link	fp,#-4
 	move.l	U100638,U100642
-	move.l	U99196,U100638
+	move.l	_edit_buffer_end,U100638
 	unlk	fp
 	rts
 
@@ -23111,7 +23099,7 @@ L74508:
 	bcs.s	L74486
 	tst.w	8(fp)
 	beq.s	L74542
-	move.l	U100642,U99196
+	move.l	U100642,_edit_buffer_end
 	bsr  	L73126
 L74542:
 	bsr  	L72348
@@ -23151,7 +23139,7 @@ L74622:
 
 L74624:
 	move.l	8(fp),d0
-	cmp.l	U99196,d0
+	cmp.l	_edit_buffer_end,d0
 	beq.s	L74698
 	bsr  	L72906
 	tst.w	d0
@@ -23172,7 +23160,7 @@ L74654:
 	bsr  	L72808
 L74686:
 	bsr  	L72710
-	addq.l	#1,U99196
+	addq.l	#1,_edit_buffer_end
 	bra.s	L74624
 
 L74698:
@@ -23192,8 +23180,8 @@ L74702:
 	addq.l	#2,sp
 L74742:
 	move.w	#1,(sp)
-	move.l	#U101090,-(sp)
-	jsr	L218
+	move.l	#_edit_buffer_savedregs,-(sp)
+	jsr	_stack_restore
 	addq.l	#4,sp
 	unlk	fp
 	rts
@@ -23206,7 +23194,7 @@ L74764:
 	cmp.w	#20,d0
 	bls.s	L74798
 	clr.w	U99852
-	bsr  	L75710
+	bsr  	stack_check
 L74798:
 	unlk	fp
 	rts
@@ -23324,7 +23312,7 @@ L74948:
 	tst.w	d0
 	beq  	.L75244
 	move.w	U101200,d0
-	move.w	U101468,d1
+	move.w	_edit_buffer_size,d1
 	add.w	#-250,d1
 	cmp.w	d1,d0
 	move	sr,d0
@@ -23332,8 +23320,8 @@ L74948:
 	move	d0,ccr
 	blt.s	.L75150
 	move.w	#1,(sp)
-	move.l	#U101090,-(sp)
-	jsr	L218
+	move.l	#_edit_buffer_savedregs,-(sp)
+	jsr	_stack_restore
 	addq.l	#4,sp
 .L75150:
 	cmp.b	#9,d7
@@ -23489,7 +23477,7 @@ L75596:
 	addq.l	#6,a0
 	move.l	(a0),U91936
 	clr.w	U91926
-	jsr	L46108
+	jsr	_do_event_loop
 	cmp.w	#-1,d0
 	bne.s	.L75666
 	bsr.s	L75670
@@ -23509,9 +23497,9 @@ L75670:
 	unlk	fp
 	rts
 
-L75710:
+stack_check:
 	link	fp,#-4
-	bsr  	L75962
+	bsr  	do_stack_check
 	tst.w	d0
 	beq	.L75758
 	move.l	err_stack,(sp)
@@ -23520,7 +23508,7 @@ L75710:
 	addq.l	#2,sp
 	move.w	#1,(sp)
 	move.l	#U101158,-(sp)
-	jsr	L218
+	jsr	_stack_restore
 	addq.l	#4,sp
 .L75758:
 	bsr  	L75596
@@ -23530,7 +23518,6 @@ L75710:
 	bsr  	L75582
 	jsr	L2226
 	bra	.return
-
 .L75780:
 	bsr  	L76400
 .return:
@@ -23584,7 +23571,7 @@ L75872:
 	bsr  	L75582
 	move.w	#1,(sp)
 	move.l	#U100656,-(sp)
-	jsr	L218
+	jsr	_stack_restore
 	addq.l	#4,sp
 	bra.s	L75906
 
@@ -23621,14 +23608,16 @@ L75952:
 	unlk	fp
 	rts
 
-L75962:
+_edit_buffer_start: dc.l 0
+
+do_stack_check:
 	link	fp,#0
 	cmpi.w	#1,U100986
-	beq.s	.L75990
+	beq.s	.edit_buffer_active
 	cmpi.w	#1,U100996
-	beq.s	.L75990
-	move.l	U100744,d0
-.L76014:
+	beq.s	.edit_buffer_active
+	move.l	_edit_buffer_start,d0
+.check:
 	move.l	d0,d2
 	move.l	fp,d0
 	sub.l	#1719,d0
@@ -23651,12 +23640,12 @@ L75962:
 	move.w	#19,U99852
 	bra.s	.L76036
 
-.L75990:
-	move.l	U100744,d0
-	move.w	U101468,d1
+.edit_buffer_active:
+	move.l	_edit_buffer_start,d0
+	move.w	_edit_buffer_size,d1
 	ext.l	d1
 	add.l	d1,d0
-	bra.s	.L76014
+	bra.s	.check
 
 is_oom:
 	link	fp,#-4
@@ -23695,7 +23684,7 @@ L76156:
 	move.w	U100990,U99194
 	move.w	U101044,U98710
 	jsr	L70792
-	move.l	U99196,U101102
+	move.l	_edit_buffer_end,U101102
 	jsr	L70038
 L76206:
 	jsr	L70006
@@ -23714,7 +23703,7 @@ L76224:
 	jsr	L64942
 	move.w	#2,(sp)
 	move.l	#U101014,-(sp)
-	jsr	L218
+	jsr	_stack_restore
 	addq.l	#4,sp
 L76276:
 	jsr	L64160
@@ -23723,7 +23712,7 @@ L76276:
 	jsr	L64942
 	clr.w	(sp)
 	move.l	#U101014,-(sp)
-	jsr	L218
+	jsr	_stack_restore
 	addq.l	#4,sp
 L76310:
 	jsr	L64028
@@ -23733,7 +23722,7 @@ L76316:
 	beq.s	L76224
 	move.w	#1,(sp)
 	move.l	#U101158,-(sp)
-	jsr	L218
+	jsr	_stack_restore
 	addq.l	#4,sp
 L76344:
 	unlk	fp
@@ -23924,7 +23913,7 @@ L76856:
 	jsr	L64090
 	jsr	L9760
 	move.l	#U101014,(sp)
-	jsr	L204
+	jsr	_stack_save
 	bra.s	L76932
 
 L76890:
@@ -24227,7 +24216,8 @@ Frename:
 	unlk	fp
 	rts
 
-Malloc:
+	public _Malloc
+_Malloc:
 	move.l	4(sp),d0
 	addq.l	#1,d0
 	andi.l	#-2,d0
@@ -24239,7 +24229,8 @@ Malloc:
 	andi.l	#-2,d0
 	rts
 
-get_free_mem:
+	public _get_free_mem
+_get_free_mem:
 	move.l	#-1,-(sp)
 	move.w	#72,-(sp)
 	trap	#1	; GEMDOS
@@ -24255,13 +24246,13 @@ Mfree:
 	unlk	fp
 	rts
 
-L77854:
+init:
 	link	fp,#-2
 	movem.l	d7/a5,-(sp)
 	jsr	init_gem
 	move.w	#1,U99190
 	jsr	L47940
-	bsr  	alloc_mem
+	jsr  	_nodes_alloc
 	clr.w	d0
 	move.w	d0,U98714
 	move.w	d0,U99192
@@ -24290,7 +24281,7 @@ L77854:
 	jsr	L32858
 	jsr	L47940
 	move.w	U100984,U99816
-	move.l	U91922,a0
+	move.l	p_cmdlin,a0
 	tst.b	(a0)
 	beq.s	.L78092
 	move.l	a0,(sp)
@@ -24391,56 +24382,6 @@ L78330:
 	unlk	fp
 	rts
 
-alloc_mem:
-	link	fp,#-4
-	movem.l	d6-d7,-(sp)
-
-	jsr	get_free_mem
-	sub.l	#$A00,d0	; leave 2.5k for TOS or bad things happen
-	bge	.pos
-	clr.l	d0
-.pos:
-	; for reference a 512k TOS 1.0 machine originally
-	; allocated 0x44AF6 (0x444B6 in lowres)
-	move.l	d0,-(sp)
-	jsr	Malloc
-	addq.l	#4,sp
-
-	move.l	d0,-4(fp)
-	move.l	sp,d0
-	sub.l	#8680,d0
-	move.l	d0,U100744
-	move.l	#33,-(sp)
-	sub.l	-4(fp),d0
-	move.l	d0,-(sp)
-	subq.l	#1,(sp)
-	jsr	L83960
-	addq.l	#8,sp
-	add.l	-4(fp),d0
-	addq.l	#2,d0
-	and.l	#$00FFFFFE,d0	; uh oh
-	move.l	d0,U101194
-	move.l	U100744,d7
-	sub.l	U101194,d7
-	asr.l	#2,d7
-	move.l	d7,d0
-	cmp.l	#65535,d0
-	ble.s	.L78458
-	move.w	#-1,nodes_max
-	bra.s	.L78464
-.L78458:
-	;move.w	#2750,nodes_max
-	move.w	d7,nodes_max
-.L78464:
-	move.l	-4(fp),d0
-	subq.l	#4,d0
-	move.l	d0,U101036
-	move.w	#32,U100734
-	tst.l	(sp)+
-	movem.l	(sp)+,d7
-	unlk	fp
-	rts
-
 L78494:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
@@ -24462,8 +24403,8 @@ L78494:
 	move.w	d0,U99862
 	clr.w	U99188
 	clr.w	U100620
-	move.w	U100734,U99176
-	move.w	nodes_max,nodes_free
+	move.w	_node_bitmap_offset,U99176
+	move.w	_nodes_max,nodes_free
 	jsr	node_add
 	move.w	d0,U101004
 	movea.l	#string_table,a0
@@ -26471,7 +26412,10 @@ L83914:
 	unlk	fp
 	rts
 
-L83960:
+	public _div32
+	public ___divsi3
+_div32:
+___divsi3:
 	link	fp,#-2
 	movem.l	d2-d7,-(sp)
 	clr.w	d3
@@ -26483,7 +26427,6 @@ L83960:
 	move.l	#-2147483648,d0
 	divs	#0,d0
 	bra  	.L84108
-
 .L84006:
 	bge.s	.L84012
 	neg.l	d6
@@ -26500,7 +26443,6 @@ L83960:
 	moveq	#1,d5
 	clr.l	d7
 	bra.s	.L84080
-
 .L84032:
 	cmp.l	#65536,d7
 	bge.s	.L84050
@@ -26509,7 +26451,6 @@ L83960:
 	swap	d7
 	ext.l	d7
 	bra.s	.L84080
-
 .L84050:
 	moveq	#1,d4
 .L84052:
@@ -26518,7 +26459,6 @@ L83960:
 	asl.l	#1,d6
 	asl.l	#1,d4
 	bra.s	.L84052
-
 .L84062:
 	tst.l	d4
 	beq.s	.L84080
@@ -26530,7 +26470,6 @@ L83960:
 	lsr.l	#1,d4
 	lsr.l	#1,d6
 	bra.s	.L84062
-
 .L84080:
 	cmp.w	#1,d3
 	bne.s	.L84100
@@ -26539,7 +26478,6 @@ L83960:
 	move.l	d5,d0
 	neg.l	d0
 	bra.s	.L84108
-
 .L84100:
 	move.l	d7,U98682
 	move.l	d5,d0
@@ -26584,7 +26522,7 @@ L84202:
 	link	fp,#-2
 	move.l	12(fp),-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L83960
+	jsr	_div32
 	cmpm.l	(sp)+,(sp)+
 	move.l	U98682,d0
 	unlk	fp
@@ -26783,15 +26721,15 @@ init_err: dc.b '[3][I can''t initialize LOGO.][EXIT]',0
 
 T85866:
 	dc.b	'[3][Not enough windows to run LOGO][exit]',0
-T85908:
+window_title_dialogue:
 	dc.b	'LOGO DIALOGUE',0
-T85922:
+window_title_editor:
 	dc.b	'LOGO EDITOR',0
-T85934:
+window_title_graphics:
 	dc.b	'GRAPHICS DISPLAY',0
-T85951:
+window_title_debug:
 	dc.b	'DEBUG INFO',0
-T85962:
+rsc_filename:
 	dc.b	'LOGOHAX.RSC',0
 T85972:
 	dc.l	L51844
@@ -27019,8 +26957,8 @@ err_disk:
 	dc.l	err_s_disk
 T87118:
 	dc.l	T87794
-T87122:
-	dc.l	T87807
+err_edit_buffer:
+	dc.l	err_s_edit_buffer
 T87126:
 	dc.l	T87830
 	dc.l	T87865
@@ -27168,7 +27106,7 @@ err_s_disk:
 	dc.b	'I''m having trouble with the disk',0
 T87794:
 	dc.b	'Disk is full',0
-T87807:
+err_s_edit_buffer:
 	dc.b	'My edit buffer is full',0
 T87830:
 	dc.b	'If wants [ ]''s around instructions',0
@@ -27375,9 +27313,9 @@ word_table:
 	dc.l	T90500
 	dc.l	L18674
 	dc.l	T90505
-	dc.l	L13800
+	dc.l	word_edall
 	dc.l	T90511
-	dc.l	L13976
+	dc.l	word_edit
 	dc.l	T90519
 	dc.l	L15036
 	dc.l	T90525
@@ -28209,7 +28147,7 @@ T91786:
 
 p_tbase: ds.l	1
 
-U91922:
+p_cmdlin:
 	ds.l	1
 U91926:
 	ds.b	2
@@ -28385,12 +28323,11 @@ U92234:
 
 grph_buffer: ds.l 1
 
-U92240:
-	ds.b	2
-U92242:
-	ds.b	2
-U92244:
-	ds.b	18
+_event_key_counter: ds.w 1
+_event_loop_counter: ds.w 1
+_do_event_loop_returnval: ds.w 1
+key_buffer: ds.b 16
+
 U92262:
 	ds.b	2
 U92264:
@@ -28541,8 +28478,9 @@ U99192:
 	ds.b	2
 U99194:
 	ds.b	2
-U99196:
-	ds.b	4
+
+_edit_buffer_end: ds.l 1
+
 U99200:
 	ds.b	2
 U99202:
@@ -28638,8 +28576,6 @@ U100676:
 	ds.b	2
 U100678:
 	ds.b	56
-U100734:
-	ds.b	2
 U100736:
 	ds.b	2
 U100738:
@@ -28648,8 +28584,6 @@ U100740:
 	ds.b	2
 U100742:
 	ds.b	2
-U100744:
-	ds.l	1
 U100748:
 	ds.b	2
 U100750:
@@ -28708,9 +28642,6 @@ U100984:
 	ds.b	2
 U100986:
 	ds.b	2
-
-nodes_max: ds.w	1
-
 U100990:
 	ds.b	2
 U100992:
@@ -28740,8 +28671,6 @@ U101030: ds.l 1
 
 U101034:
 	ds.b	2
-U101036:
-	ds.b	4
 U101040:
 	ds.b	2
 U101042:
@@ -28766,8 +28695,8 @@ _addr_in:
 contrl:
 	ds.w	12
 
-U101090:
-	ds.b	12
+_edit_buffer_savedregs: ds.b 12
+
 U101102:
 	ds.b	4
 U101106:
@@ -28836,8 +28765,8 @@ U101462:
 	public _addr_out
 _addr_out: ds.l 1
 
-U101468:
-	ds.b	2
+_edit_buffer_size: ds.w 1
+
 U101470:
 	ds.b	4
 U101474:

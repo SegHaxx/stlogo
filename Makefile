@@ -1,5 +1,6 @@
 VASM=vasmm68k_mot
 MINT_PREFIX=m68k-atari-mint
+MINT_CFLAGS=-Wall -Os -mshort
 
 TARGETS=logohax.prg
 
@@ -8,15 +9,18 @@ all: $(TARGETS)
 clean:
 	rm -f *.o $(TARGETS)
 
-logohax.prg: logohax.o dialog.o
+logohax.prg: logohax.o nodes.o dialog.o
 	$(MINT_PREFIX)-ld -nostartfiles -nostdlib $^ -o $@
 	$(MINT_PREFIX)-size $@
 
 logohax.o: logohax.s
 	$(VASM) -Faout -nowarn=2061 $< -o $@ -L $@.lst
 
+nodes.o: nodes.c
+	$(MINT_PREFIX)-gcc $(MINT_CFLAGS) -c $< -o $@
+
 dialog.o: dialog.c aes.h
-	$(MINT_PREFIX)-gcc -Wall -Os -mshort -c $< -o $@
+	$(MINT_PREFIX)-gcc $(MINT_CFLAGS) -c $< -o $@
 
 EXAMPLES=HANOI.LOG MANDEL.LOG SNOWFLAK.LOG SQUIRAL.LOG TEST.LOG TEST_TT.LOG TETRA.LOG WUFF.LOG
 
