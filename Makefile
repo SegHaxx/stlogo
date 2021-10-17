@@ -15,7 +15,7 @@ logohax.prg: logohax.o dialog.o
 logohax.o: logohax.s
 	$(VASM) -Faout -nowarn=2061 $< -o $@ -L $@.lst
 
-dialog.o: dialog.c
+dialog.o: dialog.c aes.h
 	$(MINT_PREFIX)-gcc -Wall -Os -mshort -c $< -o $@
 
 EXAMPLES=HANOI.LOG MANDEL.LOG SNOWFLAK.LOG SQUIRAL.LOG TEST.LOG TEST_TT.LOG TETRA.LOG WUFF.LOG

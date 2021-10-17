@@ -77,17 +77,17 @@ L290:
 	public _crys_if
 _crys_if:
 	move.w	4(sp),d0
-	move.w	d0,control
+	move.w	d0,_control
 
 	sub.w	#10,d0
 	move.w	d0,d1
 	add.w	d0,d0
 	add.w	d1,d0
-	move.l	#ctrl_cnts,a0
+	move.l	#_ctrl_cnts,a0
 	add.w	d0,a0
 
 	clr.w	d0
-	move.l	#control+2,a1
+	move.l	#_control+2,a1
 	move.b	(a0)+,d0
 	move.w	d0,(a1)+
 	move.b	(a0)+,d0
@@ -95,7 +95,7 @@ _crys_if:
 	move.b	(a0),d0
 	move.w	d0,(a1)
 
-	move.l	aespb,d1
+	move.l	#_aespb,d1
 	move.w	#200,d0
 	trap	#2	; AES
 
@@ -104,13 +104,12 @@ _crys_if:
 
 appl_init:
 	link	fp,#-6
-	move.l	#control,U98686
-	move.l	#U100590,U98690
-	move.l	#int_in,U98694
-	move.l	#_int_out,U98698
-	move.l	#_addr_in,U98702
-	move.l	#U101464,U98706
-	move.l	#U98686,aespb
+	move.l	#_control,cb_pcontrol
+	move.l	#_global,cb_pglobal
+	move.l	#_int_in,cb_pintin
+	move.l	#_int_out,cb_pintout
+	move.l	#_addr_in,cb_padrin
+	move.l	#_addr_out,cb_padrout
 	move.w	#10,(sp)
 	bsr  	_crys_if
 	move.w	_int_out,U101048
@@ -128,23 +127,23 @@ appl_exit:
 
 evnt_multi:
 	link	fp,#-4
-	move.w	8(fp),int_in
-	move.w	10(fp),int_in+2
-	move.w	12(fp),int_in+4
-	move.w	14(fp),int_in+6
-	move.w	16(fp),int_in+8
-	move.w	18(fp),int_in+10
-	move.w	20(fp),int_in+12
-	move.w	22(fp),int_in+14
-	move.w	24(fp),int_in+16
-	move.w	26(fp),int_in+18
-	move.w	28(fp),int_in+20
-	move.w	30(fp),int_in+22
-	move.w	32(fp),int_in+24
-	move.w	34(fp),int_in+26
+	move.w	8(fp),_int_in
+	move.w	10(fp),_int_in+2
+	move.w	12(fp),_int_in+4
+	move.w	14(fp),_int_in+6
+	move.w	16(fp),_int_in+8
+	move.w	18(fp),_int_in+10
+	move.w	20(fp),_int_in+12
+	move.w	22(fp),_int_in+14
+	move.w	24(fp),_int_in+16
+	move.w	26(fp),_int_in+18
+	move.w	28(fp),_int_in+20
+	move.w	30(fp),_int_in+22
+	move.w	32(fp),_int_in+24
+	move.w	34(fp),_int_in+26
 	move.l	36(fp),_addr_in
-	move.w	40(fp),int_in+28
-	move.w	42(fp),int_in+30
+	move.w	40(fp),_int_in+28
+	move.w	42(fp),_int_in+30
 	move.w	#25,(sp)
 	bsr  	_crys_if
 	movea.l	60(fp),a0
@@ -159,7 +158,7 @@ evnt_multi:
 menu_bar:
 	link	fp,#-4
 	move.l	8(fp),_addr_in
-	move.w	12(fp),int_in
+	move.w	12(fp),_int_in
 	move.w	#30,(sp)
 	bsr  	_crys_if
 	unlk	fp
@@ -168,8 +167,8 @@ menu_bar:
 menu_icheck:
 	link	fp,#-4
 	move.l	8(fp),_addr_in
-	move.w	12(fp),int_in
-	move.w	14(fp),int_in+2
+	move.w	12(fp),_int_in
+	move.w	14(fp),_int_in+2
 	move.w	#31,(sp)
 	bsr  	_crys_if
 	unlk	fp
@@ -178,8 +177,8 @@ menu_icheck:
 menu_ienable:
 	link	fp,#-4
 	move.l	8(fp),_addr_in
-	move.w	12(fp),int_in
-	move.w	14(fp),int_in+2
+	move.w	12(fp),_int_in
+	move.w	14(fp),_int_in+2
 	move.w	#32,(sp)
 	bsr  	_crys_if
 	unlk	fp
@@ -188,58 +187,16 @@ menu_ienable:
 menu_tnormal:
 	link	fp,#-4
 	move.l	8(fp),_addr_in
-	move.w	12(fp),int_in
-	move.w	14(fp),int_in+2
+	move.w	12(fp),_int_in
+	move.w	14(fp),_int_in+2
 	move.w	#33,(sp)
-	bsr  	_crys_if
-	unlk	fp
-	rts
-
-	xdef _objc_draw
-_objc_draw:
-	link	fp,#-4
-	move.l	8(fp),_addr_in
-	move.w	12(fp),int_in
-	move.w	14(fp),int_in+2
-	move.w	16(fp),int_in+4
-	move.w	18(fp),int_in+6
-	move.w	20(fp),int_in+8
-	move.w	22(fp),int_in+10
-	move.w	#42,(sp)
-	bsr  	_crys_if
-	unlk	fp
-	rts
-
-	xdef _form_do
-_form_do:
-	link	fp,#-4
-	move.l	8(fp),_addr_in
-	move.w	12(fp),int_in
-	move.w	#50,(sp)
-	bsr  	_crys_if
-	unlk	fp
-	rts
-
-	xdef _form_dial
-_form_dial:
-	link	fp,#-4
-	move.w	8(fp),int_in
-	move.w	10(fp),int_in+2
-	move.w	12(fp),int_in+4
-	move.w	14(fp),int_in+6
-	move.w	16(fp),int_in+8
-	move.w	18(fp),int_in+10
-	move.w	20(fp),int_in+12
-	move.w	22(fp),int_in+14
-	move.w	24(fp),int_in+16
-	move.w	#51,(sp)
 	bsr  	_crys_if
 	unlk	fp
 	rts
 
 form_alert:
 	link	fp,#-4
-	move.w	8(fp),int_in
+	move.w	8(fp),_int_in
 	move.l	10(fp),_addr_in
 	move.w	#52,(sp)
 	bsr  	_crys_if
@@ -265,7 +222,7 @@ graf_handle:
 
 graf_mouse:
 	link	fp,#-4
-	move.w	8(fp),int_in
+	move.w	8(fp),_int_in
 	move.l	10(fp),_addr_in
 	move.w	#78,(sp)
 	bsr  	_crys_if
@@ -300,11 +257,11 @@ fsel_input:
 
 wind_create:
 	link	fp,#-4
-	move.w	8(fp),int_in
-	move.w	10(fp),int_in+2
-	move.w	12(fp),int_in+4
-	move.w	14(fp),int_in+6
-	move.w	16(fp),int_in+8
+	move.w	8(fp),_int_in
+	move.w	10(fp),_int_in+2
+	move.w	12(fp),_int_in+4
+	move.w	14(fp),_int_in+6
+	move.w	16(fp),_int_in+8
 	move.w	#100,(sp)
 	bsr  	_crys_if
 	unlk	fp
@@ -312,11 +269,11 @@ wind_create:
 
 wind_open:
 	link	fp,#-4
-	move.w	8(fp),int_in
-	move.w	10(fp),int_in+2
-	move.w	12(fp),int_in+4
-	move.w	14(fp),int_in+6
-	move.w	16(fp),int_in+8
+	move.w	8(fp),_int_in
+	move.w	10(fp),_int_in+2
+	move.w	12(fp),_int_in+4
+	move.w	14(fp),_int_in+6
+	move.w	16(fp),_int_in+8
 	move.w	#101,(sp)
 	bsr  	_crys_if
 	unlk	fp
@@ -324,7 +281,7 @@ wind_open:
 
 wind_close:
 	link	fp,#-4
-	move.w	8(fp),int_in
+	move.w	8(fp),_int_in
 	move.w	#102,(sp)
 	bsr  	_crys_if
 	unlk	fp
@@ -332,8 +289,8 @@ wind_close:
 
 wind_get:
 	link	fp,#-4
-	move.w	8(fp),int_in
-	move.w	10(fp),int_in+2
+	move.w	8(fp),_int_in
+	move.w	10(fp),_int_in+2
 	move.w	#104,(sp)
 	bsr  	_crys_if
 	movea.l	12(fp),a0
@@ -350,12 +307,12 @@ wind_get:
 
 wind_set:
 	link	fp,#-4
-	move.w	8(fp),int_in
-	move.w	10(fp),int_in+2
-	move.w	12(fp),int_in+4
-	move.w	14(fp),int_in+6
-	move.w	16(fp),int_in+8
-	move.w	18(fp),int_in+10
+	move.w	8(fp),_int_in
+	move.w	10(fp),_int_in+2
+	move.w	12(fp),_int_in+4
+	move.w	14(fp),_int_in+6
+	move.w	16(fp),_int_in+8
+	move.w	18(fp),_int_in+10
 	move.w	#105,(sp)
 	bsr  	_crys_if
 	unlk	fp
@@ -363,7 +320,7 @@ wind_set:
 
 wind_update:
 	link	fp,#-4
-	move.w	8(fp),int_in
+	move.w	8(fp),_int_in
 	move.w	#107,(sp)
 	bsr  	_crys_if
 	unlk	fp
@@ -374,12 +331,12 @@ wind_calc:
 	movem.l	d7/a4-a5,-(sp)
 	movea.l	12(fp),a5
 	movea.l	16(fp),a4
-	move.w	8(fp),int_in
-	move.w	10(fp),int_in+2
-	move.w	(a5)+,int_in+4
-	move.w	(a5)+,int_in+6
-	move.w	(a5)+,int_in+8
-	move.w	(a5),int_in+10
+	move.w	8(fp),_int_in
+	move.w	10(fp),_int_in+2
+	move.w	(a5)+,_int_in+4
+	move.w	(a5)+,_int_in+6
+	move.w	(a5)+,_int_in+8
+	move.w	(a5),_int_in+10
 	move.w	#108,(sp)
 	bsr  	_crys_if
 	move.w	_int_out+2,(a4)+
@@ -396,20 +353,6 @@ rsrc_load:
 	move.l	8(fp),_addr_in
 	move.w	#110,(sp)
 	bsr  	_crys_if
-	unlk	fp
-	rts
-
-	public _rsrc_gaddr
-_rsrc_gaddr:
-	link	fp,#-4
-	move.w	8(fp),int_in
-	move.w	10(fp),int_in+2
-	move.w	#112,(sp)
-	bsr  	_crys_if
-	movea.l	12(fp),a0
-	move.l	U101464,(a0)
-	clr.w	d0
-	move.w	_int_out,d0
 	unlk	fp
 	rts
 
@@ -7152,10 +7095,8 @@ init_vdi:
 .done:
 	muls	#96,d0
 	ext.l	d0
-	movea.l	d0,a0
-	adda.l	#turtle_table,a0
-	subq.l	#1,a0
-	move.l	a0,turtle_p
+	add.l	#turtle_table-1,d0
+	move.l	d0,turtle_p
 
 	unlk	fp
 	rts
@@ -11974,10 +11915,10 @@ L39630:
 .L40110:
 	cmpi.w	#19,8(fp)
 	bne.s	.L40126
-	move.l	U92218,d0
+	move.l	_banner_load_file,d0
 	bra.s	.L40132
 .L40126:
-	move.l	U92222,d0
+	move.l	_banner_save_file,d0
 .L40132:
 	move.l	d0,-4(fp)
 	move.l	-4(fp),(sp)
@@ -12007,10 +11948,10 @@ L39630:
 .L40216:
 	cmpi.w	#23,8(fp)
 	bne.s	.L40232
-	move.l	U92218,d0
+	move.l	_banner_load_file,d0
 	bra.s	.L40238
 .L40232:
-	move.l	U92222,d0
+	move.l	_banner_save_file,d0
 .L40238:
 	move.l	d0,-4(fp)
 	move.l	-4(fp),(sp)
@@ -12036,10 +11977,10 @@ L39630:
 .L40308:
 	cmpi.w	#21,8(fp)
 	bne.s	.L40324
-	move.l	U92214,d0
+	move.l	_banner_delete_file,d0
 	bra.s	.L40330
 .L40324:
-	move.l	U92218,d0
+	move.l	_banner_load_file,d0
 .L40330:
 	move.l	d0,-4(fp)
 	move.l	-4(fp),(sp)
@@ -14502,7 +14443,7 @@ L48742:
 	unlk	fp
 	rts
 
-init:
+init_gem:
 	link	fp,#-16
 	move.w	#16,(sp)	; mode
 	move.w	#11,-(sp)	; Kbshift
@@ -14564,16 +14505,6 @@ init:
 
 .L48982:
 	jsr	_dialog_init
-	; set up banners
-	move.w	#5,(sp)
-	jsr  	_rsrc_gaddr_tree
-	move.l	d0,U92214
-	move.w	#6,(sp)
-	jsr  	_rsrc_gaddr_tree
-	move.l	d0,U92218
-	move.w	#7,(sp)
-	jsr  	_rsrc_gaddr_tree
-	move.l	d0,U92222
 
 	move.l	#work_xywh,(sp)
 	bsr  	L42912
@@ -14660,7 +14591,7 @@ init:
 L49370:
 	link	fp,#-4
 	clr.w	(sp)
-	jsr  	_rsrc_gaddr_tree
+	jsr  	_get_rsrc_gaddr
 	move.l	d0,U92190
 	move.w	#1,(sp)
 	move.l	U92190,-(sp)
@@ -24327,7 +24258,7 @@ Mfree:
 L77854:
 	link	fp,#-2
 	movem.l	d7/a5,-(sp)
-	jsr	init
+	jsr	init_gem
 	move.w	#1,U99190
 	jsr	L47940
 	bsr  	alloc_mem
@@ -26661,7 +26592,8 @@ L84202:
 
 	data
 
-ctrl_cnts:
+	public _ctrl_cnts
+_ctrl_cnts:
 	dc.b	0,1,0,2,1,1,2,1
 	dc.b	1,0,1,1,2,1,1,1
 	dc.b	1,1,0,0,0,0,0,0
@@ -28440,12 +28372,6 @@ p_ptsout: ds.l 1
 
 U92190:
 	ds.b	8
-U92214:
-	ds.b	4
-U92218:
-	ds.b	4
-U92222:
-	ds.b	4
 
 draw_lock_flag: ds.w 1
 
@@ -28530,18 +28456,16 @@ U98674: ds.b 8
 
 U98682:
 	ds.b	4
-U98686:
-	ds.b	4
-U98690:
-	ds.b	4
-U98694:
-	ds.b	4
-U98698:
-	ds.b	4
-U98702:
-	ds.b	4
-U98706:
-	ds.b	4
+
+	public _aespb
+_aespb:
+cb_pcontrol: ds.l 1
+cb_pglobal:  ds.l 1
+cb_pintin:   ds.l 1
+cb_pintout:  ds.l 1
+cb_padrin:   ds.l 1
+cb_padrout:  ds.l 1
+
 U98710:
 	ds.b	2
 U98712:
@@ -28668,11 +28592,9 @@ U100562:
 
 U100564_y: ds.w	1
 
-ptsout:
-	ds.w	12
+ptsout: ds.w 12
 
-U100590:
-	ds.b	30
+_global: ds.b 30
 
 U100620: ds.w 2
 
@@ -28755,8 +28677,10 @@ U100900:
 U100904:
 	ds.b	2
 
-control: ds.w 4
-int_in:  ds.w 16
+	public _control
+_control: ds.w 4
+	public _int_in
+_int_in:  ds.w 16
 	public _int_out
 _int_out: ds.w 7
 
@@ -28797,8 +28721,6 @@ U100996:
 	ds.b	2
 U100998:
 	ds.b	2
-aespb:
-	ds.l	1
 U101004:
 	ds.b	2
 U101006:
@@ -28910,8 +28832,10 @@ U101460:
 	ds.b	2
 U101462:
 	ds.b	2
-U101464:
-	ds.b	4
+
+	public _addr_out
+_addr_out: ds.l 1
+
 U101468:
 	ds.b	2
 U101470:
