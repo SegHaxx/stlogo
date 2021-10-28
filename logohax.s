@@ -6007,7 +6007,7 @@ L19286:
 	move.l	U101030,-(sp)
 	jsr	Fopen
 	addq.l	#4,sp
-	move.w	d0,U101054
+	move.w	d0,_file_handle
 	cmp.w	#-1,d0
 	bgt.s	L19324
 	jsr	L67642
@@ -6021,7 +6021,7 @@ L19328:
 	move.l	U101030,-(sp)
 	jsr	Fcreate
 	addq.l	#4,sp
-	move.w	d0,U101054
+	move.w	d0,_file_handle
 	cmp.w	#-1,d0
 	bgt.s	L19366
 	jsr	L67118
@@ -6029,20 +6029,20 @@ L19366:
 	unlk	fp
 	rts
 
-L19370:
-	link	fp,#-4
-	move.w	U101054,(sp)
+_do_fclose:
+	move.w	_file_handle,-(sp)
 	jsr	Fclose
 	cmp.w	#-1,d0
-	bgt.s	.return
-	jsr	do_err_disk
+	ble.s	.err
 .return:
-	unlk	fp
+	addq	#2,sp
 	rts
+.err:
+	jmp	do_err_disk
 
 L19402:
 	link	fp,#-4
-	move.w	U101054,(sp)
+	move.w	_file_handle,(sp)
 	move.w	#1,-(sp)
 	move.l	fp,-(sp)
 	addi.l	#9,(sp)
@@ -6057,7 +6057,7 @@ L19444:
 
 L19448:
 	link	fp,#-6
-	move.w	U101054,(sp)
+	move.w	_file_handle,(sp)
 	move.w	#1,-(sp)
 	move.l	fp,-(sp)
 	subq.l	#2,(sp)
@@ -6159,7 +6159,7 @@ L19724:
 	move.l	U101030,-(sp)
 	jsr	Fopen
 	addq.l	#4,sp
-	move.w	d0,U101054
+	move.w	d0,_file_handle
 	cmp.w	#-1,d0
 	bgt.s	.L19782
 	bsr  	L19328
@@ -6185,7 +6185,7 @@ L19724:
 .L19856:
 	tst.w	U100998
 	beq.s	.L19812
-	bsr  	L19370
+	bsr  	_do_fclose
 	jsr	L56464
 	jsr	L56572
 	jsr	L69648
@@ -6204,11 +6204,11 @@ L19724:
 	movea.l	U101102,a0
 	tst.b	(a0)
 	bne.s	.L19908
-	bsr  	L19370
+	bsr  	_do_fclose
 	unlk	fp
 	rts
 
-L19948:
+_word_load:
 	link	fp,#-138
 	jsr	L48408
 	jsr	L62430
@@ -6222,7 +6222,7 @@ L19948:
 	addq.l	#4,sp
 	jsr	L61884
 	tst.w	d0
-	bne.s	L20056
+	bne.s	.L20056
 	jsr	L61500
 	move.w	U100984,(sp)
 	move.w	U100648,-(sp)
@@ -6232,17 +6232,16 @@ L19948:
 	move.w	d0,-(sp)
 	jsr	L66062
 	addq.l	#4,sp
-L20056:
+.L20056:
 	bsr  	L19594
 	jsr	L66768
 	move.w	#1,U101476
-	bra.s	L20082
-
-L20076:
+	bra.s	.L20082
+.L20076:
 	jsr	L37176
-L20082:
+.L20082:
 	tst.w	U101476
-	bne.s	L20076
+	bne.s	.L20076
 	jsr	L66800
 	jsr	L58082
 	jsr	L48444
@@ -6307,7 +6306,7 @@ L20172:
 	move.w	d0,-(sp)
 	jsr	L56676
 	addq.l	#2,sp
-	bsr  	L19370
+	bsr  	_do_fclose
 	jsr	L58068
 	jsr	L48444
 	move.w	-2(fp),U101044
@@ -6321,7 +6320,7 @@ L20414:
 	move.l	U101030,-(sp)
 	jsr	Fopen
 	addq.l	#4,sp
-	move.w	d0,U101054
+	move.w	d0,_file_handle
 	cmp.w	#-1,d0
 	bgt.s	L20450
 	clr.w	d0
@@ -6332,7 +6331,7 @@ L20450:
 L20452:
 	move.w	d0,-2(fp)
 	beq.s	L20462
-	bsr  	L19370
+	bsr  	_do_fclose
 L20462:
 	move.w	-2(fp),d0
 	unlk	fp
@@ -11062,38 +11061,35 @@ L37176:
 	move.l	#U100656,(sp)
 	jsr	_stack_save
 	tst.w	d0
-	beq.s	L37222
+	beq.s	.L37222
 	jsr	L2226
 	jsr	L60948
-	bra.s	L37308
-
-L37222:
+	bra.s	.return
+.L37222:
 	move.w	#63,(sp)
 	jsr	L50590
 	move.l	T87158,(sp)
 	jsr	L52220
 	tst.w	d0
-	beq.s	L37256
+	beq.s	.L37256
 	jsr	L54122
-	bra.s	L37308
-
-L37256:
+	bra.s	.return
+.L37256:
 	move.l	T87162,(sp)
 	jsr	L52220
 	tst.w	d0
-	beq.s	L37280
+	beq.s	.L37280
 	jsr	L49652
-	bra.s	L37308
-
-L37280:
+	bra.s	.return
+.L37280:
 	move.l	T87166,(sp)
 	jsr	L52220
 	tst.w	d0
-	bne.s	L37302
+	bne.s	.L37302
 	clr.w	U98712
-L37302:
+.L37302:
 	jsr	L58142
-L37308:
+.return:
 	unlk	fp
 	rts
 
@@ -15019,7 +15015,7 @@ L50590:
 	bne.s	.L50706
 	tst.w	U100998
 	beq.s	.L50684
-	jsr	L19370
+	jsr	_do_fclose
 	clr.w	U101476
 	tst.w	U99190
 	beq.s	.L50660
@@ -27345,7 +27341,7 @@ word_table:
 	dc.l	T90596
 	dc.l	L20880
 	dc.l	T90600
-	dc.l	L19948
+	dc.l	_word_load
 	dc.l	T90605
 	dc.l	L20118
 	dc.l	T90610
@@ -28686,8 +28682,8 @@ U101050:
 	ds.b	2
 U101052:
 	ds.b	2
-U101054:
-	ds.b	2
+
+_file_handle: ds.w 1
 
 	public _addr_in
 _addr_in:
