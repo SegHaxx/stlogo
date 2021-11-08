@@ -3,6 +3,8 @@
 ev_adrerr	equ	$c
 iv_M1_kb_midi	equ	$118
 
+	COMMENT HEAD=111 ; fastload
+
 	movea.l	4(sp),a0	; BASEPAGE
 
 	move.l	a0,d0
@@ -24,31 +26,6 @@ iv_M1_kb_midi	equ	$118
 	move.w	#74,-(sp)	; Mshrink
 	trap	#1		; Gemdos
 	jmp	L37058
-
-L146:
-	move.l	sp,d0
-	sub.l	#1000,d0
-	rts
-
-L156:
-	move.l	p_tbase,d0
-	rts
-
-L164:
-	move.l	U91922,d0
-	rts
-
-bios:
-	move.l	(sp)+,U91946
-	trap	#13		; Bios
-	move.l	U91946,-(sp)
-	rts
-
-xbios:
-	move.l	(sp)+,U91946
-	trap	#14		; Xbios
-	move.l	U91946,-(sp)
-	rts
 
 L204:
 	movea.l	4(sp),a0
@@ -95,126 +72,33 @@ L290:
 	addq.w	#6,sp
 	rts
 
-L332:
-	movea.l	U101194,a0
-	clr.l	d1
-	move.w	4(sp),d1
-	lsl.l	#2,d1
-	or.w	6(sp),d1
-	clr.w	d0
-	move.b	0(a0,d1.l),d0
-	rts
-
-L358:
-	movea.l	U101194,a0
-	clr.l	d0
-	move.w	4(sp),d0
-	lsl.l	#2,d0
-	move.w	0(a0,d0.l),d0
-	rts
-
-L378:
-	movea.l	U101194,a0
-	clr.l	d0
-	move.w	4(sp),d0
-	lsl.l	#2,d0
-	move.w	2(a0,d0.l),d0
-	rts
-
-L398:
-	movea.l	U101194,a0
-	clr.l	d0
-	move.w	4(sp),d0
-	lsl.l	#2,d0
-	move.l	0(a0,d0.l),d0
-	rts
-
-L418:
-	movea.l	U101194,a0
-	clr.l	d0
-	move.w	4(sp),d0
-	lsl.l	#2,d0
-	or.w	6(sp),d0
-	move.b	9(sp),0(a0,d0.l)
-	rts
-
-L444:
-	movea.l	U101194,a0
-	clr.l	d0
-	move.w	4(sp),d0
-	lsl.l	#2,d0
-	move.w	6(sp),0(a0,d0.l)
-	rts
-
-L466:
-	movea.l	U101194,a0
-	clr.l	d0
-	move.w	4(sp),d0
-	lsl.l	#2,d0
-	move.w	6(sp),2(a0,d0.l)
-	rts
-
-L488:
-	movea.l	U101194,a0
-	clr.l	d0
-	move.w	4(sp),d0
-	lsl.l	#2,d0
-	move.l	6(sp),0(a0,d0.l)
-	rts
-
-L510:
-	movea.l	U101194,a0
-	clr.l	d0
-	move.w	4(sp),d0
-	lsl.l	#2,d0
-	clr.l	d1
-	move.w	2(a0,d0.l),d1
-	add.l	p_tbase,d1
-	movea.l	d1,a0
-	jmp	(a0)
-
-aes:
-	move.l	4(sp),d1
-	move.w	#200,d0
-	trap	#2		; AES
-	rts
-
-L552:
-	move.l	(sp)+,U91946
-	trap	#1		; Gemdos
-	move.l	U91946,-(sp)
-	rts
+******* AES bindings
 
 crys_if:
-	link	fp,#-10
-	move.w	8(fp),control
-	move.w	8(fp),d0
-	add.w	#-10,d0
-	muls	#3,d0
-	ext.l	d0
-	add.l	#ctrl_cnts,d0
-	move.l	d0,-6(fp)
-	move.w	#1,-2(fp)
-	bra.s	.do
+	move.w	4(sp),d0
+	move.w	d0,control
 
-.loop:	movea.l	-6(fp),a0
-	move.b	(a0),d0
-	ext.w	d0
-	movea.w	-2(fp),a1
-	adda.l	a1,a1
-	adda.l	#control,a1
-	move.w	d0,(a1)
-	addq.l	#1,-6(fp)
-	addq.w	#1,-2(fp)
-.do:	cmpi.w	#4,-2(fp)
-	blt.s	.loop
-
-	move.l	aespb,(sp)
-	jsr	aes
+	sub.w	#10,d0
+	move.w	d0,d1
+	add.w	d0,d0
+	add.w	d1,d0
+	move.l	#ctrl_cnts,a0
+	add.w	d0,a0
 
 	clr.w	d0
+	move.l	#control+2,a1
+	move.b	(a0)+,d0
+	move.w	d0,(a1)+
+	move.b	(a0)+,d0
+	move.w	d0,(a1)+
+	move.b	(a0),d0
+	move.w	d0,(a1)
+
+	move.l	aespb,d1
+	move.w	#200,d0
+	trap	#2	; AES
+
 	move.w	int_out,d0
-	unlk	fp
 	rts
 
 appl_init:
@@ -263,9 +147,9 @@ evnt_multi:
 	move.w	#25,(sp)
 	bsr  	crys_if
 	movea.l	60(fp),a0
-	move.w	U100956,(a0)
+	move.w	int_out+10,(a0)
 	movea.l	64(fp),a0
-	move.w	U100958,(a0)
+	move.w	int_out+12,(a0)
 	clr.w	d0
 	move.w	int_out,d0
 	unlk	fp
@@ -309,23 +193,6 @@ menu_tnormal:
 	bsr  	crys_if
 	unlk	fp
 	rts
-
-	link	fp,#-4
-	move.l	8(fp),addr_in
-	move.w	12(fp),int_in
-	move.w	14(fp),int_in+2
-	move.w	#40,(sp)
-	bsr  	crys_if
-	unlk	fp
-	rts
-
-	link	fp,#-4
-	move.l	8(fp),addr_in
-	move.w	12(fp),int_in
-	move.w	#41,(sp)
-	bsr  	crys_if
- 	unlk	fp
- 	rts
 
 objc_draw:
 	link	fp,#-4
@@ -380,13 +247,13 @@ graf_handle:
 	move.w	#77,(sp)
 	bsr  	crys_if
 	movea.l	8(fp),a0
-	move.w	U100948,(a0)
+	move.w	int_out+2,(a0)
 	movea.l	12(fp),a0
-	move.w	U100950,(a0)
+	move.w	int_out+4,(a0)
 	movea.l	16(fp),a0
-	move.w	U100952,(a0)
+	move.w	int_out+6,(a0)
 	movea.l	20(fp),a0
-	move.w	U100954,(a0)
+	move.w	int_out+8,(a0)
 	clr.w	d0
 	move.w	int_out,d0
 	unlk	fp
@@ -406,27 +273,25 @@ graf_mkstate:
 	move.w	#79,(sp)
 	bsr  	crys_if
 	movea.l	8(fp),a0
-	move.w	U100948,(a0)
+	move.w	int_out+2,(a0)
 	movea.l	12(fp),a0
-	move.w	U100950,(a0)
+	move.w	int_out+4,(a0)
 	movea.l	16(fp),a0
-	move.w	U100952,(a0)
+	move.w	int_out+6,(a0)
 	movea.l	20(fp),a0
-	move.w	U100954,(a0)
+	move.w	int_out+8,(a0)
 	unlk	fp
 	rts
 
 fsel_input:
-	link	fp,#-4
-	move.l	8(fp),addr_in
-	move.l	12(fp),addr_in+4
-	move.w	#90,(sp)
+	move.l	4(sp),addr_in
+	move.l	8(sp),addr_in+4
+	move.w	#90,-(sp)
 	bsr  	crys_if
-	movea.l	16(fp),a0
-	move.w	U100948,(a0)
-	clr.w	d0
+	addq	#2,sp
+	movea.l	12(sp),a0
 	move.w	int_out,d0
-	unlk	fp
+	move.w	int_out+2,(a0)
 	rts
 
 wind_create:
@@ -461,13 +326,6 @@ wind_close:
 	unlk	fp
 	rts
 
-	link	fp,#-4
-	move.w	8(fp),int_in
-	move.w	#103,(sp)
-	bsr  	crys_if
-	unlk	fp
-	rts
-
 wind_get:
 	link	fp,#-4
 	move.w	8(fp),int_in
@@ -475,14 +333,13 @@ wind_get:
 	move.w	#104,(sp)
 	bsr  	crys_if
 	movea.l	12(fp),a0
-	move.w	U100948,(a0)
+	move.w	int_out+2,(a0)
 	movea.l	16(fp),a0
-	move.w	U100950,(a0)
+	move.w	int_out+4,(a0)
 	movea.l	20(fp),a0
-	move.w	U100952,(a0)
+	move.w	int_out+6,(a0)
 	movea.l	24(fp),a0
-	move.w	U100954,(a0)
-	clr.w	d0
+	move.w	int_out+8,(a0)
 	move.w	int_out,d0
 	unlk	fp
 	rts
@@ -521,10 +378,10 @@ wind_calc:
 	move.w	(a5),int_in+10
 	move.w	#108,(sp)
 	bsr  	crys_if
-	move.w	U100948,(a4)+
-	move.w	U100950,(a4)+
-	move.w	U100952,(a4)+
-	move.w	U100954,(a4)
+	move.w	int_out+2,(a4)+
+	move.w	int_out+4,(a4)+
+	move.w	int_out+6,(a4)+
+	move.w	int_out+8,(a4)
 	tst.l	(sp)+
 	movem.l	(sp)+,a4-a5
 	unlk	fp
@@ -551,6 +408,80 @@ rsrc_gaddr:
 	unlk	fp
 	rts
 
+******* AES end
+
+******* Nodes stuff?
+
+L332_2d:
+	clr.l	d2
+	movea.l	U101194,a0
+	move.w	d0,d2
+	lsl.l	#2,d2
+	or.w	d1,d2
+	clr.w	d0
+	move.b	0(a0,d2.l),d0
+	rts
+
+L358_1d:
+	clr.l	d1
+	movea.l	U101194,a0
+	move.w	d0,d1
+	lsl.l	#2,d1
+	move.w	0(a0,d1.l),d0
+	rts
+
+L378_1d:
+	clr.l	d1
+	movea.l	U101194,a0
+	move.w	d0,d1
+	lsl.l	#2,d1
+	move.w	2(a0,d1.l),d0
+	rts
+
+L66356_1d:
+	bsr.s	L378_1d
+	bra.s	L378_1d
+
+L398:
+	clr.l	d0
+	movea.l	U101194,a0
+	move.w	4(sp),d0
+	lsl.l	#2,d0
+	move.l	0(a0,d0.l),d0
+	rts
+
+L418:
+	clr.l	d0
+	movea.l	U101194,a0
+	move.w	4(sp),d0
+	lsl.l	#2,d0
+	or.w	6(sp),d0
+	move.b	9(sp),0(a0,d0.l)
+	rts
+
+L488:
+	clr.l	d0
+	movea.l	U101194,a0
+	move.w	4(sp),d0
+	lsl.l	#2,d0
+	move.l	6(sp),0(a0,d0.l)
+	rts
+
+L510:
+	clr.l	d0
+	movea.l	U101194,a0
+	move.w	4(sp),d0
+	lsl.l	#2,d0
+	clr.l	d1
+	move.w	2(a0,d0.l),d1
+	add.l	p_tbase,d1
+	movea.l	d1,a0
+	jmp	(a0)
+
+U101194: dc.l 0
+
+******* Nodes end
+
 L2120:
 	link	fp,#-4
 	jsr	L61904
@@ -559,8 +490,7 @@ L2120:
 	clr.w	d0
 	move.w	U99864,d0
 	move.w	d0,U100626
-	move.w	d0,(sp)
-	jsr	L358
+	jsr	L358_1d
 	move.w	d0,U100636
 	jsr	L60580
 	move.w	U101156,U101460
@@ -741,8 +671,8 @@ L2682:
 	jsr	L61904
 	tst.w	d0
 	bne.s	L2724
-	move.w	U99864,(sp)
-	jsr	L358
+	move.w	U99864,d0
+	jsr	L358_1d
 	move.w	d0,(sp)
 	jsr	L65322
 	tst.w	d0
@@ -788,13 +718,13 @@ L2808:
 
 L2812:
 	link	fp,#-4
-	move.l	T85052,-(sp)
+	move.l	#$E52EE246,-(sp)
 	jsr	L61476
 	move.l	d0,-(sp)
 	jsr	L79448
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81968
+	jsr	fp_mul
 	addq.l	#8,sp
 	move.l	d0,(sp)
 	jsr	L61950
@@ -873,9 +803,9 @@ L3042:
 
 L3058:
 	link	fp,#-4
-	move.l	T85048,-(sp)
+	clr.l	-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	bge.s	L3096
 	move.l	8(fp),-(sp)
@@ -896,18 +826,18 @@ L3104:
 	moveq	#1,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688
+	jsr	int_to_ffp
 	addq.l	#4,sp
 	move.l	d0,-(sp)
 	move.l	(a5),-(sp)
-	jsr	L81832
+	jsr	ffp_to_int
 	addq.l	#4,sp
 	move.w	d0,d7
 	move.l	(a5),-(sp)
 	move.w	d7,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688
+	jsr	int_to_ffp
 	addq.l	#4,sp
 	move.l	d0,-4(fp)
 	move.l	d0,-(sp)
@@ -917,7 +847,7 @@ L3104:
 	bsr.s	L3058
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	bge.s	L3198
 	move.l	-4(fp),d0
@@ -939,7 +869,7 @@ L3214:
 	subq.l	#4,(sp)
 	bsr  	L3104
 	move.l	d0,-(sp)
-	jsr	L81832
+	jsr	ffp_to_int
 	addq.l	#4,sp
 	move.w	d0,(sp)
 	bsr  	L4614
@@ -953,13 +883,13 @@ L3264:
 	movem.l	d7/a4-a5,-(sp)
 	movea.l	8(fp),a5
 	movea.l	12(fp),a4
-	move.l	T85048,-(sp)
+	clr.l	-(sp)
 	move.l	a4,-(sp)
 	bsr  	L3104
 	addq.l	#4,sp
 	move.l	d0,(a4)
 	move.l	d0,-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	bne.s	L3314
 	jsr	L67382
@@ -969,10 +899,10 @@ L3314:
 	move.l	d0,(a5)
 	move.l	(a4),-(sp)
 	move.l	(a5),-(sp)
-	jsr	L81572
+	jsr	fp_div
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	jsr	L81832
+	jsr	ffp_to_int
 	addq.l	#4,sp
 	tst.l	(sp)+
 	movem.l	(sp)+,a4-a5
@@ -993,7 +923,7 @@ L3354:
 	addq.l	#4,sp
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688
+	jsr	int_to_ffp
 	addq.l	#4,sp
 	move.l	d0,(sp)
 	jsr	L61950
@@ -1015,10 +945,10 @@ L3414:
 	addq.l	#8,sp
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688
+	jsr	int_to_ffp
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81968
+	jsr	fp_mul
 	addq.l	#8,sp
 	move.l	d0,-(sp)
 	move.l	-4(fp),-(sp)
@@ -1038,10 +968,10 @@ L3504:
 L3520:
 	link	fp,#-4
 	jsr	L61340
-	move.l	T85048,-(sp)
+	clr.l	-(sp)
 	jsr	L62206
 	move.l	d0,-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	bge.s	L3562
 	move.l	#-2147483456,-(sp)
@@ -1052,7 +982,7 @@ L3562:
 L3568:
 	jsr	L62206
 	move.l	d0,-(sp)
-	jsr	L81510
+	jsr	fp_add
 	addq.l	#8,sp
 	move.l	d0,(sp)
 	bsr.s	L3592
@@ -1106,7 +1036,7 @@ L3702:
 	jsr	L65532
 	addq.l	#2,sp
 	move.l	d0,-(sp)
-	jsr	L81510
+	jsr	fp_add
 	addq.l	#8,sp
 	move.l	d0,(sp)
 	jsr	L61950
@@ -1141,7 +1071,7 @@ L3802:
 	jsr	L65532
 	addq.l	#2,sp
 	move.l	d0,-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	ble.s	L3854
 	clr.w	(sp)
@@ -1197,7 +1127,7 @@ L3934:
 	jsr	L65532
 	addq.l	#2,sp
 	move.l	d0,-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	bge.s	L3986
 	clr.w	(sp)
@@ -1242,7 +1172,7 @@ L4036:
 	jsr	L65532
 	addq.l	#2,sp
 	move.l	d0,-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	blt.s	L4088
 	clr.w	d0
@@ -1278,7 +1208,7 @@ L4110:
 	jsr	L65532
 	addq.l	#2,sp
 	move.l	d0,-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	bgt.s	L4162
 	clr.w	(sp)
@@ -1305,10 +1235,10 @@ L4184:
 
 L4194:
 	link	fp,#-4
-	move.l	T85048,-(sp)
+	clr.l	-(sp)
 	jsr	L62206
 	move.l	d0,-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	bne.s	L4228
 	jsr	L67382
@@ -1320,7 +1250,7 @@ L4228:
 	jsr	L65532
 	addq.l	#2,sp
 	move.l	d0,-(sp)
-	jsr	L81572
+	jsr	fp_div
 	addq.l	#8,sp
 	move.l	d0,(sp)
 	jsr	L61950
@@ -1336,7 +1266,7 @@ L4274:
 	jsr	L65532
 	addq.l	#2,sp
 	move.l	d0,-(sp)
-	jsr	L81968
+	jsr	fp_mul
 	addq.l	#8,sp
 	move.l	d0,(sp)
 	jsr	L61950
@@ -1351,49 +1281,37 @@ L4324:
 	rts
 
 L4342:
-	link	fp,#-4
 	bsr.s	L4422
 	bsr  	L3802
-	unlk	fp
 	rts
 
 L4356:
-	link	fp,#-4
 	jsr	L61572
 	jsr	L61190
 	bsr  	L3886
-	unlk	fp
 	rts
 
 L4380:
-	link	fp,#-4
 	bsr.s	L4422
 	bsr  	L3934
-	unlk	fp
 	rts
 
 L4394:
-	link	fp,#-4
 	bsr.s	L4422
 	bsr  	L4018
-	unlk	fp
 	rts
 
 L4408:
-	link	fp,#-4
 	bsr.s	L4422
 	bsr  	L4110
-	unlk	fp
 	rts
 
 L4422:
-	link	fp,#-4
 	jsr	L61572
 	jsr	L62398
 	jsr	L61572
 	jsr	L62398
 	jsr	L64764
-	unlk	fp
 	rts
 
 L4460:
@@ -1457,148 +1375,140 @@ L4614:
 	move.w	d0,U100646
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688
+	jsr	int_to_ffp
 	addq.l	#4,sp
 	move.l	d0,-(sp)
 	moveq	#2,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688
+	jsr	int_to_ffp
 	addq.l	#4,sp
 	move.l	d0,-(sp)
 	move.w	8(fp),d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688
+	jsr	int_to_ffp
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81968
+	jsr	fp_mul
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	jsr	L81968
+	jsr	fp_mul
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	jsr	L81572
+	jsr	fp_div
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	jsr	L81832
+	jsr	ffp_to_int
 	addq.l	#4,sp
 	unlk	fp
 	rts
 
-L4734:
+word_shuffle:
 	link	fp,#-4
 	jsr	L61312
 	move.w	U101046,(sp)
-	bsr.s	L4762
+	bsr.s	do_shuffle
 	jsr	L64764
 	unlk	fp
 	rts
 
-L4762:
+do_shuffle:
 	link	fp,#0
-	movem.l	d3-d7,-(sp)
+	movem.l	d4-d7,-(sp)
 	move.w	8(fp),d7
 	tst.w	d7
-	bne.s	L4790
+	bne.s	.L4790
 	jsr	L64732
 	moveq	#1,d0
-	bra  	L4914
-
-L4790:
+	bra  	.L4914
+.L4790:
 	jsr	L74764
-	move.w	d7,(sp)
-	jsr	L378
+	move.w	d7,d0
+	jsr	L378_1d
 	move.w	d0,(sp)
-	bsr.s	L4762
+	bsr.s	do_shuffle
 	move.w	d0,d4
 	move.w	d4,(sp)
 	bsr  	L4614
 	move.w	d0,d5
-	move.w	d7,(sp)
-	jsr	L358
+	move.w	d7,d0
+	jsr	L358_1d
 	move.w	d0,d7
 	jsr	L64160
 	move.w	d0,d6
 	tst.w	d5
-	bne.s	L4862
+	bne.s	.L4862
 	move.w	d6,(sp)
 	move.w	d7,-(sp)
 	jsr	L65496
 	addq.l	#2,sp
 	move.w	d0,(sp)
 	jsr	L64276
-	bra.s	L4910
-
-L4862:
-	bra.s	L4874
-
-L4864:
-	move.w	d6,(sp)
-	jsr	L378
+	bra.s	.L4910
+.L4862:
+	bra.s	.L4874
+.L4864:
+	move.w	d6,d0
+	jsr	L378_1d
 	move.w	d0,d6
-L4874:
+.L4874:
 	subq.w	#1,d5
-	bne.s	L4864
-	move.w	d6,(sp)
-	jsr	L378
+	bne.s	.L4864
+	move.w	d6,d0
+	jsr	L378_1d
 	move.w	d0,(sp)
 	move.w	d7,-(sp)
 	jsr	L65496
 	addq.l	#2,sp
-	move.w	d0,(sp)
-	move.w	d6,-(sp)
-	jsr	L65226
-	addq.l	#2,sp
-L4910:
+	move.w	d0,d1
+	move.w	d6,d0
+	jsr	L65226_2d
+.L4910:
 	move.w	d4,d0
 	addq.w	#1,d0
-L4914:
-	tst.l	(sp)+
+.L4914:
 	movem.l	(sp)+,d4-d7
 	unlk	fp
 	rts
 
-L4924:
-	link	fp,#0
-	movem.l	d5-d7,-(sp)
+word_sort:
+	movem.l	d6-d7,-(sp)
+	subq	#2,sp
 	jsr	L61312
 	tst.w	U101046
-	beq  	L5262
+	beq  	.L5262
 	jsr	L64746
 	jsr	L64732
 	move.w	U101046,d6
-	bra  	L5244
-
-L4970:
+	bra  	.L5244
+.L4970:
 	jsr	L75596
-	move.w	d6,(sp)
-	jsr	L358
+	move.w	d6,d0
+	jsr	L358_1d
 	move.w	d0,U101046
 	move.w	d0,(sp)
 	jsr	L65322
 	tst.w	d0
-	bne.s	L5008
+	bne.s	.L5008
 	jsr	L67118
-L5008:
+.L5008:
 	jsr	L64160
 	tst.w	d0
-	bne.s	L5042
+	bne.s	.L5042
 	move.w	U101046,(sp)
 	jsr	L65694
 	move.w	d0,(sp)
 	jsr	L64276
-	bra  	L5234
-
-L5042:
+	bra  	.L5234
+.L5042:
 	jsr	L64160
-	move.w	d0,(sp)
-	jsr	L358
+	jsr	L358_1d
 	move.w	d0,(sp)
 	jsr	L64090
 	bsr  	L4036
 	tst.w	d0
-	bne.s	L5106
+	bne.s	.L5106
 	jsr	L64160
 	move.w	d0,(sp)
 	move.w	U101046,-(sp)
@@ -1606,65 +1516,57 @@ L5042:
 	addq.l	#2,sp
 	move.w	d0,(sp)
 	jsr	L64276
-	bra  	L5234
-
-L5106:
+	bra  	.L5234
+.L5106:
 	jsr	L64160
 	move.w	d0,d7
-L5114:
-	move.w	d7,(sp)
-	jsr	L378
+.L5114:
+	move.w	d7,d0
+	jsr	L378_1d
 	tst.w	d0
-	bne.s	L5152
+	bne.s	.L5152
 	move.w	U101046,(sp)
 	jsr	L65694
-	move.w	d0,(sp)
-	move.w	d7,-(sp)
-	jsr	L65226
-	addq.l	#2,sp
-	bra.s	L5234
-
-L5152:
-	move.w	d7,(sp)
-	jsr	L378
-	move.w	d0,(sp)
-	jsr	L358
+	move.w	d0,d1
+	move.w	d7,d0
+	jsr	L65226_2d
+	bra.s	.L5234
+.L5152:
+	move.w	d7,d0
+	jsr	L378_1d
+	jsr	L358_1d
 	move.w	d0,(sp)
 	jsr	L64090
 	bsr  	L4036
 	tst.w	d0
-	bne.s	L5222
-	move.w	d7,(sp)
-	jsr	L378
+	bne.s	.L5222
+	move.w	d7,d0
+	jsr	L378_1d
 	move.w	d0,(sp)
 	move.w	U101046,-(sp)
 	jsr	L65496
 	addq.l	#2,sp
-	move.w	d0,(sp)
-	move.w	d7,-(sp)
-	jsr	L65226
-	addq.l	#2,sp
-	bra.s	L5234
-
-L5222:
-	move.w	d7,(sp)
-	jsr	L378
+	move.w	d0,d1
+	move.w	d7,d0
+	jsr	L65226_2d
+	bra.s	.L5234
+.L5222:
+	move.w	d7,d0
+	jsr	L378_1d
 	move.w	d0,d7
-	bra.s	L5114
-
-L5234:
-	move.w	d6,(sp)
-	jsr	L378
+	bra.s	.L5114
+.L5234:
+	move.w	d6,d0
+	jsr	L378_1d
 	move.w	d0,d6
-L5244:
+.L5244:
 	tst.w	d6
-	bne  	L4970
+	bne  	.L4970
 	jsr	L64764
 	jsr	L64180
-L5262:
-	tst.l	(sp)+
+.L5262:
+	addq	#2,sp
 	movem.l	(sp)+,d6-d7
-	unlk	fp
 	rts
 
 L5272:
@@ -1705,10 +1607,10 @@ L5354:
 
 L5382:
 	link	fp,#-4
-	move.l	T85052,-(sp)
+	move.l	#$E52EE246,-(sp)
 	jsr	L61476
 	move.l	d0,-(sp)
-	jsr	L81968
+	jsr	fp_mul
 	addq.l	#8,sp
 	move.l	d0,(sp)
 	jsr	L61950
@@ -1717,10 +1619,10 @@ L5382:
 
 L5420:
 	link	fp,#-4
-	move.l	T85052,-(sp)
+	move.l	#$E52EE246,-(sp)
 	jsr	L61476
 	move.l	d0,-(sp)
-	jsr	L81572
+	jsr	fp_div
 	addq.l	#8,sp
 	move.l	d0,(sp)
 	jsr	L61950
@@ -1729,14 +1631,14 @@ L5420:
 
 L5458:
 	link	fp,#-4
-	move.l	T85052,-(sp)
+	move.l	#$E52EE246,-(sp)
 	move.w	#180,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688
+	jsr	int_to_ffp
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81572
+	jsr	fp_div
 	addq.l	#8,sp
 	move.l	d0,(sp)
 	jsr	L61950
@@ -1745,14 +1647,14 @@ L5458:
 
 L5506:
 	link	fp,#-8
-	move.l	T85048,-(sp)
+	clr.l	-(sp)
 	jsr	L61476
 	move.l	d0,-(sp)
 	jsr	L37032
 	addq.l	#4,sp
 	move.l	d0,-4(fp)
 	move.l	d0,-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	bne.s	L5554
 	jsr	L67118
@@ -1763,7 +1665,7 @@ L5554:
 	jsr	L37006
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81572
+	jsr	fp_div
 	addq.l	#8,sp
 	move.l	d0,(sp)
 	jsr	L61950
@@ -1772,10 +1674,10 @@ L5554:
 
 L5596:
 	link	fp,#-4
-	move.l	T85048,-(sp)
+	clr.l	-(sp)
 	jsr	L61476
 	move.l	d0,-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	bge.s	L5630
 	jsr	L67118
@@ -1792,7 +1694,7 @@ L5656:
 	link	fp,#-4
 	jsr	L61476
 	move.l	d0,(sp)
-	jsr	L81632
+	jsr	fp_exp
 	move.l	d0,(sp)
 	jsr	L61950
 	unlk	fp
@@ -1800,17 +1702,17 @@ L5656:
 
 L5686:
 	link	fp,#-4
-	move.l	T85048,-(sp)
+	clr.l	-(sp)
 	jsr	L61476
 	move.l	d0,-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	bgt.s	L5720
 	jsr	L67118
 L5720:
 	jsr	L62206
 	move.l	d0,(sp)
-	jsr	L81660
+	jsr	fp_log
 	move.l	d0,(sp)
 	jsr	L61950
 	unlk	fp
@@ -1818,23 +1720,23 @@ L5720:
 
 L5746:
 	link	fp,#-4
-	move.l	T85048,-(sp)
+	clr.l	-(sp)
 	jsr	L61476
 	move.l	d0,-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	bgt.s	L5780
 	jsr	L67118
 L5780:
 	move.l	#-1610612668,(sp)
-	jsr	L81660
+	jsr	fp_log
 	move.l	d0,-(sp)
 	jsr	L62206
 	move.l	d0,-(sp)
-	jsr	L81660
+	jsr	fp_log
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81572
+	jsr	fp_div
 	addq.l	#8,sp
 	move.l	d0,(sp)
 	jsr	L61950
@@ -1850,13 +1752,13 @@ L5832:
 
 L5850:
 	link	fp,#-4
-	move.l	T85048,-(sp)
+	clr.l	-(sp)
 	jsr	L64160
 	move.w	d0,-(sp)
 	jsr	L65532
 	addq.l	#2,sp
 	move.l	d0,-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	bgt.s	L5920
 	jsr	L64224
@@ -1875,13 +1777,13 @@ L5920:
 	jsr	L65532
 	addq.l	#2,sp
 	move.l	d0,-(sp)
-	jsr	L81660
+	jsr	fp_log
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81968
+	jsr	fp_mul
 	addq.l	#8,sp
 	move.l	d0,(sp)
-	jsr	L81632
+	jsr	fp_exp
 	move.l	d0,(sp)
 	jsr	L61950
 	unlk	fp
@@ -1905,8 +1807,8 @@ L6020:
 	bne.s	L6030
 	jsr	L67474
 L6030:
-	move.w	d6,(sp)
-	jsr	L378
+	move.w	d6,d0
+	jsr	L378_1d
 	move.w	d0,d6
 L6040:
 	cmp.w	#1,d7
@@ -1930,8 +1832,8 @@ L6066:
 
 L6082:
 	addq.w	#1,d6
-	move.w	d7,(sp)
-	jsr	L378
+	move.w	d7,d0
+	jsr	L378_1d
 	move.w	d0,d7
 L6094:
 	tst.w	d7
@@ -1943,108 +1845,98 @@ L6094:
 	rts
 
 L6110:
-	link	fp,#0
-	movem.l	d3-d7,-(sp)
-	move.w	8(fp),d7
-	move.w	10(fp),d6
+	movem.l	d4-d7,-(sp)
+	move.w	20(sp),d7
+	move.w	22(sp),d6
 	tst.w	d7
-	bne.s	L6132
+	bne.s	.L6132
 	moveq	#-1,d7
-L6132:
-	move.w	d6,(sp)
+.L6132:
+	move.w	d6,-(sp)
 	jsr	L64090
 	clr.w	d0
 	move.w	d0,U101046
 	move.w	d0,d5
-	bra.s	L6224
-
-L6152:
+	bra.s	.L6224
+.L6152:
 	tst.w	d5
-	bne.s	L6182
-	move.w	d6,(sp)
-	jsr	L358
+	bne.s	.L6182
+	move.w	d6,d0
+	jsr	L358_1d
 	move.w	d0,(sp)
 	jsr	L65694
 	move.w	d0,d5
 	move.w	d5,U101046
-	bra.s	L6214
-
-L6182:
-	move.w	d6,(sp)
-	jsr	L358
+	bra.s	.L6214
+.L6182:
+	move.w	d6,d0
+	jsr	L358_1d
 	move.w	d0,(sp)
 	jsr	L65694
 	move.w	d0,d4
-	move.w	d4,(sp)
-	move.w	d5,-(sp)
-	jsr	L65226
-	addq.l	#2,sp
+	move.w	d4,d1
+	move.w	d5,d0
+	jsr	L65226_2d
 	move.w	d4,d5
-L6214:
-	move.w	d6,(sp)
-	jsr	L378
+.L6214:
+	move.w	d6,d0
+	jsr	L378_1d
 	move.w	d0,d6
-L6224:
+.L6224:
 	move.w	d7,d0
 	subq.w	#1,d7
 	tst.w	d0
-	beq.s	L6236
+	beq.s	.L6236
 	tst.w	d6
-	bne.s	L6152
-L6236:
+	bne.s	.L6152
+.L6236:
 	jsr	L64180
 	clr.w	d0
 	move.w	d5,d0
-	tst.l	(sp)+
+	addq	#2,sp
 	movem.l	(sp)+,d4-d7
-	unlk	fp
 	rts
 
 L6256:
-	link	fp,#0
-	movem.l	d3-d7,-(sp)
-	move.w	8(fp),d7
-	move.w	10(fp),d6
-	move.w	12(fp),d5
+	movem.l	d4-d7,-(sp)
+	move.w	20(sp),d7
+	move.w	22(sp),d6
+	move.w	24(sp),d5
 	tst.w	d7
-	bne.s	L6282
-	moveq	#-1,d7
-L6282:
-	move.w	d6,(sp)
+	bne.s	.L6282
+	subq	#1,d7
+.L6282:
+	move.w	d6,-(sp)
 	jsr	L64090
-	bra.s	L6334
-
-L6292:
-	move.w	d6,(sp)
-	jsr	L358
+	bra.s	.L6334
+.L6292:
+	move.w	d6,d0
+	jsr	L358_1d
 	move.w	d0,(sp)
 	jsr	L65694
 	move.w	d0,d4
-	move.w	d4,(sp)
-	move.w	d5,-(sp)
-	jsr	L65226
-	addq.l	#2,sp
+	move.w	d4,d1
+	move.w	d5,d0
+	jsr	L65226_2d
 	move.w	d4,d5
-	move.w	d6,(sp)
-	jsr	L378
+	move.w	d6,d0
+	jsr	L378_1d
 	move.w	d0,d6
-L6334:
+.L6334:
 	move.w	d7,d0
 	subq.w	#1,d7
 	tst.w	d0
-	beq.s	L6346
+	beq.s	.L6346
 	tst.w	d6
-	bne.s	L6292
-L6346:
+	bne.s	.L6292
+.L6346:
 	jsr	L64180
-	clr.w	d0
 	move.w	d5,d0
-	tst.l	(sp)+
+	addq	#2,sp
 	movem.l	(sp)+,d4-d7
-	unlk	fp
 	rts
 
-L6366:
+word_ascii:
 	link	fp,#-4
 	jsr	L61500
 	bsr  	L9296
@@ -2055,22 +1947,21 @@ L6366:
 	unlk	fp
 	rts
 
-L6400:
+word_butfirst:
 	link	fp,#-4
 	jsr	L61294
 	move.w	d0,(sp)
 	jsr	L65266
 	tst.w	d0
-	beq.s	L6432
+	beq.s	.L6432
 	move.w	#1,(sp)
 	bsr  	L9114
-	bra.s	L6450
-
-L6432:
-	move.w	U101046,(sp)
-	jsr	L378
+	bra.s	.L6450
+.L6432:
+	move.w	U101046,d0
+	jsr	L378_1d
 	move.w	d0,U101046
-L6450:
+.L6450:
 	unlk	fp
 	rts
 
@@ -2082,7 +1973,7 @@ L6454:
 	move.l	a0,-(sp)
 	jsr	L62206
 	move.l	d0,-(sp)
-	jsr	L81832
+	jsr	ffp_to_int
 	addq.l	#4,sp
 	ext.w	d0
 	movea.l	(sp)+,a0
@@ -2152,7 +2043,7 @@ L6590:
 	jsr	L65532
 	addq.l	#2,sp
 	move.l	d0,-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	beq.s	L6696
 	clr.w	d0
@@ -2208,23 +2099,21 @@ L6766:
 	jsr	L65266
 	tst.w	d0
 	bne.s	L6846
-	move.w	d6,(sp)
-	jsr	L358
+	move.w	d6,d0
+	jsr	L358_1d
 	move.w	d0,(sp)
-	move.w	d5,-(sp)
-	jsr	L358
-	addq.l	#2,sp
+	move.w	d5,d0
+	jsr	L358_1d
 	move.w	d0,-(sp)
 	bsr  	L6590
 	addq.l	#2,sp
 	tst.w	d0
 	beq.s	L6846
-	move.w	d6,(sp)
-	jsr	L378
+	move.w	d6,d0
+	jsr	L378_1d
 	move.w	d0,(sp)
-	move.w	d7,-(sp)
-	jsr	L378
-	addq.l	#2,sp
+	move.w	d7,d0
+	jsr	L378_1d
 	move.w	d0,-(sp)
 	bsr  	L6590
 	addq.l	#2,sp
@@ -2245,72 +2134,65 @@ L6858:
 	move.w	d7,(sp)
 	jsr	L65356
 	tst.w	d0
-	beq.s	L6886
+	beq.s	.L6886
 	clr.w	d0
-	bra.s	L6936
-
-L6886:
+	bra.s	.return
+.L6886:
 	move.w	d7,(sp)
 	jsr	L65322
 	tst.w	d0
-	beq.s	L6926
+	beq.s	.L6926
 	move.w	U101046,(sp)
 	bsr  	L9214
 	movea.l	U101030,a0
 	tst.b	(a0)
-	beq.s	L6922
+	beq.s	.L6922
 	clr.w	d0
-	bra.s	L6924
-
-L6922:
+	bra.s	.L6924
+.L6922:
 	moveq	#1,d0
-L6924:
-	bra.s	L6936
-
-L6926:
+.L6924:
+	bra.s	.return
+.L6926:
 	tst.w	d7
-	beq.s	L6934
+	beq.s	.L6934
 	clr.w	d0
-	bra.s	L6936
-
-L6934:
+	bra.s	.return
+.L6934:
 	moveq	#1,d0
-L6936:
+.return:
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
 	unlk	fp
 	rts
 
-L6946:
-	link	fp,#-4
+word_emptyp:
 	jsr	L61294
-	move.w	d0,(sp)
+	move.w	d0,-(sp)
 	bsr.s	L6858
 	move.w	d0,(sp)
 	jsr	L60886
-	unlk	fp
+	addq	#2,sp
 	rts
 
-L6972:
+word_butlast:
 	link	fp,#-4
 	jsr	L61294
 	move.w	d0,(sp)
 	jsr	L65266
 	tst.w	d0
-	beq.s	L7002
+	beq.s	.L7002
 	clr.w	(sp)
 	bsr  	L9114
-	bra.s	L7054
-
-L7002:
-	move.w	U101046,(sp)
-	jsr	L378
+	bra.s	.L7054
+.L7002:
+	move.w	U101046,d0
+	jsr	L378_1d
 	tst.w	d0
-	bne.s	L7026
+	bne.s	.L7026
 	clr.w	U101046
-	bra.s	L7054
-
-L7026:
+	bra.s	.L7054
+.L7026:
 	move.w	U101046,(sp)
 	move.w	U101046,-(sp)
 	bsr  	L6066
@@ -2319,7 +2201,7 @@ L7026:
 	subq.w	#1,(sp)
 	bsr  	L6110
 	addq.l	#2,sp
-L7054:
+.L7054:
 	unlk	fp
 	rts
 
@@ -2331,7 +2213,7 @@ L7058:
 	unlk	fp
 	rts
 
-L7084:
+word_first:
 	link	fp,#-4
 	jsr	L61550
 	move.w	U101046,(sp)
@@ -2343,8 +2225,8 @@ L7084:
 	bra.s	L7140
 
 L7122:
-	move.w	U101046,(sp)
-	jsr	L358
+	move.w	U101046,d0
+	jsr	L358_1d
 	move.w	d0,U101046
 L7140:
 	unlk	fp
@@ -2451,15 +2333,13 @@ L7468:
 	unlk	fp
 	rts
 
-L7472:
-	link	fp,#-4
-	move.w	#2,(sp)
+word_list:
+	move.w	#2,-(sp)
 	jsr	L61064
 	move.w	d0,(sp)
 	bsr  	L8638
-	jsr	L64764
-	unlk	fp
-	rts
+	addq	#2,sp
+	jmp	L64764
 
 L7502:
 	link	fp,#-4
@@ -2478,15 +2358,14 @@ L7532:
 	unlk	fp
 	rts
 
-L7542:
-	link	fp,#0
-	movem.l	d6-d7,-(sp)
+word_lput:
+	move.l	d7,-(sp)
 	jsr	L61572
 	jsr	L61294
-	move.w	d0,(sp)
+	move.w	d0,-(sp)
 	jsr	L65322
 	tst.w	d0
-	beq.s	L7622
+	beq.s	.L7622
 	jsr	L62398
 	bsr  	L9350
 	move.w	U101046,(sp)
@@ -2496,11 +2375,10 @@ L7542:
 	jsr	L55092
 	bsr  	L9388
 	jsr	L61992
-	bra.s	L7696
-
-L7622:
+	bra.s	.return
+.L7622:
 	tst.w	U101046
-	beq.s	L7676
+	beq.s	.L7676
 	move.w	U101046,(sp)
 	clr.w	-(sp)
 	bsr  	L6110
@@ -2514,48 +2392,42 @@ L7622:
 	move.w	#1,-(sp)
 	bsr  	L6256
 	addq.l	#4,sp
-	bra.s	L7696
-
-L7676:
+	bra.s	.return
+.L7676:
 	jsr	L64224
 	move.w	d0,(sp)
 	jsr	L65694
 	move.w	d0,U101046
-L7696:
-	tst.l	(sp)+
-	movem.l	(sp)+,d7
-	unlk	fp
+.return:
+	addq	#2,sp
+	move.l	(sp)+,d7
 	rts
 
-L7706:
-	link	fp,#0
-	movem.l	d5-d7,-(sp)
+word_replace:
+	movem.l	d6-d7,-(sp)
 	bsr  	L8924
 	move.w	d0,d7
 	jsr	L61294
-	move.w	d0,(sp)
+	move.w	d0,-(sp)
 	move.w	d7,-(sp)
 	bsr  	L5984
 	addq.l	#2,sp
 	move.w	d0,d6
 	jsr	L61294
-	move.w	d0,(sp)
-	move.w	d6,-(sp)
-	jsr	L65186
-	addq.l	#2,sp
+	move.w	d0,d1
+	move.w	d6,d0
+	jsr	L65186_2d
 	jsr	L61834
-	tst.l	(sp)+
+	addq	#2,sp
 	movem.l	(sp)+,d6-d7
-	unlk	fp
 	rts
 
-L7772:
-	link	fp,#0
-	movem.l	d4-d7,-(sp)
+word_reptail:
+	movem.l	d5-d7,-(sp)
 	bsr  	L8924
 	move.w	d0,d5
 	jsr	L61294
-	move.w	d0,(sp)
+	move.w	d0,-(sp)
 	move.w	d5,-(sp)
 	bsr  	L5984
 	addq.l	#2,sp
@@ -2565,19 +2437,17 @@ L7772:
 	move.w	d6,(sp)
 	jsr	L65322
 	tst.w	d0
-	beq.s	L7834
+	beq.s	.L7834
 	move.w	d6,(sp)
 	jsr	L65694
 	move.w	d0,d6
-L7834:
-	move.w	d6,(sp)
-	move.w	d7,-(sp)
-	jsr	L65226
-	addq.l	#2,sp
+.L7834:
+	move.w	d6,d1
+	move.w	d7,d0
+	jsr	L65226_2d
 	jsr	L61834
-	tst.l	(sp)+
+	addq	#2,sp
 	movem.l	(sp)+,d5-d7
-	unlk	fp
 	rts
 
 L7862:
@@ -2666,8 +2536,8 @@ L8088:
 	bra.s	L8168
 
 L8114:
-	move.w	U101046,(sp)
-	jsr	L358
+	move.w	U101046,d0
+	jsr	L358_1d
 	move.w	d0,(sp)
 	move.w	d7,-(sp)
 	bsr  	L6590
@@ -2678,8 +2548,8 @@ L8114:
 	bra.s	L8184
 
 L8144:
-	move.w	U101046,(sp)
-	jsr	L378
+	move.w	U101046,d0
+	jsr	L378_1d
 	move.w	d0,U101046
 	addq.w	#1,U101106
 L8168:
@@ -2714,35 +2584,33 @@ L8244:
 	unlk	fp
 	rts
 
-L8254:
+word_sentence:
 	link	fp,#-2
-	movem.l	d5-d7,-(sp)
+	movem.l	d6-d7,-(sp)
 	move.w	#2,(sp)
 	jsr	L61064
 	move.w	d0,-2(fp)
 	clr.w	(sp)
 	jsr	L64090
-	bra  	L8446
-
-L8288:
+	bra  	.L8446
+.L8288:
 	jsr	L61190
 	jsr	L64160
 	tst.w	d0
-	bne.s	L8382
+	bne.s	.L8382
 	tst.w	U101046
-	beq.s	L8380
+	beq.s	.L8380
 	move.w	U101046,(sp)
 	jsr	L65322
 	tst.w	d0
-	beq.s	L8352
+	beq.s	.L8352
 	move.w	U101046,(sp)
 	jsr	L65694
 	move.w	d0,d7
 	move.w	d7,(sp)
 	jsr	L64276
-	bra.s	L8380
-
-L8352:
+	bra.s	.L8380
+.L8352:
 	move.w	U101046,(sp)
 	clr.w	-(sp)
 	bsr  	L6110
@@ -2750,39 +2618,35 @@ L8352:
 	move.w	d0,d7
 	move.w	U101046,(sp)
 	jsr	L64276
-L8380:
-	bra.s	L8446
-
-L8382:
+.L8380:
+	bra.s	.L8446
+.L8382:
 	move.w	U101046,(sp)
 	jsr	L65322
 	tst.w	d0
-	beq.s	L8428
+	beq.s	.L8428
 	move.w	U101046,(sp)
 	jsr	L65694
 	move.w	d0,d6
-	move.w	d6,(sp)
-	move.w	d7,-(sp)
-	jsr	L65226
-	addq.l	#2,sp
+	move.w	d6,d1
+	move.w	d7,d0
+	jsr	L65226_2d
 	move.w	d6,d7
-	bra.s	L8446
-
-L8428:
+	bra.s	.L8446
+.L8428:
 	move.w	d7,(sp)
 	move.w	U101046,-(sp)
 	clr.w	-(sp)
 	bsr  	L6256
 	addq.l	#4,sp
 	move.w	d0,d7
-L8446:
+.L8446:
 	move.w	-2(fp),(sp)
 	jsr	L61098
 	subq.w	#1,-2(fp)
 	tst.w	d0
-	beq  	L8288
+	beq  	.L8288
 	jsr	L64764
-	tst.l	(sp)+
 	movem.l	(sp)+,d6-d7
 	unlk	fp
 	rts
@@ -2810,25 +2674,24 @@ L8512:
 	bra.s	L8614
 
 L8548:
-	move.w	d7,(sp)
-	jsr	L358
+	move.w	d7,d0
+	jsr	L358_1d
 	move.w	d0,d6
 	move.w	d6,(sp)
 	jsr	L65322
 	tst.w	d0
 	bne.s	L8596
 	move.w	d6,(sp)
-	move.w	U101460,-(sp)
-	jsr	L358
-	addq.l	#2,sp
+	move.w	U101460,d0
+	jsr	L358_1d
 	move.w	d0,-(sp)
 	jsr	L67066
 	addq.l	#2,sp
 L8596:
 	move.w	d6,(sp)
 	jsr	L55092
-	move.w	d7,(sp)
-	jsr	L378
+	move.w	d7,d0
+	jsr	L378_1d
 	move.w	d0,d7
 L8614:
 	tst.w	d7
@@ -2842,41 +2705,37 @@ L8614:
 
 L8638:
 	link	fp,#0
-	movem.l	d5-d7,-(sp)
+	movem.l	d6-d7,-(sp)
 	move.w	8(fp),(sp)
 	jsr	L61098
 	tst.w	d0
-	beq.s	L8668
+	beq.s	.L8668
 	jsr	L64732
-	bra.s	L8742
-
-L8668:
+	bra.s	.L8742
+.L8668:
 	jsr	L61294
 	move.w	d0,(sp)
 	jsr	L65694
 	move.w	d0,d7
 	move.w	d7,(sp)
 	jsr	L64090
-	bra.s	L8724
-
-L8694:
+	bra.s	.L8724
+.L8694:
 	jsr	L61294
 	move.w	d0,(sp)
 	jsr	L65694
 	move.w	d0,d6
-	move.w	d6,(sp)
-	move.w	d7,-(sp)
-	jsr	L65226
-	addq.l	#2,sp
+	move.w	d6,d1
+	move.w	d7,d0
+	jsr	L65226_2d
 	move.w	d6,d7
-L8724:
+.L8724:
 	subq.w	#1,8(fp)
 	move.w	8(fp),(sp)
 	jsr	L61098
 	tst.w	d0
-	beq.s	L8694
-L8742:
-	tst.l	(sp)+
+	beq.s	.L8694
+.L8742:
 	movem.l	(sp)+,d6-d7
 	unlk	fp
 	rts
@@ -2888,7 +2747,7 @@ L8752:
 	move.w	d0,d7
 	jsr	L61476
 	move.l	d0,-(sp)
-	jsr	L81832
+	jsr	ffp_to_int
 	addq.l	#4,sp
 	move.w	d0,d6
 	move.w	d6,d0
@@ -2946,7 +2805,7 @@ L8924:
 	movem.l	d6-d7,-(sp)
 	jsr	L61476
 	move.l	d0,-(sp)
-	jsr	L81832
+	jsr	ffp_to_int
 	addq.l	#4,sp
 	move.w	d0,d7
 	ble.s	L8956
@@ -3050,28 +2909,20 @@ L9186:
 
 L9214:
 	link	fp,#0
-	movem.l	d6-d7,-(sp)
+	move.l	d7,-(sp)
 	move.w	8(fp),d7
 	movea.l	#U100754,a0
 	move.l	a0,U101030
 	move.l	a0,-(sp)
-	clr.w	-(sp)
-	move.w	d7,-(sp)
-	jsr	L378
-	addq.l	#2,sp
-	move.w	d0,-(sp)
-	jsr	L358
-	addq.l	#2,sp
-	move.w	d0,-(sp)
-	jsr	L358
-	addq.l	#2,sp
-	move.w	d0,-(sp)
-	jsr	L332
-	addq.l	#4,sp
+	move.w	d7,d0
+	jsr	L378_1d
+	jsr	L358_1d
+	jsr	L358_1d
+	clr.w	d1
+	jsr	L332_2d
 	movea.l	(sp)+,a0
 	move.b	d0,(a0)
-	tst.l	(sp)+
-	movem.l	(sp)+,d7
+	move.l	(sp)+,d7
 	unlk	fp
 	rts
 
@@ -3080,18 +2931,17 @@ L9296:
 	move.w	U101046,(sp)
 	jsr	L65356
 	tst.w	d0
-	beq.s	L9322
+	beq.s	.L9322
 	bsr  	L9162
-	bra.s	L9346
-
-L9322:
+	bra.s	.return
+.L9322:
 	move.w	U101046,(sp)
 	bsr.s	L9214
 	movea.l	U101030,a0
 	tst.b	(a0)
-	bne.s	L9346
+	bne.s	.return
 	jsr	L67118
-L9346:
+.return:
 	unlk	fp
 	rts
 
@@ -3329,8 +3179,8 @@ L10004:
 	bra.s	L10152
 
 L10068:
-	move.w	U99818,(sp)
-	jsr	L358
+	move.w	U99818,d0
+	jsr	L358_1d
 	move.w	d0,U99864
 	bra.s	L10142
 
@@ -3352,8 +3202,8 @@ L10142:
 	tst.w	d0
 	beq.s	L10088
 L10152:
-	move.w	U99818,(sp)
-	jsr	L378
+	move.w	U99818,d0
+	jsr	L378_1d
 	move.w	d0,U99818
 	bne.s	L10068
 L10172:
@@ -3381,9 +3231,8 @@ L10216:
 L10220:
 	link	fp,#-4
 	move.l	#L9984,(sp)
-	move.w	U99864,-(sp)
-	jsr	L358
-	addq.l	#2,sp
+	move.w	U99864,d0
+	jsr	L358_1d
 	move.w	d0,-(sp)
 	jsr	L62078
 	addq.l	#2,sp
@@ -3393,15 +3242,15 @@ L10220:
 	jsr	L61904
 	tst.w	d0
 	bne  	L10442
-	move.w	U99864,(sp)
-	jsr	L358
+	move.w	U99864,d0
+	jsr	L358_1d
 	move.w	d0,(sp)
 	jsr	L65726
 	tst.w	d0
 	beq.s	L10376
 	jsr	L9350
-	move.w	U99864,(sp)
-	jsr	L358
+	move.w	U99864,d0
+	jsr	L358_1d
 	move.w	d0,(sp)
 	jsr	L55092
 	jsr	L9388
@@ -3417,8 +3266,8 @@ L10376:
 	bra.s	L10436
 
 L10378:
-	move.w	U99864,(sp)
-	jsr	L358
+	move.w	U99864,d0
+	jsr	L358_1d
 	cmp.w	U100624,d0
 	bne.s	L10436
 	jsr	L59950
@@ -3440,20 +3289,15 @@ L10442:
 	unlk	fp
 	rts
 
-L10446:
-	link	fp,#-4
-	clr.w	d0
-	move.w	U100978,d0
-	swap	d0
-	clr.w	d0
-	swap	d0
+word_nodes:
+	clr.l	d0
+	move.w	nodes_free,d0
 	move.l	d0,-(sp)
-	jsr	L81688
-	addq.l	#4,sp
+	jsr	int_to_ffp
 	move.l	d0,(sp)
 	jsr	L52972
 	jsr	L64764
-	unlk	fp
+	addq.l	#4,sp
 	rts
 
 L10492:
@@ -3566,13 +3410,13 @@ L10816:
 	bra.s	L10864
 
 L10834:
-	move.w	d7,(sp)
-	jsr	L358
+	move.w	d7,d0
+	jsr	L358_1d
 	move.w	d0,U101046
 	movea.l	8(fp),a0
 	jsr	(a0)
-	move.w	d7,(sp)
-	jsr	L378
+	move.w	d7,d0
+	jsr	L378_1d
 	move.w	d0,d7
 L10864:
 	tst.w	d7
@@ -3667,14 +3511,13 @@ L11096:
 	rts
 
 L11134:
-	link	fp,#0
-	movem.l	d5-d7,-(sp)
-	move.w	8(fp),d7
-	move.w	10(fp),d6
-	move.w	d6,(sp)
+	movem.l	d6-d7,-(sp)
+	move.w	12(sp),d7
+	move.w	14(sp),d6
+	move.w	d6,-(sp)
 	bsr  	L11848
 	move.w	d0,U91952
-	bne.s	L11212
+	bne.s	.L11212
 	move.w	d7,(sp)
 	jsr	L64090
 	move.w	d6,(sp)
@@ -3686,16 +3529,14 @@ L11134:
 	addq.l	#4,sp
 	jsr	L64180
 	jsr	L64180
-	bra.s	L11228
-
-L11212:
-	move.w	d7,(sp)
-	move.w	U91952,-(sp)
-	jsr	L65226
-	addq.l	#2,sp
-L11228:
+	bra.s	.L11228
+.L11212:
+	move.w	d7,d1
+	move.w	U91952,d0
+	jsr	L65226_2d
+.L11228:
 	tst.w	U101198
-	beq.s	L11296
+	beq.s	.L11296
 	jsr	L60968
 	move.w	d7,(sp)
 	move.l	#L55354,-(sp)
@@ -3710,11 +3551,10 @@ L11228:
 	adda.l	#16,sp
 	jsr	L74840
 	jsr	L47940
-L11296:
+.L11296:
 	jsr	L61834
-	tst.l	(sp)+
+	addq	#2,sp
 	movem.l	(sp)+,d6-d7
-	unlk	fp
 	rts
 
 L11312:
@@ -3731,12 +3571,10 @@ L11312:
 	rts
 
 L11360:
-	link	fp,#-4
 	jsr	L61500
-	move.w	U101046,(sp)
-	jsr	L66356
+	move.w	U101046,d0
+	jsr	L66356_1d
 	move.w	d0,U101046
-	unlk	fp
 	rts
 
 L11392:
@@ -3768,19 +3606,17 @@ L11468:
 	jsr	L57456
 	jsr	L64160
 	move.w	d0,d7
-	bra  	L11650
-
-L11510:
-	move.w	d7,(sp)
-	jsr	L358
+	bra  	.L11650
+.L11510:
+	move.w	d7,d0
+	jsr	L358_1d
 	move.w	d0,(sp)
 	jsr	L57838
-	bra.s	L11622
-
-L11528:
+	bra.s	.L11622
+.L11528:
 	jsr	L57986
 	tst.w	d0
-	bne.s	L11622
+	bne.s	.L11622
 	jsr	L74840
 	move.w	U101182,(sp)
 	move.l	#L55354,-(sp)
@@ -3790,9 +3626,8 @@ L11528:
 	asl.l	d1,d0
 	move.l	d0,-(sp)
 	move.l	#L55354,-(sp)
-	move.w	d7,-(sp)
-	jsr	L358
-	addq.l	#2,sp
+	move.w	d7,d0
+	jsr	L358_1d
 	swap	d0
 	clr.w	d0
 	swap	d0
@@ -3803,18 +3638,18 @@ L11528:
 	move.l	T87310,-(sp)
 	jsr	L54390
 	adda.l	#24,sp
-L11622:
+.L11622:
 	jsr	L57902
 	tst.w	d0
-	bne.s	L11528
-	move.w	d7,(sp)
-	jsr	L378
+	bne.s	.L11528
+	move.w	d7,d0
+	jsr	L378_1d
 	move.w	d0,d7
 	move.w	d7,(sp)
 	jsr	L64276
-L11650:
+.L11650:
 	tst.w	d7
-	bne  	L11510
+	bne  	.L11510
 	jsr	L61834
 	jsr	L64180
 	tst.l	(sp)+
@@ -3871,28 +3706,25 @@ L11848:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
 	move.w	U101474,d7
-	bra.s	L11906
-
-L11864:
-	move.w	d7,(sp)
-	jsr	L358
-	move.w	d0,(sp)
-	jsr	L358
+	bra.s	.L11906
+.L11864:
+	move.w	d7,d0
+	jsr	L358_1d
+	jsr	L358_1d
 	cmp.w	8(fp),d0
-	bne.s	L11896
-	move.w	d7,(sp)
-	jsr	L358
-	bra.s	L11912
-
-L11896:
-	move.w	d7,(sp)
-	jsr	L378
+	bne.s	.L11896
+	move.w	d7,d0
+	jsr	L358_1d
+	bra.s	.return
+.L11896:
+	move.w	d7,d0
+	jsr	L378_1d
 	move.w	d0,d7
-L11906:
+.L11906:
 	tst.w	d7
-	bne.s	L11864
+	bne.s	.L11864
 	clr.w	d0
-L11912:
+.return:
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
 	unlk	fp
@@ -3919,12 +3751,12 @@ L11964:
 	beq.s	L11998
 	jsr	L67118
 L11998:
-	move.w	U101046,(sp)
-	jsr	L358
+	move.w	U101046,d0
+	jsr	L358_1d
 	move.w	d0,(sp)
 	bsr.s	L12082
-	move.w	U101046,(sp)
-	jsr	L378
+	move.w	U101046,d0
+	jsr	L378_1d
 	move.w	d0,(sp)
 	bsr  	L12154
 	jsr	L61804
@@ -3952,12 +3784,12 @@ L12112:
 	bra.s	L12140
 
 L12114:
-	move.w	d7,(sp)
-	jsr	L358
+	move.w	d7,d0
+	jsr	L358_1d
 	move.w	d0,(sp)
 	jsr	L62492
-	move.w	d7,(sp)
-	jsr	L378
+	move.w	d7,d0
+	jsr	L378_1d
 	move.w	d0,d7
 L12140:
 	tst.w	d7
@@ -3974,16 +3806,16 @@ L12154:
 	bra.s	L12204
 
 L12168:
-	move.w	d7,(sp)
-	jsr	L358
+	move.w	d7,d0
+	jsr	L358_1d
 	move.w	d0,(sp)
 	jsr	L65266
 	tst.w	d0
 	beq.s	L12194
 	jsr	L67118
 L12194:
-	move.w	d7,(sp)
-	jsr	L378
+	move.w	d7,d0
+	jsr	L378_1d
 	move.w	d0,d7
 L12204:
 	tst.w	d7
@@ -4051,7 +3883,7 @@ L12322:
 	move.w	d7,-(sp)
 	jsr	L55502
 	addq.l	#2,sp
-	jsr	L56040
+	clr.w	U101034
 	move.w	10(fp),(sp)
 	addq.w	#1,(sp)
 	move.w	d7,-(sp)
@@ -4066,9 +3898,8 @@ L12322:
 	jsr	L64732
 	move.w	10(fp),(sp)
 	addq.w	#1,(sp)
-	move.w	d6,-(sp)
-	jsr	L378
-	addq.l	#2,sp
+	move.w	d6,d0
+	jsr	L378_1d
 	move.w	d0,-(sp)
 	bsr.s	L12490
 	addq.l	#2,sp
@@ -4099,14 +3930,13 @@ L12528:
 
 L12532:
 	move.w	10(fp),(sp)
-	move.w	d6,-(sp)
-	jsr	L358
-	addq.l	#2,sp
+	move.w	d6,d0
+	jsr	L358_1d
 	move.w	d0,-(sp)
 	bsr.s	L12490
 	addq.l	#2,sp
-	move.w	d6,(sp)
-	jsr	L378
+	move.w	d6,d0
+	jsr	L378_1d
 	move.w	d0,d6
 L12562:
 	tst.w	d6
@@ -4130,16 +3960,16 @@ L12590:
 	bra.s	L12630
 
 L12602:
-	move.w	d6,(sp)
-	jsr	L358
+	move.w	d6,d0
+	jsr	L358_1d
 	cmp.w	8(fp),d0
 	bne.s	L12620
 	moveq	#1,d0
 	bra.s	L12644
 
 L12620:
-	move.w	d6,(sp)
-	jsr	L378
+	move.w	d6,d0
+	jsr	L378_1d
 	move.w	d0,d6
 L12630:
 	tst.w	d6
@@ -4156,64 +3986,57 @@ L12644:
 	unlk	fp
 	rts
 
-L12654:
-	link	fp,#0
-	movem.l	d6-d7,-(sp)
+word_potl:
+	move.l	d7,-(sp)
+	subq	#2,sp
 	clr.w	U100674
 	move.w	U100736,d7
-	bra.s	L12718
-
-L12676:
+	bra.s	.L12718
+.L12676:
 	move.w	U100674,(sp)
-	move.w	d7,-(sp)
-	jsr	L358
-	addq.l	#2,sp
+	move.w	d7,d0
+	jsr	L358_1d
 	move.w	d0,-(sp)
 	jsr	L65496
 	addq.l	#2,sp
 	move.w	d0,U100674
-	move.w	d7,(sp)
-	jsr	L378
+	move.w	d7,d0
+	jsr	L378_1d
 	move.w	d0,d7
-L12718:
+.L12718:
 	tst.w	d7
-	bne.s	L12676
+	bne.s	.L12676
 	jsr	L64732
 	move.w	U100736,d7
-	bra.s	L12798
-
-L12736:
+	bra.s	.L12798
+.L12736:
 	move.w	U98716,(sp)
-	move.w	d7,-(sp)
-	jsr	L358
-	addq.l	#2,sp
+	move.w	d7,d0
+	jsr	L358_1d
 	move.w	d0,-(sp)
 	jsr	L66008
 	addq.l	#2,sp
+	jsr	L378_1d
 	move.w	d0,(sp)
-	jsr	L378
-	move.w	d0,(sp)
-	move.w	d7,-(sp)
-	jsr	L358
-	addq.l	#2,sp
+	move.w	d7,d0
+	jsr	L358_1d
 	move.w	d0,-(sp)
 	bsr.s	L12840
 	addq.l	#2,sp
-	move.w	d7,(sp)
-	jsr	L378
+	move.w	d7,d0
+	jsr	L378_1d
 	move.w	d0,d7
-L12798:
+.L12798:
 	tst.w	d7
-	bne.s	L12736
+	bne.s	.L12736
 	jsr	L64180
 	clr.w	(sp)
 	move.w	U100674,-(sp)
 	jsr	L56676
 	addq.l	#2,sp
 	jsr	L61834
-	tst.l	(sp)+
-	movem.l	(sp)+,d7
-	unlk	fp
+	addq	#2,sp
+	move.l	(sp)+,d7
 	rts
 
 L12840:
@@ -4223,58 +4046,57 @@ L12840:
 	move.w	d7,(sp)
 	jsr	L65726
 	tst.w	d0
-	beq.s	L12956
+	beq.s	.L12956
 	move.w	U98716,(sp)
 	move.w	d7,-(sp)
 	jsr	L66008
 	addq.l	#2,sp
 	move.w	d0,d6
-	beq.s	L12956
+	beq.s	.L12956
 	cmp.w	8(fp),d7
-	beq.s	L12912
+	beq.s	.L12912
 	move.w	d7,(sp)
 	move.w	U100674,-(sp)
 	jsr	L66654
 	addq.l	#2,sp
 	move.w	d0,U100674
-L12912:
+.L12912:
 	move.w	#1,(sp)
 	move.w	d7,-(sp)
 	bsr  	L12576
 	addq.l	#2,sp
 	tst.w	d0
-	bne.s	L13010
+	bne.s	.L13010
 	move.w	d7,(sp)
 	bsr  	L12242
 	jsr	L74764
-	move.w	d6,(sp)
-	jsr	L378
+	move.w	d6,d0
+	jsr	L378_1d
 	move.w	d0,(sp)
 	move.w	d7,-(sp)
 	bsr.s	L12840
 	addq.l	#2,sp
-L12956:
+.L12956:
 	move.w	d7,(sp)
 	jsr	L65266
 	tst.w	d0
-	bne.s	L13010
-	bra.s	L13006
-
-L12970:
+	bne.s	.L13010
+	bra.s	.L13006
+.L12970:
 	jsr	L74764
-	move.w	d7,(sp)
-	jsr	L358
+	move.w	d7,d0
+	jsr	L358_1d
 	move.w	d0,(sp)
 	move.w	8(fp),-(sp)
 	bsr  	L12840
 	addq.l	#2,sp
-	move.w	d7,(sp)
-	jsr	L378
+	move.w	d7,d0
+	jsr	L378_1d
 	move.w	d0,d7
-L13006:
+.L13006:
 	tst.w	d7
-	bne.s	L12970
-L13010:
+	bne.s	.L12970
+.L13010:
 	tst.l	(sp)+
 	movem.l	(sp)+,d6-d7
 	unlk	fp
@@ -4302,14 +4124,12 @@ L13080:
 
 L13090:
 	move.w	U98716,(sp)
-	move.w	d7,-(sp)
-	jsr	L358
-	addq.l	#2,sp
+	move.w	d7,d0
+	jsr	L358_1d
 	move.w	d0,-(sp)
 	jsr	L66008
 	addq.l	#2,sp
-	move.w	d0,(sp)
-	jsr	L378
+	jsr	L378_1d
 	move.w	d0,(sp)
 	bsr  	L13278
 	tst.w	d0
@@ -4317,30 +4137,29 @@ L13090:
 	move.w	U100674,(sp)
 	jsr	L64090
 	move.w	#1,(sp)
-	move.w	d7,-(sp)
-	jsr	L358
-	addq.l	#2,sp
+	move.w	d7,d0
+	jsr	L358_1d
 	move.w	d0,-(sp)
 	bsr  	L12576
 	addq.l	#2,sp
 	tst.w	d0
 	bne.s	L13186
-	move.w	d7,(sp)
-	jsr	L358
+	move.w	d7,d0
+	jsr	L358_1d
 	move.w	d0,(sp)
 	bsr  	L12242
 L13186:
 	jsr	L64224
 	move.w	d0,U100674
 L13198:
-	move.w	d7,(sp)
-	jsr	L378
+	move.w	d7,d0
+	jsr	L378_1d
 	move.w	d0,d7
 L13208:
 	tst.w	d7
 	bne.s	L13090
-	move.w	U101046,(sp)
-	jsr	L378
+	move.w	U101046,d0
+	jsr	L378_1d
 	move.w	d0,U101046
 L13230:
 	tst.w	U101046
@@ -4364,8 +4183,8 @@ L13278:
 	jsr	L65726
 	tst.w	d0
 	beq.s	L13326
-	move.w	U101046,(sp)
-	jsr	L358
+	move.w	U101046,d0
+	jsr	L358_1d
 	cmp.w	d7,d0
 	beq.s	L13322
 	clr.w	d0
@@ -4385,8 +4204,8 @@ L13326:
 
 L13340:
 	jsr	L74764
-	move.w	d7,(sp)
-	jsr	L358
+	move.w	d7,d0
+	jsr	L358_1d
 	move.w	d0,(sp)
 	bsr.s	L13278
 	tst.w	d0
@@ -4395,8 +4214,8 @@ L13340:
 	bra.s	L13382
 
 L13366:
-	move.w	d7,(sp)
-	jsr	L378
+	move.w	d7,d0
+	jsr	L378_1d
 	move.w	d0,d7
 L13376:
 	tst.w	d7
@@ -4503,9 +4322,8 @@ L13636:
 L13694:
 	link	fp,#-4
 	bsr.s	L13764
-	bra.s	L13744
-
-L13702:
+	bra.s	.L13744
+.L13702:
 	jsr	L64746
 	bsr.s	L13764
 	move.w	U101046,(sp)
@@ -4515,10 +4333,10 @@ L13702:
 	move.w	U101046,-(sp)
 	jsr	L66394
 	addq.l	#2,sp
-L13744:
+.L13744:
 	jsr	L61884
 	tst.w	d0
-	beq.s	L13702
+	beq.s	.L13702
 	jsr	L61834
 	unlk	fp
 	rts
@@ -4619,8 +4437,8 @@ L14068:
 	bra.s	L14144
 
 L14082:
-	move.w	d7,(sp)
-	jsr	L358
+	move.w	d7,d0
+	jsr	L358_1d
 	move.w	d0,U101046
 	move.w	d0,(sp)
 	jsr	L62492
@@ -4632,8 +4450,8 @@ L14082:
 	bne.s	L14134
 	jsr	L61710
 L14134:
-	move.w	d7,(sp)
-	jsr	L378
+	move.w	d7,d0
+	jsr	L378_1d
 	move.w	d0,d7
 L14144:
 	tst.w	d7
@@ -4746,9 +4564,7 @@ L14462:
 	jsr	L74840
 	move.w	U100994,(sp)
 	jsr	L64160
-	move.w	d0,-(sp)
-	jsr	L358
-	addq.l	#2,sp
+	jsr	L358_1d
 	move.w	d0,d7
 	move.w	d7,-(sp)
 	jsr	L65948
@@ -4788,7 +4604,7 @@ L14548:
 	move.w	U100668,-(sp)
 	jsr	L55502
 	addq.l	#2,sp
-	jsr	L56040
+	clr.w	U101034
 L14630:
 	move.w	U98718,(sp)
 	move.w	U100668,-(sp)
@@ -4820,8 +4636,7 @@ L14710:
 	tst.w	d0
 	bne  	L14548
 	jsr	L64160
-	move.w	d0,(sp)
-	jsr	L378
+	jsr	L378_1d
 	move.w	d0,(sp)
 	jsr	L64276
 L14744:
@@ -5134,8 +4949,8 @@ L15672:
 	bra.s	L15800
 
 L15698:
-	move.w	d5,(sp)
-	jsr	L358
+	move.w	d5,d0
+	jsr	L358_1d
 	move.w	d0,U101046
 	move.w	d0,(sp)
 	jsr	L62492
@@ -5159,8 +4974,8 @@ L15754:
 	jsr	L67118
 L15784:
 	jsr	L64180
-	move.w	d5,(sp)
-	jsr	L378
+	move.w	d5,d0
+	jsr	L378_1d
 	move.w	d0,d5
 L15800:
 	tst.w	d5
@@ -5182,8 +4997,7 @@ L15814:
 
 L15844:
 	jsr	L64160
-	move.w	d0,(sp)
-	jsr	L358
+	jsr	L358_1d
 	move.w	d0,U101046
 	move.w	d0,(sp)
 	jsr	L65726
@@ -5192,8 +5006,7 @@ L15844:
 	jsr	L67118
 L15882:
 	jsr	L64160
-	move.w	d0,(sp)
-	jsr	L378
+	jsr	L378_1d
 	move.w	d0,(sp)
 	jsr	L64276
 	moveq	#1,d0
@@ -5205,7 +5018,7 @@ L15910:
 	link	fp,#-8
 	jsr	L61476
 	move.l	d0,-(sp)
-	jsr	L81832
+	jsr	ffp_to_int
 	addq.l	#4,sp
 	move.l	d0,-4(fp)
 	move.l	-4(fp),d0
@@ -5230,10 +5043,9 @@ L15970:
 	rts
 
 L15980:
-	link	fp,#-4
-	move.w	U101124,(sp)
+	move.w	max_colors,-(sp)
 	jsr	L61658
-	unlk	fp
+	addq	#2,sp
 	rts
 
 L16000:
@@ -5245,7 +5057,7 @@ L16000:
 	jsr	L3058
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	bgt.s	L16060
 	jsr	L48234
@@ -5278,12 +5090,12 @@ L16114:
 	bne.s	L16132
 	jsr	L67474
 L16132:
-	move.w	U100896,(sp)
-	jsr	L358
+	move.w	U100896,d0
+	jsr	L358_1d
 	move.w	d0,(sp)
 	jsr	L64090
-	move.w	U100896,(sp)
-	jsr	L378
+	move.w	U100896,d0
+	jsr	L378_1d
 	move.w	d0,U100896
 	unlk	fp
 	rts
@@ -5333,7 +5145,7 @@ L16278:
 	bsr.s	L16174
 	bsr.s	L16256
 	move.l	d0,-(sp)
-	jsr	L81832
+	jsr	ffp_to_int
 	addq.l	#4,sp
 	move.w	d0,d7
 	cmp.w	8(fp),d7
@@ -5351,45 +5163,43 @@ L16318:
 
 L16330:
 	link	fp,#-4
-	move.l	T85048,(sp)
-	move.l	T85048,-(sp)
+	clr.l	(sp)
+	clr.l	-(sp)
 	jsr	L35228
 	addq.l	#4,sp
-	move.l	T85048,(sp)
+	clr.l	(sp)
 	jsr	L33502
 	unlk	fp
 	rts
 
-L16370:
-	link	fp,#-4
-	move.w	T85006,(sp)
+word_setzoom:
+	move.w	#16,-(sp)
 	move.l	#L33736,-(sp)
 	bsr  	L17846
-	addq.l	#4,sp
-	unlk	fp
+	addq.l	#6,sp
 	rts
 
-L16396:
+word_setpan:
 	link	fp,#-12
 	bsr  	L16240
-	move.l	T85016,-(sp)
+	move.l	#$FA00004E,-(sp)
 	bsr  	L16256
 	move.l	d0,-4(fp)
 	move.l	d0,-(sp)
 	jsr	L3058
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	bgt.s	L16516
-	move.l	T85016,-(sp)
+	move.l	#$FA00004E,-(sp)
 	bsr  	L16256
 	move.l	d0,-8(fp)
 	move.l	d0,-(sp)
 	jsr	L3058
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	bgt.s	L16516
 	jsr	L48234
@@ -5441,27 +5251,22 @@ L16600:
 	unlk	fp
 	rts
 
-L16642:
-	link	fp,#-8
+word_forward:
 	jsr	L61476
-	move.l	d0,-4(fp)
+	move.l	d0,-(sp)
 	jsr	L48234
-	move.l	-4(fp),(sp)
 	jsr	L33366
 	bsr  	L18502
-	unlk	fp
+	addq	#4,sp
 	rts
 
-L16680:
+word_turtlefacts:
 	link	fp,#-4
-	jsr	L34018
-	move.l	d0,(sp)
+	move.l	U99808,(sp)
 	jsr	L52972
-	jsr	L34032
-	move.l	d0,(sp)
+	move.l	U99812,(sp)
 	jsr	L52972
-	jsr	L33566
-	move.l	d0,(sp)
+	move.l	U92078,(sp)
 	jsr	L52972
 	jsr	L33300
 	movea.w	d0,a0
@@ -5470,11 +5275,9 @@ L16680:
 	movea.l	#T87322,a1
 	move.l	0(a0,a1.l),(sp)
 	jsr	L62056
-	jsr	L33352
-	move.w	d0,(sp)
+	move.w	U92094,(sp)
 	jsr	L53070
-	jsr	L34468
-	move.w	d0,(sp)
+	move.w	turtle_show_flag,(sp)
 	jsr	L60886
 	jsr	L64746
 	move.w	#6,(sp)
@@ -5482,17 +5285,16 @@ L16680:
 	unlk	fp
 	rts
 
-L16802:
+word_screenfacts:
 	link	fp,#-4
 	jsr	L33160
 	move.w	d0,(sp)
 	jsr	L53070
-	jsr	L34634
-	movea.w	d0,a0
-	adda.l	a0,a0
-	adda.l	a0,a0
-	movea.l	#T87338,a1
-	move.l	0(a0,a1.l),(sp)
+	move.w	window_mode,d0
+	add.w	d0,d0
+	add.w	d0,d0
+	movea.l	#window_mode_table,a1
+	move.l	0(a1,d0.w),(sp)
 	jsr	L62056
 	jsr	L34692
 	move.l	d0,(sp)
@@ -5500,57 +5302,48 @@ L16802:
 	jsr	L33780
 	move.l	d0,(sp)
 	jsr	L52972
-	jsr	L33882
-	move.l	d0,(sp)
+	move.l	U92124,(sp)
 	jsr	L52972
-	jsr	L33896
-	move.l	d0,(sp)
+	move.l	U92128,(sp)
 	jsr	L52972
 	move.w	#6,(sp)
 	jsr	L62166
 	unlk	fp
 	rts
 
-L16918:
-	link	fp,#-4
+word_hideturtle:
 	jsr	L48234
-	jsr	L34414
+	jsr	turtle_hide
 	jsr	L47940
-	unlk	fp
 	rts
 
-L16944:
-	link	fp,#-4
+word_home:
 	jsr	L48234
 	bsr  	L16330
 	jsr	L47940
-	unlk	fp
 	rts
 
-L16968:
-	link	fp,#-4
+word_left:
 	bsr  	L16000
 	move.l	d0,-(sp)
 	jsr	L82000
-	addq.l	#4,sp
 	move.l	d0,(sp)
 	jsr	L33472
 	jsr	L47940
-	unlk	fp
+	addq	#4,sp
 	rts
 
-L17004:
-	link	fp,#-4
+word_right:
 	bsr  	L16000
-	move.l	d0,(sp)
+	move.l	d0,-(sp)
 	jsr	L33472
 	jsr	L47940
-	unlk	fp
+	addq	#4,sp
 	rts
 
 L17030:
 	link	fp,#-6
-	move.w	U101126,(sp)
+	move.w	max_colors,(sp)
 	jsr	L61658
 	move.w	d0,-2(fp)
 	jsr	L48234
@@ -5560,7 +5353,7 @@ L17030:
 	unlk	fp
 	rts
 
-L17074:
+word_setheading:
 	link	fp,#-4
 	bsr  	L16000
 	move.l	d0,(sp)
@@ -5585,7 +5378,7 @@ L17136:
 	movem.l	d6-d7,-(sp)
 	bsr  	L16090
 	bsr  	L16114
-	move.w	U101124,(sp)
+	move.w	max_colors,(sp)
 	bsr  	L16278
 	move.w	d0,d7
 	jsr	L9350
@@ -5664,8 +5457,7 @@ L17400:
 	jsr	L61476
 	move.l	d0,-4(fp)
 	jsr	L48234
-	jsr	L34032
-	move.l	d0,(sp)
+	move.l	U99812,(sp)
 	move.l	-4(fp),-(sp)
 	jsr	L35228
 	addq.l	#4,sp
@@ -5679,8 +5471,7 @@ L17448:
 	move.l	d0,-4(fp)
 	jsr	L48234
 	move.l	-4(fp),(sp)
-	jsr	L34018
-	move.l	d0,-(sp)
+	move.l	U99808,-(sp)
 	jsr	L35228
 	addq.l	#4,sp
 	bsr  	L18502
@@ -5690,7 +5481,7 @@ L17448:
 L17496:
 	link	fp,#-4
 	jsr	L48234
-	jsr	L34440
+	jsr	turtle_show
 	jsr	L47940
 	unlk	fp
 	rts
@@ -5698,64 +5489,62 @@ L17496:
 L17522:
 	link	fp,#-12
 	bsr  	L16240
-	jsr	L34032
-	move.l	d0,-(sp)
+	move.l	U99812,-(sp)
 	bsr  	L16256
 	move.l	d0,-(sp)
 	jsr	L82028
 	addq.l	#8,sp
 	move.l	d0,-8(fp)
-	move.l	T85048,-(sp)
-	jsr	L34018
-	move.l	d0,-(sp)
+	clr.l	-(sp)
+	move.l	U99808,-(sp)
 	bsr  	L16256
 	move.l	d0,-(sp)
 	jsr	L82028
 	addq.l	#8,sp
 	move.l	d0,-4(fp)
 	move.l	d0,-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	bne.s	L17642
-	move.l	T85048,-(sp)
+	clr.l	-(sp)
 	move.l	-8(fp),-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	bge.s	L17628
 	move.l	#-1275068344,(sp)
 	bra.s	L17634
 
 L17628:
-	move.l	T85048,(sp)
+	clr.l	(sp)
 L17634:
 	jsr	L61950
 	bra.s	L17756
 
 L17642:
-	move.l	T85052,-(sp)
+	move.l	#$E52EE246,-(sp)
 	move.l	-4(fp),-(sp)
 	move.l	-8(fp),-(sp)
-	jsr	L81572
+	jsr	fp_div
 	addq.l	#8,sp
 	move.l	d0,-(sp)
 	jsr	L79448
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81968
+	jsr	fp_mul
 	addq.l	#8,sp
 	move.l	d0,-(sp)
 	move.l	#-1275068345,-(sp)
 	jsr	L82028
 	addq.l	#8,sp
 	move.l	d0,-8(fp)
-	move.l	T85048,-(sp)
+	clr.l	-(sp)
 	move.l	-4(fp),-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	bge.s	L17746
 	move.l	#-1275068344,-(sp)
 	move.l	-8(fp),-(sp)
-	jsr	L81510
+	jsr	fp_add
 	addq.l	#8,sp
 	move.l	d0,(sp)
 	bra.s	L17750
@@ -5790,13 +5579,11 @@ L17808:
 	unlk	fp
 	rts
 
-L17822:
-	link	fp,#-4
-	move.w	T85002,(sp)
+word_setscrunch:
+	move.w	#10,-(sp)
 	move.l	#L34648,-(sp)
 	bsr.s	L17846
-	addq.l	#4,sp
-	unlk	fp
+	addq.l	#6,sp
 	rts
 
 L17846:
@@ -5804,33 +5591,33 @@ L17846:
 	move.w	12(fp),d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688
+	jsr	int_to_ffp
 	addq.l	#4,sp
 	move.l	d0,-(sp)
 	jsr	L61476
 	move.l	d0,-(sp)
 	move.l	#-2147483583,-(sp)
-	jsr	L81572
+	jsr	fp_div
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	bgt.s	L18002
 	move.w	12(fp),d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688
+	jsr	int_to_ffp
 	addq.l	#4,sp
 	move.l	d0,-(sp)
 	jsr	L62206
 	move.l	d0,-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	bgt.s	L18002
-	move.l	T85048,-(sp)
+	clr.l	-(sp)
 	jsr	L62206
 	move.l	d0,-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	ble.s	L18002
 	jsr	L48234
@@ -5852,27 +5639,23 @@ L18008:
 
 L18012:
 	link	fp,#-4
-	jsr	L34018
-	move.l	d0,(sp)
+	move.l	U99808,(sp)
 	jsr	L61950
 	unlk	fp
 	rts
 
 L18034:
 	link	fp,#-4
-	jsr	L34032
-	move.l	d0,(sp)
+	move.l	U99812,(sp)
 	jsr	L61950
 	unlk	fp
 	rts
 
 L18056:
 	link	fp,#-4
-	jsr	L34018
-	move.l	d0,(sp)
+	move.l	U99808,(sp)
 	jsr	L52972
-	jsr	L34032
-	move.l	d0,(sp)
+	move.l	U99812,(sp)
 	jsr	L52972
 	move.w	#2,(sp)
 	jsr	L62166
@@ -5881,8 +5664,7 @@ L18056:
 
 L18102:
 	link	fp,#-4
-	jsr	L33566
-	move.l	d0,(sp)
+	move.l	U92078,(sp)
 	jsr	L61950
 	unlk	fp
 	rts
@@ -5892,14 +5674,14 @@ L18124:
 	bsr  	L15910
 	move.l	d0,-4(fp)
 	clr.l	(sp)
-	move.w	#32,-(sp)
+	move.w	#32,-(sp)	; Super
 	jsr	gemdos
 	addq.l	#2,sp
 	move.l	d0,U91942
 	movea.l	-4(fp),a0
 	move.b	(a0),-6(fp)
 	move.l	U91942,(sp)
-	move.w	#32,-(sp)
+	move.w	#32,-(sp)	; Super
 	jsr	gemdos
 	addq.l	#2,sp
 	move.b	-6(fp),d0
@@ -5918,14 +5700,14 @@ L18204:
 	jsr	L62246
 	move.b	d0,-2(fp)
 	clr.l	(sp)
-	move.w	#32,-(sp)
+	move.w	#32,-(sp)	; Super
 	jsr	gemdos
 	addq.l	#2,sp
 	move.l	d0,U91942
 	move.b	-2(fp),(a5)
 	move.l	U91942,(sp)
 	move.w	#32,-(sp)
-	jsr	gemdos
+	jsr	gemdos		; Super
 	addq.l	#2,sp
 	jsr	L61834
 	tst.l	(sp)+
@@ -5943,14 +5725,14 @@ L18286:
 L18312:
 	clr.l	(sp)
 	move.w	#32,-(sp)
-	jsr	gemdos
+	jsr	gemdos		; Super
 	addq.l	#2,sp
 	move.l	d0,U91942
 	movea.l	-4(fp),a0
 	move.w	(a0),-6(fp)
 	move.l	U91942,(sp)
 	move.w	#32,-(sp)
-	jsr	gemdos
+	jsr	gemdos		; Super
 	addq.l	#2,sp
 	move.w	-6(fp),(sp)
 	jsr	L61926
@@ -5967,19 +5749,19 @@ L18372:
 L18398:
 	jsr	L61476
 	move.l	d0,-(sp)
-	jsr	L81832
+	jsr	ffp_to_int
 	addq.l	#4,sp
 	move.w	d0,-6(fp)
 	clr.l	(sp)
 	move.w	#32,-(sp)
-	jsr	gemdos
+	jsr	gemdos		; Super
 	addq.l	#2,sp
 	move.l	d0,U91942
 	movea.l	-4(fp),a0
 	move.w	-6(fp),(a0)
 	move.l	U91942,(sp)
 	move.w	#32,-(sp)
-	jsr	gemdos
+	jsr	gemdos		; Super
 	addq.l	#2,sp
 	jsr	L61834
 	unlk	fp
@@ -5996,10 +5778,8 @@ L18474:
 	rts
 
 L18502:
-	link	fp,#-4
 	jsr	L47940
 	jsr	L61834
-	unlk	fp
 	rts
 
 L18522:
@@ -6140,7 +5920,7 @@ L18928:
 	bra.s	L18988
 
 L18936:
-	jsr	L48330
+	jsr	mouse_show
 	move.l	T87058,(sp)
 	move.w	#2,-(sp)
 	jsr	form_alert
@@ -6154,7 +5934,7 @@ L18970:
 	moveq	#1,d0
 L18972:
 	move.w	d0,-2(fp)
-	jsr	L48260
+	jsr	mouse_hide
 	tst.w	-2(fp)
 	bne.s	L19006
 L18988:
@@ -6271,7 +6051,7 @@ L19286:
 	link	fp,#-4
 	clr.w	(sp)
 	move.l	U101030,-(sp)
-	jsr	L77468
+	jsr	Fopen
 	addq.l	#4,sp
 	move.w	d0,U101054
 	cmp.w	#-1,d0
@@ -6285,7 +6065,7 @@ L19328:
 	link	fp,#-4
 	clr.w	(sp)
 	move.l	U101030,-(sp)
-	jsr	L77664
+	jsr	Fcreate
 	addq.l	#4,sp
 	move.w	d0,U101054
 	cmp.w	#-1,d0
@@ -6298,11 +6078,11 @@ L19366:
 L19370:
 	link	fp,#-4
 	move.w	U101054,(sp)
-	jsr	L77496
+	jsr	Fclose
 	cmp.w	#-1,d0
-	bgt.s	L19398
-	jsr	L67546
-L19398:
+	bgt.s	.return
+	jsr	do_err_disk
+.return:
 	unlk	fp
 	rts
 
@@ -6312,7 +6092,7 @@ L19402:
 	move.w	#1,-(sp)
 	move.l	fp,-(sp)
 	addi.l	#9,(sp)
-	jsr	L77554
+	jsr	Fwrite
 	addq.l	#6,sp
 	cmp.w	#1,d0
 	beq.s	L19444
@@ -6327,7 +6107,7 @@ L19448:
 	move.w	#1,-(sp)
 	move.l	fp,-(sp)
 	subq.l	#2,(sp)
-	jsr	L77520
+	jsr	Fread
 	addq.l	#6,sp
 	tst.w	d0
 	beq.s	L19482
@@ -6391,7 +6171,7 @@ L19628:
 	move.l	T87150,(sp)
 	bsr  	L19136
 	move.l	U101030,(sp)
-	jsr	L77692
+	jsr	Fdelete
 	cmp.w	#-1,d0
 	bgt.s	L19666
 	jsr	L67642
@@ -6423,7 +6203,7 @@ L19724:
 	bsr  	L19136
 	clr.w	(sp)
 	move.l	U101030,-(sp)
-	jsr	L77468
+	jsr	Fopen
 	addq.l	#4,sp
 	move.w	d0,U101054
 	cmp.w	#-1,d0
@@ -6587,7 +6367,7 @@ L20414:
 	link	fp,#-6
 	clr.w	(sp)
 	move.l	U101030,-(sp)
-	jsr	L77468
+	jsr	Fopen
 	addq.l	#4,sp
 	move.w	d0,U101054
 	cmp.w	#-1,d0
@@ -6654,7 +6434,7 @@ L20584:
 	ext.w	d0
 	move.w	d0,(sp)
 	addi.w	#-65,(sp)
-	jsr	L77640
+	jsr	Dsetdrv
 	cmp.w	#-1,d0
 	bgt.s	L20650
 	jsr	L67118
@@ -6667,7 +6447,7 @@ L20652:
 	clr.b	1(a5)
 L20664:
 	move.l	a5,(sp)
-	jsr	L77588
+	jsr	Dsetpath
 	cmp.w	#-1,d0
 	bgt.s	L20684
 	jsr	L67118
@@ -6689,7 +6469,7 @@ L20700:
 	addq.w	#1,(sp)
 	move.l	fp,-(sp)
 	addi.l	#-62,(sp)
-	jsr	L77612
+	jsr	Dgetpath
 	addq.l	#4,sp
 	move.l	fp,(sp)
 	addi.l	#-64,(sp)
@@ -6706,7 +6486,7 @@ L20774:
 	jsr	L64732
 	clr.w	(sp)
 	move.l	U101030,-(sp)
-	jsr	L77422
+	jsr	Fsfirst
 	addq.l	#4,sp
 	cmp.w	#-1,d0
 	ble.s	L20876
@@ -6722,7 +6502,7 @@ L20820:
 	addq.l	#2,sp
 	move.w	d0,(sp)
 	jsr	L64276
-	jsr	L77450
+	jsr	Fsnext
 	cmp.w	#-1,d0
 	ble.s	L20876
 	bra.s	L20820
@@ -6820,13 +6600,13 @@ L21112:
 	moveq	#10,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688
+	jsr	int_to_ffp
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81968
+	jsr	fp_mul
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	jsr	L81832
+	jsr	ffp_to_int
 	addq.l	#4,sp
 	unlk	fp
 	rts
@@ -6834,11 +6614,11 @@ L21112:
 L21208:
 	link	fp,#-8
 	jsr	L16174
-	move.l	T85048,-(sp)
+	clr.l	-(sp)
 	jsr	L16256
 	move.l	d0,-4(fp)
 	move.l	d0,-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	bge.s	L21252
 	jsr	L67118
@@ -6848,7 +6628,7 @@ L21252:
 	jsr	(a0)
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81832
+	jsr	ffp_to_int
 	addq.l	#4,sp
 	unlk	fp
 	rts
@@ -6930,9 +6710,9 @@ L21448:
 	move.w	#15,contrl	; vsl_type
 	clr.w	contrl+2
 	move.w	#1,contrl+6
-	move.w	8(fp),U98410
+	move.w	8(fp),intin
 	jsr	vdi
-	move.w	U98720,d0
+	move.w	intout,d0
 	move.w	d0,U91962
 	cmp.w	U101134,d0
 	bne.s	.return
@@ -6957,9 +6737,9 @@ L21448:
 	move.w	-2(fp),(sp)
 	jsr	L65532
 	move.l	d0,-(sp)
-	jsr	L81832
+	jsr	ffp_to_int
 	addq.l	#4,sp
-	move.w	d0,U98410
+	move.w	d0,intin
 	jsr	vdi
 .return:
 	unlk	fp
@@ -6970,7 +6750,7 @@ vswr_mode:
 	move.w	U92050,-2(fp)
 	move.w	8(fp),d0
 	move.w	d0,U92050
-	move.w	d0,U98410
+	move.w	d0,intin
 	move.w	#32,contrl
 	clr.w	contrl+2
 	move.w	#1,contrl+6
@@ -6984,10 +6764,10 @@ vsf_color:
 	move.w	#25,contrl
 	clr.w	contrl+2
 	move.w	#1,contrl+6
-	move.w	8(fp),U98410
+	move.w	8(fp),intin
 	jsr	vdi
-	move.w	U92052,-2(fp)
-	move.w	U98720,U92052
+	move.w	prev_color,-2(fp)
+	move.w	intout,prev_color
 	move.w	-2(fp),d0
 	unlk	fp
 	rts
@@ -6997,10 +6777,10 @@ vsf_interior:
 	move.w	#23,contrl
 	clr.w	contrl+2
 	move.w	#1,contrl+6
-	move.w	8(fp),U98410
+	move.w	8(fp),intin
 	jsr	vdi
 	move.w	U92054,-2(fp)
-	move.w	U98720,U92054
+	move.w	intout,U92054
 	move.w	-2(fp),d0
 	unlk	fp
 	rts
@@ -7010,10 +6790,10 @@ vsf_style:
 	move.w	#24,contrl
 	clr.w	contrl+2
 	move.w	#1,contrl+6
-	move.w	8(fp),U98410
+	move.w	8(fp),intin
 	jsr	vdi
 	move.w	U92056,-2(fp)
-	move.w	U98720,U92056
+	move.w	intout,U92056
 	move.w	-2(fp),d0
 	unlk	fp
 	rts
@@ -7073,7 +6853,7 @@ L22116:
 	jsr	L65532
 	addq.l	#2,sp
 	move.l	d0,-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	blt.s	L22282
 	move.l	#-65456,-(sp)
@@ -7081,18 +6861,18 @@ L22116:
 	jsr	L65532
 	addq.l	#2,sp
 	move.l	d0,-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	bgt.s	L22282
 	move.w	-4(fp),(sp)
 	jsr	L65532
 	move.l	d0,-(sp)
-	jsr	L81832
+	jsr	ffp_to_int
 	addq.l	#4,sp
 	move.w	d0,-(sp)
 	movea.w	d7,a0
 	adda.l	a0,a0
-	adda.l	#U98410,a0
+	adda.l	#intin,a0
 	move.w	(sp)+,(a0)
 	addq.w	#1,d7
 L22246:
@@ -7108,16 +6888,16 @@ L22282:
 	unlk	fp
 	rts
 
-L22292:
+lock_and_vdi:
 	link	fp,#-4
-	jsr	L48260
+	jsr	mouse_hide
 	jsr	vdi
 	unlk	fp
 	rts
 
 L22312:
 	link	fp,#-4
-	bsr.s	L22292
+	bsr.s	lock_and_vdi
 	jsr	L33100
 	move.w	#1,U92038
 	jsr	L47940
@@ -7173,8 +6953,7 @@ L22482:
 	move.w	U91956,-(sp)
 	bsr  	L21964
 	addq.l	#4,sp
-	jsr	L33352
-	move.w	d0,(sp)
+	move.w	U92094,(sp)
 	move.w	U91964,-(sp)
 	move.w	U91962,-(sp)
 	bsr  	L21448
@@ -7201,12 +6980,6 @@ L22588:
 	unlk	fp
 	rts
 
-L22656:
-	link	fp,#-4
-	move.w	char_h,d0
-	unlk	fp
-	rts
-
 L22670:
 	link	fp,#-8
 	move.l	10(fp),-4(fp)
@@ -7215,7 +6988,7 @@ L22670:
 	move.l	#U92058,(sp)
 	move.l	10(fp),-(sp)
 	move.w	#8,-(sp)
-	jsr	L50230
+	jsr	memmove
 	addq.l	#6,sp
 	bra.s	L22726
 
@@ -7227,7 +7000,7 @@ L22726:
 	move.w	#129,contrl	; vs_clip
 	move.w	#2,contrl+2
 	move.w	#1,contrl+6
-	move.w	#1,U98410
+	move.w	#1,intin
 	movea.l	-4(fp),a0
 	move.w	(a0),ptsin
 	movea.l	-4(fp),a0
@@ -7259,99 +7032,94 @@ L22840:
 	unlk	fp
 	rts
 
-L22862:
+set_mfdb: ; (*mfdb, *fd_addr, i16 fd_w, i16 fd_h)
 	link	fp,#-4
 	movea.l	8(fp),a0
+	move.l	12(fp),(a0)	; fd_addr
 	move.w	16(fp),d0
-	move.w	d0,4(a0)
+	move.w	d0,4(a0)	; fd_w
 	add.w	#15,d0
 	ext.l	d0
 	divs	#16,d0
-	movea.l	8(fp),a1
-	move.w	d0,8(a1)
-	movea.l	8(fp),a0
-	move.w	18(fp),6(a0)
-	movea.l	8(fp),a0
-	clr.w	10(a0)
-	movea.l	8(fp),a0
-	move.w	nplanes,12(a0)
-	movea.l	8(fp),a0
-	move.l	12(fp),(a0)
+	move.w	18(fp),6(a0)	; fd_h
+	move.w	d0,8(a0)	; fd_wdwidth
+	clr.w	10(a0)		; fd_stand
+	move.w	nplanes,12(a0)	; fd_nplanes
 	unlk	fp
 	rts
 
 init_vdi:
 	link	fp,#-6
-	move.l	#U98410,(sp)
-	jsr	L37408
-	move.l	#U98720,(sp)
-	jsr	L37440
-	move.l	#ptsin,(sp)
-	jsr	L37392
-	move.l	#ptsout,(sp)
-	jsr	L37424
-	move.w	#1,U98410
-	move.w	#1,U98412
-	move.w	#1,U98414
-	move.w	#1,U98416
-	move.w	#1,U98418
-	move.w	#1,U98420
-	move.w	#1,U98422
-	move.w	#1,U98424
-	move.w	#1,U98426
-	move.w	#1,U98428
-	move.w	#2,U98430
+	move.l	#contrl,p_contrl
+	move.l	#intin,p_intin
+	move.l	#intout,p_intout
+	move.l	#ptsin,p_ptsin
+	move.l	#ptsout,p_ptsout
+	move.w	#1,intin
+	move.w	#1,intin+2
+	move.w	#1,intin+4
+	move.w	#1,intin+6
+	move.w	#1,intin+8
+	move.w	#1,intin+10
+	move.w	#1,intin+12
+	move.w	#1,intin+14
+	move.w	#1,intin+16
+	move.w	#1,intin+18
+	move.w	#2,intin+20
 	move.w	#100,contrl	; v_opnvwk
 	clr.w	contrl+2
 	move.w	#11,contrl+6
 	move.w	8(fp),contrl+12
 	jsr	vdi
-	move.w	U98720,d0
+
+	move.w	intout,d0
 	addq.w	#1,d0
 	move.w	d0,screen_w
-	move.w	U98722,d0
+
+	move.w	intout+2,d0
 	addq.w	#1,d0
 	move.w	d0,screen_h
-	move.w	U98746,d0
+
+	move.w	intout+26,d0	; number of colors
 	subq.w	#1,d0
-	move.w	d0,U101126
-	move.w	d0,U101124
-	move.w	#1000,U101128
+	move.w	d0,max_colors
+
 	move.w	#4,U101130
-	move.w	U98742,U101132
-	move.w	U98744,U101142
+	move.w	intout+22,U101132
+	move.w	intout+24,U101142
 	move.w	#7,U101134
-	move.w	U98734,U101136
-	bne.s	L23226
+	move.w	intout+14,U101136
+	bne.s	.L23226
 	move.w	#39,U101136
-L23226:
-	move.w	U98726,U101138
-	move.w	U98728,U101140
+.L23226:
+	move.w	intout+6,U101138
+	move.w	intout+8,U101140
 	move.w	U101140,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688
+	jsr	int_to_ffp
 	addq.l	#4,sp
 	move.l	d0,-(sp)
 	move.w	U101138,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688
+	jsr	int_to_ffp
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81572
+	jsr	fp_div
 	addq.l	#8,sp
 	move.l	d0,U100900
-	clr.w	nplanes
-	move.w	U98746,-2(fp)
-	bra.s	L23326
 
-L23316:
-	addq.w	#1,nplanes
-	asr	-2(fp)
-L23326:
-	cmpi.w	#1,-2(fp)
-	bgt.s	L23316
+	clr.w	d0
+	clr.w	nplanes
+	move.w	intout+26,d0	; number of colors
+	bra.s	.do
+
+.loop:	addq.w	#1,nplanes
+	asr.w	d0
+.do:	cmpi.w	#1,d0
+	bgt.s	.loop
+
 	move.w	#38,contrl	; vqt_attributes
 	clr.w	contrl+2
 	clr.w	contrl+6
@@ -7461,7 +7229,7 @@ L23728:
 	move.w	#114,contrl
 	move.w	#2,contrl+2
 	clr.w	contrl+6
-	bsr  	L22292
+	bsr  	lock_and_vdi
 	move.w	-6(fp),(sp)
 	bsr  	vswr_mode
 	move.w	-4(fp),(sp)
@@ -7476,18 +7244,21 @@ L23832:
 
 L23836:
 	link	fp,#-4
+
 	move.w	screen_h,(sp)
 	move.w	screen_w,-(sp)
 	clr.l	-(sp)
 	move.l	#psrcMFDB,-(sp)
-	bsr  	L22862
+	bsr  	set_mfdb
 	adda.l	#10,sp
+
 	move.w	screen_h,(sp)
 	move.w	screen_w,-(sp)
 	clr.l	-(sp)
 	move.l	#pdesMFDB,-(sp)
-	bsr  	L22862
+	bsr  	set_mfdb
 	adda.l	#10,sp
+
 	move.w	10(fp),ptsin
 	move.w	12(fp),ptsin+2
 	move.w	10(fp),d0
@@ -7508,8 +7279,8 @@ L23836:
 	add.w	20(fp),d0
 	subq.w	#1,d0
 	move.w	d0,ptsin+14
-	move.w	8(fp),U98410
-	bsr  	L24230
+	move.w	8(fp),intin
+	bsr  	vro_cpyfm
 	unlk	fp
 	rts
 
@@ -7517,73 +7288,71 @@ L24012:
 	link	fp,#0
 	movem.l	d6-d7/a5,-(sp)
 	movea.l	8(fp),a5
-	jsr	L48260
+	jsr	mouse_hide
 	move.w	#8,contrl
 	move.w	#1,contrl+2
 	move.w	16(fp),contrl+6
 	move.w	18(fp),ptsin
-	bra.s	L24128
+	bra.s	.L24128
 
-L24064:
+.L24064:
 	move.w	14(fp),d0
 	add.w	d0,20(fp)
 	move.w	20(fp),ptsin+2
 	clr.w	d7
-	bra.s	L24108
+	bra.s	.L24108
 
-L24084:
+.L24084:
 	move.b	0(a5,d7.w),d0
 	ext.w	d0
 	and.w	#255,d0
 	movea.w	d7,a1
 	adda.l	a1,a1
-	adda.l	#U98410,a1
+	adda.l	#intin,a1
 	move.w	d0,(a1)
 	addq.w	#1,d7
-L24108:
+.L24108:
 	cmp.w	16(fp),d7
-	blt.s	L24084
+	blt.s	.L24084
 	jsr	vdi
 	move.w	12(fp),d0
 	ext.l	d0
 	adda.l	d0,a5
-L24128:
+.L24128:
 	move.w	20(fp),d0
 	cmp.w	22(fp),d0
-	blt.s	L24064
+	blt.s	.L24064
 	tst.l	(sp)+
 	movem.l	(sp)+,d7/a5
 	unlk	fp
 	rts
 
-L24148:
+vdi_putchar:
 	link	fp,#-4
-	jsr	L48260
+	jsr	mouse_hide
 	move.w	10(fp),ptsin
-	bsr  	L22656
+	move.w	char_h,d0
 	add.w	12(fp),d0
 	move.w	d0,ptsin+2
 	move.b	9(fp),d0
 	ext.w	d0
 	and.w	#255,d0
-	move.w	d0,U98410
-	move.w	#8,contrl
+	move.w	d0,intin
+	move.w	#8,contrl	; v_gtext
 	move.w	#1,contrl+2
 	move.w	#1,contrl+6
 	jsr	vdi
 	unlk	fp
 	rts
 
-L24230:
+vro_cpyfm:
 	link	fp,#-4
-	move.w	#109,contrl	; vro_cpyfm
+	move.w	#109,contrl
 	move.w	#4,contrl+2
 	move.w	#1,contrl+6
-	move.l	#psrcMFDB,(sp)
-	jsr	L37456
-	move.l	#pdesMFDB,(sp)
-	jsr	L37472
-	bsr  	L22292
+	move.l	#psrcMFDB,contrl+14
+	move.l	#pdesMFDB,contrl+18
+	bsr  	lock_and_vdi
 	unlk	fp
 	rts
 
@@ -7625,7 +7394,7 @@ L24328:
 	bne.s	L24452
 	move.l	fp,(sp)
 	subq.l	#8,(sp)
-	move.l	T87318,-(sp)
+	move.l	temp_pic,-(sp)
 	bsr  	L25344
 	addq.l	#4,sp
 	bra.s	L24472
@@ -7650,24 +7419,23 @@ L24500:
 L24504:
 	link	fp,#-12
 	tst.w	U92040
-	bne.s	L24616
+	bne.s	.return
 	jsr	L33130
 	tst.w	U92036
-	beq.s	L24610
+	beq.s	.L24610
 	tst.w	U99190
-	bne.s	L24610
+	bne.s	.L24610
 	move.w	8(fp),-8(fp)
 	move.w	10(fp),-6(fp)
 	cmpi.w	#2,U92036
-	bne.s	L24578
+	bne.s	.L24578
 	move.l	fp,(sp)
 	subq.l	#8,(sp)
-	move.l	T87318,-(sp)
+	move.l	temp_pic,-(sp)
 	bsr  	L24872
 	addq.l	#4,sp
-	bra.s	L24610
-
-L24578:
+	bra.s	.L24610
+.L24578:
 	move.w	U92046,-4(fp)
 	move.w	U92048,-2(fp)
 	move.l	U92042,(sp)
@@ -7676,18 +7444,18 @@ L24578:
 	clr.w	-(sp)
 	bsr.s	L24620
 	addq.l	#6,sp
-L24610:
+.L24610:
 	jsr	L33100
-L24616:
+.return
 	unlk	fp
 	rts
 
 L24620:
 	link	fp,#0
 	movem.l	d7/a4-a5,-(sp)
+
 	movea.l	10(fp),a0
 	move.w	6(a0),(sp)
-	movea.l	10(fp),a0
 	move.w	4(a0),-(sp)
 	clr.l	-(sp)
 	moveq	#1,d0
@@ -7695,19 +7463,20 @@ L24620:
 	muls	#20,d0
 	add.l	#psrcMFDB,d0
 	move.l	d0,-(sp)
-	bsr  	L22862
+	bsr  	set_mfdb
 	adda.l	#10,sp
+
 	movea.l	10(fp),a0
 	move.w	6(a0),(sp)
-	movea.l	10(fp),a0
 	move.w	4(a0),-(sp)
 	move.l	14(fp),-(sp)
 	move.w	8(fp),d0
 	muls	#20,d0
 	add.l	#psrcMFDB,d0
 	move.l	d0,-(sp)
-	bsr  	L22862
+	bsr  	set_mfdb
 	adda.l	#10,sp
+
 	move.w	8(fp),d0
 	asl.w	#3,d0
 	ext.l	d0
@@ -7721,16 +7490,13 @@ L24620:
 	adda.l	#ptsin,a5
 	movea.l	10(fp),a0
 	move.w	(a0),(a5)
-	movea.l	10(fp),a0
 	move.w	2(a0),2(a5)
-	movea.l	10(fp),a0
 	move.w	(a0),d0
 	movea.l	10(fp),a1
 	move.w	4(a1),d1
 	add.w	d1,d0
 	subq.w	#1,d0
 	move.w	d0,4(a5)
-	movea.l	10(fp),a0
 	move.w	2(a0),d0
 	movea.l	10(fp),a1
 	move.w	6(a1),d1
@@ -7739,16 +7505,14 @@ L24620:
 	move.w	d0,6(a5)
 	clr.w	(a4)
 	clr.w	2(a4)
-	movea.l	10(fp),a0
 	move.w	4(a0),d0
 	subq.w	#1,d0
 	move.w	d0,4(a4)
-	movea.l	10(fp),a0
 	move.w	6(a0),d0
 	subq.w	#1,d0
 	move.w	d0,6(a4)
-	move.w	#3,U98410
-	bsr  	L24230
+	move.w	#3,intin
+	bsr  	vro_cpyfm
 	tst.l	(sp)+
 	movem.l	(sp)+,a4-a5
 	unlk	fp
@@ -7758,38 +7522,38 @@ L24872:
 	link	fp,#-190
 	clr.w	(sp)
 	move.l	8(fp),-(sp)
-	jsr	L77468
+	jsr	Fopen
 	addq.l	#4,sp
 	move.w	d0,-184(fp)
 	cmp.w	#-1,d0
-	bgt.s	L24906
+	bgt.s	.L24906
 	jsr	L69438
-L24906:
+.L24906:
 	move.w	-184(fp),(sp)
 	move.w	#10,-(sp)
 	move.l	fp,-(sp)
 	addi.l	#-180,(sp)
-	jsr	L77520
+	jsr	Fread
 	addq.l	#6,sp
 	cmp.w	#-1,d0
-	bgt.s	L24942
+	bgt.s	.L24942
 	jsr	L69504
-L24942:
+.L24942:
 	move.w	-180(fp),d0
 	cmp.w	nplanes,d0
-	beq.s	L24960
+	beq.s	.L24960
 	jsr	L69624
-L24960:
-	move.l	T87318,d0
+.L24960:
+	move.l	temp_pic,d0
 	cmp.l	8(fp),d0
-	beq.s	L25050
+	beq.s	.L25050
 	move.l	12(fp),(sp)
 	move.l	fp,-(sp)
 	addi.l	#-178,(sp)
 	jsr	L49856
 	addq.l	#4,sp
 	tst.w	d0
-	bne.s	L25050
+	bne.s	.L25050
 	move.w	#1,U92040
 	move.l	fp,(sp)
 	addi.l	#-178,(sp)
@@ -7799,25 +7563,24 @@ L24960:
 	move.l	fp,-(sp)
 	addi.l	#-178,(sp)
 	move.w	#8,-(sp)
-	jsr	L50230
+	jsr	memmove
 	addq.l	#6,sp
-	bra.s	L25076
-
-L25050:
+	bra.s	.L25076
+.L25050:
 	move.l	12(fp),(sp)
 	addq.l	#4,(sp)
 	move.l	fp,-(sp)
 	addi.l	#-174,(sp)
 	move.w	#4,-(sp)
-	jsr	L50230
+	jsr	memmove
 	addq.l	#6,sp
-L25076:
+.L25076:
 	movea.l	12(fp),a0
 	tst.w	6(a0)
-	beq  	L25242
+	beq  	.L25242
 	movea.l	12(fp),a0
 	tst.w	4(a0)
-	beq  	L25242
+	beq  	.L25242
 	movea.l	12(fp),a0
 	move.w	2(a0),d0
 	movea.l	12(fp),a1
@@ -7834,19 +7597,18 @@ L25076:
 	muls	nplanes,d0
 	asl.w	#1,d0
 	move.w	d0,-186(fp)
-	bra.s	L25228
-
-L25164:
+	bra.s	.L25228
+.L25164:
 	move.w	-184(fp),(sp)
 	move.w	-186(fp),-(sp)
 	move.l	fp,-(sp)
 	addi.l	#-180,(sp)
-	jsr	L77520
+	jsr	Fread
 	addq.l	#6,sp
 	cmp.w	#-1,d0
-	bgt.s	L25200
+	bgt.s	.L25200
 	jsr	L69504
-L25200:
+.L25200:
 	move.l	fp,(sp)
 	addi.l	#-180,(sp)
 	move.l	12(fp),-(sp)
@@ -7855,14 +7617,14 @@ L25200:
 	addq.l	#6,sp
 	movea.l	12(fp),a0
 	addq.w	#1,2(a0)
-L25228:
+.L25228:
 	movea.l	12(fp),a0
 	move.w	2(a0),d0
 	cmp.w	-182(fp),d0
-	blt.s	L25164
-L25242:
+	blt.s	.L25164
+.L25242:
 	move.w	-184(fp),(sp)
-	jsr	L77496
+	jsr	Fclose
 	unlk	fp
 	rts
 
@@ -7871,7 +7633,7 @@ L25256:
 	move.w	14(fp),(sp)
 	move.w	12(fp),-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L77554
+	jsr	Fwrite
 	addq.l	#6,sp
 	move.w	d0,-2(fp)
 	cmp.w	#-1,d0
@@ -7899,7 +7661,7 @@ L25344:
 	link	fp,#-190
 	clr.w	(sp)
 	move.l	8(fp),-(sp)
-	jsr	L77664
+	jsr	Fcreate
 	addq.l	#4,sp
 	move.w	d0,-184(fp)
 	cmp.w	#-1,d0
@@ -7911,7 +7673,7 @@ L25378:
 	addi.l	#-178,(sp)
 	move.l	12(fp),-(sp)
 	move.w	#8,-(sp)
-	jsr	L50230
+	jsr	memmove
 	addq.l	#6,sp
 	move.w	-184(fp),(sp)
 	move.w	#10,-(sp)
@@ -7958,7 +7720,7 @@ L25548:
 	cmp.w	-182(fp),d0
 	blt.s	L25496
 	move.w	-184(fp),(sp)
-	jsr	L77496
+	jsr	Fclose
 	cmp.w	#-1,d0
 	bgt.s	L25584
 	jsr	L69570
@@ -7990,7 +7752,7 @@ L25628:
 	subq.l	#8,(sp)
 	move.l	#U100970_x,-(sp)
 	move.w	#8,-(sp)
-	jsr	L50230
+	jsr	memmove
 	addq.l	#6,sp
 	jsr	L33144
 	move.l	fp,-(sp)
@@ -8035,22 +7797,21 @@ L25774:
 	unlk	fp
 	rts
 
-L25788:
+vdi_line:
 	link	fp,#-6
 	move.w	#1,(sp)
 	bsr  	vswr_mode
 	move.w	d0,-2(fp)
-	jsr	L33352
-	move.w	d0,(sp)
+	move.w	U92094,(sp)
 	bsr  	L27190
-	move.w	#6,contrl
+	move.w	#6,contrl	; v_pline
 	move.w	#2,contrl+2
 	clr.w	contrl+6
 	move.w	8(fp),ptsin
 	move.w	10(fp),ptsin+2
 	move.w	12(fp),ptsin+4
 	move.w	14(fp),ptsin+6
-	bsr  	L22292
+	bsr  	lock_and_vdi
 	move.w	-2(fp),(sp)
 	bsr  	vswr_mode
 	unlk	fp
@@ -8061,7 +7822,7 @@ L25886:
 L25890:
 	move.w	#-1,(sp)
 	move.w	#32,-(sp)	; Dosound
-	jsr	xbios
+	trap	#14		; Xbios
 	addq.l	#2,sp
 	tst.w	d0
 	bne.s	L25890
@@ -8088,7 +7849,7 @@ L25964:
 L25972:
 	move.l	#U99606,(sp)
 	move.w	#32,-(sp)	; Dosound
-	jsr	xbios
+	trap	#14		; Xbios
 	addq.l	#2,sp
 	jsr	L61834
 	unlk	fp
@@ -8100,7 +7861,7 @@ L26000:
 	bsr  	L22348
 	move.l	#ptsin,(sp)
 	bsr  	L21016
-	bsr  	L21278
+	bsr  	L21278	
 	add.w	ptsin,d0
 	subq.w	#1,d0
 	move.w	d0,ptsin+4
@@ -8112,26 +7873,29 @@ L26000:
 	move.w	d0,ptsin+6
 	bsr  	L21310
 	tst.w	d0
-	beq.s	L26098
-	move.w	#11,contrl
+	beq.s	.L26098
+	move.w	#11,contrl	; v_bar
 	move.w	#2,contrl+2
 	move.w	#1,contrl+10
-	bra.s	L26178
+	bra.s	.L26178
 
-L26098:
+.L26098:
 	move.w	ptsin+4,d0
 	move.w	d0,ptsin+12
 	move.w	d0,ptsin+8
+
 	move.w	ptsin,d0
 	move.w	d0,ptsin+16
 	move.w	d0,ptsin+4
+
 	move.w	ptsin+2,d0
 	move.w	d0,ptsin+18
 	move.w	d0,ptsin+14
 	move.w	ptsin+6,ptsin+10
-	move.w	#6,contrl
+	move.w	#6,contrl	; v_pline
 	move.w	#5,contrl+2
-L26178:
+
+.L26178:
 	clr.w	contrl+6
 	bsr  	L22312
 	unlk	fp
@@ -8146,9 +7910,9 @@ L26192:
 	bsr  	L21278
 	move.w	d0,ptsin+12
 	bsr  	L21112
-	move.w	d0,U98412
+	move.w	d0,intin+2
 	bsr  	L21112
-	move.w	d0,U98410
+	move.w	d0,intin
 	bsr  	L21362
 	unlk	fp
 	rts
@@ -8177,8 +7941,8 @@ L26254:
 	bra.s	L26376
 
 L26358:
-	clr.w	U98410
-	move.w	#3600,U98412
+	clr.w	intin
+	move.w	#3600,intin+2
 	bsr  	L21362
 L26376:
 	unlk	fp
@@ -8195,7 +7959,7 @@ L26380:
 	move.w	d0,(sp)
 	jsr	L16278
 	move.w	d0,-4(fp)
-	move.w	U101124,(sp)
+	move.w	max_colors,(sp)
 	jsr	L16278
 	move.w	d0,(sp)
 	move.w	-4(fp),-(sp)
@@ -8281,8 +8045,8 @@ L26628:
 L26696:
 	move.w	#2,contrl+6
 	move.w	#6,contrl+10
-	clr.w	U98410
-	move.w	#3600,U98412
+	clr.w	intin
+	move.w	#3600,intin+2
 L26726:
 	move.w	#11,contrl
 	move.w	#2,contrl+2
@@ -8299,7 +8063,7 @@ L26750:
 	move.w	U101136,(sp)
 	jsr	L16278
 	move.w	d0,-4(fp)
-	move.w	U101124,(sp)
+	move.w	max_colors,(sp)
 	jsr	L16278
 	move.w	d0,(sp)
 	move.w	-4(fp),-(sp)
@@ -8316,8 +8080,7 @@ L26830:
 	jsr	L53070
 	move.w	U91964,(sp)
 	jsr	L53070
-	jsr	L33352
-	move.w	d0,(sp)
+	move.w	U92094,(sp)
 	jsr	L53070
 	move.w	#3,(sp)
 	jsr	L62166
@@ -8331,9 +8094,9 @@ L26886:
 	move.w	#1,contrl+6
 	move.w	#63,(sp)
 	jsr	L61658
-	move.w	d0,U98410
+	move.w	d0,intin
 	jsr	vdi
-	move.w	U98720,U92034
+	move.w	intout,U92034
 	jsr	L61834
 	unlk	fp
 	rts
@@ -8345,7 +8108,7 @@ L26954:
 	unlk	fp
 	rts
 
-L26974:
+word_sysfacts:
 	link	fp,#-16
 	move.l	fp,(sp)
 	subq.l	#8,(sp)
@@ -8365,11 +8128,10 @@ L26974:
 	jsr	L53070
 	move.w	-8(fp),(sp)
 	jsr	L53070
-	move.w	U101124,(sp)
+	move.w	max_colors,(sp)
 	jsr	L53070
-	jsr	L37600
-	move.l	d0,-(sp)
-	jsr	L81688
+	move.l	grph_buffer,-(sp)
+	jsr	int_to_ffp
 	addq.l	#4,sp
 	move.l	d0,-12(fp)
 	move.l	-12(fp),(sp)
@@ -8385,7 +8147,7 @@ L27114:
 	link	fp,#-4
 	move.w	8(fp),(sp)
 	bsr  	init_vdi
-	move.w	T84996,(sp)
+	move.w	#1,(sp)
 	move.w	#1,-(sp)
 	move.w	#1,-(sp)
 	bsr  	L21964
@@ -8396,17 +8158,13 @@ L27114:
 	bsr  	L21448
 	addq.l	#4,sp
 	tst.w	contrl+12
-	bne.s	L27176
+	bne.s	.L27176
 	clr.w	d0
-	bra.s	L27178
+	bra.s	.L27178
 
-L27176:
+.L27176:
 	moveq	#1,d0
-L27178:
-	unlk	fp
-	rts
-
-	link	fp,#-4
+.L27178:
 	unlk	fp
 	rts
 
@@ -8415,7 +8173,7 @@ L27190:
 	move.w	#17,contrl
 	clr.w	contrl+2
 	move.w	#1,contrl+6
-	move.w	8(fp),U98410
+	move.w	8(fp),intin
 	jsr	vdi
 	unlk	fp
 	rts
@@ -8423,36 +8181,40 @@ L27190:
 L27234:
 	link	fp,#-10
 	move.w	16(fp),(sp)
-	andi.w	#255,(sp)
+	andi.w	#$FF,(sp)
 	bsr.s	L27190
 	move.w	16(fp),d0
 	asr.w	#8,d0
 	cmp.w	#2,d0
-	bne.s	L27266
+	bne.s	.L27266
 	move.w	#3,(sp)
-	bra.s	L27270
+	bra.s	.L27270
 
-L27266:
+.L27266:
 	move.w	#1,(sp)
-L27270:
+.L27270:
 	bsr  	vswr_mode
 	move.w	d0,-2(fp)
-	move.w	#6,contrl
+
+	move.w	#6,contrl	; v_pline
 	move.w	#2,contrl+2
 	clr.w	contrl+6
+
 	move.w	U100970_x,d0
+	move.w	d0,d1
 	add.w	8(fp),d0
+	add.w	12(fp),d1
 	move.w	d0,ptsin
+	move.w	d1,ptsin+4
+
 	move.w	U100972_y,d0
+	move.w	d0,d1
 	add.w	10(fp),d0
+	add.w	14(fp),d1
 	move.w	d0,ptsin+2
-	move.w	U100970_x,d0
-	add.w	12(fp),d0
-	move.w	d0,ptsin+4
-	move.w	U100972_y,d0
-	add.w	14(fp),d0
-	move.w	d0,ptsin+6
-	bsr  	L22292
+	move.w	d1,ptsin+6
+
+	bsr  	lock_and_vdi
 	move.w	#1,U92038
 	move.w	-2(fp),(sp)
 	bsr  	vswr_mode
@@ -8463,45 +8225,45 @@ L27388:
 	link	fp,#-4
 	bsr  	L21310
 	tst.w	d0
-	beq.s	L27476
+	beq.s	.return
 	bsr  	L22348
-	move.w	#103,contrl
+	move.w	#103,contrl	; v_contourfill
 	move.w	#1,contrl+2
 	move.w	#1,contrl+6
-	move.w	#-1,U98410
+	move.w	#-1,intin
 	move.w	U100970_x,d0
-	add.w	U99860,d0
+	add.w	U99860_x,d0
 	move.w	d0,ptsin
 	move.w	U100972_y,d0
-	add.w	U100564,d0
+	add.w	U100564_y,d0
 	move.w	d0,ptsin+2
 	bsr  	L22312
-L27476:
+.return:
 	unlk	fp
 	rts
 
-L27480:
+vs_color:
 	link	fp,#-4
 	move.w	#14,contrl
 	clr.w	contrl+2
 	move.w	#4,contrl+6
-	move.w	8(fp),U98410
-	move.w	10(fp),U98412
-	move.w	12(fp),U98414
-	move.w	14(fp),U98416
+	move.w	8(fp),intin
+	move.w	10(fp),intin+2
+	move.w	12(fp),intin+4
+	move.w	14(fp),intin+6
 	jsr	vdi
 	unlk	fp
 	rts
 
-L27548:
+vq_color:
 	link	fp,#-4
 	move.w	#26,contrl
 	clr.w	contrl+2
 	move.w	#2,contrl+6
-	move.w	8(fp),U98410
-	move.w	#1,U98412
+	move.w	8(fp),intin
+	move.w	#1,intin+2
 	jsr	vdi
-	move.l	#U98722,d0
+	move.l	#intout+2,d0
 	unlk	fp
 	rts
 
@@ -8510,18 +8272,18 @@ L27606:
 	movem.l	d6-d7,-(sp)
 	move.w	8(fp),d7
 	btst	#7,d7
-	beq.s	L27628
+	beq.s	.L27628
 	or.w	#-256,d7
-L27628:
+.L27628:
 	btst	#1,11(fp)
-	beq.s	L27642
+	beq.s	.L27642
 	move.w	d7,d0
 	neg.w	d0
-	bra.s	L27644
+	bra.s	.L27644
 
-L27642:
+.L27642:
 	move.w	d7,d0
-L27644:
+.L27644:
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
 	unlk	fp
@@ -8565,15 +8327,16 @@ turtle_draw:
 	move.l	d1,a1
 	add.l	turtle_p,a1
 	move.w	U100970_x,d0
-	add.w	U99860,d0
+	add.w	U99860_x,d0
 	move.w	d0,ptsin
 	move.w	d0,ptsin+16
 	move.w	U100972_y,d0
-	add.w	U100564,d0
+	add.w	U100564_y,d0
 	move.w	d0,ptsin+2
 	move.w	d0,ptsin+18
 	moveq	#2,d7
 	bra.s	.L27958
+
 .L27860:
 	move.w	d2,(sp)
 	addq.l	#1,a1
@@ -8585,7 +8348,7 @@ turtle_draw:
 	move.w	d0,-(sp)
 	move.w	U100970_x,d0
 	add.w	d0,(sp)
-	move.w	U99860,d0
+	move.w	U99860_x,d0
 	add.w	d0,(sp)
 	movea.w	d7,a0
 	adda.l	a0,a0
@@ -8603,7 +8366,7 @@ turtle_draw:
 	move.w	d0,-(sp)
 	move.w	U100972_y,d0
 	add.w	d0,(sp)
-	move.w	U100564,d0
+	move.w	U100564_y,d0
 	add.w	d0,(sp)
 	movea.w	d7,a0
 	adda.l	a0,a0
@@ -8616,7 +8379,7 @@ turtle_draw:
 	move.w	#6,contrl	; v_pline
 	move.w	#5,contrl+2
 	clr.w	contrl+6
-	bsr  	L22292
+	bsr  	lock_and_vdi
 	move.w	#-1,(sp)
 	move.w	-4(fp),-(sp)
 	move.w	-6(fp),-(sp)
@@ -8795,7 +8558,7 @@ L28438:
 	jsr	L45356
 	clr.w	(sp)
 	move.l	a5,-(sp)
-	jsr	L77612
+	jsr	Dgetpath
 	addq.l	#4,sp
 	cmpi.w	#1,12(fp)
 	bne.s	L28484
@@ -8813,7 +8576,8 @@ L28490:
 	jsr	L83706
 	addq.l	#4,sp
 	clr.b	40(a5)
-	jsr	L48330
+	jsr	mouse_show
+
 	move.l	fp,(sp)
 	subq.l	#2,(sp)
 	move.l	a5,-(sp)
@@ -8821,6 +8585,7 @@ L28490:
 	move.l	a5,-(sp)
 	jsr	fsel_input
 	addq.l	#8,sp
+
 	move.l	a5,(sp)
 	jsr	L83914
 	move.w	d0,d7
@@ -8855,35 +8620,33 @@ L28600:
 	unlk	fp
 	rts
 
-L28632:
-	link	fp,#-4
+word_setpal:
+	movem.l	d3-d5,-(sp)
 	jsr	L15980
-	move.w	d0,U92066
+	move.w	d0,d3
 	jsr	L16090
-	move.w	U101128,(sp)
+	move.w	#1000,-(sp)
 	jsr	L16278
-	move.w	d0,U92068
-	move.w	U101128,(sp)
+	move.w	d0,d4
 	jsr	L16278
-	move.w	d0,U92070
-	move.w	U101128,(sp)
+	move.w	d0,d5
 	jsr	L16278
 	move.w	d0,(sp)
-	move.w	U92070,-(sp)
-	move.w	U92068,-(sp)
-	move.w	U92066,-(sp)
-	jsr	L27480
-	addq.l	#6,sp
+	move.w	d5,-(sp)
+	move.w	d4,-(sp)
+	move.w	d3,-(sp)
+	jsr	vs_color
 	jsr	L61834
-	unlk	fp
+	addq	#8,sp
+	movem.l	(sp)+,d3-d5
 	rts
 
-L28740:
+word_pal:
 	link	fp,#0
 	movem.l	d7/a5,-(sp)
 	jsr	L15980
 	move.w	d0,(sp)
-	jsr	L27548
+	jsr	vq_color
 	movea.l	d0,a5
 	move.w	(a5),(sp)
 	jsr	L53070
@@ -8900,119 +8663,109 @@ L28740:
 	unlk	fp
 	rts
 
-L28812:
+word_turtletext:
 	link	fp,#-6
-	movem.l	d5-d7,-(sp)
+	movem.l	d6-d7,-(sp)
 	move.w	#1,-6(fp)
 	move.w	#1,(sp)
 	jsr	L61064
 	move.w	d0,(sp)
 	jsr	L8638
-	jsr	L33352
-	move.w	d0,-2(fp)
+	move.w	U92094,-2(fp)
 	move.w	#2,-4(fp)
 	jsr	L33300
-	bra.s	L28896
-
-L28868:
+	bra.s	.L28896
+.L28868:
 	clr.w	-6(fp)
-	bra.s	L28912
-
-L28874:
+	bra.s	.L28912
+.L28874:
 	jsr	L33160
 	move.w	d0,-2(fp)
-	bra.s	L28912
-
-L28886:
+	bra.s	.L28912
+.L28886:
 	move.w	#3,-4(fp)
-	bra.s	L28912
-
-	bra.s	L28912
-
-L28896:
+	bra.s	.L28912
+	bra.s	.L28912
+.L28896:
 	tst.w	d0
-	beq.s	L28868
+	beq.s	.L28868
 	cmp.w	#2,d0
-	beq.s	L28886
+	beq.s	.L28886
 	cmp.w	#3,d0
-	beq.s	L28874
-L28912:
+	beq.s	.L28874
+.L28912:
 	jsr	L22348
 	jsr	L9350
 	jsr	L64224
 	move.w	d0,d7
-	bra.s	L28972
-
-L28934:
-	move.w	d7,(sp)
-	jsr	L358
+	bra.s	.L28972
+.L28934:
+	move.w	d7,d0
+	jsr	L358_1d
 	move.w	d0,U101046
 	jsr	L18616
-	move.w	d7,(sp)
-	jsr	L378
+	move.w	d7,d0
+	jsr	L378_1d
 	move.w	d0,d7
-	beq.s	L28972
+	beq.s	.L28972
 	jsr	L76978
-L28972:
+.L28972:
 	tst.w	d7
-	bne.s	L28934
+	bne.s	.L28934
 	jsr	L9388
 	move.w	-4(fp),(sp)
 	jsr	vswr_mode
 	move.w	d0,-4(fp)
 	move.w	-2(fp),(sp)
-	bsr  	L29170
+	bsr  	vst_color
 	move.w	#8,contrl
 	move.w	#1,contrl+2
 	move.w	U99178,contrl+6
 	move.w	U100970_x,d0
-	add.w	U99860,d0
+	add.w	U99860_x,d0
 	move.w	d0,ptsin
 	move.w	U100972_y,d0
-	add.w	U100564,d0
+	add.w	U100564_y,d0
 	move.w	d0,ptsin+2
 	clr.w	d6
-	bra.s	L29104
-
-L29070:
+	bra.s	.L29104
+.L29070:
 	movea.l	U101030,a0
 	move.b	(a0),d0
 	ext.w	d0
 	and.w	#255,d0
 	movea.w	d6,a1
 	adda.l	a1,a1
-	adda.l	#U98410,a1
+	adda.l	#intin,a1
 	move.w	d0,(a1)
 	addq.l	#1,U101030
 	addq.w	#1,d6
-L29104:
+.L29104:
 	cmp.w	U99178,d6
-	bcs.s	L29070
+	bcs.s	.L29070
 	tst.w	-6(fp)
-	beq.s	L29126
+	beq.s	.L29126
 	jsr	L22312
-	bra.s	L29144
-
-L29126:
+	bra.s	.L29144
+.L29126:
 	jsr	L33100
 	jsr	L47940
 	jsr	L61834
-L29144:
+.L29144:
 	move.w	-4(fp),(sp)
 	jsr	vswr_mode
 	move.w	#1,(sp)
-	bsr.s	L29170
-	tst.l	(sp)+
+	bsr.s	vst_color
 	movem.l	(sp)+,d6-d7
 	unlk	fp
 	rts
 
-L29170:
+vst_color:
 	link	fp,#-4
 	move.w	#22,contrl
 	clr.w	contrl+2
 	move.w	#1,contrl+6
-	move.w	8(fp),U98410
+	move.w	8(fp),intin
 	jsr	vdi
 	unlk	fp
 	rts
@@ -9044,8 +8797,7 @@ L29214:
 	bra  	L29456
 
 L29308:
-	jsr	L33882
-	move.l	d0,-(sp)
+	move.l	U92124,-(sp)
 	jsr	L33780
 	move.l	d0,-(sp)
 	move.w	-8(fp),d0
@@ -9054,22 +8806,21 @@ L29308:
 	sub.w	d1,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688
+	jsr	int_to_ffp
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81572
+	jsr	fp_div
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	jsr	L81510
+	jsr	fp_add
 	addq.l	#8,sp
 	move.l	d0,-12(fp)
-	jsr	L33896
-	move.l	d0,-(sp)
+	move.l	U92128,-(sp)
 	jsr	L34692
 	move.l	d0,-(sp)
 	jsr	L33780
 	move.l	d0,-(sp)
-	jsr	L81968
+	jsr	fp_mul
 	addq.l	#8,sp
 	move.l	d0,-(sp)
 	move.w	U101122,d0
@@ -9077,13 +8828,13 @@ L29308:
 	sub.w	-6(fp),d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688
+	jsr	int_to_ffp
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81572
+	jsr	fp_div
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	jsr	L81510
+	jsr	fp_add
 	addq.l	#8,sp
 	move.l	d0,-16(fp)
 L29456:
@@ -9196,8 +8947,7 @@ L29740:
 L29826:
 	link	fp,#-4
 	move.l	8(fp),U92072
-	jsr	L34468
-	tst.w	d0
+	tst.w	turtle_show_flag
 	beq.s	L29854
 	move.w	#8,(sp)
 	bra.s	L29858
@@ -9215,18 +8965,15 @@ L29858:
 	bsr  	L29556
 	addq.l	#2,sp
 	move.w	#3,(sp)
-	jsr	L34018
-	move.l	d0,-(sp)
+	move.l	U99808,-(sp)
 	bsr  	L29650
 	addq.l	#4,sp
 	move.w	#4,(sp)
-	jsr	L34032
-	move.l	d0,-(sp)
+	move.l	U99812,-(sp)
 	bsr  	L29650
 	addq.l	#4,sp
 	move.w	#5,(sp)
-	jsr	L33566
-	move.l	d0,-(sp)
+	move.l	U92078,-(sp)
 	bsr  	L29650
 	addq.l	#4,sp
 	unlk	fp
@@ -9240,15 +8987,15 @@ L29948:
 	bsr  	L29590
 	tst.w	d0
 	beq  	L30266
-	jsr	L48374
+	jsr	wind_update_begin
 	jsr	L48234
 	jsr	L46108
-	jsr	L48392
+	jsr	wind_update_end
 	move.w	#8,(sp)
 	bsr  	L29590
 	tst.w	d0
 	beq.s	L30022
-	jsr	L34440
+	jsr	turtle_show
 	bra.s	L30040
 
 L30022:
@@ -9257,7 +9004,7 @@ L30022:
 	tst.w	d0
 L30032:
 	beq.s	L30040
-	jsr	L34414
+	jsr	turtle_hide
 L30040:
 	moveq	#12,d7
 	bra.s	L30046
@@ -9328,14 +9075,14 @@ L30170:
 	beq.s	L30258
 	move.l	#-130993,-(sp)
 	move.l	-12(fp),-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	ble.s	L30220
 	move.l	#-130993,-12(fp)
 L30220:
 	move.l	#-130865,-(sp)
 	move.l	-12(fp),-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	bge.s	L30248
 	move.l	#-130865,-12(fp)
@@ -9391,18 +9138,16 @@ L30334:
 	bsr  	L29650
 	addq.l	#4,sp
 	move.w	#3,(sp)
-	jsr	L33882
-	move.l	d0,-(sp)
+	move.l	U92124,-(sp)
 	bsr  	L29650
 	addq.l	#4,sp
 	move.w	#6,(sp)
-	jsr	L33896
-	move.l	d0,-(sp)
+	move.l	U92128,-(sp)
 	bsr  	L29650
 	addq.l	#4,sp
-	jsr	L34634
+	move.w	window_mode,d0
+	addi.w	#11,d0
 	move.w	d0,(sp)
-	addi.w	#11,(sp)
 	move.w	#1,-(sp)
 	bsr  	L29556
 	addq.l	#2,sp
@@ -9529,7 +9274,7 @@ L30702:
 	jsr	L50202
 	addq.l	#2,sp
 	move.w	d0,-10(fp)
-	move.w	U101126,(sp)
+	move.w	max_colors,(sp)
 	move.w	#11,-(sp)
 	bsr  	L31540
 	addq.l	#2,sp
@@ -9578,8 +9323,7 @@ L30972:
 	move.w	d0,-2(fp)
 	jsr	L25732
 	move.w	d0,-4(fp)
-	jsr	L33352
-	move.w	d0,-6(fp)
+	move.w	U92094,-6(fp)
 	move.w	U101134,(sp)
 	move.w	#13,-(sp)
 	bsr  	L31540
@@ -9596,7 +9340,7 @@ L30972:
 	jsr	L50202
 	addq.l	#2,sp
 	move.w	d0,-10(fp)
-	move.w	U101124,(sp)
+	move.w	max_colors,(sp)
 	move.w	#16,-(sp)
 	bsr  	L31540
 	addq.l	#2,sp
@@ -9644,7 +9388,7 @@ L30972:
 	move.w	12(a0),-(sp)
 	movea.l	8(fp),a0
 	move.w	10(a0),-(sp)
-	jsr	L25788
+	jsr	vdi_line
 	addq.l	#6,sp
 	clr.w	(sp)
 	jsr	L22670
@@ -9660,7 +9404,7 @@ L30972:
 L31302:
 	link	fp,#-6
 	move.w	#17,U92076
-	move.w	U101126,(sp)
+	move.w	max_colors,(sp)
 	move.w	#17,-(sp)
 	bsr  	L31540
 	addq.l	#2,sp
@@ -9741,19 +9485,18 @@ L31540:
 	unlk	fp
 	rts
 
-L31596:
+dialog_graphics_setup:
 	link	fp,#-4
 	move.l	8(fp),U92072
 	move.w	#8,U92076
 	jsr	L21310
 	tst.w	d0
-	beq.s	L31632
+	beq.s	.L31632
 	move.w	#6,(sp)
-	bra.s	L31636
-
-L31632:
+	bra.s	.L31636
+.L31632:
 	move.w	#7,(sp)
-L31636:
+.L31636:
 	move.w	#1,-(sp)
 	bsr  	L29556
 	addq.l	#2,sp
@@ -9783,8 +9526,7 @@ L31636:
 	bsr  	L31452
 	addq.l	#2,sp
 	move.w	#16,(sp)
-	jsr	L33352
-	move.w	d0,-(sp)
+	move.w	U92094,-(sp)
 	bsr  	L31452
 	addq.l	#2,sp
 	move.w	#17,(sp)
@@ -9859,7 +9601,7 @@ L31968:
 	jsr	L50202
 	addq.l	#2,sp
 	move.w	d0,-4(fp)
-	move.w	U101126,(sp)
+	move.w	max_colors,(sp)
 	move.w	#11,-(sp)
 	bsr  	L31540
 	addq.l	#2,sp
@@ -9888,7 +9630,7 @@ L31968:
 	jsr	L50202
 	addq.l	#2,sp
 	move.w	d0,-4(fp)
-	move.w	U101124,(sp)
+	move.w	max_colors,(sp)
 	move.w	#16,-(sp)
 	bsr  	L31540
 	addq.l	#2,sp
@@ -9901,7 +9643,7 @@ L31968:
 	move.w	-2(fp),-(sp)
 	jsr	L21448
 	addq.l	#4,sp
-	move.w	U101126,(sp)
+	move.w	max_colors,(sp)
 	move.w	#17,-(sp)
 	bsr  	L31540
 	addq.l	#2,sp
@@ -9931,7 +9673,7 @@ L32300:
 
 L32304:
 	link	fp,#-6
-L32308:
+.loop:
 	clr.l	(sp)
 	move.w	#257,-(sp)
 	jsr	graf_mouse
@@ -9947,14 +9689,13 @@ L32308:
 	move.w	#2,(sp)
 	bsr  	L29590
 	move.w	d0,-2(fp)
-	bne.s	L32382
+	bne.s	.return
 	move.w	#3,(sp)
 	bsr  	L29590
 	tst.w	d0
-	bne.s	L32382
-	bra.s	L32308
-
-L32382:
+	bne.s	.return
+	bra.s	.loop
+.return:
 	move.w	-2(fp),d0
 	unlk	fp
 	rts
@@ -9974,17 +9715,17 @@ L32390:
 	sub.w	U92100,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688
+	jsr	int_to_ffp
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81572
+	jsr	fp_div
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	jsr	L81572
+	jsr	fp_div
 	addq.l	#8,sp
 	move.l	d0,-(sp)
 	move.l	U99808,-(sp)
-	jsr	L81510
+	jsr	fp_add
 	addq.l	#8,sp
 	move.l	d0,U99808
 	move.l	U92136,-(sp)
@@ -9993,17 +9734,17 @@ L32390:
 	sub.w	-4(fp),d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688
+	jsr	int_to_ffp
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81572
+	jsr	fp_div
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	jsr	L81572
+	jsr	fp_div
 	addq.l	#8,sp
 	move.l	d0,-(sp)
 	move.l	U99812,-(sp)
-	jsr	L81510
+	jsr	fp_add
 	addq.l	#8,sp
 	move.l	d0,U99812
 L32592:
@@ -10014,30 +9755,30 @@ L32596:
 	link	fp,#-8
 	tst.w	U99190
 	bne  	L32748
-	move.w	U99860,-2(fp)
-	move.w	U100564,-4(fp)
+	move.w	U99860_x,-2(fp)
+	move.w	U100564_y,-4(fp)
 	bsr  	L34368
 	move.w	-2(fp),d0
-	cmp.w	U99860,d0
+	cmp.w	U99860_x,d0
 	bne.s	L32654
 	move.w	-2(fp),d0
-	cmp.w	U100564,d0
+	cmp.w	U100564_y,d0
 	beq.s	L32702
 L32654:
-	move.w	-2(fp),U99860
-	move.w	-4(fp),U100564
+	move.w	-2(fp),U99860_x
+	move.w	-4(fp),U100564_y
 	jsr	turtle_draw
-	move.w	U92118,U99860
-	move.w	U92120,U100564
+	move.w	U92118,U99860_x
+	move.w	U92120,U100564_y
 	jsr	turtle_draw
 L32702:
-	move.w	U100564,(sp)
-	move.w	U99860,-(sp)
+	move.w	U100564_y,(sp)
+	move.w	U99860_x,-(sp)
 	bsr  	L36410
 	addq.l	#2,sp
 	tst.w	d0
 	beq.s	L32748
-	tst.w	U92086
+	tst.w	window_mode
 	beq.s	L32748
 	jsr	turtle_draw
 	bsr  	L34706
@@ -10075,14 +9816,14 @@ L32752:
 L32858:
 	link	fp,#-4
 	move.w	#1,U92122
-	move.l	T85048,d0
+	clr.l	d0
 	move.l	d0,U92078
 	move.l	d0,U99812
 	move.l	d0,U99808
 	clr.w	U92082
 	clr.w	turtle_show_flag
-	clr.w	U92086
-	move.l	T85032,U92088
+	clr.w	window_mode
+	move.l	#$80000041,U92088
 	clr.w	d0
 	move.w	d0,U92102
 	move.w	d0,U92098
@@ -10090,46 +9831,46 @@ L32858:
 	move.w	U101140,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688
+	jsr	int_to_ffp
 	addq.l	#4,sp
 	move.l	d0,-(sp)
 	move.w	U101138,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688
+	jsr	int_to_ffp
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81572
+	jsr	fp_div
 	addq.l	#8,sp
 	move.l	d0,(sp)
 	bsr  	L34648
-	move.w	T84998,(sp)
+	clr.w	(sp)
 	bsr  	L33174
-	move.w	T84996,(sp)
+	move.w	#1,(sp)
 	bsr  	L33316
 	move.w	#256,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688
+	jsr	int_to_ffp
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	move.w	T85004,d0
+	move.w	#256,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688
+	jsr	int_to_ffp
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81572
+	jsr	fp_div
 	addq.l	#8,sp
 	move.l	d0,(sp)
 	bsr  	L33736
-	move.l	T85048,(sp)
-	move.l	T85048,-(sp)
+	clr.l	(sp)
+	clr.l	-(sp)
 	bsr  	L33794
 	addq.l	#4,sp
 	bsr  	L33580
 	bsr  	L33212
-	bsr  	L34440
+	bsr  	turtle_show
 	unlk	fp
 	rts
 
@@ -10174,17 +9915,12 @@ L33174:
 	rts
 
 L33212:
-	link	fp,#-4
 	move.b	#1,U92092
-	bsr  	L33352
-	move.b	d0,U92093
-	unlk	fp
+	move.b	U92094,U92093
 	rts
 
 L33238:
-	link	fp,#-4
 	clr.b	U92092
-	unlk	fp
 	rts
 
 L33252:
@@ -10196,11 +9932,8 @@ L33252:
 	rts
 
 L33276:
-	link	fp,#-4
 	move.b	#2,U92092
-	bsr.s	L33352
-	move.b	d0,U92093
-	unlk	fp
+	move.b	U92094,U92093
 	rts
 
 L33300:
@@ -10215,16 +9948,10 @@ L33316:
 	move.w	8(fp),U92094
 	bsr.s	L33300
 	cmp.w	#3,d0
-	beq.s	L33348
+	beq.s	.return
 	move.w	U92094,d0
 	move.b	d0,U92093
-L33348:
-	unlk	fp
-	rts
-
-L33352:
-	link	fp,#-4
-	move.w	U92094,d0
+.return:
 	unlk	fp
 	rts
 
@@ -10236,10 +9963,10 @@ L33366:
 	jsr	L36612
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81968
+	jsr	fp_mul
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	jsr	L81510
+	jsr	fp_add
 	addq.l	#8,sp
 	move.l	d0,(sp)
 	move.l	U99808,-(sp)
@@ -10248,10 +9975,10 @@ L33366:
 	jsr	L36642
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81968
+	jsr	fp_mul
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	jsr	L81510
+	jsr	fp_add
 	addq.l	#8,sp
 	move.l	d0,-(sp)
 	bsr  	L35228
@@ -10263,7 +9990,7 @@ L33472:
 	link	fp,#-4
 	move.l	8(fp),-(sp)
 	move.l	U92078,-(sp)
-	jsr	L81510
+	jsr	fp_add
 	addq.l	#8,sp
 	move.l	d0,(sp)
 	bsr.s	L33502
@@ -10277,16 +10004,10 @@ L33502:
 	bsr  	L36300
 	move.l	d0,U92078
 	move.l	d0,-(sp)
-	jsr	L81832
+	jsr	ffp_to_int
 	addq.l	#4,sp
 	move.w	d0,U92082
 	jsr	turtle_draw
-	unlk	fp
-	rts
-
-L33566:
-	link	fp,#-4
-	move.l	U92078,d0
 	unlk	fp
 	rts
 
@@ -10341,7 +10062,7 @@ L33736:
 	move.l	8(fp),d0
 	move.l	d0,U92132
 	move.l	d0,-(sp)
-	jsr	L81968
+	jsr	fp_mul
 	addq.l	#8,sp
 	move.l	d0,U92136
 	bsr  	L34368
@@ -10356,16 +10077,16 @@ L33780:
 
 L33794:
 	link	fp,#-4
-	tst.w	U92086
+	tst.w	window_mode
 	beq.s	L33858
-	move.l	T85048,-(sp)
+	clr.l	-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	bne.s	L33846
-	move.l	T85048,-(sp)
+	clr.l	-(sp)
 	move.l	12(fp),-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	beq.s	L33858
 L33846:
@@ -10378,23 +10099,11 @@ L33858:
 	unlk	fp
 	rts
 
-L33882:
-	link	fp,#-4
-	move.l	U92124,d0
-	unlk	fp
-	rts
-
-L33896:
-	link	fp,#-4
-	move.l	U92128,d0
-	unlk	fp
-	rts
-
 L33910:
 	link	fp,#-4
-	move.l	T85032,-(sp)
+	move.l	#$80000041,-(sp)
 	move.l	U92132,-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	bne.s	L33942
 	move.l	8(fp),d0
@@ -10403,7 +10112,7 @@ L33910:
 L33942:
 	move.l	8(fp),-(sp)
 	move.l	U92132,-(sp)
-	jsr	L81968
+	jsr	fp_mul
 	addq.l	#8,sp
 L33960:
 	unlk	fp
@@ -10411,9 +10120,9 @@ L33960:
 
 L33964:
 	link	fp,#-4
-	move.l	T85032,-(sp)
+	move.l	#$80000041,-(sp)
 	move.l	U92136,-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	bne.s	L33996
 	move.l	8(fp),d0
@@ -10422,21 +10131,9 @@ L33964:
 L33996:
 	move.l	8(fp),-(sp)
 	move.l	U92136,-(sp)
-	jsr	L81968
+	jsr	fp_mul
 	addq.l	#8,sp
 L34014:
-	unlk	fp
-	rts
-
-L34018:
-	link	fp,#-4
-	move.l	U99808,d0
-	unlk	fp
-	rts
-
-L34032:
-	link	fp,#-4
-	move.l	U99812,d0
 	unlk	fp
 	rts
 
@@ -10455,10 +10152,10 @@ L34046:
 	move.w	U92114,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688
+	jsr	int_to_ffp
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81510
+	jsr	fp_add
 	addq.l	#8,sp
 	move.l	d0,8(fp)
 	move.l	U92128,-(sp)
@@ -10474,7 +10171,7 @@ L34046:
 	move.w	U92116,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688
+	jsr	int_to_ffp
 	addq.l	#4,sp
 	move.l	d0,-(sp)
 	jsr	L82028
@@ -10486,20 +10183,20 @@ L34046:
 	move.l	12(fp),(sp)
 	jsr	L3058
 	move.l	d0,-8(fp)
-	move.l	T85040,-(sp)
+	move.l	#$FA00004F,-(sp)
 	move.l	-4(fp),-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	bgt.s	L34250
-	move.l	T85040,-(sp)
+	move.l	#$FA00004F,-(sp)
 	move.l	-8(fp),-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	ble.s	L34336
 L34250:
 	move.l	-8(fp),-(sp)
 	move.l	-4(fp),-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	ble.s	L34274
 	move.l	-4(fp),-(sp)
@@ -10508,18 +10205,18 @@ L34250:
 L34274:
 	move.l	-8(fp),-(sp)
 L34278:
-	move.l	T85040,-(sp)
-	jsr	L81572
+	move.l	#$FA00004F,-(sp)
+	jsr	fp_div
 	addq.l	#8,sp
 	move.l	d0,-4(fp)
 	move.l	-4(fp),-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81968
+	jsr	fp_mul
 	addq.l	#8,sp
 	move.l	d0,8(fp)
 	move.l	-4(fp),-(sp)
 	move.l	12(fp),-(sp)
-	jsr	L81968
+	jsr	fp_mul
 	addq.l	#8,sp
 	move.l	d0,12(fp)
 L34336:
@@ -10538,55 +10235,43 @@ L34368:
 	move.l	U99808,-(sp)
 	bsr  	L34046
 	addq.l	#4,sp
-	move.w	U92118,U99860
-	move.w	U92120,U100564
+	move.w	U92118,U99860_x
+	move.w	U92120,U100564_y
 	unlk	fp
 	rts
 
-L34414:
-	link	fp,#-4
-	bsr.s	L34468
-	tst.w	d0
-	beq.s	L34436
+turtle_hide:
+	tst.w	turtle_show_flag
+	beq.s	.return
 	jsr	turtle_draw
 	clr.w	turtle_show_flag
-L34436:
-	unlk	fp
+.return:
 	rts
 
-L34440:
-	link	fp,#-4
-	bsr.s	L34468
-	tst.w	d0
-	bne.s	L34464
+turtle_show:
+	tst.w	turtle_show_flag
+	bne.s	.return
 	move.w	#1,turtle_show_flag
 	jsr	turtle_draw
-L34464:
-	unlk	fp
-	rts
-
-L34468:
-	link	fp,#-4
-	move.w	turtle_show_flag,d0
-	unlk	fp
+.return:
 	rts
 
 L34482:
 	link	fp,#-4
-	clr.w	U92086
+	clr.w	window_mode
 	unlk	fp
 	rts
 
 L34496:
 	link	fp,#-4
-	move.l	T85048,-(sp)
+	clr.l	-(sp)
 	move.l	U92124,-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	bne.s	L34544
-	move.l	T85048,-(sp)
+	clr.l	-(sp)
 	move.l	U92128,-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	beq.s	L34550
 L34544:
@@ -10599,7 +10284,7 @@ L34554:
 	link	fp,#-4
 	bsr.s	L34496
 	jsr	turtle_draw
-	move.w	#1,U92086
+	move.w	#1,window_mode
 	bsr  	L34706
 	jsr	turtle_draw
 	unlk	fp
@@ -10607,8 +10292,8 @@ L34554:
 
 L34588:
 	link	fp,#-4
-	move.w	U100564,(sp)
-	move.w	U99860,-(sp)
+	move.w	U100564_y,(sp)
+	move.w	U99860_x,-(sp)
 	bsr  	L36410
 	addq.l	#2,sp
 	tst.w	d0
@@ -10616,13 +10301,7 @@ L34588:
 	jsr	L66856
 L34620:
 	bsr.s	L34496
-	move.w	#2,U92086
-	unlk	fp
-	rts
-
-L34634:
-	link	fp,#-4
-	move.w	U92086,d0
+	move.w	#2,window_mode
 	unlk	fp
 	rts
 
@@ -10630,7 +10309,7 @@ L34648:
 	link	fp,#-4
 	move.l	U92132,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81968
+	jsr	fp_mul
 	addq.l	#8,sp
 	move.l	d0,U92136
 	move.l	8(fp),U92088
@@ -10653,19 +10332,19 @@ L34712:
 	move.w	U101120,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688
+	jsr	int_to_ffp
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81572
+	jsr	fp_div
 	addq.l	#8,sp
 	move.l	d0,-(sp)
 	move.l	U99808,-(sp)
-	jsr	L81510
+	jsr	fp_add
 	addq.l	#8,sp
 	move.l	d0,U99808
 	bsr  	L34368
 L34772:
-	tst.w	U99860
+	tst.w	U99860_x
 	blt.s	L34712
 	bra.s	L34842
 
@@ -10674,10 +10353,10 @@ L34782:
 	move.w	U101120,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688
+	jsr	int_to_ffp
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81572
+	jsr	fp_div
 	addq.l	#8,sp
 	move.l	d0,-(sp)
 	move.l	U99808,-(sp)
@@ -10687,7 +10366,7 @@ L34782:
 	bsr  	L34368
 L34842:
 	move.w	U101120,d0
-	cmp.w	U99860,d0
+	cmp.w	U99860_x,d0
 	ble.s	L34782
 	bra.s	L34918
 
@@ -10696,10 +10375,10 @@ L34858:
 	move.w	U101122,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688
+	jsr	int_to_ffp
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81572
+	jsr	fp_div
 	addq.l	#8,sp
 	move.l	d0,-(sp)
 	move.l	U99812,-(sp)
@@ -10708,7 +10387,7 @@ L34858:
 	move.l	d0,U99812
 	bsr  	L34368
 L34918:
-	tst.w	U100564
+	tst.w	U100564_y
 	blt.s	L34858
 	bra.s	L34988
 
@@ -10717,20 +10396,20 @@ L34928:
 	move.w	U101122,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688
+	jsr	int_to_ffp
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81572
+	jsr	fp_div
 	addq.l	#8,sp
 	move.l	d0,-(sp)
 	move.l	U99812,-(sp)
-	jsr	L81510
+	jsr	fp_add
 	addq.l	#8,sp
 	move.l	d0,U99812
 	bsr  	L34368
 L34988:
 	move.w	U101122,d0
-	cmp.w	U100564,d0
+	cmp.w	U100564_y,d0
 	ble.s	L34928
 	unlk	fp
 	rts
@@ -10738,46 +10417,46 @@ L34988:
 L35006:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
-	move.l	T85048,-(sp)
+	clr.l	-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	blt.s	L35088
-	move.l	T85044,-(sp)
+	move.l	#$80000040,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81832
+	jsr	ffp_to_int
 	addq.l	#4,sp
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688
+	jsr	int_to_ffp
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81510
+	jsr	fp_add
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	jsr	L81832
+	jsr	ffp_to_int
 	addq.l	#4,sp
 	move.w	d0,d7
 	bra.s	L35156
 
 L35088:
-	move.l	T85044,-(sp)
+	move.l	#$80000040,-(sp)
 	move.l	8(fp),-(sp)
 	jsr	L82028
 	addq.l	#8,sp
 	move.l	d0,8(fp)
 	move.l	8(fp),-(sp)
-	jsr	L81832
+	jsr	ffp_to_int
 	addq.l	#4,sp
 	move.w	d0,d7
 	move.l	8(fp),-(sp)
 	move.w	d7,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688
+	jsr	int_to_ffp
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	bne.s	L35156
 	addq.w	#1,d7
@@ -10793,14 +10472,14 @@ L35168:
 	move.w	#16000,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688
+	jsr	int_to_ffp
 	addq.l	#4,sp
 	move.l	d0,-(sp)
 	move.l	8(fp),-(sp)
 	jsr	L3058
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	ble.s	L35220
 	jsr	L66856
@@ -10821,13 +10500,13 @@ L35228:
 	bsr  	L36258
 	addq.l	#2,sp
 	jsr	turtle_draw
-	move.w	U99860,U92140
-	move.w	U100564,U92142
+	move.w	U99860_x,U92140
+	move.w	U100564_y,U92142
 	move.w	U92118,d0
-	move.w	d0,U99860
+	move.w	d0,U99860_x
 	move.w	d0,U92144
 	move.w	U92120,d0
-	move.w	d0,U100564
+	move.w	d0,U100564_y
 	move.w	d0,U92146
 	move.l	8(fp),U99808
 	move.l	12(fp),U99812
@@ -11027,7 +10706,7 @@ L35836:
 	move.w	U92160,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688
+	jsr	int_to_ffp
 	addq.l	#4,sp
 	move.l	d0,-(sp)
 	movea.w	#1,a0
@@ -11052,7 +10731,7 @@ L35836:
 	sub.w	d1,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688
+	jsr	int_to_ffp
 	addq.l	#4,sp
 	move.l	d0,-(sp)
 	movea.w	d6,a0
@@ -11066,13 +10745,13 @@ L35836:
 	sub.w	U92162,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688
+	jsr	int_to_ffp
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81968
+	jsr	fp_mul
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	jsr	L81572
+	jsr	fp_div
 	addq.l	#8,sp
 	move.l	d0,-(sp)
 	bsr  	L35006
@@ -11111,7 +10790,7 @@ L36198:
 
 L36234:
 	link	fp,#-4
-	cmpi.w	#1,U92086
+	cmpi.w	#1,window_mode
 	beq.s	L36252
 	clr.w	d0
 	bra.s	L36254
@@ -11124,7 +10803,7 @@ L36254:
 
 L36258:
 	link	fp,#-4
-	cmpi.w	#2,U92086
+	cmpi.w	#2,window_mode
 	bne.s	L36296
 	move.w	10(fp),(sp)
 	move.w	8(fp),-(sp)
@@ -11142,23 +10821,23 @@ L36300:
 	bra.s	L36328
 
 L36306:
-	move.l	T85036,-(sp)
+	move.l	#$B4000049,-(sp)
 	move.l	8(fp),-(sp)
 	jsr	L82028
 	addq.l	#8,sp
 	move.l	d0,8(fp)
 L36328:
-	move.l	T85036,-(sp)
+	move.l	#$B4000049,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	bge.s	L36306
 	bra.s	L36372
 
 L36350:
-	move.l	T85036,-(sp)
+	move.l	#$B4000049,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81510
+	jsr	fp_add
 	addq.l	#8,sp
 	move.l	d0,8(fp)
 L36372:
@@ -11166,10 +10845,10 @@ L36372:
 	clr.w	d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688
+	jsr	int_to_ffp
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	bgt.s	L36350
 	move.l	8(fp),d0
@@ -11266,9 +10945,9 @@ L36602:
 
 L36612:
 	link	fp,#-4
-	move.l	T85056,-(sp)
+	move.l	#$B4000047,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81510
+	jsr	fp_add
 	addq.l	#8,sp
 	move.l	d0,(sp)
 	bsr.s	L36642
@@ -11283,37 +10962,37 @@ L36642:
 	bra.s	L36690
 
 L36662:
-	move.l	T85056,-(sp)
+	move.l	#$B4000047,-(sp)
 	move.l	U92166,-(sp)
 	jsr	L82028
 	addq.l	#8,sp
 	move.l	d0,U92166
 	addq.w	#1,d7
 L36690:
-	move.l	T85056,-(sp)
+	move.l	#$B4000047,-(sp)
 	move.l	U92166,-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	bgt.s	L36662
 	btst	#0,d7
 	beq.s	L36744
 	move.l	U92166,-(sp)
-	move.l	T85056,-(sp)
+	move.l	#$B4000047,-(sp)
 	jsr	L82028
 	addq.l	#8,sp
 	move.l	d0,U92166
 L36744:
 	move.l	U92166,-(sp)
 	move.l	U92166,-(sp)
-	jsr	L81832
+	jsr	ffp_to_int
 	addq.l	#4,sp
 	move.w	d0,U92164
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688
+	jsr	int_to_ffp
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	bne.s	L36818
 	movea.w	U92164,a0
@@ -11327,7 +11006,7 @@ L36818:
 	move.w	U92164,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688
+	jsr	int_to_ffp
 	addq.l	#4,sp
 	move.l	d0,-(sp)
 	move.l	U92166,-(sp)
@@ -11340,7 +11019,7 @@ L36818:
 	adda.l	a0,a0
 	movea.l	#T85060,a1
 	move.l	0(a0,a1.l),-(sp)
-	jsr	L81968
+	jsr	fp_mul
 	addq.l	#8,sp
 	move.l	d0,-(sp)
 	move.l	U92166,-(sp)
@@ -11348,7 +11027,7 @@ L36818:
 	addq.w	#1,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688
+	jsr	int_to_ffp
 	addq.l	#4,sp
 	move.l	d0,-(sp)
 	jsr	L82028
@@ -11359,10 +11038,10 @@ L36818:
 	adda.l	a0,a0
 	movea.l	#T85060,a1
 	move.l	0(a0,a1.l),-(sp)
-	jsr	L81968
+	jsr	fp_mul
 	addq.l	#8,sp
 	move.l	d0,-(sp)
-	jsr	L81510
+	jsr	fp_add
 	addq.l	#8,sp
 L36962:
 	move.l	d0,U92166
@@ -11419,7 +11098,7 @@ L37058:
 	cmp.w	#23,d7
 	bne.s	.L37150
 	jsr	L62532
-	jsr	L62878
+	jsr	word_recycle
 .L37150:
 	jsr	L58082
 .L37156:
@@ -11435,7 +11114,7 @@ L37058:
 L37176:
 	link	fp,#-4
 	clr.w	U101470
-	jsr	L56040
+	clr.w	U101034
 	move.l	#U100656,(sp)
 	jsr	L204
 	tst.w	d0
@@ -11475,83 +11154,9 @@ L37308:
 	rts
 
 vdi:
-	move.l	#contrl,pblock
 	move.l	#pblock,d1
 	moveq	#115,d0
 	trap	#2
-	rts
-
-	link	fp,#0
-	move.w	10(fp),d0
-	asl.w	#1,d0
-	muls	8(fp),d0
-	divs	12(fp),d0
-	bmi.s	L37358
-	addq.w	#1,d0
-	bra.s	L37360
-
-L37358:
-	subq.w	#1,d0
-L37360:
-	asr.w	#1,d0
-	unlk	fp
-	rts
-
-	link	fp,#0
-	move.w	10(fp),d0
-	asl.w	#1,d0
-	mulu.w	8(fp),d0
-	divu	12(fp),d0
-	addq.w	#1,d0
-	asr.w	#1,d0
-	unlk	fp
-	rts
-
-L37392:
-	link	fp,#0
-	move.l	8(fp),U92178
-	unlk	fp
-	rts
-
-L37408:
-	link	fp,#0
-	move.l	8(fp),U92174
-	unlk	fp
-	rts
-
-L37424:
-	link	fp,#0
-	move.l	8(fp),U92186
-	unlk	fp
-	rts
-
-L37440:
-	link	fp,#0
-	move.l	8(fp),U92182
-	unlk	fp
-	rts
-
-L37456:
-	link	fp,#0
-	move.l	8(fp),contrl+14
-	unlk	fp
-	rts
-
-L37472:
-	link	fp,#0
-	move.l	8(fp),contrl+18
-	unlk	fp
-	rts
-
-	link	fp,#0
-	move.l	8(fp),contrl+14
-	unlk	fp
-	rts
-
-	link	fp,#0
-	movea.l	8(fp),a0
-	move.l	contrl+18,(a0)
-	unlk	fp
 	rts
 
 L37522:
@@ -11576,12 +11181,6 @@ L37552:
 	move.w	U99100,(a0)
 	movea.l	20(fp),a0
 	move.w	U99102,(a0)
-	unlk	fp
-	rts
-
-L37600:
-	link	fp,#-4
-	move.l	grph_buffer,d0
 	unlk	fp
 	rts
 
@@ -11622,7 +11221,7 @@ L37732:
 	link	fp,#0
 	movem.l	d6-d7/a5,-(sp)
 	move.w	8(fp),d7
-	bsr  	L48260
+	bsr  	mouse_hide
 	move.w	d7,d0
 	muls	#40,d0
 	movea.l	d0,a5
@@ -11648,15 +11247,15 @@ L37732:
 	movea.l	d0,a0
 	move.w	#-1,16(a0)
 	cmp.w	U100904,d7
-	bne.s	L37844
+	bne.s	.L37844
 	move.w	#-1,U100904
-L37844:
+.L37844:
 	movea.w	d7,a0
 	adda.l	a0,a0
 	movea.l	#U92262,a1
 	move.w	0(a0,a1.l),(sp)
 	jsr	wind_close
-	bsr  	L48330
+	bsr  	mouse_show
 	tst.l	(sp)+
 	movem.l	(sp)+,d7/a5
 	unlk	fp
@@ -11671,9 +11270,8 @@ L37878:
 	move.w	d0,d7
 	movea.l	8(fp),a0
 	move.w	(a0),d0
-	bra  	L39246
-
-L37910:
+	bra  	.switch
+.L37910:
 	move.w	#1,(sp)
 	movea.l	8(fp),a0
 	move.w	6(a0),-(sp)
@@ -11683,10 +11281,9 @@ L37910:
 	movea.l	8(fp),a0
 	move.w	8(a0),(sp)
 	bsr  	L39630
-	bra  	L39270
-
-L37952:
-	bsr  	L48260
+	bra  	.L39270
+.L37952:
+	bsr  	mouse_hide
 	move.l	fp,(sp)
 	subq.l	#2,(sp)
 	move.l	fp,-(sp)
@@ -11700,9 +11297,8 @@ L37952:
 	move.w	6(a0),-(sp)
 	jsr	wind_get
 	adda.l	#16,sp
-	bra.s	L38072
-
-L37998:
+	bra.s	.L38072
+.L37998:
 	move.l	fp,(sp)
 	subq.l	#8,(sp)
 	move.l	8(fp),-(sp)
@@ -11710,13 +11306,13 @@ L37998:
 	jsr	L49946
 	addq.l	#4,sp
 	tst.w	d0
-	beq.s	L38032
+	beq.s	.L38032
 	move.l	fp,(sp)
 	subq.l	#8,(sp)
 	move.w	d7,-(sp)
 	bsr  	L45236
 	addq.l	#2,sp
-L38032:
+.L38032:
 	move.l	fp,(sp)
 	subq.l	#2,(sp)
 	move.l	fp,-(sp)
@@ -11730,15 +11326,14 @@ L38032:
 	move.w	6(a0),-(sp)
 	jsr	wind_get
 	adda.l	#16,sp
-L38072:
+.L38072:
 	tst.w	-4(fp)
-	beq.s	L38084
+	beq.s	.L38084
 	tst.w	-2(fp)
-	bne.s	L37998
-L38084:
-	bra  	L39270
-
-L38088:
+	bne.s	.L37998
+.L38084:
+	bra  	.L39270
+.L38088:
 	clr.w	(sp)
 	move.w	#10,-(sp)
 	movea.l	8(fp),a0
@@ -11749,37 +11344,34 @@ L38088:
 	movea.l	8(fp),a0
 	move.w	6(a0),(sp)
 	bsr  	L39356
-	bra  	L39270
-
-L38132:
+	bra  	.L39270
+.L38132:
 	bsr  	L45356
 	cmp.w	#1,d7
-	bne.s	L38180
+	bne.s	.L38180
 	btst	#0,U98293
-	beq.s	L38160
+	beq.s	.L38160
 	move.w	#58,(sp)
 	bsr  	L39630
-L38160:
+.L38160:
 	btst	#1,U98293
-	beq.s	L38178
+	beq.s	.L38178
 	move.w	#59,(sp)
 	bsr  	L39630
-L38178:
-	bra.s	L38202
-
-L38180:
+.L38178:
+	bra.s	.L38202
+.L38180:
 	cmp.w	#3,d7
-	bne.s	L38202
+	bne.s	.L38202
 	cmp.w	U101462,d7
-	bne.s	L38202
+	bne.s	.L38202
 	move.w	#36,(sp)
 	bsr  	L39630
-L38202:
+.L38202:
 	move.w	d7,(sp)
 	bsr  	L37732
-	bra  	L39270
-
-L38212:
+	bra  	.L39270
+.L38212:
 	move.l	fp,(sp)
 	subq.l	#2,(sp)
 	move.l	fp,-(sp)
@@ -11813,7 +11405,7 @@ L38212:
 	jsr	L49856
 	addq.l	#4,sp
 	tst.w	d0
-	beq.s	L38394
+	beq.s	.L38394
 	move.l	8(fp),(sp)
 	addi.l	#14,(sp)
 	move.l	8(fp),-(sp)
@@ -11827,7 +11419,7 @@ L38212:
 	move.w	6(a0),-(sp)
 	jsr	wind_get
 	adda.l	#16,sp
-L38394:
+.L38394:
 	bsr  	L45356
 	movea.l	8(fp),a0
 	move.w	14(a0),(sp)
@@ -11865,24 +11457,22 @@ L38394:
 	move.w	d7,(sp)
 	bsr  	L42772
 	cmp.w	#2,d7
-	bne.s	L38556
+	bne.s	.L38556
 	move.w	d7,(sp)
 	bsr  	L45052
 	jsr	L22560
-	bra.s	L38568
-
-L38556:
+	bra.s	.L38568
+.L38556:
 	move.l	fp,(sp)
 	subq.l	#8,(sp)
 	move.w	d7,-(sp)
 	bsr  	L41316
 	addq.l	#2,sp
-L38568:
-	bra  	L39270
-
-L38572:
+.L38568:
+	bra  	.L39270
+.L38572:
 	cmp.w	#2,d7
-	bne.s	L38658
+	bne.s	.L38658
 	movea.l	8(fp),a0
 	move.w	8(a0),d0
 	movea.l	8(fp),a1
@@ -11891,7 +11481,7 @@ L38572:
 	move.w	work_x,d1
 	add.w	work_w,d1
 	cmp.w	d1,d0
-	bgt.s	L38646
+	bgt.s	.L38646
 	movea.l	8(fp),a0
 	move.w	10(a0),d0
 	movea.l	8(fp),a1
@@ -11900,11 +11490,11 @@ L38572:
 	move.w	work_y,d1
 	add.w	work_h,d1
 	cmp.w	d1,d0
-	ble.s	L38658
-L38646:
+	ble.s	.L38658
+.L38646:
 	move.l	#U99096,(sp)
 	jsr	L24328
-L38658:
+.L38658:
 	movea.l	8(fp),a0
 	move.w	14(a0),(sp)
 	movea.l	8(fp),a0
@@ -11931,43 +11521,40 @@ L38658:
 	move.w	d7,(sp)
 	bsr  	L42772
 	cmp.w	#2,d7
-	bne.s	L38774
+	bne.s	.L38774
 	move.w	d7,(sp)
 	bsr  	L45052
-	bra.s	L38850
-
-L38774:
+	bra.s	.L38850
+.L38774:
 	move.w	d7,d0
 	muls	#40,d0
 	movea.l	d0,a0
 	movea.l	#U99016,a1
 	move.w	4(a0,a1.l),d0
 	cmp.w	-4(fp),d0
-	bne.s	L38822
+	bne.s	.L38822
 	move.w	d7,d0
 	muls	#40,d0
 	movea.l	d0,a0
 	movea.l	#U99016,a1
 	move.w	6(a0,a1.l),d0
 	cmp.w	-2(fp),d0
-	beq.s	L38836
-L38822:
+	beq.s	.L38836
+.L38822:
 	move.l	fp,(sp)
 	subq.l	#8,(sp)
 	move.w	d7,-(sp)
 	bsr  	L41316
 	addq.l	#2,sp
-	bra.s	L38850
-
-L38836:
+	bra.s	.L38850
+.L38836:
 	cmp.w	U101462,d7
-	bne.s	L38850
+	bne.s	.L38850
 	move.w	d7,(sp)
 	bsr  	L45052
-L38850:
-	bra  	L39270
-
-L38854:
+.L38850:
+	bra  	.L39270
+.L38854:
 	movea.l	8(fp),a0
 	move.w	8(a0),(sp)
 	move.w	#8,-(sp)
@@ -11987,9 +11574,8 @@ L38854:
 	clr.w	-(sp)
 	bsr  	L41410
 	addq.l	#6,sp
-	bra  	L39270
-
-L38918:
+	bra  	.L39270
+.L38918:
 	movea.l	8(fp),a0
 	move.w	8(a0),(sp)
 	move.w	#9,-(sp)
@@ -12009,14 +11595,12 @@ L38918:
 	move.w	#1,-(sp)
 	bsr  	L41410
 	addq.l	#6,sp
-	bra  	L39270
-
-L38986:
+	bra  	.L39270
+.L38986:
 	movea.l	8(fp),a0
 	move.w	8(a0),d0
-	bra  	L39212
-
-L38998:
+	bra  	.L39212
+.L38998:
 	move.w	#1,(sp)
 	move.w	d7,d0
 	muls	#40,d0
@@ -12028,9 +11612,8 @@ L38998:
 	clr.w	-(sp)
 	bsr  	L41410
 	addq.l	#6,sp
-	bra  	L39242
-
-L39036:
+	bra  	.L39242
+.L39036:
 	move.w	#1,(sp)
 	move.w	d7,d0
 	muls	#40,d0
@@ -12042,19 +11625,17 @@ L39036:
 	clr.w	-(sp)
 	bsr  	L41410
 	addq.l	#6,sp
-	bra  	L39242
-
-L39074:
+	bra  	.L39242
+.L39074:
 	cmpi.w	#3,U101462
-	bne.s	L39104
+	bne.s	.L39104
 	cmp.w	#3,d7
-	bne.s	L39104
+	bne.s	.L39104
 	jsr	L28274
 	move.w	d0,(sp)
 	bsr  	L46448
-	bra.s	L39140
-
-L39104:
+	bra.s	.L39140
+.L39104:
 	move.w	#1,(sp)
 	move.w	d7,d0
 	muls	#40,d0
@@ -12066,20 +11647,18 @@ L39104:
 	move.w	#1,-(sp)
 	bsr  	L41410
 	addq.l	#6,sp
-L39140:
-	bra.s	L39242
-
-L39142:
+.L39140:
+	bra.s	.L39242
+.L39142:
 	cmpi.w	#3,U101462
-	bne.s	L39172
+	bne.s	.L39172
 	cmp.w	#3,d7
-	bne.s	L39172
+	bne.s	.L39172
 	jsr	L28290
 	move.w	d0,(sp)
 	bsr  	L46448
-	bra.s	L39208
-
-L39172:
+	bra.s	.L39208
+.L39172:
 	move.w	#1,(sp)
 	move.w	d7,d0
 	muls	#40,d0
@@ -12091,37 +11670,31 @@ L39172:
 	move.w	#1,-(sp)
 	bsr  	L41410
 	addq.l	#6,sp
-L39208:
-	bra.s	L39242
-
-	bra.s	L39242
-
-L39212:
+.L39208:
+	bra.s	.L39242
+	bra.s	.L39242
+.L39212:
 	cmp.w	#2,d0
-	beq  	L39074
+	beq  	.L39074
 	cmp.w	#3,d0
-	beq.s	L39142
+	beq.s	.L39142
 	cmp.w	#6,d0
-	beq  	L39036
+	beq  	.L39036
 	cmp.w	#7,d0
-	beq  	L38998
-L39242:
-	bra.s	L39270
-
-	bra.s	L39270
-
-L39246:
+	beq  	.L38998
+.L39242:
+	bra.s	.L39270
+	bra.s	.L39270
+.switch:
 	sub.w	#10,d0
 	cmp.w	#18,d0
-	bhi.s	L39270
+	bhi.s	.L39270
 	asl.w	#2,d0
-	movea.w	d0,a0
-	adda.l	#T85526,a0
-	movea.l	(a0),a0
+	movea.l	#.T85526,a0
+	movea.l	0(a0,d0.w),a0
 	jmp	(a0)
-
-L39270:
-	bsr  	L48330
+.L39270:
+	bsr  	mouse_show
 	movea.l	8(fp),a0
 	clr.w	(a0)
 	tst.l	(sp)+
@@ -12129,56 +11702,68 @@ L39270:
 	unlk	fp
 	rts
 
+.T85526:
+	dc.l	.L37910,.L39270
+	dc.l	.L39270,.L39270
+	dc.l	.L39270,.L39270
+	dc.l	.L39270,.L39270
+	dc.l	.L39270,.L39270
+	dc.l	.L37952,.L38088
+	dc.l	.L38132,.L38212
+	dc.l	.L38986,.L38854
+	dc.l	.L38918,.L38394
+	dc.l	.L38572
+
 L39290:
 	link	fp,#-4
 	move.w	8(fp),d0
-	bra.s	L39326
-
-L39300:
+	bra.s	.switch
+.L39300:
 	moveq	#6,d0
-	bra.s	L39352
-
-L39304:
+	bra.s	.return
+.L39304:
 	moveq	#2,d0
-	bra.s	L39352
-
-L39308:
+	bra.s	.return
+.L39308:
 	moveq	#14,d0
-	bra.s	L39352
-
-L39312:
+	bra.s	.return
+.L39312:
 	moveq	#16,d0
-	bra.s	L39352
-
-L39316:
+	bra.s	.return
+.L39316:
 	moveq	#18,d0
-	bra.s	L39352
-
-L39320:
+	bra.s	.return
+.L39320:
 	moveq	#15,d0
-	bra.s	L39352
-
-	bra.s	L39348
-
-L39326:
+	bra.s	.return
+	bra.s	.L39348
+.switch:
 	ext.l	d0
-	movea.l	#T85602,a0
+	movea.l	#.T85602,a0
 	moveq	#6,d1
-L39336:
+.loop:
 	cmp.l	(a0)+,d0
-	dbeq	d1,L39336
+	dbeq	d1,.loop
 	movea.l	24(a0),a0
 	jmp	(a0)
-
-L39348:
+.L39348:
 	move.w	8(fp),d0
-L39352:
+.return:
 	unlk	fp
 	rts
 
+.T85602:
+	dc.l	18176,18432
+	dc.l	19200,19712
+	dc.l	20480,20992
+	dc.l	0,.L39316
+	dc.l	.L39312,.L39304
+	dc.l	.L39300,.L39308
+	dc.l	.L39320,.L39348
+
 L39356:
 	link	fp,#-26
-L39360:
+.L39360:
 	move.l	fp,(sp)
 	addi.l	#-22,(sp)
 	move.l	fp,-(sp)
@@ -12191,7 +11776,7 @@ L39360:
 	move.w	8(fp),-(sp)
 	jsr	wind_get
 	adda.l	#16,sp
-	bsr  	L48330
+	bsr  	mouse_show
 	move.l	fp,(sp)
 	subq.l	#2,(sp)
 	move.l	fp,-(sp)
@@ -12230,23 +11815,22 @@ L39360:
 	move.l	d0,(sp)
 	jsr	L22840
 	btst	#4,-13(fp)
-	beq.s	L39562
+	beq.s	.L39562
 	move.l	#U99820,(sp)
 	bsr  	L37878
-L39562:
+.L39562:
 	btst	#0,-13(fp)
-	beq.s	L39578
+	beq.s	.L39578
 	move.w	-4(fp),(sp)
 	bsr  	L46448
-L39578:
+.L39578:
 	cmpi.w	#4,-14(fp)
-	beq.s	L39598
+	beq.s	.L39598
 	tst.w	U92244
-	bne.s	L39598
-	bra  	L39360
-
-L39598:
-	bsr  	L48260
+	bne.s	.L39598
+	bra  	.L39360
+.L39598:
+	bsr  	mouse_hide
 	move.w	U101462,d0
 	muls	#40,d0
 	add.l	#U99016,d0
@@ -12259,110 +11843,93 @@ L39630:
 	link	fp,#-10
 	move.w	U101462,-6(fp)
 	move.w	8(fp),d0
-	bra  	L40554
-
-L39650:
+	bra  	.switch
+.L39650:
 	clr.w	(sp)
-	move.l	U92198,d0
+	move.l	dialog_about,d0
 	move.l	d0,-4(fp)
 	move.l	d0,-(sp)
 	move.l	#form_do,-(sp)
-	bsr  	L40664
+	bsr  	form_doer
 	addq.l	#8,sp
 	movea.l	-4(fp),a0
 	adda.l	#154,a0
 	clr.w	(a0)
-	bra  	L40578
-
-L39692:
+	bra  	.L40578
+.L39692:
 	jsr	L28242
 	move.w	d0,(sp)
 	bsr  	L46448
-	bra  	L40578
-
-L39708:
+	bra  	.L40578
+.L39708:
 	jsr	L28306
 	move.w	d0,(sp)
 	bsr  	L46448
-	bra  	L40578
-
-L39724:
+	bra  	.L40578
+.L39724:
 	jsr	L28258
 	move.w	d0,(sp)
 	bsr  	L46448
-	bra  	L40578
-
-L39740:
+	bra  	.L40578
+.L39740:
 	jsr	L28338
 	move.w	d0,(sp)
 	bsr  	L46448
-	bra  	L40578
-
-L39756:
+	bra  	.L40578
+.L39756:
 	jsr	L28226
 	move.w	d0,(sp)
 	bsr  	L46448
-	bra  	L40578
-
-L39772:
+	bra  	.L40578
+.L39772:
 	jsr	L28322
 	move.w	d0,(sp)
 	bsr  	L46448
-	bra  	L40578
-
-L39788:
+	bra  	.L40578
+.L39788:
 	jsr	L28194
 	move.w	d0,(sp)
 	bsr  	L46448
-	bra  	L40578
-
-L39804:
+	bra  	.L40578
+.L39804:
 	jsr	L28274
 	move.w	d0,(sp)
 	bsr  	L46448
-	bra  	L40578
-
-L39820:
+	bra  	.L40578
+.L39820:
 	jsr	L28290
 	move.w	d0,(sp)
 	bsr  	L46448
-	bra  	L40578
-
-L39836:
+	bra  	.L40578
+.L39836:
 	jsr	L28146
 	move.w	d0,(sp)
 	bsr  	L46448
-	bra  	L40578
-
-L39852:
+	bra  	.L40578
+.L39852:
 	jsr	L28178
 	move.w	d0,(sp)
 	bsr  	L46448
-	bra  	L40578
-
-L39868:
+	bra  	.L40578
+.L39868:
 	jsr	L28162
 	move.w	d0,(sp)
 	bsr  	L46448
-	bra  	L40578
-
-L39884:
+	bra  	.L40578
+.L39884:
 	bsr  	L49652
-	bra  	L40578
-
-L39892:
+	bra  	.L40578
+.L39892:
 	jsr	L28386
 	move.w	d0,(sp)
 	bsr  	L46448
-	bra  	L40578
-
-L39908:
+	bra  	.L40578
+.L39908:
 	jsr	L28354
 	move.w	d0,(sp)
 	bsr  	L46448
-	bra  	L40578
-
-L39924:
+	bra  	.L40578
+.L39924:
 	move.w	U92234,d0
 	moveq	#1,d1
 	eor.w	d1,d0
@@ -12375,14 +11942,13 @@ L39924:
 	jsr	L24290
 	addq.l	#2,sp
 	tst.w	U92234
-	beq.s	L39992
+	beq.s	.L39992
 	bsr  	L48234
 	move.l	#U99096,(sp)
 	jsr	L24328
-L39992:
-	bra  	L40578
-
-L39996:
+.L39992:
+	bra  	.L40578
+.L39996:
 	eori.w	#1,U98286
 	move.w	U98286,(sp)
 	move.w	#61,-(sp)
@@ -12390,12 +11956,11 @@ L39996:
 	jsr	menu_icheck
 	addq.l	#6,sp
 	cmpi.w	#3,U101462
-	beq.s	L40042
+	beq.s	.L40042
 	bsr  	L47962
-L40042:
-	bra  	L40578
-
-L40046:
+.L40042:
+	bra  	.L40578
+.L40046:
 	eori.w	#1,U98288
 	move.w	U98288,(sp)
 	move.w	#60,-(sp)
@@ -12403,27 +11968,24 @@ L40046:
 	jsr	menu_icheck
 	addq.l	#6,sp
 	tst.w	U98292
-	bne.s	L40090
+	bne.s	.L40090
 	bsr  	L47994
-L40090:
-	bra  	L40578
-
-L40094:
+.L40090:
+	bra  	.L40578
+.L40094:
 	clr.l	(sp)
 	move.w	8(fp),-(sp)
 	bsr  	L40590
 	addq.l	#2,sp
-	bra  	L40578
-
-L40110:
+	bra  	.L40578
+.L40110:
 	cmpi.w	#19,8(fp)
-	bne.s	L40126
+	bne.s	.L40126
 	move.l	U92218,d0
-	bra.s	L40132
-
-L40126:
+	bra.s	.L40132
+.L40126:
 	move.l	U92222,d0
-L40132:
+.L40132:
 	move.l	d0,-4(fp)
 	move.l	-4(fp),(sp)
 	clr.w	-(sp)
@@ -12434,32 +11996,29 @@ L40132:
 	jsr	L28438
 	addq.l	#4,sp
 	tst.w	d0
-	bne.s	L40182
+	bne.s	.L40182
 	move.w	#1,(sp)
 	bsr  	L41000
-	bra  	L40578
-
-L40182:
+	bra  	.L40578
+.L40182:
 	move.l	-4(fp),(sp)
 	move.w	#1,-(sp)
 	bsr  	L41000
 	addq.l	#2,sp
-L40196:
+.L40196:
 	move.l	#U100678,(sp)
 	move.w	8(fp),-(sp)
 	bsr  	L40590
 	addq.l	#2,sp
-	bra  	L40578
-
-L40216:
+	bra  	.L40578
+.L40216:
 	cmpi.w	#23,8(fp)
-	bne.s	L40232
+	bne.s	.L40232
 	move.l	U92218,d0
-	bra.s	L40238
-
-L40232:
+	bra.s	.L40238
+.L40232:
 	move.l	U92222,d0
-L40238:
+.L40238:
 	move.l	d0,-4(fp)
 	move.l	-4(fp),(sp)
 	clr.w	-(sp)
@@ -12470,27 +12029,25 @@ L40238:
 	jsr	L28438
 	addq.l	#4,sp
 	tst.w	d0
-	beq.s	L40290
+	beq.s	.L40290
 	move.l	#U98294,(sp)
 	move.w	8(fp),-(sp)
 	bsr  	L40590
 	addq.l	#2,sp
-L40290:
+.L40290:
 	move.l	-4(fp),(sp)
 	move.w	#1,-(sp)
 	bsr  	L41000
 	addq.l	#2,sp
-	bra  	L40578
-
-L40308:
+	bra  	.L40578
+.L40308:
 	cmpi.w	#21,8(fp)
-	bne.s	L40324
+	bne.s	.L40324
 	move.l	U92214,d0
-	bra.s	L40330
-
-L40324:
+	bra.s	.L40330
+.L40324:
 	move.l	U92218,d0
-L40330:
+.L40330:
 	move.l	d0,-4(fp)
 	move.l	-4(fp),(sp)
 	clr.w	-(sp)
@@ -12501,72 +12058,93 @@ L40330:
 	jsr	L28438
 	addq.l	#4,sp
 	tst.w	d0
-	beq.s	L40384
+	beq.s	.L40384
 	move.l	#U98294,(sp)
 	move.w	8(fp),-(sp)
 	bsr  	L40590
 	addq.l	#2,sp
-L40384:
+.L40384:
 	move.l	-4(fp),(sp)
 	move.w	#1,-(sp)
 	bsr  	L41000
 	addq.l	#2,sp
-	bra  	L40578
-
-L40402:
+	bra  	.L40578
+.L40402:
 	move.l	U92202,(sp)
 	jsr	L29826
 	move.w	#3,(sp)
 	move.l	U92202,-(sp)
 	move.l	#form_do,-(sp)
-	bsr  	L40664
+	bsr  	form_doer
 	addq.l	#8,sp
 	move.l	U92202,(sp)
 	jsr	L29948
-	bra  	L40578
-
-L40452:
+	bra  	.L40578
+.L40452:
 	move.l	U92206,(sp)
 	jsr	L30334
 	move.w	#2,(sp)
 	move.l	U92206,-(sp)
 	move.l	#form_do,-(sp)
-	bsr  	L40664
+	bsr  	form_doer
 	addq.l	#8,sp
 	move.l	U92206,(sp)
 	jsr	L30444
-	bra.s	L40578
-
-L40500:
+	bra.s	.L40578
+.L40500:
 	move.l	U92210,(sp)
-	jsr	L31596
+	jsr	dialog_graphics_setup
 	move.w	#8,(sp)
 	move.l	U92210,-(sp)
 	move.l	#L32304,-(sp)
-	bsr  	L40664
+	bsr  	form_doer
 	addq.l	#8,sp
 	move.w	d0,(sp)
 	move.l	U92210,-(sp)
 	jsr	L31908
 	addq.l	#4,sp
-	bra.s	L40578
-
-	bra.s	L40578
-
-L40554:
+	bra.s	.L40578
+	bra.s	.L40578
+.switch:
 	sub.w	#10,d0
 	cmp.w	#51,d0
-	bhi.s	L40578
+	bhi.s	.L40578
 	asl.w	#2,d0
-	movea.w	d0,a0
-	adda.l	#T85658,a0
-	movea.l	(a0),a0
+	movea.l	#.T85658,a0
+	movea.l	0(a0,d0.w),a0
 	jmp	(a0)
-
-L40578:
+.L40578:
 	move.w	-6(fp),U101462
 	unlk	fp
 	rts
+
+.T85658:
+	dc.l	.L39650,.L40578
+	dc.l	.L40578,.L40578
+	dc.l	.L40578,.L40578
+	dc.l	.L40578,.L40578
+	dc.l	.L40578,.L40110
+	dc.l	.L40110,.L40308
+	dc.l	.L40578,.L40216
+	dc.l	.L40216,.L40578
+	dc.l	.L39884,.L40196
+	dc.l	.L40578,.L39892
+	dc.l	.L40094,.L40094
+	dc.l	.L39908,.L40578
+	dc.l	.L40094,.L40308
+	dc.l	.L39868,.L39892
+	dc.l	.L40578,.L39692
+	dc.l	.L39708,.L39724
+	dc.l	.L39740,.L40578
+	dc.l	.L39756,.L39772
+	dc.l	.L39788,.L39804
+	dc.l	.L39820,.L40578
+	dc.l	.L39836,.L39852
+	dc.l	.L40578,.L40500
+	dc.l	.L40402,.L40452
+	dc.l	.L40578,.L39924
+	dc.l	.L40094,.L40094
+	dc.l	.L40046,.L39996
 
 L40590:
 	link	fp,#-4
@@ -12578,36 +12156,35 @@ L40590:
 	move.w	8(fp),(sp)
 	bsr  	L46448
 	tst.l	-4(fp)
-	beq.s	L40654
+	beq.s	.return
 	clr.w	d7
-	bra.s	L40648
-
-L40634:
+	bra.s	.L40648
+.L40634:
 	move.b	-4(fp,d7.w),d0
 	ext.w	d0
 	move.w	d0,(sp)
 	bsr  	L46448
 	addq.w	#1,d7
-L40648:
+.L40648:
 	cmp.w	#4,d7
-	blt.s	L40634
-L40654:
+	blt.s	.L40634
+.return:
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
 	unlk	fp
 	rts
 
-L40664:
+form_doer:
 	link	fp,#-4
 	movem.l	d2-d7,-(sp)
 	bsr  	L45356
 	move.l	8(fp),d0
 	cmp.l	#form_do,d0
 	bne.s	.L40694
-	bsr  	L48330
+	bsr  	mouse_show
 	bra.s	.L40698
 .L40694:
-	bsr  	L48260
+	bsr  	mouse_hide
 .L40698:
 	movea.l	12(fp),a0
 	adda.l	#20,a0
@@ -12703,7 +12280,7 @@ L40664:
 
 L41000:
 	link	fp,#-10
-	bsr  	L48330
+	bsr  	mouse_show
 	tst.w	8(fp)
 	bne  	L41248
 	movea.l	10(fp),a0
@@ -12866,21 +12443,21 @@ L41410:
 	add.l	#U99016,d0
 	move.l	d0,-(sp)
 	move.w	#8,-(sp)
-	jsr	L50230
+	jsr	memmove
 	addq.l	#6,sp
 	move.l	fp,(sp)
 	addi.l	#-20,(sp)
 	move.l	fp,-(sp)
 	addi.l	#-32,(sp)
 	move.w	#8,-(sp)
-	jsr	L50230
+	jsr	memmove
 	addq.l	#6,sp
 	move.l	fp,(sp)
 	addi.l	#-24,(sp)
 	move.l	fp,-(sp)
 	addi.l	#-32,(sp)
 	move.w	#4,-(sp)
-	jsr	L50230
+	jsr	memmove
 	addq.l	#6,sp
 	move.w	12(fp),d0
 	cmp.w	-4(fp),d0
@@ -13319,7 +12896,7 @@ L42946:
 	move.l	#U99024,(sp)
 	move.l	8(fp),-(sp)
 	move.w	#8,-(sp)
-	jsr	L50230
+	jsr	memmove
 	addq.l	#6,sp
 	move.w	U99028,d0
 	ext.l	d0
@@ -13341,7 +12918,7 @@ L42946:
 	move.l	#U99104,(sp)
 	move.l	8(fp),-(sp)
 	move.w	#8,-(sp)
-	jsr	L50230
+	jsr	memmove
 	addq.l	#6,sp
 	move.w	U99108,d0
 	ext.l	d0
@@ -13365,7 +12942,7 @@ L42946:
 	move.l	#U99064,(sp)
 	move.l	8(fp),-(sp)
 	move.w	#8,-(sp)
-	jsr	L50230
+	jsr	memmove
 	addq.l	#6,sp
 	move.w	U99070,d0
 	ext.l	d0
@@ -13393,7 +12970,7 @@ L42946:
 	move.l	#U99144,(sp)
 	move.l	#U99064,-(sp)
 	move.w	#8,-(sp)
-	jsr	L50230
+	jsr	memmove
 	addq.l	#6,sp
 	movea.l	8(fp),a0
 	move.w	6(a0),(sp)
@@ -13417,7 +12994,7 @@ L43336:
 	tst.w	(a0)
 	bge.s	L43360
 	move.l	#T85866,(sp)
-	bsr  	L49566
+	bsr  	alert
 L43360:
 	addq.w	#1,d7
 L43362:
@@ -13454,7 +13031,7 @@ L43378:
 	move.l	d0,-(sp)
 	addq.l	#8,(sp)
 	move.w	#8,-(sp)
-	jsr	L50230
+	jsr	memmove
 	addq.l	#6,sp
 	move.w	-2(fp),(sp)
 	move.w	-4(fp),-(sp)
@@ -13592,7 +13169,7 @@ L43836:
 	subq.l	#8,(sp)
 	move.l	#work_xywh,-(sp)
 	move.w	#8,-(sp)
-	jsr	L50230
+	jsr	memmove
 	addq.l	#6,sp
 	move.w	-4(fp),d0
 	ext.l	d0
@@ -13625,7 +13202,7 @@ L43836:
 	move.l	fp,-(sp)
 	subq.l	#8,(sp)
 	move.w	#8,-(sp)
-	jsr	L50230
+	jsr	memmove
 	addq.l	#6,sp
 L44066:
 	unlk	fp
@@ -14017,21 +13594,20 @@ L45236:
 	add.l	#U99016,d0
 	movea.l	d0,a0
 	tst.w	18(a0)
-	bne.s	L45292
+	bne.s	.L45292
 	move.l	10(fp),(sp)
 	move.w	d7,-(sp)
 	bsr  	L44174
 	addq.l	#2,sp
-	bra.s	L45322
-
-L45292:
+	bra.s	.L45322
+.L45292:
 	move.l	10(fp),(sp)
 	jsr	L28066
 	move.w	U99098,(sp)
 	move.w	U99096,-(sp)
 	jsr	L24504
 	addq.l	#2,sp
-L45322:
+.L45322:
 	move.w	U101462,d0
 	muls	#40,d0
 	add.l	#U99016,d0
@@ -14237,7 +13813,7 @@ L45924:
 	move.b	9(fp),d0
 	ext.w	d0
 	move.w	d0,-(sp)
-	jsr	L24148
+	jsr	vdi_putchar
 	addq.l	#4,sp
 	move.l	a5,(sp)
 	move.w	d6,-(sp)
@@ -14284,22 +13860,21 @@ L46108:
 	movem.l	d5-d7/a5,-(sp)
 	move.w	U100904,d6
 	lea 	-12(fp),a5
-L46126:
-	tst.w	U92226
-	beq.s	L46150
-	bsr  	L48374
-	bsr  	L48392
-	bsr  	L48374
-	bsr  	L48392
-L46150:
-	tst.w	U92226
-	beq.s	L46162
+.L46126:
+	tst.w	draw_lock_flag
+	beq.s	.L46150
+	bsr  	wind_update_begin
+	bsr  	wind_update_end
+	bsr  	wind_update_begin
+	bsr  	wind_update_end
+.L46150:
+	tst.w	draw_lock_flag
+	beq.s	.L46162
 	clr.w	d0
-	bra.s	L46164
-
-L46162:
+	bra.s	.L46164
+.L46162:
 	moveq	#2,d0
-L46164:
+.L46164:
 	or.w	#49,d0
 	move.w	d0,-2(fp)
 	move.l	a5,(sp)
@@ -14311,13 +13886,12 @@ L46164:
 	move.l	a5,-(sp)
 	clr.w	-(sp)
 	cmp.w	#-2,d6
-	bne.s	L46200
+	bne.s	.L46200
 	move.w	#40,-(sp)
-	bra.s	L46202
-
-L46200:
+	bra.s	.L46202
+.L46200:
 	clr.w	-(sp)
-L46202:
+.L46202:
 	move.l	U101480,-(sp)
 	clr.w	-(sp)
 	clr.w	-(sp)
@@ -14357,40 +13931,38 @@ L46202:
 	jsr	graf_mkstate
 	adda.l	#12,sp
 	move.w	-8(fp),d0
-	cmp.w	U92228,d0
-	bne.s	L46352
+	cmp.w	mouse_x,d0
+	bne.s	.L46352
 	move.w	-10(fp),d0
-	cmp.w	U92230,d0
-	beq.s	L46374
-L46352:
-	move.w	-8(fp),U92228
-	move.w	-10(fp),U92230
-	bsr  	L48330
-	bra.s	L46388
-
-L46374:
+	cmp.w	mouse_y,d0
+	beq.s	.L46374
+.L46352:
+	move.w	-8(fp),mouse_x
+	move.w	-10(fp),mouse_y
+	bsr  	mouse_show
+	bra.s	.L46388
+.L46374:
 	move.w	d7,d0
 	and.w	#-33,d0
-	bne.s	L46388
+	bne.s	.L46388
 	cmp.w	#-2,d6
-	bne.s	L46432
-L46388:
+	bne.s	.L46432
+.L46388:
 	btst	#0,d7
-	beq.s	L46412
+	beq.s	.L46412
 	jsr	L28370
 	cmp.w	-4(fp),d0
-	beq.s	L46412
+	beq.s	.L46412
 	move.w	-4(fp),(sp)
 	bsr.s	L46448
-L46412:
+.L46412:
 	btst	#4,d7
-	beq.s	L46428
+	beq.s	.L46428
 	move.l	#U99820,(sp)
 	bsr  	L37878
-L46428:
-	bra  	L46126
-
-L46432:
+.L46428:
+	bra  	.L46126
+.L46432:
 	move.w	U92244,d0
 	tst.l	(sp)+
 	movem.l	(sp)+,d6-d7/a5
@@ -14513,7 +14085,7 @@ L46776:
 	subq.w	#1,d0
 	muls	36(a5),d0
 	move.w	d0,-(sp)
-	jsr	L50230
+	jsr	memmove
 	addq.l	#6,sp
 	move.w	#32,(sp)
 	move.w	36(a5),-(sp)
@@ -14529,7 +14101,7 @@ L46776:
 	subq.l	#8,(sp)
 	move.l	a5,-(sp)
 	move.w	#8,-(sp)
-	jsr	L50230
+	jsr	memmove
 	addq.l	#6,sp
 	move.w	-2(fp),(sp)
 	move.w	cell_h,d0
@@ -14589,7 +14161,7 @@ L47004:
 	movea.l	-12(fp),a1
 	muls	36(a1),d0
 	move.w	d0,-(sp)
-	jsr	L50230
+	jsr	memmove
 	addq.l	#6,sp
 	move.w	#32,(sp)
 	movea.l	-12(fp),a0
@@ -14602,7 +14174,7 @@ L47004:
 	subq.l	#8,(sp)
 	move.l	-12(fp),-(sp)
 	move.w	#8,-(sp)
-	jsr	L50230
+	jsr	memmove
 	addq.l	#6,sp
 	move.w	-2(fp),d0
 	ext.l	d0
@@ -14753,7 +14325,7 @@ L47638:
 	add.l	#U99016,d0
 	move.l	d0,-(sp)
 	move.w	#8,-(sp)
-	jsr	L50230
+	jsr	memmove
 	addq.l	#6,sp
 	move.w	U98280,d0
 	move.w	U100904,d1
@@ -14816,12 +14388,11 @@ L47936:
 	rts
 
 L47940:
-	link	fp,#-4
 	clr.w	d0
 	move.w	d0,U101462
-	move.w	d0,(sp)
+	move.w	d0,-(sp)
 	bsr  	L45052
-	unlk	fp
+	addq	#2,sp
 	rts
 
 L47962:
@@ -14924,62 +14495,68 @@ L48230:
 	rts
 
 L48234:
-	link	fp,#-4
 	moveq	#2,d0
 	move.w	d0,U101462
-	move.w	d0,(sp)
+	move.w	d0,-(sp)
 	bsr  	L45052
 	bsr  	L44636
-	unlk	fp
+	addq	#2,sp
 	rts
 
-L48260:
+mouse_hide:
 	link	fp,#-6
-	tst.w	U92226
-	beq.s	.L48326
-	bsr.s	L48374
+	tst.w	draw_lock_flag
+	beq.s	.return
+
+	bsr.s	wind_update_begin
+
 	clr.l	(sp)
-	move.w	#256,-(sp)
-	jsr	graf_mouse
+	move.w	#256,-(sp)	; M_OFF
+	jsr	graf_mouse	; hide mouse
 	addq.l	#2,sp
-	clr.w	U92226
+
+	clr.w	draw_lock_flag
+
 	move.l	fp,(sp)
 	subq.l	#2,(sp)
 	move.l	fp,-(sp)
 	subq.l	#2,(sp)
-	move.l	#U92230,-(sp)
-	move.l	#U92228,-(sp)
+	move.l	#mouse_y,-(sp)
+	move.l	#mouse_x,-(sp)
 	jsr	graf_mkstate
 	adda.l	#12,sp
-.L48326:
+.return:
 	unlk	fp
 	rts
 
-L48330:
+mouse_show:
 	link	fp,#-4
-	tst.w	U92226
-	bne.s	L48370
+	tst.w	draw_lock_flag
+	bne.s	.return
+
 	bsr  	L45356
+
 	clr.l	(sp)
-	move.w	#257,-(sp)
-	jsr	graf_mouse
+	move.w	#257,-(sp)	; M_ON
+	jsr	graf_mouse	; show mouse
 	addq.l	#2,sp
-	move.w	#1,U92226
-	bsr.s	L48392
-L48370:
+
+	move.w	#1,draw_lock_flag
+	bsr.s	wind_update_end
+.return:
 	unlk	fp
 	rts
 
-L48374:
+wind_update_begin:
 	link	fp,#-4
-	move.w	#1,(sp)
+	move.w	#1,(sp)		; BEG_UPDATE
 	jsr	wind_update
 	unlk	fp
 	rts
 
-L48392:
+wind_update_end:
 	link	fp,#-4
-	clr.w	(sp)
+	clr.w	(sp)		; END_UPDATE
 	jsr	wind_update
 	unlk	fp
 	rts
@@ -15111,10 +14688,10 @@ init:
 	link	fp,#-16
 	move.w	#16,(sp)	; mode
 	move.w	#11,-(sp)	; Kbshift
-	jsr	bios
+	trap	#13		; BIOS
 	addq.l	#2,sp
 	move.w	d0,U101192
-	move.w	#1,U92226
+	move.w	#1,draw_lock_flag
 	jsr	appl_init
 	tst.w	d0
 	beq.s	.error
@@ -15134,7 +14711,7 @@ init:
 	bne.s	.no_err
 
 .error:	move.l	#init_err,(sp)
-	bsr  	L49566
+	bsr  	alert
 
 .no_err:
 	move.w	cell_h,d0
@@ -15153,16 +14730,20 @@ init:
 	adda.l	#16,sp
 
 	move.l	#U99820,U101480
+
 	clr.l	(sp)
 	clr.w	-(sp)
 	jsr	graf_mouse
 	addq.l	#2,sp
+
 	move.l	#T85962,(sp)
 	jsr	rsrc_load
 	tst.w	d0
 	bne.s	.L48982
+
 	move.l	#rsrc_err,(sp)
-	bsr  	L49566
+	bsr  	alert
+
 .L48982:
 	move.w	#2,(sp)
 	bsr  	L37522
@@ -15172,7 +14753,7 @@ init:
 	move.l	d0,U92206
 	move.w	#4,(sp)
 	bsr  	L37522
-	move.l	d0,U92198
+	move.l	d0,dialog_about
 	move.w	#1,(sp)
 	bsr  	L37522
 	move.l	d0,U92210
@@ -15191,6 +14772,7 @@ init:
 
 	move.w	#-2,U101462
 	move.w	#-1,U100904
+
 	jsr	get_free_mem
 	cmp.l	#$DFFF,d0
 	ble.s	.not_enough_mem
@@ -15216,9 +14798,9 @@ init:
 	move.l	d1,(sp)	; Allocate graphics buffer
 	jsr	Malloc
 
-	move.l	d0,grph_buffer	
+	move.l	d0,grph_buffer
 	move.w	#1,U92232
-	bra.s	.L49232
+	bra	.L49232
 
 .not_enough_mem:
 	jsr	L21006
@@ -15252,7 +14834,7 @@ init:
 	clr.w	U98292
 	bsr  	L44608
 	clr.l	(sp)
-	move.w	#32,-(sp)
+	move.w	#32,-(sp)	; Super
 	jsr	gemdos
 	addq.l	#2,sp
 	move.l	d0,U91942
@@ -15261,7 +14843,7 @@ init:
 	addq.l	#6,a0
 	move.l	(a0),U91936
 	move.l	U91942,(sp)
-	move.w	#32,-(sp)
+	move.w	#32,-(sp)	; Super
 	jsr	gemdos
 	addq.l	#2,sp
 	unlk	fp
@@ -15332,14 +14914,14 @@ L49460:
 	unlk	fp
 	rts
 
-L49566:
+alert:
 	link	fp,#-4
-	bsr  	L48330
+	bsr  	mouse_show
 	move.l	8(fp),(sp)
 	move.w	#1,-(sp)
 	jsr	form_alert
 	addq.l	#2,sp
-	bsr.s	L49596
+	bsr	L49596
 	unlk	fp
 	rts
 
@@ -15348,12 +14930,12 @@ L49596:
 	jsr	L290
 	move.w	U101192,(sp)	; mode
 	move.w	#11,-(sp)	; Kbshift
-	jsr	bios
+	trap	#13		; BIOS
 	addq.l	#2,sp
 	jsr	v_clsvwk
 	jsr	appl_exit
 	clr.l	(sp)
-	clr.w	-(sp)
+	clr.w	-(sp)	; Pterm0
 	jsr	gemdos
 	addq.l	#2,sp
 	unlk	fp
@@ -15361,7 +14943,7 @@ L49596:
 
 L49652:
 	link	fp,#-4
-	bsr  	L48330
+	bsr  	mouse_show
 	jsr	L69360
 	tst.w	d0
 	beq.s	L49672
@@ -15378,7 +14960,7 @@ L49676:
 L49684:
 	link	fp,#-4
 	move.w	#7,(sp)
-	move.w	#6,-(sp)
+	move.w	#6,-(sp)	; Crawio
 	jsr	gemdos
 	addq.l	#2,sp
 	unlk	fp
@@ -15387,7 +14969,7 @@ L49684:
 L49708:
 	link	fp,#-4
 	clr.l	(sp)
-	move.w	#17,-(sp)
+	move.w	#17,-(sp)	; Cprnos
 	jsr	gemdos
 	addq.l	#2,sp
 	unlk	fp
@@ -15400,22 +14982,6 @@ L49730:
 	move.w	d0,(sp)
 	andi.w	#255,(sp)
 	jsr	Cprnout
-	unlk	fp
-	rts
-
-	link	fp,#-4
-	movea.l	12(fp),a0
-	movea.l	8(fp),a1
-	move.w	(a1),(a0)
-	movea.l	16(fp),a0
-	movea.l	8(fp),a1
-	move.w	2(a1),(a0)
-	movea.l	20(fp),a0
-	movea.l	8(fp),a1
-	move.w	4(a1),(a0)
-	movea.l	24(fp),a0
-	movea.l	8(fp),a1
-	move.w	6(a1),(a0)
 	unlk	fp
 	rts
 
@@ -15570,38 +15136,28 @@ L50226:
 	unlk	fp
 	rts
 
-L50230:
-	link	fp,#0
-	movem.l	d6-d7/a4-a5,-(sp)
-	movea.l	10(fp),a5
-	movea.l	14(fp),a4
-	moveq	#1,d7
-	cmpa.l	a4,a5
-	bge.s	L50274
-	moveq	#-1,d7
-	move.w	8(fp),d0
-	subq.w	#1,d0
-	ext.l	d0
-	adda.l	d0,a4
-	move.w	8(fp),d0
-	subq.w	#1,d0
-	ext.l	d0
-	adda.l	d0,a5
-L50274:
-	bra.s	L50282
+memmove:
+	move.w	4(sp),d0	; len
+	movea.l	6(sp),a0	; src
+	movea.l	10(sp),a1	; dst
 
-L50276:
-	move.b	(a5),(a4)
-	adda.w	d7,a4
-	adda.w	d7,a5
-L50282:
-	move.w	8(fp),d0
-	subq.w	#1,8(fp)
-	tst.w	d0
-	bne.s	L50276
-	tst.l	(sp)+
-	movem.l	(sp)+,d7/a4-a5
-	unlk	fp
+	cmpa.l	a1,a0
+	bge.s	.forwards
+
+ 	ext.l	d0
+	adda.l	d0,a0
+	adda.l	d0,a1
+
+	bra.s	.backwards
+
+.loopr:	move.b	-(a0),-(a1)
+.backwards:
+	dbra	d0,.loopr
+	rts
+
+.loopf:	move.b	(a0)+,(a1)+
+.forwards:
+	dbra	d0,.loopf
 	rts
 
 L50304:
@@ -15609,15 +15165,15 @@ L50304:
 	movem.l	d6-d7/a5,-(sp)
 	movea.l	8(fp),a5
 	move.w	12(fp),d7
-	bra.s	L50326
+	bra.s	.L50326
 
-L50322:
+.L50322:
 	move.b	15(fp),(a5)+
-L50326:
+.L50326:
 	move.w	d7,d0
 	subq.w	#1,d7
 	tst.w	d0
-	bne.s	L50322
+	bne.s	.L50322
 	tst.l	(sp)+
 	movem.l	(sp)+,d7/a5
 	unlk	fp
@@ -15834,27 +15390,17 @@ L50912:
 	rts
 
 L50940:
-	link	fp,#0
-	movem.l	d7/a5,-(sp)
-	movea.l	10(fp),a5
-	bra.s	L50968
-
-L50954:
-	move.b	(a5)+,d0
-	ext.w	d0
-	cmp.b	9(fp),d0
-	bne.s	L50968
-	moveq	#1,d0
-	bra.s	L50974
-
-L50968:
-	tst.b	(a5)
-	bne.s	L50954
+	movea.l	6(sp),a0
 	clr.w	d0
-L50974:
-	tst.l	(sp)+
-	movem.l	(sp)+,a5
-	unlk	fp
+	move.b	5(sp),d2
+.loop:
+	move.b	(a0)+,d1
+	beq.s	.return
+
+	cmp.b	d2,d1
+	bne.s	.loop
+	moveq	#1,d0
+.return:
 	rts
 
 L50984:
@@ -15864,16 +15410,16 @@ L50984:
 	move.w	d7,(sp)
 	bsr.s	L51030
 	tst.w	d0
-	beq.s	L51008
+	beq.s	.L51008
 	moveq	#1,d0
-	bra.s	L51020
+	bra.s	.L51020
 
-L51008:
+.L51008:
 	move.l	#T86008,(sp)
 	move.w	d7,-(sp)
 	bsr.s	L50940
 	addq.l	#2,sp
-L51020:
+.L51020:
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
 	unlk	fp
@@ -16391,138 +15937,122 @@ L52392:
 	move.w	8(fp),d7
 	move.w	U99178,d4
 	movea.l	U101030,a5
-	move.w	d7,(sp)
-	jsr	L378
-	move.w	d0,(sp)
-	jsr	L358
+	move.w	d7,d0
+	jsr	L378_1d
+	jsr	L358_1d
 	move.w	d0,d7
-	bra  	L52542
-
-L52438:
-	move.w	d7,(sp)
-	jsr	L358
+	bra  	.L52542
+.L52438:
+	move.w	d7,d0
+	jsr	L358_1d
 	move.w	d0,d3
 	moveq	#-1,d6
-	bra.s	L52522
-
-L52452:
+	bra.s	.L52522
+.L52452:
 	cmpi.b	#35,(a5)
-	bne.s	L52468
+	bne.s	.L52468
 	cmp.w	#1,d4
-	ble.s	L52468
+	ble.s	.L52468
 	addq.l	#1,a5
 	subq.w	#1,d4
-L52468:
-	move.w	d6,(sp)
-	move.w	d3,-(sp)
-	jsr	L332
-	addq.l	#2,sp
+.L52468:
+	move.w	d6,d1
+	move.w	d3,d0
+	jsr	L332_2d
 	move.w	d0,d5
 	tst.w	d5
-	bne.s	L52498
+	bne.s	.L52498
 	tst.w	d4
-	beq.s	L52494
+	beq.s	.L52494
 	clr.w	d0
-	bra.s	L52496
-
-L52494:
+	bra.s	.L52496
+.L52494:
 	moveq	#1,d0
-L52496:
-	bra.s	L52556
-
-L52498:
+.L52496:
+	bra.s	.return
+.L52498:
 	move.w	d4,d0
 	subq.w	#1,d4
 	tst.w	d0
-	bne.s	L52510
+	bne.s	.L52510
 	clr.w	d0
-	bra.s	L52556
-
-L52510:
+	bra.s	.return
+.L52510:
 	move.b	(a5)+,d0
 	ext.w	d0
 	cmp.w	d0,d5
-	beq.s	L52522
+	beq.s	.L52522
 	clr.w	d0
-	bra.s	L52556
-
-L52522:
+	bra.s	.return
+.L52522:
 	addq.w	#1,d6
 	move.w	d6,d0
 	cmp.w	#4,d0
-	blt.s	L52452
-	move.w	d7,(sp)
-	jsr	L378
+	blt.s	.L52452
+	move.w	d7,d0
+	jsr	L378_1d
 	move.w	d0,d7
-L52542:
+.L52542:
 	tst.w	d7
-	bne.s	L52438
+	bne.s	.L52438
 	tst.w	d4
-	beq.s	L52554
+	beq.s	.L52554
 	clr.w	d0
-	bra.s	L52556
-
-L52554:
+	bra.s	.return
+.L52554:
 	moveq	#1,d0
-L52556:
+.return:
 	tst.l	(sp)+
 	movem.l	(sp)+,d3-d7/a5
 	unlk	fp
 	rts
 
 L52566:
-	link	fp,#0
-	movem.l	d3-d7,-(sp)
-	jsr	L62588
+	movem.l	d4-d7,-(sp)
+	jsr	node_add
 	move.w	d0,d7
-	move.w	d7,(sp)
+	move.w	d7,-(sp)
 	jsr	L64090
-	jsr	L62588
+	jsr	node_add
 	move.w	d0,d4
-	move.w	d4,(sp)
-	move.w	d7,-(sp)
-	jsr	L65226
-	addq.l	#2,sp
-	jsr	L62588
+	move.w	d4,d1
+	move.w	d7,d0
+	jsr	L65226_2d
+	jsr	node_add
 	move.w	d0,d5
-	move.w	d5,(sp)
-	move.w	d4,-(sp)
-	jsr	L65186
-	addq.l	#2,sp
-	jsr	L62588
-	move.w	d0,(sp)
-	move.w	d5,-(sp)
-	jsr	L65186
-	addq.l	#2,sp
-	move.w	#8,(sp)
-	move.w	d7,-(sp)
-	jsr	L65186
-	addq.l	#2,sp
-L52662:
-	move.w	d5,(sp)
-	jsr	L358
+	move.w	d5,d1
+	move.w	d4,d0
+	jsr	L65186_2d
+	jsr	node_add
+	move.w	d0,d1
+	move.w	d5,d0
+	jsr	L65186_2d
+	move.w	#8,d1
+	move.w	d7,d0
+	jsr	L65186_2d
+.L52662:
+	move.w	d5,d0
+	jsr	L358_1d
 	move.w	d0,d7
 	moveq	#-1,d6
-	bra  	L52794
-
-L52678:
+	bra  	.L52794
+.L52678:
 	tst.w	U99178
-	bne.s	L52704
+	bne.s	.L52704
 	clr.w	(sp)
 	clr.w	-(sp)
 	move.w	d7,-(sp)
 	jsr	L418
 	addq.l	#4,sp
-	bra  	L52872
-
-L52704:
+	bra  	.L52872
+.L52704:
 	movea.l	U101030,a0
 	cmpi.b	#35,(a0)
-	bne.s	L52730
+	bne.s	.L52730
 	cmpi.w	#1,U99178
-	bls.s	L52730
+	bls.s	.L52730
 	bsr  	L50570
-L52730:
+.L52730:
 	movea.l	U101030,a0
 	move.b	(a0),d0
 	ext.w	d0
@@ -16533,24 +16063,23 @@ L52730:
 	addq.l	#4,sp
 	addq.l	#1,U101030
 	subq.w	#1,U99178
-	bne.s	L52794
+	bne.s	.L52794
 	addq.w	#1,d6
 	move.w	d6,d0
 	cmp.w	#4,d0
-	bge.s	L52792
+	bge.s	.L52792
 	clr.w	(sp)
 	move.w	d6,-(sp)
 	move.w	d7,-(sp)
 	jsr	L418
 	addq.l	#4,sp
-L52792:
-	bra.s	L52872
-
-L52794:
+.L52792:
+	bra.s	.L52872
+.L52794:
 	addq.w	#1,d6
 	move.w	d6,d0
 	cmp.w	#4,d0
-	blt.s	L52678
+	blt.s	.L52678
 	clr.w	(sp)
 	jsr	L65694
 	move.w	d0,(sp)
@@ -16561,78 +16090,68 @@ L52794:
 	move.w	d0,(sp)
 	jsr	L64276
 	jsr	L64160
-	move.w	d0,(sp)
-	move.w	d5,-(sp)
-	jsr	L65226
-	addq.l	#2,sp
+	move.w	d0,d1
+	move.w	d5,d0
+	jsr	L65226_2d
 	jsr	L64224
 	move.w	d0,d5
-	bra  	L52662
-
-L52872:
-	tst.l	(sp)+
+	bra  	.L52662
+.L52872:
+	addq	#2,sp
 	movem.l	(sp)+,d4-d7
-	unlk	fp
 	rts
 
 L52882:
-	link	fp,#-4
 	bsr  	L52566
-	clr.w	(sp)
+	clr.w	-(sp)
 	jsr	L64160
 	move.w	d0,-(sp)
 	jsr	L65496
 	addq.l	#2,sp
 	move.w	d0,(sp)
 	jsr	L64090
+	jsr	L64224
 	movea.w	U101184,a0
 	adda.l	a0,a0
 	movea.l	#U101202,a1
-	move.w	0(a0,a1.l),(sp)
-	jsr	L64224
-	move.w	d0,-(sp)
-	jsr	L65226
-	addq.l	#2,sp
+	move.w	0(a0,a1.l),d1
+	jsr	L65226_2d
 	move.w	d0,-(sp)
 	movea.w	U101184,a0
 	adda.l	a0,a0
 	adda.l	#U101202,a0
 	move.w	(sp)+,(a0)
-	unlk	fp
+	addq	#2,sp
 	rts
 
 L52972:
-	link	fp,#-4
-	move.l	8(fp),U99602
-	bsr.s	L52990
-	unlk	fp
-	rts
+	move.l	4(sp),U99602
+	jmp	L52990
 
 L52990:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
 	move.l	U99602,-(sp)
-	jsr	L81832
+	jsr	ffp_to_int
 	addq.l	#4,sp
 	move.w	d0,d7
 	move.l	U99602,-(sp)
 	move.w	d7,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688
+	jsr	int_to_ffp
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
-	bne.s	L53052
+	bne.s	.L53052
 	move.w	d7,(sp)
 	bsr.s	L53070
-	bra.s	L53060
-
-L53052:
+	bra.s	.L53060
+.L53052:
 	move.l	U99602,(sp)
 	bsr.s	L53102
-L53060:
+.L53060:
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
 	unlk	fp
@@ -16650,32 +16169,26 @@ L53070:
 	rts
 
 L53102:
-	link	fp,#0
-	movem.l	d6-d7,-(sp)
-	move.l	8(fp),U100628
-	jsr	L62588
+	move.l	d7,-(sp)
+	move.l	8(sp),U100628
+	jsr	node_add
 	move.w	d0,d7
 	move.w	d7,(sp)
 	jsr	L64090
-	jsr	L62588
-	move.w	d0,(sp)
-	move.w	d7,-(sp)
-	jsr	L65226
-	addq.l	#2,sp
-	move.w	#16,(sp)
-	move.w	d7,-(sp)
-	jsr	L65186
-	addq.l	#2,sp
+	jsr	node_add
+	move.w	d0,d1
+	move.w	d7,d0
+	jsr	L65226_2d
+	move.w	#16,d1
+	move.w	d7,d0
+	jsr	L65186_2d
 	move.l	U100628,(sp)
-	move.w	d7,-(sp)
-	jsr	L378
-	addq.l	#2,sp
+	move.w	d7,d0
+	jsr	L378_1d
 	move.w	d0,-(sp)
 	jsr	L488
 	addq.l	#2,sp
-	tst.l	(sp)+
-	movem.l	(sp)+,d7
-	unlk	fp
+	move.l	(sp)+,d7
 	rts
 
 L53202:
@@ -16696,21 +16209,21 @@ L53232:
 	bra.s	L53298
 
 L53252:
-	move.w	d7,(sp)
-	jsr	L358
+	move.w	d7,d0
+	jsr	L358_1d
 	move.w	d0,(sp)
 	bsr  	L52392
 	tst.w	d0
 	beq.s	L53288
-	move.w	d7,(sp)
-	jsr	L358
+	move.w	d7,d0
+	jsr	L358_1d
 	move.w	d0,(sp)
 	jsr	L64090
 	bra.s	L53308
 
 L53288:
-	move.w	d7,(sp)
-	jsr	L378
+	move.w	d7,d0
+	jsr	L378_1d
 	move.w	d0,d7
 L53298:
 	tst.w	d7
@@ -16781,27 +16294,25 @@ L53462:
 	link	fp,#-4
 	bsr  	L53644
 	tst.w	d0
-	beq.s	L53486
+	beq.s	.L53486
 	jsr	L64732
 	bsr  	L53858
-	bra.s	L53530
-
-L53486:
+	bra.s	.return
+.L53486:
 	move.w	#93,(sp)
 	bsr  	L52304
 	tst.w	d0
-	beq.s	L53514
+	beq.s	.L53514
 	bsr  	L51714
 	jsr	L64732
 	bsr  	L53858
-	bra.s	L53530
-
-L53514:
+	bra.s	.return
+.L53514:
 	jsr	L74764
 	bsr.s	L53534
 	bsr.s	L53462
 	jsr	L64470
-L53530:
+.return:
 	unlk	fp
 	rts
 
@@ -16860,64 +16371,57 @@ L53628:
 L53644:
 	link	fp,#-4
 	tst.w	U101008
-	beq.s	L53662
+	beq.s	.L53662
 	moveq	#1,d0
-	bra  	L53854
-
-L53662:
+	bra  	.return
+.L53662:
 	tst.w	U100982
-	beq.s	L53758
+	beq.s	.L53758
 	tst.w	U101470
-	beq.s	L53754
+	beq.s	.L53754
 	bsr  	L52338
 	tst.w	d0
-	beq.s	L53754
+	beq.s	.L53754
 	bsr  	L52190
 	move.w	U101042,(sp)
 	bsr  	L53070
 	cmpi.w	#59,U100632
-	bne.s	L53718
+	bne.s	.L53718
 	move.w	U100676,(sp)
-	bra.s	L53724
-
-L53718:
+	bra.s	.L53724
+.L53718:
 	move.w	U100634,(sp)
-L53724:
+.L53724:
 	jsr	L64090
 	bsr  	L53396
 	bsr  	L53872
 	bsr  	L51714
 	jsr	L74764
 	bsr.s	L53644
-	bra  	L53854
-
-L53754:
+	bra  	.return
+.L53754:
 	clr.w	d0
-	bra.s	L53854
-
-L53758:
+	bra.s	.return
+.L53758:
 	tst.w	U101470
-	bne.s	L53770
+	bne.s	.L53770
 	moveq	#1,d0
-	bra.s	L53854
-
-L53770:
+	bra.s	.return
+.L53770:
 	move.w	#62,(sp)
 	bsr  	L50590
 	tst.w	U100892
-	beq.s	L53790
+	beq.s	.L53790
 	clr.w	d0
-	bra.s	L53792
-
-L53790:
+	bra.s	.L53792
+.L53790:
 	moveq	#1,d0
-L53792:
+.L53792:
 	move.w	d0,U101008
-	beq.s	L53804
+	beq.s	.L53804
 	moveq	#1,d0
-	bra.s	L53854
-
-L53804:
+	bra.s	.return
+.L53804:
 	move.w	U101042,(sp)
 	bsr  	L53070
 	move.w	U100740,(sp)
@@ -16928,7 +16432,7 @@ L53804:
 	clr.w	U100892
 	jsr	L74764
 	bsr  	L53644
-L53854:
+.return:
 	unlk	fp
 	rts
 
@@ -16939,34 +16443,30 @@ L53858:
 	rts
 
 L53872:
-	link	fp,#-4
+	subq	#2,sp
 	jsr	L64470
 	jsr	L64470
 	tst.w	U101034
-	bne.s	L53924
+	bne.s	.L53924
 	jsr	L64160
 	move.w	d0,(sp)
 	jsr	L65694
 	move.w	d0,U101010
 	move.w	d0,U101034
-	bra.s	L53972
-
-L53924:
+	bra.s	.return
+.L53924:
 	jsr	L64160
 	move.w	d0,(sp)
 	jsr	L65694
-	move.w	d0,(sp)
-	move.w	U101010,-(sp)
-	jsr	L65226
-	addq.l	#2,sp
-	move.w	U101010,(sp)
-	jsr	L378
+	move.w	d0,d1
+	move.w	U101010,d0
+	jsr	L65226_2d
+	move.w	U101010,d0
+	jsr	L378_1d
 	move.w	d0,U101010
-L53970	equ	*-2
-L53972:
-	jsr	L64180
-	unlk	fp
-	rts
+.return:
+	addq	#2,sp
+	jmp	L64180
 
 L53982:
 	link	fp,#-4
@@ -17026,34 +16526,31 @@ L54122:
 	movem.l	d6-d7,-(sp)
 	bsr  	L51714
 	cmpi.w	#2,U100982
-	bne.s	L54150
+	bne.s	.L54150
 	bsr  	L50570
-	bra.s	L54170
-
-L54150:
+	bra.s	.L54170
+.L54150:
 	cmpi.w	#8,U100982
-	beq.s	L54170
+	beq.s	.L54170
 	jsr	L58102
-	bra  	L54380
-
-L54170:
+	bra  	.L54380
+.L54170:
 	bsr  	L53428
 	jsr	L64160
 	move.w	d0,d7
 	move.w	d7,(sp)
 	jsr	L65878
 	tst.w	d0
-	beq.s	L54220
+	beq.s	.L54220
 	jsr	L61762
 	tst.w	d0
-	beq.s	L54212
+	beq.s	.L54212
 	jsr	L61804
-	bra.s	L54220
-
-L54212:
+	bra.s	.L54220
+.L54212:
 	move.w	d7,(sp)
 	jsr	L66904
-L54220:
+.L54220:
 	bsr  	L53982
 	move.w	#1,U101470
 	clr.w	U101042
@@ -17061,20 +16558,19 @@ L54220:
 	bsr  	L54054
 	jsr	L64470
 	tst.w	U101034
-	bne.s	L54278
+	bne.s	.L54278
 	move.w	U100738,(sp)
 	move.w	d7,-(sp)
 	jsr	L66244
 	addq.l	#2,sp
-	bra.s	L54300
-
-L54278:
+	bra.s	.L54300
+.L54278:
 	move.w	U101034,(sp)
 	move.w	U100738,-(sp)
 	move.w	d7,-(sp)
 	jsr	L66062
 	addq.l	#4,sp
-L54300:
+.L54300:
 	move.w	d7,(sp)
 	jsr	L55654
 	jsr	L64160
@@ -17085,16 +16581,16 @@ L54300:
 	addq.l	#4,sp
 	jsr	L64180
 	tst.w	U99190
-	bne.s	L54374
+	bne.s	.L54374
 	move.w	d7,(sp)
 	move.l	#L54682,-(sp)
 	move.l	T87202,-(sp)
 	jsr	L54390
 	addq.l	#8,sp
 	jsr	L74840
-L54374:
+.L54374:
 	jsr	L64180
-L54380:
+.L54380:
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
 	unlk	fp
@@ -17146,39 +16642,32 @@ L54484:
 	link	fp,#0
 	movem.l	d2-d7,-(sp)
 	move.w	8(fp),d7
-	move.w	d7,(sp)
-	jsr	L378
-	move.w	d0,(sp)
-	jsr	L358
+	move.w	d7,d0
+	jsr	L378_1d
+	jsr	L358_1d
 	move.w	d0,d7
-	beq.s	L54542
-	move.w	#1,(sp)
-	move.w	d7,-(sp)
-	jsr	L358
-	addq.l	#2,sp
-	move.w	d0,-(sp)
-	jsr	L332
-	addq.l	#2,sp
+	beq.s	.L54542
+	move.w	d7,d0
+	jsr	L358_1d
+	moveq	#1,d1
+	jsr	L332_2d
 	move.w	d0,d3
-L54542:
-	bra  	L54668
-
-L54546:
-	move.w	d7,(sp)
-	jsr	L358
+.L54542:
+	bra  	.L54668
+.L54546:
+	move.w	d7,d0
+	jsr	L358_1d
 	move.w	d0,d6
 	moveq	#-1,d5
-	bra.s	L54648
-
-L54560:
-	move.w	d5,(sp)
-	move.w	d6,-(sp)
-	jsr	L332
-	addq.l	#2,sp
+	bra.s	.L54648
+.L54560:
+	move.w	d5,d1
+	move.w	d6,d0
+	jsr	L332_2d
 	move.b	d0,d4
-	beq.s	L54672
+	beq.s	.L54672
 	tst.w	10(fp)
-	beq.s	L54636
+	beq.s	.L54636
 	move.l	#T86034,(sp)
 	move.b	d4,d0
 	ext.w	d0
@@ -17186,35 +16675,35 @@ L54560:
 	jsr	L50940
 	addq.l	#2,sp
 	tst.w	d0
-	bne.s	L54626
+	bne.s	.L54626
 	move.b	d4,d0
 	ext.w	d0
 	move.w	d0,(sp)
 	jsr	L50984
 	tst.w	d0
-	beq.s	L54636
+	beq.s	.L54636
 	tst.w	d3
-	beq.s	L54636
-L54626:
+	beq.s	.L54636
+.L54626:
 	move.w	#35,(sp)
 	jsr	L74948
-L54636:
+.L54636:
 	move.b	d4,d0
 	ext.w	d0
 	move.w	d0,(sp)
 	jsr	L74948
-L54648:
+.L54648:
 	addq.w	#1,d5
 	move.w	d5,d0
 	cmp.w	#4,d0
-	blt.s	L54560
-	move.w	d7,(sp)
-	jsr	L378
+	blt.s	.L54560
+	move.w	d7,d0
+	jsr	L378_1d
 	move.w	d0,d7
-L54668:
+.L54668:
 	tst.w	d7
-	bne.s	L54546
-L54672:
+	bne.s	.L54546
+.L54672:
 	tst.l	(sp)+
 	movem.l	(sp)+,d3-d7
 	unlk	fp
@@ -17257,14 +16746,14 @@ L54740:
 	move.l	d0,d5
 	move.l	d6,-(sp)
 	move.l	d6,-(sp)
-	jsr	L81832
+	jsr	ffp_to_int
 	addq.l	#4,sp
 	move.l	d0,-36(fp)
 	move.l	d0,-(sp)
-	jsr	L81688
+	jsr	int_to_ffp
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	bne.s	L54822
 	move.l	-36(fp),(sp)
@@ -17274,12 +16763,12 @@ L54740:
 L54822:
 	move.l	#-2095944137,-(sp)
 	move.l	d5,-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	ble.s	L54858
 	move.l	#-1734967208,-(sp)
 	move.l	d5,-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	blt.s	L54884
 L54858:
@@ -17415,14 +16904,14 @@ L55162:
 	move.w	U101044,U98710
 	move.w	U100990,U99194
 L55204:
-	move.w	d7,(sp)
-	jsr	L358
+	move.w	d7,d0
+	jsr	L358_1d
 	move.w	d0,-2(fp)
 	move.w	d0,(sp)
 	bsr  	L55354
 	jsr	L53858
-	move.w	d7,(sp)
-	jsr	L378
+	move.w	d7,d0
+	jsr	L378_1d
 	move.w	d0,d7
 	beq.s	L55328
 	move.w	d7,(sp)
@@ -17445,8 +16934,8 @@ L55274:
 	move.w	-2(fp),d0
 	cmp.w	U100888,d0
 	beq.s	L55324
-	move.w	d7,(sp)
-	jsr	L358
+	move.w	d7,d0
+	jsr	L358_1d
 	cmp.w	U100652,d0
 	beq.s	L55324
 	jsr	L76978
@@ -17523,8 +17012,8 @@ L55502:
 	move.w	8(fp),(sp)
 	bsr  	L55092
 	move.w	10(fp),d7
-	move.w	d7,(sp)
-	jsr	L358
+	move.w	d7,d0
+	jsr	L358_1d
 	move.w	d0,d7
 	bra.s	L55574
 
@@ -17532,12 +17021,12 @@ L55534:
 	jsr	L76978
 	move.w	#58,(sp)
 	jsr	L74948
-	move.w	d7,(sp)
-	jsr	L358
+	move.w	d7,d0
+	jsr	L358_1d
 	move.w	d0,(sp)
 	bsr  	L55092
-	move.w	d7,(sp)
-	jsr	L378
+	move.w	d7,d0
+	jsr	L378_1d
 	move.w	d0,d7
 L55574:
 	tst.w	d7
@@ -17589,7 +17078,7 @@ L55702:
 	move.w	d0,(sp)
 	jsr	L65532
 	move.l	d0,-(sp)
-	jsr	L81832
+	jsr	ffp_to_int
 	addq.l	#4,sp
 	move.w	d0,-2(fp)
 	bsr  	L56014
@@ -17634,14 +17123,13 @@ L55826:
 	bra.s	L55894
 
 L55842:
-	move.w	U101034,(sp)
-	jsr	L358
-	move.w	d0,(sp)
-	jsr	L358
+	move.w	U101034,d0
+	jsr	L358_1d
+	jsr	L358_1d
 	move.w	d0,(sp)
 	jsr	L65532
 	move.l	d0,-(sp)
-	jsr	L81832
+	jsr	ffp_to_int
 	addq.l	#4,sp
 	cmp.w	U101042,d0
 	beq.s	L55892
@@ -17655,40 +17143,27 @@ L55894:
 	rts
 
 L55898:
-	link	fp,#-4
 	bsr.s	L55922
 	cmp.w	U100634,d0
-	beq.s	L55916
+	beq.s	.L55916
 	clr.w	d0
-	bra.s	L55918
-
-L55916:
+	bra.s	.return
+.L55916:
 	moveq	#1,d0
-L55918:
-	unlk	fp
+.return:
 	rts
 
 L55922:
-	link	fp,#-4
-	move.w	U101034,(sp)
-	jsr	L358
-	move.w	d0,(sp)
-	jsr	L378
-	move.w	d0,(sp)
-	jsr	L358
-	unlk	fp
-	rts
+	move.w	U101034,d0
+	jsr	L358_1d
+	jsr	L378_1d
+	jmp	L358_1d
 
 L55958:
-	link	fp,#-4
-	move.w	U101034,(sp)
-	jsr	L358
-	move.w	d0,(sp)
-	jsr	L378
-	move.w	d0,(sp)
-	jsr	L378
-	unlk	fp
-	rts
+	move.w	U101034,d0
+	jsr	L358_1d
+	jsr	L378_1d
+	jmp	L378_1d
 
 L55994:
 	link	fp,#-4
@@ -17701,17 +17176,9 @@ L55994:
 	rts
 
 L56014:
-	link	fp,#-4
-	move.w	U101034,(sp)
-	jsr	L378
+	move.w	U101034,d0
+	jsr	L378_1d
 	move.w	d0,U101034
-	unlk	fp
-	rts
-
-L56040:
-	link	fp,#-4
-	clr.w	U101034
-	unlk	fp
 	rts
 
 L56054:
@@ -17735,42 +17202,39 @@ L56100:
 	link	fp,#0
 	movem.l	d4-d7,-(sp)
 	move.w	8(fp),d7
-	bra.s	L56204
-
-L56114:
+	bra.s	.L56204
+.L56114:
 	jsr	L64160
-	move.w	d0,(sp)
-	jsr	L358
+	jsr	L358_1d
 	move.w	d0,d6
 	move.w	d6,(sp)
 	bsr  	L57862
 	tst.w	d0
-	bne.s	L56182
+	bne.s	.L56182
 	move.w	U98400,(sp)
 	move.w	d6,-(sp)
 	jsr	L66008
 	addq.l	#2,sp
 	move.w	d0,d5
-	beq.s	L56170
+	beq.s	.L56170
 	move.w	d5,(sp)
 	bsr  	L57862
 	tst.w	d0
-	bne.s	L56182
-L56170:
+	bne.s	.L56182
+.L56170:
 	move.w	d7,(sp)
 	move.w	d6,-(sp)
 	jsr	L66244
 	addq.l	#2,sp
-L56182:
+.L56182:
 	jsr	L64160
-	move.w	d0,(sp)
-	jsr	L378
+	jsr	L378_1d
 	move.w	d0,(sp)
 	jsr	L64276
-L56204:
+.L56204:
 	jsr	L64160
 	tst.w	d0
-	bne.s	L56114
+	bne.s	.L56114
 	jsr	L64180
 	tst.l	(sp)+
 	movem.l	(sp)+,d5-d7
@@ -17809,14 +17273,13 @@ L56294:
 	tst.w	d7
 	beq.s	L56352
 	jsr	L74764
-	move.w	d7,(sp)
-	jsr	L378
+	move.w	d7,d0
+	jsr	L378_1d
 	move.w	d0,(sp)
 	bsr.s	L56294
 	move.w	U98716,(sp)
-	move.w	d7,-(sp)
-	jsr	L358
-	addq.l	#2,sp
+	move.w	d7,d0
+	jsr	L358_1d
 	move.w	d0,-(sp)
 	bsr  	L57652
 	addq.l	#2,sp
@@ -17925,9 +17388,9 @@ L56676:
 	bra  	L57342
 
 L56692:
-	jsr	L56040
-	move.w	d7,(sp)
-	jsr	L358
+	clr.w	U101034
+	move.w	d7,d0
+	jsr	L358_1d
 	move.w	d0,U98372
 	move.w	10(fp),d0
 	bra  	L57312
@@ -17958,14 +17421,14 @@ L56792:
 	bne.s	L56810
 	move.w	U100990,U99194
 L56810:
-	move.w	d6,(sp)
-	jsr	L358
+	move.w	d6,d0
+	jsr	L358_1d
 	move.w	d0,(sp)
 	jsr	L55144
 	move.w	d0,-2(fp)
 L56830:
-	move.w	d6,(sp)
-	jsr	L378
+	move.w	d6,d0
+	jsr	L378_1d
 	move.w	d0,d6
 	bne.s	L56780
 	jsr	L55694
@@ -17999,8 +17462,8 @@ L56926:
 	addq.l	#2,sp
 	move.w	d0,d6
 	beq  	L57106
-	move.w	d6,(sp)
-	jsr	L358
+	move.w	d6,d0
+	jsr	L358_1d
 	move.w	d0,d6
 	bsr  	L58022
 	tst.w	d0
@@ -18108,13 +17571,13 @@ L57312:
 	jmp	(a0)
 
 L57332:
-	move.w	d7,(sp)
-	jsr	L378
+	move.w	d7,d0
+	jsr	L378_1d
 	move.w	d0,d7
 L57342:
 	tst.w	d7
 	bne  	L56692
-	jsr	L56040
+	clr.w	U101034
 	tst.l	(sp)+
 	movem.l	(sp)+,d6-d7
 	unlk	fp
@@ -18208,11 +17671,11 @@ L57572:
 L57602:
 	tst.w	U100960
 	beq.s	L57548
-	move.w	U100960,(sp)
-	jsr	L358
+	move.w	U100960,d0
+	jsr	L358_1d
 	move.w	d0,U100668
-	move.w	U100960,(sp)
-	jsr	L378
+	move.w	U100960,d0
+	jsr	L378_1d
 	move.w	d0,U100960
 	moveq	#1,d0
 L57648:
@@ -18300,11 +17763,9 @@ L57834:
 	rts
 
 L57838:
-	link	fp,#-4
-	move.w	8(fp),(sp)
-	jsr	L66356
+	move.w	4(sp),d0
+	jsr	L66356_1d
 	move.w	d0,U100670
-	unlk	fp
 	rts
 
 L57862:
@@ -18327,24 +17788,22 @@ L57898:
 L57902:
 	link	fp,#-4
 	tst.w	U100670
-	bne.s	L57918
+	bne.s	.L57918
 	clr.w	d0
-	bra.s	L57982
-
-L57918:
-	move.w	U100670,(sp)
-	jsr	L358
+	bra.s	.return
+.L57918:
+	move.w	U100670,d0
+	jsr	L358_1d
 	move.w	d0,U101490
-	move.w	U100670,(sp)
-	jsr	L378
-	move.w	d0,(sp)
-	jsr	L358
+	move.w	U100670,d0
+	jsr	L378_1d
+	jsr	L358_1d
 	move.w	d0,U101182
-	move.w	U100670,(sp)
-	jsr	L66356
+	move.w	U100670,d0
+	jsr	L66356_1d
 	move.w	d0,U100670
 	moveq	#1,d0
-L57982:
+.return:
 	unlk	fp
 	rts
 
@@ -18353,26 +17812,24 @@ L57986:
 	move.w	U101490,(sp)
 	jsr	L9214
 	cmpi.b	#46,U100754
-	beq.s	L58016
+	beq.s	.L58016
 	clr.w	d0
-	bra.s	L58018
-
-L58016:
+	bra.s	.return
+.L58016:
 	moveq	#1,d0
-L58018:
+.return:
 	unlk	fp
 	rts
 
 L58022:
 	link	fp,#-4
 	tst.w	U100996
-	bne.s	L58038
+	bne.s	.L58038
 	clr.w	d0
-	bra.s	L58040
-
-L58038:
+	bra.s	.return
+.L58038:
 	moveq	#1,d0
-L58040:
+.return:
 	unlk	fp
 	rts
 
@@ -18447,17 +17904,17 @@ L58232:
 	jsr	L66008
 	addq.l	#2,sp
 	move.w	d0,U98376
-	bne.s	L58270
+	bne.s	.L58270
 	jsr	L67690
-L58270:
+.L58270:
 	move.w	U101474,(sp)
 	jsr	L64090
 	move.w	U100636,(sp)
 	jsr	L64090
 	move.w	U99818,(sp)
 	jsr	L64090
-	move.w	U98376,(sp)
-	jsr	L378
+	move.w	U98376,d0
+	jsr	L378_1d
 	move.w	d0,(sp)
 	jsr	L64090
 	move.w	#6,(sp)
@@ -18468,16 +17925,15 @@ L58270:
 	move.l	#U101014,(sp)
 	jsr	L204
 	tst.w	d0
-	beq.s	L58380
+	beq.s	.L58380
 	jsr	L61834
 	bsr  	L58830
-	bra  	L58606
-
-L58380:
+	bra  	.L58606
+.L58380:
 	jsr	L64888
 	jsr	L64732
-	move.w	U98376,(sp)
-	jsr	L358
+	move.w	U98376,d0
+	jsr	L358_1d
 	move.w	d0,(sp)
 	bsr  	L59090
 	jsr	L64180
@@ -18486,7 +17942,7 @@ L58380:
 	jsr	L61834
 	bsr  	L58610
 	tst.w	d0
-	bne  	L58606
+	bne  	.L58606
 	move.w	#7,(sp)
 	jsr	L64352
 	move.w	d0,U99818
@@ -18495,19 +17951,19 @@ L58380:
 	jsr	L64408
 	addq.l	#2,sp
 	tst.w	U99818
-	beq.s	L58506
-	move.w	U99818,(sp)
-	jsr	L358
+	beq.s	.L58506
+	move.w	U99818,d0
+	jsr	L358_1d
 	move.w	d0,U99864
 	bsr  	L58878
-L58506:
+.L58506:
 	move.w	#18,(sp)
 	jsr	L68540
 	tst.w	U101198
-	beq.s	L58602
+	beq.s	.L58602
 	bsr  	L60924
 	tst.w	d0
-	beq.s	L58602
+	beq.s	.L58602
 	bsr  	L60968
 	move.w	U101046,(sp)
 	move.l	#L55354,-(sp)
@@ -18524,25 +17980,25 @@ L58506:
 	adda.l	#16,sp
 	jsr	L74840
 	jsr	L47940
-L58602:
+.L58602:
 	bsr  	L58830
-L58606:
+.L58606:
 	unlk	fp
 	rts
 
 L58610:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
-	move.w	U99818,(sp)
-	jsr	L378
+	move.w	U99818,d0
+	jsr	L378_1d
 	tst.w	d0
-	bne  	L58818
+	bne  	.L58818
 	tst.w	U99864
-	bne  	L58818
+	bne  	.L58818
 	move.w	#11,(sp)
 	jsr	L64352
 	cmp.w	#18,d0
-	bne  	L58818
+	bne  	.L58818
 	jsr	L64994
 	jsr	L65148
 	move.w	#9,(sp)
@@ -18551,7 +18007,7 @@ L58610:
 	move.w	d0,-(sp)
 	jsr	L65014
 	cmp.w	(sp)+,d0
-	bne.s	L58818
+	bne.s	.L58818
 	move.w	U98716,(sp)
 	clr.w	d0
 	move.w	U100636,d0
@@ -18560,15 +18016,15 @@ L58610:
 	jsr	L66008
 	addq.l	#2,sp
 	move.w	d0,d7
-	beq.s	L58818
-	move.w	d7,(sp)
-	jsr	L378
+	beq.s	.L58818
+	move.w	d7,d0
+	jsr	L378_1d
 	move.w	d0,U99818
-	beq.s	L58818
+	beq.s	.L58818
 	move.w	#10,(sp)
 	jsr	L64326
-	move.w	U99818,(sp)
-	jsr	L358
+	move.w	U99818,d0
+	jsr	L358_1d
 	move.w	d0,U99864
 	move.w	#11,(sp)
 	jsr	L64352
@@ -18579,11 +18035,10 @@ L58610:
 	addq.l	#2,sp
 	jsr	L64180
 	moveq	#1,d0
-	bra.s	L58820
-
-L58818:
+	bra.s	.return
+.L58818:
 	clr.w	d0
-L58820:
+.return:
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
 	unlk	fp
@@ -18607,32 +18062,31 @@ L58878:
 	move.l	#U101014,(sp)
 	jsr	L204
 	tst.w	d0
-	bne  	L59086
+	bne  	.return
 	jsr	L64888
-L58906:
+.L58906:
 	bsr  	L60948
-	bra.s	L58944
-
-L58912:
+	bra.s	.L58944
+.L58912:
 	bsr  	L59916
 	tst.w	U99818
-	beq  	L59086
-	move.w	U99818,(sp)
-	jsr	L358
+	beq  	.return
+	move.w	U99818,d0
+	jsr	L358_1d
 	move.w	d0,U99864
-L58944:
+.L58944:
 	jsr	L61904
 	tst.w	d0
-	bne.s	L58912
+	bne.s	.L58912
 	tst.w	U98398
-	beq.s	L59078
+	beq.s	.L59078
 	jsr	L64994
 	move.w	d0,(sp)
 	jsr	L66546
 	tst.w	d0
-	beq.s	L59078
+	beq.s	.L59078
 	jsr	L66768
-L58986:
+;.L58986:
 	jsr	L58082
 	bsr  	L60968
 	jsr	L64160
@@ -18649,20 +18103,17 @@ L58986:
 	move.l	T87294,-(sp)
 	jsr	L54390
 	adda.l	#16,sp
-	bra.s	L59056
-
-	bra.s	L58986
-
-L59056:
+	;bra.s	.L59056
+	;bra.s	.L58986
+;.L59056:
 	jsr	L66800
 	move.w	#2,(sp)
 	jsr	L47436
 	jsr	L47940
-L59078:
+.L59078:
 	bsr  	L59366
-	bra  	L58906
-
-L59086:
+	bra  	.L58906
+.return:
 	unlk	fp
 	rts
 
@@ -18671,9 +18122,9 @@ L59090:
 	movem.l	d6-d7,-(sp)
 	move.w	8(fp),d7
 	tst.w	d7
-	bne.s	L59162
+	bne.s	.L59162
 	tst.w	U101198
-	beq.s	L59158
+	beq.s	.L59158
 	bsr  	L60968
 	jsr	L64994
 	move.w	d0,(sp)
@@ -18683,48 +18134,45 @@ L59090:
 	addq.l	#8,sp
 	jsr	L74840
 	jsr	L47940
-L59158:
-	bra  	L59356
-
-L59162:
+.L59158:
+	bra  	.L59356
+.L59162:
 	jsr	L61884
 	tst.w	d0
-	beq.s	L59186
+	beq.s	.L59186
 	jsr	L64994
 	move.w	d0,(sp)
 	jsr	L66942
-L59186:
+.L59186:
 	bsr  	L60616
 	bsr  	L60924
 	tst.w	d0
-	bne.s	L59212
+	bne.s	.L59212
 	jsr	L64994
 	move.w	d0,(sp)
 	jsr	L67152
-L59212:
+.L59212:
 	jsr	L64746
 	jsr	L74764
-	move.w	d7,(sp)
-	jsr	L378
+	move.w	d7,d0
+	jsr	L378_1d
 	move.w	d0,(sp)
 	bsr  	L59090
 	jsr	L64160
 	move.w	d0,(sp)
-	move.w	d7,-(sp)
-	jsr	L358
-	addq.l	#2,sp
+	move.w	d7,d0
+	jsr	L358_1d
 	move.w	d0,-(sp)
 	jsr	L11782
 	addq.l	#2,sp
 	tst.w	U101198
-	beq.s	L59350
+	beq.s	.L59350
 	bsr  	L60968
 	jsr	L64160
 	move.w	d0,(sp)
 	move.l	#L55354,-(sp)
-	move.w	d7,-(sp)
-	jsr	L358
-	addq.l	#2,sp
+	move.w	d7,d0
+	jsr	L358_1d
 	swap	d0
 	clr.w	d0
 	swap	d0
@@ -18737,9 +18185,9 @@ L59212:
 	adda.l	#16,sp
 	jsr	L74840
 	jsr	L47940
-L59350:
+.L59350:
 	jsr	L64180
-L59356:
+.L59356:
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
 	unlk	fp
@@ -18752,8 +18200,8 @@ L59366:
 	jsr	L61904
 	tst.w	d0
 	bne  	L59726
-	move.w	U99864,(sp)
-	jsr	L358
+	move.w	U99864,d0
+	jsr	L358_1d
 	move.w	d0,U100636
 	move.w	d0,(sp)
 	jsr	L65266
@@ -18902,8 +18350,8 @@ L59916:
 	link	fp,#-4
 	tst.w	U99818
 	beq.s	L59946
-	move.w	U99818,(sp)
-	jsr	L378
+	move.w	U99818,d0
+	jsr	L378_1d
 	move.w	d0,U99818
 L59946:
 	unlk	fp
@@ -18913,11 +18361,11 @@ L59950:
 	link	fp,#-4
 	jsr	L61904
 	tst.w	d0
-	bne.s	L59982
-	move.w	U99864,(sp)
-	jsr	L378
+	bne.s	.L59982
+	move.w	U99864,d0
+	jsr	L378_1d
 	move.w	d0,U99864
-L59982:
+.L59982:
 	unlk	fp
 	rts
 
@@ -18933,15 +18381,15 @@ L59996:
 	jsr	L67406
 L60016:
 	move.w	U101474,d7
-	move.w	d7,(sp)
-	jsr	L358
+	move.w	d7,d0
+	jsr	L358_1d
 	move.w	d0,(sp)
-	jsr	L62820
-	move.w	U101474,(sp)
-	jsr	L378
+	jsr	node_del
+	move.w	U101474,d0
+	jsr	L378_1d
 	move.w	d0,U101474
 	move.w	d7,(sp)
-	jsr	L62820
+	jsr	node_del
 L60064:
 	clr.w	d0
 	move.w	U101474,d0
@@ -18958,54 +18406,50 @@ L60088:
 	move.w	8(fp),d7
 	move.w	U101474,d6
 	cmp.w	10(fp),d6
-	beq  	L60244
+	beq  	.return
 	clr.w	d0
 	move.w	d7,d0
 	move.w	d0,-2(fp)
 	cmp.w	d0,d6
-	bne.s	L60136
+	bne.s	.L60136
 	move.w	10(fp),(sp)
 	bsr  	L59986
-	bra.s	L60244
-
-L60136:
+	bra.s	.return
+.L60136:
 	tst.w	d7
-	bne.s	L60152
+	bne.s	.L60152
 	move.l	#T86334,(sp)
 	jsr	L67406
-L60152:
-	move.w	d7,(sp)
-	jsr	L378
+.L60152:
+	move.w	d7,d0
+	jsr	L378_1d
 	move.w	d0,(sp)
 	jsr	L64090
-	move.w	d7,(sp)
-	jsr	L358
+	move.w	d7,d0
+	jsr	L358_1d
 	move.w	d0,(sp)
-	jsr	L62820
+	jsr	node_del
 	move.w	d7,(sp)
-	jsr	L62820
-	move.w	d6,(sp)
-	jsr	L378
+	jsr	node_del
+	move.w	d6,d0
+	jsr	L378_1d
 	cmp.w	-2(fp),d0
-	beq.s	L60216
-	move.w	d6,(sp)
-	jsr	L378
+	beq.s	.L60216
+	move.w	d6,d0
+	jsr	L378_1d
 	move.w	d0,d6
-L60216:
+.L60216:
 	jsr	L64224
 	move.w	d0,d7
 	cmp.w	10(fp),d7
-	beq.s	L60232
-	bra.s	L60136
-
-L60232:
-	move.w	d7,(sp)
-	move.w	d6,-(sp)
-	jsr	L65226
-	addq.l	#2,sp
-L60244:
-	tst.l	(sp)+
-	movem.l	(sp)+,d6-d7
+	beq.s	.L60232
+	bra.s	.L60136
+.L60232:
+	move.w	d7,d1
+	move.w	d6,d0
+	jsr	L65226_2d
+.return:
+	movem.l	(sp)+,d5-d7
 	unlk	fp
 	rts
 
@@ -19031,14 +18475,14 @@ L60310:
 	move.w	d7,(sp)
 	jsr	L67730
 L60318:
-	move.w	d6,(sp)
-	jsr	L358
+	move.w	d6,d0
+	jsr	L358_1d
 	move.w	d0,U101046
 	bra.s	L60348
 
 L60334:
-	move.w	d6,(sp)
-	jsr	L378
+	move.w	d6,d0
+	jsr	L378_1d
 	move.w	d0,U101046
 L60348:
 	tst.l	(sp)+
@@ -19051,13 +18495,11 @@ L60358:
 	movea.l	8(fp),a0
 	movea.l	8(a0),a0
 	jsr	(a0)
-	bra  	L60564
-
-L60376:
+	bra  	.L60564
+.L60376:
 	clr.w	-2(fp)
-	bra  	L60526
-
-L60384:
+	bra  	.L60526
+.L60384:
 	movea.l	8(fp),a0
 	move.w	-2(fp),d1
 	asl.w	#4,d1
@@ -19067,7 +18509,7 @@ L60384:
 	jsr	L62078
 	addq.l	#2,sp
 	tst.w	d0
-	beq.s	L60522
+	beq.s	.L60522
 	move.w	U100636,(sp)
 	jsr	L64090
 	bsr  	L59950
@@ -19096,29 +18538,28 @@ L60384:
 	movea.l	4(a0,d1.l),a0
 	jsr	(a0)
 	jsr	L64180
-	bra.s	L60546
-
-L60522:
+	bra.s	.L60546
+.L60522:
 	addq.w	#1,-2(fp)
-L60526:
+.L60526:
 	movea.l	8(fp),a0
 	move.w	-2(fp),d1
 	asl.w	#4,d1
 	ext.l	d1
 	tst.l	0(a0,d1.l)
-	bne  	L60384
-L60546:
+	bne  	.L60384
+.L60546:
 	movea.l	8(fp),a0
 	move.w	-2(fp),d1
 	asl.w	#4,d1
 	ext.l	d1
 	tst.l	0(a0,d1.l)
-	beq.s	L60576
-L60564:
+	beq.s	.L60576
+.L60564:
 	jsr	L61904
 	tst.w	d0
-	beq  	L60376
-L60576:
+	beq  	.L60376
+.L60576:
 	unlk	fp
 	rts
 
@@ -19235,15 +18676,14 @@ L60852:
 L60886:
 	link	fp,#-4
 	tst.w	8(fp)
-	beq.s	L60906
+	beq.s	.L60906
 	clr.w	d0
 	move.w	U100984,d0
-	bra.s	L60914
-
-L60906:
+	bra.s	.L60914
+.L60906:
 	clr.w	d0
 	move.w	U101186,d0
-L60914:
+.L60914:
 	move.w	d0,U101046
 	unlk	fp
 	rts
@@ -19310,13 +18750,12 @@ L61064:
 	clr.w	d0
 	move.w	U100626,d0
 	cmp.w	U101460,d0
-	bne.s	L61090
+	bne.s	.L61090
 	move.w	#32767,d0
-	bra.s	L61094
-
-L61090:
+	bra.s	.return
+.L61090:
 	move.w	8(fp),d0
-L61094:
+.return:
 	unlk	fp
 	rts
 
@@ -19350,8 +18789,8 @@ L61132:
 	bsr.s	L61098
 	tst.w	d0
 	beq.s	L61178
-	move.w	U101460,(sp)
-	jsr	L358
+	move.w	U101460,d0
+	jsr	L358_1d
 	move.w	d0,(sp)
 	jsr	L66942
 L61178:
@@ -19380,8 +18819,8 @@ L61222:
 	bsr  	L61904
 	tst.w	d0
 	beq.s	L61254
-	move.w	U101460,(sp)
-	jsr	L358
+	move.w	U101460,d0
+	jsr	L358_1d
 	move.w	d0,(sp)
 	jsr	L66942
 L61254:
@@ -19390,8 +18829,8 @@ L61254:
 	jsr	L60924
 	tst.w	d0
 	bne.s	L61290
-	move.w	U101460,(sp)
-	jsr	L358
+	move.w	U101460,d0
+	jsr	L358_1d
 	move.w	d0,(sp)
 	jsr	L67152
 L61290:
@@ -19477,11 +18916,10 @@ L61464:
 	rts
 
 L61476:
-	link	fp,#-4
 	bsr  	L61340
-	move.w	U101046,(sp)
+	move.w	U101046,-(sp)
 	jsr	L65532
-	unlk	fp
+	addq	#2,sp
 	rts
 
 L61500:
@@ -19493,27 +18931,19 @@ L61500:
 	rts
 
 L61518:
-	link	fp,#-4
 	bsr  	L61190
-	bsr  	L61710
-	unlk	fp
-	rts
+	bra  	L61710
 
 L61534:
-	link	fp,#-4
 	bsr.s	L61518
-	jsr	L64746
-	unlk	fp
-	rts
+	jmp	L64746
 
 L61550:
-	link	fp,#-4
 	bsr  	L61294
 	tst.w	d0
-	bne.s	L61568
-	jsr	L67118
-L61568:
-	unlk	fp
+	bne.s	.return
+	jmp	L67118
+.return:
 	rts
 
 L61572:
@@ -19525,26 +18955,21 @@ L61572:
 	rts
 
 L61592:
-	link	fp,#-4
 	bsr.s	L61500
-	jsr	L64746
-	unlk	fp
-	rts
+	jmp	L64746
 
 L61608:
-	link	fp,#-4
 	bsr  	L61206
 	clr.w	d0
 	move.w	U101046,d0
 	cmp.w	U100984,d0
-	beq.s	L61654
+	beq.s	.return
 	clr.w	d0
 	move.w	U101046,d0
 	cmp.w	U101186,d0
-	beq.s	L61654
-	jsr	L67508
-L61654:
-	unlk	fp
+	beq.s	.return
+	jmp	L67508
+.return:
 	rts
 
 L61658:
@@ -19552,7 +18977,7 @@ L61658:
 	movem.l	d6-d7,-(sp)
 	bsr  	L61476
 	move.l	d0,-(sp)
-	jsr	L81832
+	jsr	ffp_to_int
 	addq.l	#4,sp
 	move.w	d0,d7
 	blt.s	L61694
@@ -19614,15 +19039,13 @@ L61804:
 	rts
 
 L61834:
-	link	fp,#-4
 	move.w	#1,U101046
-	unlk	fp
 	rts
 
 L61850:
 	link	fp,#-4
-	move.w	U99864,(sp)
-	jsr	L358
+	move.w	U99864,d0
+	jsr	L358_1d
 	cmp.w	U100652,d0
 	beq.s	L61878
 	clr.w	d0
@@ -19638,27 +19061,23 @@ L61884:
 	link	fp,#-4
 	bsr.s	L61904
 	tst.w	d0
-	beq.s	L61898
+	beq.s	.L61898
 	moveq	#1,d0
-	bra.s	L61900
+	bra.s	.L61900
 
-L61898:
+.L61898:
 	bsr.s	L61850
-L61900:
+.L61900:
 	unlk	fp
 	rts
 
 L61904:
-	link	fp,#-4
 	tst.w	U99864
-	beq.s	L61920
+	beq.s	.ret1
 	clr.w	d0
-	bra.s	L61922
-
-L61920:
+	rts
+.ret1:
 	moveq	#1,d0
-L61922:
-	unlk	fp
 	rts
 
 L61926:
@@ -19713,56 +19132,39 @@ L62056:
 	rts
 
 L62078:
-	link	fp,#0
-	movem.l	d6-d7,-(sp)
-	move.w	8(fp),d7
-	move.w	d7,(sp)
+	move.w	4(sp),-(sp)
 	jsr	L65726
 	tst.w	d0
-	beq.s	L62154
-	move.w	d7,(sp)
+	beq.s	.ret0
 	jsr	L65878
-	move.w	d0,d7
-	beq.s	L62154
-	jsr	L156
-	move.l	d0,-(sp)
-	move.w	d7,-(sp)
-	jsr	L378
-	addq.l	#2,sp
-	swap	d0
+	tst.w	d0
+	beq.s	.ret0
+	jsr	L378_1d
+	clr.l	d1
+	move.w	d0,d1
+	add.l	p_tbase,d1
+	cmp.l	8(sp),d1
+	beq.s	.ret1
 	clr.w	d0
-	swap	d0
-	add.l	(sp)+,d0
-	cmp.l	10(fp),d0
-	beq.s	L62150
-	clr.w	d0
-	bra.s	L62152
-
-L62150:
+.ret0:
+	addq	#2,sp
+	rts
+.ret1:
 	moveq	#1,d0
-L62152:
-	bra.s	L62156
-
-L62154:
-	clr.w	d0
-L62156:
-	tst.l	(sp)+
-	movem.l	(sp)+,d7
-	unlk	fp
+	addq	#2,sp
 	rts
 
 L62166:
 	link	fp,#-4
 	jsr	L64732
-	bra.s	L62184
-
-L62178:
+	bra.s	.L62184
+.L62178:
 	jsr	L64470
-L62184:
+.L62184:
 	move.w	8(fp),d0
 	subq.w	#1,8(fp)
 	tst.w	d0
-	bne.s	L62178
+	bne.s	.L62178
 	jsr	L64764
 	unlk	fp
 	rts
@@ -19778,7 +19180,7 @@ L62226:
 	link	fp,#-4
 	bsr.s	L62206
 	move.l	d0,-(sp)
-	jsr	L81832
+	jsr	ffp_to_int
 	addq.l	#4,sp
 	unlk	fp
 	rts
@@ -19848,27 +19250,22 @@ L62426:
 	rts
 
 L62430:
-	link	fp,#-4
 	tst.w	U101476
-	beq.s	L62464
+	beq.s	.L62464
 	tst.w	U100998
-	beq.s	L62458
+	beq.s	.L62458
 	clr.w	U99190
-	bra.s	L62464
-
-L62458:
+	bra.s	.L62464
+.L62458:
 	jsr	L67286
-L62464:
-	unlk	fp
+.L62464:
 	rts
 
 L62468:
-	link	fp,#-4
 	cmpi.w	#1,U100986
-	bne.s	L62488
+	bne.s	.L62488
 	jsr	L67334
-L62488:
-	unlk	fp
+.L62488:
 	rts
 
 L62492:
@@ -19887,7 +19284,6 @@ L62522:
 	rts
 
 L62532:
-	link	fp,#-4
 	clr.w	U101460
 	clr.w	U101156
 	clr.w	U98402
@@ -19895,105 +19291,98 @@ L62532:
 	clr.w	U99818
 	clr.w	U99864
 	clr.w	U100674
-	jsr	L61834
-	unlk	fp
+	jmp	L61834
+
+node_add:
+	move.l	d7,-(sp)
+
+	cmpi.w	#100,nodes_free
+	bls.s	.nodes_low
+
+.enough_nodes:
+	move.w	U99186,d7
+	tst.w	d7
+	beq.s	.eq
+	move.w	d7,d0
+	jsr	L378_1d
+	move.w	d0,U99186
+.L62790:
+	clr.w	d1
+	move.w	d7,d0
+	bsr  	L65226_2d
+	subq.w	#1,nodes_free
+	move.w	d7,d0
+
+	move.l	(sp)+,d7
 	rts
 
-L62588:
-	link	fp,#0
-	movem.l	d6-d7,-(sp)
-	cmpi.w	#100,U100978
-	bhi.s	L62672
-	jsr	L76064
-	tst.w	d0
-	beq.s	L62630
-	move.l	T87070,(sp)
-	jsr	L49566
-	bra.s	L62672
-
-L62630:
-	tst.w	U99188
-	bne.s	L62672
-	move.w	#1,U99188
-	bsr  	L62878
-	tst.w	U99188
-	beq.s	L62672
-	bsr.s	L62588
-	move.w	d0,U101004
-	jsr	L67254
-L62672:
-	tst.w	U99186
-	bne.s	L62770
-	clr.w	d0
-	move.w	U100620,d0
-	cmp.w	U100988,d0
-	bcc.s	L62732
-	clr.w	(sp)
+.eq	move.w	U100620,d0
+	cmp.w	nodes_max,d0
+	bcc.s	.err_nodes
+	clr.w	d1
 	move.w	U99176,d7
-	move.w	d7,-(sp)
-	bsr  	L65186
-	addq.l	#2,sp
+	move.w	d7,d0
+	bsr  	L65186_2d
 	addq.w	#1,U99176
 	move.w	d7,(sp)
 	bsr  	L63932
 	addq.w	#1,U100620
-	bra.s	L62768
+	bra.s	.L62790
 
-L62732:
-	move.l	T87074,(sp)
+.nodes_low:
+	jsr	is_oom
+	tst.w	d0
+	bne.s	.err_mem
+
+	tst.w	U99188
+	bne.s	.enough_nodes
+	move.w	#1,U99188
+	bsr  	word_recycle
+	tst.w	U99188
+	beq	.enough_nodes
+	bsr	node_add
+	move.w	d0,U101004
+	jsr	do_err_nodes_low
+	bra	.enough_nodes
+
+.err_nodes:
+	move.l	err_nodes,(sp)
 	move.w	#1,-(sp)
 	jsr	form_alert
 	addq.l	#2,sp
+
 	move.w	#23,(sp)
 	move.l	#U101158,-(sp)
 	jsr	L218
 	addq.l	#4,sp
-L62768:
-	bra.s	L62790
+	bra	.L62790
 
-L62770:
-	move.w	U99186,d7
-	move.w	d7,(sp)
-	jsr	L378
-	move.w	d0,U99186
-L62790:
-	clr.w	(sp)
-	move.w	d7,-(sp)
-	bsr  	L65226
-	addq.l	#2,sp
-	subq.w	#1,U100978
-	clr.w	d0
+.err_mem:
+	move.l	err_mem,(sp)
+	jsr	alert
+	bra	.enough_nodes
+
+U99186: dc.w 0
+
+node_del:
+	move.l	d7,-(sp)
+	move.w	8(sp),d7
+	clr.w	d1
 	move.w	d7,d0
-	tst.l	(sp)+
-	movem.l	(sp)+,d7
-	unlk	fp
-	rts
-
-L62820:
-	link	fp,#0
-	movem.l	d6-d7,-(sp)
-	move.w	8(fp),d7
-	clr.w	(sp)
-	move.w	d7,-(sp)
-	bsr  	L65186
-	addq.l	#2,sp
-	move.w	U99186,(sp)
-	move.w	d7,-(sp)
-	bsr  	L65226
-	addq.l	#2,sp
+	bsr  	L65186_2d
+	move.w	U99186,d1
+	move.w	d7,d0
+	bsr  	L65226_2d
 	move.w	d0,U99186
-	addq.w	#1,U100978
-	tst.l	(sp)+
-	movem.l	(sp)+,d7
-	unlk	fp
+	addq.w	#1,nodes_free
+	move.l	(sp)+,d7
 	rts
 
-L62878:
-	link	fp,#-4
+word_recycle:
 	clr.w	U99186
 	bsr  	L63344
 	bsr  	L64782
-	move.w	U99864,(sp)
+	move.w	U99864,-(sp)
 	bsr  	L63544
 	move.w	U99818,(sp)
 	bsr  	L63544
@@ -20013,163 +19402,150 @@ L62878:
 	bsr  	L63544
 	move.w	U100888,(sp)
 	bsr  	L63444
-	move.w	U100888,(sp)
-	jsr	L378
-	move.w	d0,(sp)
-	jsr	L378
+	move.w	U100888,d0
+	jsr	L378_1d
+	jsr	L378_1d
 	move.w	d0,(sp)
 	bsr  	L63544
 	jsr	L60924
 	tst.w	d0
-	beq.s	L63042
+	beq.s	.L63042
 	move.w	U101046,(sp)
 	bsr  	L63544
-L63042:
+.L63042:
 	move.w	U101004,(sp)
 	bsr  	L63792
-	bsr.s	L63074
-	cmpi.w	#100,U100978
-	bcs.s	L63070
+	bsr.s	do_recycle
+	cmpi.w	#100,nodes_free
+	bcs.s	.return
 	clr.w	U99188
-L63070:
-	unlk	fp
+.return:
+	addq	#2,sp
 	rts
 
-L63074:
-	link	fp,#0
-	movem.l	d5-d7,-(sp)
+do_recycle:
+	movem.l	d6-d7,-(sp)
+	subq	#2,sp
 	move.w	#-1,U98384
-	bra  	L63228
-
-L63094:
+	bra  	.L63228
+.L63094:
 	movea.w	U98384,a0
 	adda.l	a0,a0
 	adda.l	#U101202,a0
 	move.w	(a0),d6
-	bra.s	L63140
-
-L63112:
-	move.w	d6,(sp)
-	jsr	L358
+	bra.s	.L63140
+.L63112:
+	move.w	d6,d0
+	jsr	L358_1d
 	move.w	d0,(sp)
 	bsr  	L63864
 	tst.w	d0
-	bne.s	L63144
-	move.w	d6,(sp)
-	jsr	L378
+	bne.s	.L63144
+	move.w	d6,d0
+	jsr	L378_1d
 	move.w	d0,d6
-L63140:
+.L63140:
 	tst.w	d6
-	bne.s	L63112
-L63144:
+	bne.s	.L63112
+.L63144:
 	movea.w	U98384,a0
 	adda.l	a0,a0
 	adda.l	#U101202,a0
 	move.w	d6,(a0)
-	beq.s	L63228
-	bra.s	L63210
-
-L63164:
-	move.w	d7,(sp)
-	jsr	L358
+	beq.s	.L63228
+	bra.s	.L63210
+.L63164:
+	move.w	d7,d0
+	jsr	L358_1d
 	move.w	d0,(sp)
 	bsr  	L63864
 	tst.w	d0
-	beq.s	L63192
+	beq.s	.L63192
 	move.w	d6,(sp)
 	bsr  	L63792
 	move.w	d7,d6
-	bra.s	L63210
-
-L63192:
-	move.w	d7,(sp)
-	jsr	L378
-	move.w	d0,(sp)
-	move.w	d6,-(sp)
-	bsr  	L65226
-	addq.l	#2,sp
-L63210:
-	move.w	d6,(sp)
-	jsr	L378
+	bra.s	.L63210
+.L63192:
+	move.w	d7,d0
+	jsr	L378_1d
+	move.w	d0,d1
+	move.w	d6,d0
+	bsr  	L65226_2d
+.L63210:
+	move.w	d6,d0
+	jsr	L378_1d
 	move.w	d0,d7
-	bne.s	L63164
+	bne.s	.L63164
 	move.w	d6,(sp)
 	bsr  	L63792
-L63228:
+.L63228:
 	addq.w	#1,U98384
 	move.w	U98384,d0
 	cmp.w	#128,d0
-	blt  	L63094
-	clr.w	d0
-	move.w	U100988,d0
+	blt  	.L63094
+	move.w	nodes_max,d0
 	sub.w	U100620,d0
-	move.w	d0,U100978
+	move.w	d0,nodes_free
 	move.w	#-1,U98384
-	bra.s	L63314
-
-L63278:
+	bra.s	.L63314
+.L63278:
 	move.w	U100734,d6
 	add.w	U98384,d6
 	move.w	d6,(sp)
 	bsr  	L63864
 	tst.w	d0
-	beq.s	L63308
+	beq.s	.L63308
 	move.w	d6,(sp)
 	bsr  	L63932
-	bra.s	L63314
-
-L63308:
+	bra.s	.L63314
+.L63308:
 	move.w	d6,(sp)
-	bsr  	L62820
-L63314:
+	bsr  	node_del
+.L63314:
 	addq.w	#1,U98384
 	move.w	U98384,d0
 	cmp.w	U100620,d0
-	bcs.s	L63278
-	tst.l	(sp)+
+	bcs.s	.L63278
+	addq	#2,sp
 	movem.l	(sp)+,d6-d7
-	unlk	fp
 	rts
 
 L63344:
 	link	fp,#0
 	movem.l	d3-d7,-(sp)
 	moveq	#-1,d6
-	bra.s	L63424
-
-L63356:
+	bra.s	.L63424
+.L63356:
 	movea.w	d6,a0
 	adda.l	a0,a0
 	adda.l	#U101202,a0
 	move.w	(a0),d7
-	bra.s	L63420
-
-L63370:
-	move.w	d7,(sp)
-	jsr	L358
+	bra.s	.L63420
+.L63370:
+	move.w	d7,d0
+	jsr	L358_1d
 	move.w	d0,d5
-	move.w	d5,(sp)
-	jsr	L378
-	move.w	d0,(sp)
-	jsr	L378
+	move.w	d5,d0
+	jsr	L378_1d
+	jsr	L378_1d
 	move.w	d0,d4
-	beq.s	L63410
+	beq.s	.L63410
 	move.w	d5,(sp)
 	bsr.s	L63444
 	move.w	d4,(sp)
 	bsr  	L63544
-L63410:
-	move.w	d7,(sp)
-	jsr	L378
+.L63410:
+	move.w	d7,d0
+	jsr	L378_1d
 	move.w	d0,d7
-L63420:
+.L63420:
 	tst.w	d7
-	bne.s	L63370
-L63424:
+	bne.s	.L63370
+.L63424:
 	addq.w	#1,d6
 	move.w	d6,d0
 	cmp.w	#128,d0
-	blt.s	L63356
+	blt.s	.L63356
 	tst.l	(sp)+
 	movem.l	(sp)+,d4-d7
 	unlk	fp
@@ -20182,129 +19558,120 @@ L63444:
 	move.w	d7,(sp)
 	bsr  	L63864
 	tst.w	d0
-	bne.s	L63534
+	bne.s	.return
 	move.w	d7,(sp)
 	bsr  	L63792
-	move.w	d7,(sp)
-	jsr	L378
+	move.w	d7,d0
+	jsr	L378_1d
 	move.w	d0,d7
-	move.w	d7,(sp)
-	jsr	L358
+	move.w	d7,d0
+	jsr	L358_1d
 	move.w	d0,d6
 	move.w	d7,(sp)
 	bsr  	L63792
-	bra.s	L63530
-
-L63500:
-	move.w	d6,(sp)
-	jsr	L358
+	bra.s	.L63530
+.L63500:
+	move.w	d6,d0
+	jsr	L358_1d
 	move.w	d0,(sp)
 	bsr  	L63792
 	move.w	d6,(sp)
 	bsr  	L63792
-	move.w	d6,(sp)
-	jsr	L378
+	move.w	d6,d0
+	jsr	L378_1d
 	move.w	d0,d6
-L63530:
+.L63530:
 	tst.w	d6
-	bne.s	L63500
-L63534:
+	bne.s	.L63500
+.return:
 	tst.l	(sp)+
 	movem.l	(sp)+,d6-d7
 	unlk	fp
 	rts
 
 L63544:
-	link	fp,#0
-	movem.l	d5-d7,-(sp)
-	move.w	8(fp),d7
-	bra  	L63690
-
-L63560:
+	move.l	d7,-(sp)
+	move.w	8(sp),d7
+	subq	#2,sp
+	bra  	.L63690
+.L63560:
 	move.w	d7,(sp)
 	bsr  	L63864
 	tst.w	d0
-	bne  	L63696
+	bne  	.return
 	cmp.w	#32,d7
-	bcc.s	L63586
+	bcc.s	.L63586
 	cmp.w	#18,d7
-	bcc  	L63696
-L63586:
+	bcc  	.return
+.L63586:
 	move.w	d7,(sp)
 	bsr  	L65266
 	tst.w	d0
-	beq.s	L63648
+	beq.s	.L63648
 	move.w	d7,(sp)
 	bsr  	L65356
 	tst.w	d0
-	beq.s	L63638
+	beq.s	.L63638
 	move.w	d7,(sp)
 	bsr  	L65454
 	tst.w	d0
-	beq.s	L63630
-	move.w	d7,(sp)
-	jsr	L378
+	beq.s	.L63630
+	move.w	d7,d0
+	jsr	L378_1d
 	move.w	d0,(sp)
 	bsr  	L63792
-L63630:
+.L63630:
 	move.w	d7,(sp)
 	bsr  	L63792
-	bra.s	L63644
-
-L63638:
+	bra.s	.L63644
+.L63638:
 	move.w	d7,(sp)
 	bsr  	L63444
-L63644:
-	bra.s	L63696
-
-	bra.s	L63680
-
-L63648:
+.L63644:
+	bra.s	.return
+.L63648:
 	move.w	d7,(sp)
 	bsr  	L63792
 	jsr	L75962
 	tst.w	d0
-	beq.s	L63666
-	bsr.s	L63706
-L63666:
-	move.w	d7,(sp)
-	jsr	L358
+	beq.s	.L63666
+	bsr.s	do_err_stackgc
+.L63666:
+	move.w	d7,d0
+	jsr	L358_1d
 	move.w	d0,(sp)
 	bsr  	L63544
-L63680:
-	move.w	d7,(sp)
-	jsr	L378
+	move.w	d7,d0
+	jsr	L378_1d
 	move.w	d0,d7
-L63690:
+.L63690:
 	tst.w	d7
-	bne  	L63560
-L63696:
-	tst.l	(sp)+
-	movem.l	(sp)+,d6-d7
-	unlk	fp
+	bne  	.L63560
+.return:
+	addq	#2,sp
+	move.l	(sp)+,d7
 	rts
 
-L63706:
+do_err_stackgc:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
-	move.l	T87078,(sp)
+	move.l	err_stackgc,(sp)
 	move.w	#1,-(sp)
 	jsr	form_alert
 	addq.l	#2,sp
 	moveq	#-1,d7
-	bra.s	L63752
-
-L63736:
+	bra.s	.L63752
+.L63736:
 	move.w	d7,(sp)
 	clr.w	d0
 	move.w	U100734,d0
 	add.w	d0,(sp)
 	bsr  	L63932
-L63752:
+.L63752:
 	addq.w	#1,d7
 	move.w	d7,d0
 	cmp.w	U100620,d0
-	bcs.s	L63736
+	bcs.s	.L63736
 	move.w	#1,(sp)
 	move.l	#U101158,-(sp)
 	jsr	L218
@@ -20315,87 +19682,53 @@ L63752:
 	rts
 
 L63792:
-	link	fp,#0
-	movem.l	d6-d7,-(sp)
-	move.w	8(fp),d7
-	clr.w	d0
-	move.w	d7,d0
-	and.w	#7,d0
-	movea.w	d0,a0
-	movea.l	#T86340,a1
-	move.b	0(a0,a1.l),d0
-	ext.w	d0
-	move.w	d0,-(sp)
-	clr.w	d0
-	move.w	d7,d0
+	clr.l	d0
+	move.w	4(sp),d0
+
+	moveq	#7,d2
+	movea.l	#pow2_table,a0
+	and.l	d0,d2
+	move.b	0(a0,d2.w),d2
+
+	movea.l	U101036,a0
 	lsr.w	#3,d0
-	swap	d0
-	clr.w	d0
-	swap	d0
-	add.l	U101036,d0
-	movea.l	d0,a0
-	move.b	(a0),d0
-	or.w	(sp)+,d0
-	move.b	d0,(a0)
-	tst.l	(sp)+
-	movem.l	(sp)+,d7
-	unlk	fp
+	or.b	d2,0(a0,d0.l)
+
 	rts
 
 L63864:
-	link	fp,#0
-	movem.l	d6-d7,-(sp)
-	move.w	8(fp),d7
+	move.w	4(sp),d2
+
+	move.w	d2,d1
 	movea.l	U101036,a0
-	clr.w	d1
-	move.w	d7,d1
 	lsr.w	#3,d1
 	move.b	0(a0,d1.w),d0
-	ext.w	d0
-	clr.w	d1
-	move.w	d7,d1
-	and.w	#7,d1
-	swap	d1
-	clr.w	d1
-	swap	d1
-	add.l	#T86340,d1
-	movea.l	d1,a1
-	move.b	(a1),d1
-	ext.w	d1
+
+	moveq	#7,d1
+	movea.l	#pow2_table,a0
+	and.w	d2,d1
+	move.b	0(a0,d1.w),d1
+
 	and.w	d1,d0
-	tst.l	(sp)+
-	movem.l	(sp)+,d7
-	unlk	fp
 	rts
 
 L63932:
-	link	fp,#0
-	movem.l	d6-d7,-(sp)
-	move.w	8(fp),d7
-	clr.w	d0
-	move.w	d7,d0
-	and.w	#7,d0
-	movea.w	d0,a0
-	movea.l	#T86340,a1
-	move.b	0(a0,a1.l),d0
-	ext.w	d0
+	move.w	4(sp),d2
+
+	moveq	#7,d0
+	movea.l	#pow2_table,a0
+	and.w	d2,d0
+	move.b	0(a0,d0.w),d0
+
 	not.w	d0
-	move.w	d0,-(sp)
-	clr.w	d0
-	move.w	d7,d0
-	lsr.w	#3,d0
-	swap	d0
-	clr.w	d0
-	swap	d0
-	add.l	U101036,d0
-	movea.l	d0,a0
-	move.b	(a0),d0
-	and.w	(sp)+,d0
-	move.b	d0,(a0)
-	tst.l	(sp)+
-	movem.l	(sp)+,d7
-	unlk	fp
+	movea.l	U101036,a0
+	move.w	d0,d1
+	lsr.w	#3,d2
+	and.b	d1,0(a0,d2.w)
+
 	rts
+
+pow2_table: dc.b 1,2,4,8,16,32,64,128
 
 L64006:
 	link	fp,#-4
@@ -20430,99 +19763,84 @@ L64056:
 	rts
 
 L64090:
-	link	fp,#0
-	movem.l	d6-d7,-(sp)
-	move.w	8(fp),d7
-	move.w	d7,(sp)
-	move.w	U101004,-(sp)
-	bsr  	L65226
-	addq.l	#2,sp
-	move.w	U98402,(sp)
-	move.w	U101004,-(sp)
-	bsr  	L65186
-	addq.l	#2,sp
-	move.w	d0,U98402
-	bsr  	L62588
-	move.w	d0,U101004
-	tst.l	(sp)+
-	movem.l	(sp)+,d7
-	unlk	fp
+	move.l	a3,-(sp)
+	movea.l	#U101004,a3
+	movea.l	#U98402,a2
+	move.w	8(sp),d1
+	move.w	(a3),d0
+	bsr  	L65226_2d
+	move.w	(a2),d1
+	bsr  	L65186_2d
+	move.w	d0,(a2)
+	bsr  	node_add
+	move.w	d0,(a3)
+	move.l	(sp)+,a3
 	rts
 
 L64160:
-	link	fp,#-4
-	move.w	U98402,(sp)
-	jsr	L378
-	unlk	fp
-	rts
+	move.w	U98402,d0
+	jmp	L378_1d
+
+U98402: dc.w 0
 
 L64180:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
 	move.w	U98402,d7
-	move.w	d7,(sp)
-	jsr	L358
+	move.w	d7,d0
+	jsr	L358_1d
 	move.w	d0,U98402
 	move.w	d7,(sp)
-	bsr  	L62820
+	bsr  	node_del
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
 	unlk	fp
 	rts
 
 L64224:
-	link	fp,#0
-	movem.l	d5-d7,-(sp)
+	movem.l	d6-d7,-(sp)
 	bsr.s	L64160
 	move.w	d0,d7
 	move.w	U98402,d6
-	move.w	d6,(sp)
-	jsr	L358
+	move.w	d6,d0
+	jsr	L358_1d
 	move.w	d0,U98402
-	move.w	d6,(sp)
-	bsr  	L62820
+	move.w	d6,-(sp)
+	bsr  	node_del
+	addq	#2,sp
 	clr.w	d0
 	move.w	d7,d0
-	tst.l	(sp)+
 	movem.l	(sp)+,d6-d7
-	unlk	fp
 	rts
 
 L64276:
-	link	fp,#-4
-	move.w	8(fp),(sp)
-	move.w	U98402,-(sp)
-	bsr  	L65226
-	addq.l	#2,sp
-	unlk	fp
-	rts
+	move.w	4(sp),d1
+	move.w	U98402,d0
+	jmp 	L65226_2d
 
 L64300:
 	link	fp,#-4
-	bra.s	L64310
-
-L64306:
+	bra.s	.L64310
+.L64306:
 	bsr  	L64732
-L64310:
+.L64310:
 	move.w	8(fp),d0
-L64312	equ	*-2
 	subq.w	#1,8(fp)
 	tst.w	d0
-	bne.s	L64306
+	bne.s	.L64306
 	unlk	fp
 	rts
 
 L64326:
 	link	fp,#-4
-	bra.s	L64336
-
-L64332:
+	bra.s	.L64336
+.L64332:
 	bsr  	L64180
-L64336:
+.L64336:
 	move.w	8(fp),d0
 	subq.w	#1,8(fp)
 	tst.w	d0
-	bne.s	L64332
+	bne.s	.L64332
 	unlk	fp
 	rts
 
@@ -20530,19 +19848,19 @@ L64352:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
 	move.w	U98402,d7
-	bra.s	L64378
-
-L64368:
-	move.w	d7,(sp)
-	jsr	L358
+	bra.s	.L64378
+.L64368:
+	move.w	d7,d0
+	jsr	L358_1d
 	move.w	d0,d7
-L64378:
+.L64378:
 	move.w	8(fp),d0
 	subq.w	#1,8(fp)
 	tst.w	d0
-	bne.s	L64368
+	bne.s	.L64368
 	move.w	d7,(sp)
-	jsr	L378
+	move.w	d7,d0
+	jsr	L378_1d
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
 	unlk	fp
@@ -20550,71 +19868,61 @@ L64378:
 
 L64408:
 	link	fp,#0
-	movem.l	d5-d7,-(sp)
+	movem.l	d6-d7,-(sp)
 	move.w	10(fp),d7
 	move.w	U98402,d6
-	bra.s	L64438
-
-L64428:
-	move.w	d6,(sp)
-	jsr	L358
+	bra.s	.L64438
+.L64428:
+	move.w	d6,d0
+	jsr	L358_1d
 	move.w	d0,d6
-L64438:
+.L64438:
 	move.w	8(fp),d0
-L64440	equ	*-2
 	subq.w	#1,8(fp)
 	tst.w	d0
-	bne.s	L64428
-	move.w	d7,(sp)
-	move.w	d6,-(sp)
-	bsr  	L65226
-	addq.l	#2,sp
-	tst.l	(sp)+
+	bne.s	.L64428
+	move.w	d7,d1
+	move.w	d6,d0
+	bsr  	L65226_2d
 	movem.l	(sp)+,d6-d7
 	unlk	fp
 	rts
 
 L64470:
-	link	fp,#0
-	movem.l	d6-d7,-(sp)
-	move.w	U98402,(sp)
-	jsr	L358
+	move.l	d7,-(sp)
+	move.w	U98402,d0
+	jsr	L358_1d
 	move.w	d0,d7
-	move.w	d7,(sp)
-	jsr	L378
-	move.w	d0,(sp)
-	move.w	U98402,-(sp)
-	bsr  	L65186
-	addq.l	#2,sp
-	move.w	U98402,(sp)
-	move.w	d7,-(sp)
-	bsr  	L65226
-	addq.l	#2,sp
+	move.w	d7,d0
+	jsr	L378_1d
+	move.w	d0,d1
+	move.w	U98402,d0
+	bsr  	L65186_2d
+	move.w	U98402,d1
+	move.w	d7,d0
+	bsr  	L65226_2d
 	move.w	d7,U98402
-	tst.l	(sp)+
-	movem.l	(sp)+,d7
-	unlk	fp
+	move.l	(sp)+,d7
 	rts
 
-L64544:
+L64544:	; optimize me
 	link	fp,#0
-	movem.l	d6-d7,-(sp)
+	move.l	d7,-(sp)
 	move.w	8(fp),d7
-	bra.s	L64568
-
-L64558:
-	move.w	d7,(sp)
-	jsr	L358
+	bra.s	.do
+.loop:
+	move.w	d7,d0
+	jsr	L358_1d
 	move.w	d0,d7
-L64568:
+.do:
 	move.w	10(fp),d0
 	subq.w	#1,10(fp)
 	tst.w	d0
-	bne.s	L64558
+	bne.s	.loop
+
 	clr.w	d0
 	move.w	d7,d0
-	tst.l	(sp)+
-	movem.l	(sp)+,d7
+	move.l	(sp)+,d7
 	unlk	fp
 	rts
 
@@ -20622,8 +19930,8 @@ L64594:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
 	move.w	8(fp),d7
-	move.w	d7,(sp)
-	jsr	L378
+	move.w	d7,d0
+	jsr	L378_1d
 	move.w	d0,d7
 	cmp.w	#20,d7
 	bne.s	L64626
@@ -20655,18 +19963,18 @@ L64658:
 	movem.l	d6-d7,-(sp)
 	move.w	8(fp),d7
 	tst.w	d7
-	beq.s	L64692
+	beq.s	.L64692
 	move.w	d7,(sp)
 	move.w	U98402,-(sp)
 	bsr  	L64544
 	addq.l	#2,sp
 	move.w	d0,(sp)
-	bra.s	L64698
-
-L64692:
-	move.w	U98402,(sp)
-L64698:
-	jsr	L378
+	bra.s	.L64698
+.L64692:
+	move.w	U98402,d0
+	move.w	d0,(sp)
+.L64698:
+	jsr	L378_1d
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
 	unlk	fp
@@ -20695,52 +20003,47 @@ L64746:
 	rts
 
 L64764:
-	link	fp,#-4
 	bsr  	L64224
 	move.w	d0,U101046
-	unlk	fp
 	rts
 
 L64782:
 	link	fp,#0
 	movem.l	d5-d7,-(sp)
 	move.w	U98402,d6
-	bra.s	L64874
-
-L64798:
-	move.w	d6,(sp)
-	jsr	L378
+	bra.s	.L64874
+.L64798:
+	move.w	d6,d0
+	jsr	L378_1d
 	move.w	d0,d7
 	move.w	d7,(sp)
 	bsr  	L63544
 	cmp.w	#22,d7
-	bhi.s	L64830
+	bhi.s	.L64830
 	cmp.w	#18,d7
-	bcs.s	L64830
+	bcs.s	.L64830
 	moveq	#7,d0
-	bra.s	L64832
-
-L64830:
+	bra.s	.L64832
+.L64830:
 	moveq	#1,d0
-L64832:
+.L64832:
 	move.w	d0,U98386
-	bra.s	L64858
-
-L64840:
-	move.w	d6,(sp)
-	jsr	L358
+	bra.s	.L64858
+.L64840:
+	move.w	d6,d0
+	jsr	L358_1d
 	move.w	d0,d7
 	move.w	d6,(sp)
 	bsr  	L63792
 	move.w	d7,d6
-L64858:
+.L64858:
 	move.w	U98386,d0
 	subq.w	#1,U98386
 	tst.w	d0
-	bne.s	L64840
-L64874:
+	bne.s	.L64840
+.L64874:
 	tst.w	d6
-	bne.s	L64798
+	bne.s	.L64798
 	tst.l	(sp)+
 	movem.l	(sp)+,d6-d7
 	unlk	fp
@@ -20806,24 +20109,23 @@ L65014:
 	bra.s	L65088
 
 L65020:
-	move.w	U99866,(sp)
-	jsr	L378
+	move.w	U99866,d0
+	jsr	L378_1d
 	cmp.w	#22,d0
 	bne.s	L65042
 	clr.w	d0
 	bra.s	L65098
 
 L65042:
-	move.w	U99866,(sp)
-	jsr	L378
+	move.w	U99866,d0
+	jsr	L378_1d
 	cmp.w	#18,d0
 	bne.s	L65086
 	move.w	#9,(sp)
 	move.w	U99866,-(sp)
 	bsr  	L64544
 	addq.l	#2,sp
-	move.w	d0,(sp)
-	jsr	L378
+	jsr	L378_1d
 	bra.s	L65098
 
 L65086:
@@ -20841,8 +20143,8 @@ L65102:
 	bra.s	L65134
 
 L65108:
-	move.w	U99866,(sp)
-	jsr	L378
+	move.w	U99866,d0
+	jsr	L378_1d
 	cmp.w	#22,d0
 	bne.s	L65132
 	bsr.s	L65148
@@ -20871,63 +20173,36 @@ L65148:
 	unlk	fp
 	rts
 
-L65186:
-	link	fp,#0
-	movem.l	d6-d7,-(sp)
-	move.w	8(fp),d7
-	move.w	10(fp),(sp)
-	move.w	d7,-(sp)
-	jsr	L444
-	addq.l	#2,sp
-	clr.w	d0
-	move.w	d7,d0
-	tst.l	(sp)+
-	movem.l	(sp)+,d7
-	unlk	fp
+L65186_2d: ; L444 inlined
+	clr.l	d2
+	movea.l	U101194,a0
+	move.w	d0,d2
+	lsl.l	#2,d2
+	move.w	d1,0(a0,d2.l)
 	rts
 
-L65226:
-	link	fp,#0
-	movem.l	d6-d7,-(sp)
-	move.w	8(fp),d7
-	move.w	10(fp),(sp)
-	move.w	d7,-(sp)
-	jsr	L466
-	addq.l	#2,sp
-	clr.w	d0
-	move.w	d7,d0
-	tst.l	(sp)+
-	movem.l	(sp)+,d7
-	unlk	fp
+L65226_2d: ; L466 inlined
+	clr.l	d2
+	movea.l	U101194,a0
+	move.w	d0,d2
+	lsl.l	#2,d2
+	move.w	d1,2(a0,d2.l)
 	rts
 
 L65266:
-	link	fp,#0
-	movem.l	d6-d7,-(sp)
-	move.w	8(fp),d7
-	tst.w	d7
-	bne.s	L65286
-	moveq	#1,d0
-	bra.s	L65312
+	move.w	4(sp),d0
+	beq.s	.ret1
 
-L65286:
-	move.w	d7,(sp)
-	jsr	L358
-	move.w	d0,d7
-	tst.w	d7
-	bls.s	L65306
-	cmp.w	#32,d7
-	bcs.s	L65310
-L65306:
+	jsr	L358_1d
+	bls.s	.ret0
+	moveq	#32,d1
+	cmp.w	d1,d0
+	bcs.s	.ret1
+.ret0:
 	clr.w	d0
-	bra.s	L65312
-
-L65310:
+	rts
+.ret1:
 	moveq	#1,d0
-L65312:
-	tst.l	(sp)+
-	movem.l	(sp)+,d7
-	unlk	fp
 	rts
 
 L65322:
@@ -20949,35 +20224,31 @@ L65346:
 	rts
 
 L65356:
-	link	fp,#0
-	movem.l	d6-d7,-(sp)
-	move.w	8(fp),d7
-	move.w	d7,(sp)
-	jsr	L358
+	move.l	d7,-(sp)
+	move.w	8(sp),d7
+	move.w	d7,d0
+	jsr	L358_1d
 	cmp.w	#16,d0
-	bhi.s	L65396
-	move.w	d7,(sp)
-	jsr	L358
+	bhi.s	.ret0
+	move.w	d7,d0
+	jsr	L358_1d
 	cmp.w	#10,d0
-	bcc.s	L65400
-L65396:
+	bcc.s	.ret1
+.ret0:
 	clr.w	d0
-	bra.s	L65402
-
-L65400:
-	moveq	#1,d0
-L65402:
-	tst.l	(sp)+
-	movem.l	(sp)+,d7
-	unlk	fp
+.return:
+	move.l	(sp)+,d7
 	rts
+.ret1:
+	moveq	#1,d0
+	bra.s	.return
 
 L65412:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
 	move.w	8(fp),d7
-	move.w	d7,(sp)
-	jsr	L358
+	move.w	d7,d0
+	jsr	L358_1d
 	cmp.w	#10,d0
 	beq.s	L65442
 	clr.w	d0
@@ -20995,34 +20266,26 @@ L65454:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
 	move.w	8(fp),d7
-	move.w	d7,(sp)
-	jsr	L358
+	move.w	d7,d0
+	jsr	L358_1d
 	cmp.w	#16,d0
-	beq.s	L65484
+	beq.s	.L65484
 	clr.w	d0
-	bra.s	L65486
-
-L65484:
+	bra.s	.return
+.L65484:
 	moveq	#1,d0
-L65486:
+.return:
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
 	unlk	fp
 	rts
 
 L65496:
-	link	fp,#-4
-	move.w	10(fp),(sp)
-	move.w	8(fp),-(sp)
-	bsr  	L62588
-	move.w	d0,-(sp)
-	bsr  	L65186
-	addq.l	#4,sp
-	move.w	d0,-(sp)
-	bsr  	L65226
-	addq.l	#2,sp
-	unlk	fp
-	rts
+	bsr  	node_add
+	move.w	4(sp),d1
+	bsr  	L65186_2d
+	move.w	6(sp),d1
+	jmp  	L65226_2d
 
 L65532:
 	link	fp,#0
@@ -21032,18 +20295,18 @@ L65532:
 	bsr  	L65412
 	tst.w	d0
 	beq.s	L65582
-	move.w	d7,(sp)
-	jsr	L378
+	move.w	d7,d0
+	jsr	L378_1d
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688
+	jsr	int_to_ffp
 	addq.l	#4,sp
 	move.l	d0,U100628
 	bra.s	L65604
 
 L65582:
-	move.w	d7,(sp)
-	jsr	L378
+	move.w	d7,d0
+	jsr	L378_1d
 	move.w	d0,(sp)
 	jsr	L398
 	move.l	d0,U100628
@@ -21062,14 +20325,14 @@ L65620:
 	bsr  	L65266
 	tst.w	d0
 	bne.s	L65684
-	jsr	L56040
+	clr.w	U101034
 L65648:
-	move.w	d7,(sp)
-	jsr	L358
+	move.w	d7,d0
+	jsr	L358_1d
 	move.w	d0,(sp)
 	jsr	L55354
-	move.w	d7,(sp)
-	jsr	L378
+	move.w	d7,d0
+	jsr	L378_1d
 	move.w	d0,d7
 	beq.s	L65684
 	jsr	L76978
@@ -21095,18 +20358,16 @@ L65694:
 	rts
 
 L65726:
-	link	fp,#-4
-	move.w	8(fp),(sp)
+	move.w	4(sp),-(sp)
 	jsr	L65840
-	cmp.w	#8,d0
-	beq.s	L65750
-	clr.w	d0
-	bra.s	L65752
+	addq	#2,sp
 
-L65750:
+	subq	#8,d0
+	bne.s	.ret0
 	moveq	#1,d0
-L65752:
-	unlk	fp
+	rts
+.ret0:
+	clr.w	d0
 	rts
 
 L65756:
@@ -21116,109 +20377,81 @@ L65756:
 	move.w	d7,(sp)
 	bsr  	L65266
 	tst.w	d0
-	beq.s	L65782
+	beq.s	.L65782
 	clr.w	d0
-	bra.s	L65830
-
-L65782:
-	bra.s	L65806
-
-L65784:
+	bra.s	.L65830
+.L65782:
+	bra.s	.L65806
+.L65784:
 	tst.w	d7
-	bne.s	L65796
+	bne.s	.L65796
 	clr.w	d0
 	move.w	d7,d0
-	bra.s	L65830
-
-	bra.s	L65806
-
-L65796:
-	move.w	d7,(sp)
-	jsr	L378
+	bra.s	.L65830
+	;bra.s	.L65806
+.L65796:
+	move.w	d7,d0
+	jsr	L378_1d
 	move.w	d0,d7
-L65806:
+.L65806:
 	cmpi.w	#1,8(fp)
 	move	sr,d0
 	subq.w	#1,8(fp)
 	move	d0,ccr
-	bgt.s	L65784
+	bgt.s	.L65784
 	move.w	d7,(sp)
-	jsr	L358
-L65830:
+	move.w	d7,d0
+	jsr	L358_1d
+.L65830:
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
 	unlk	fp
 	rts
 
 L65840:
-	link	fp,#0
-	movem.l	d6-d7,-(sp)
-	move.w	8(fp),d7
-	tst.w	d7
-	bne.s	L65860
-	clr.w	d0
-	bra.s	L65868
-
-L65860:
-	move.w	d7,(sp)
-	jsr	L358
-L65868:
-	tst.l	(sp)+
-	movem.l	(sp)+,d7
-	unlk	fp
+	move.w	4(sp),d0
+	beq.s	.ret0
+	jmp	L358_1d
+.ret0:
 	rts
 
 L65878:
-	link	fp,#0
-	movem.l	d6-d7,-(sp)
-	move.w	8(fp),d7
-	bra.s	L65926
+	move.w	4(sp),d2
+.loop:
+	move.w	d2,d0
+	jsr  	L66356_1d
+	beq.s	.ret0
 
-L65892:
-	move.w	d7,(sp)
-	jsr	L358
+	move.w	d0,d2
+	jsr	L358_1d
 	cmp.w	U100742,d0
-	bne.s	L65926
-	move.w	d7,(sp)
-	jsr	L378
-	move.w	d0,(sp)
-	jsr	L358
-	bra.s	L65938
-
-L65926:
-	move.w	d7,(sp)
-	bsr  	L66356
-	move.w	d0,d7
-	bne.s	L65892
-	clr.w	d0
-L65938:
-	tst.l	(sp)+
-	movem.l	(sp)+,d7
-	unlk	fp
+	bne.s	.loop
+	move.w	d2,d0
+	jsr	L378_1d
+	jmp	L358_1d
+.ret0:
 	rts
 
 L65948:
 	link	fp,#0
 	movem.l	d6-d7,-(sp)
 	move.w	8(fp),d7
-	bra.s	L65986
-
-L65962:
-	move.w	d7,(sp)
-	jsr	L358
+	bra.s	.L65986
+.L65962:
+	move.w	d7,d0
+	jsr	L358_1d
 	cmp.w	10(fp),d0
-	bne.s	L65986
-	move.w	d7,(sp)
-	jsr	L378
-	bra.s	L65998
-
-L65986:
-	move.w	d7,(sp)
-	bsr  	L66356
+	bne.s	.L65986
+	move.w	d7,d0
+	jsr	L378_1d
+	bra.s	.L65998
+.L65986:
+	move.w	d7,d0
+	jsr  	L66356_1d
 	move.w	d0,d7
-	bne.s	L65962
+	bne.s	.L65962
 	clr.w	d0
-L65998:
+.L65998:
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
 	unlk	fp
@@ -21250,39 +20483,37 @@ L66052:
 
 L66062:
 	link	fp,#0
-	movem.l	d3-d7,-(sp)
+	movem.l	d4-d7,-(sp)
 	move.w	8(fp),d7
 	move.w	d7,(sp)
 	jsr	L65726
 	tst.w	d0
-	bne.s	L66092
+	bne.s	.L66092
 	clr.w	d0
-	bra  	L66234
-
-L66092:
+	bra  	.L66234
+.L66092:
 	move.w	10(fp),d6
 	cmp.w	U98716,d6
-	bne.s	L66124
+	bne.s	.L66124
 	move.w	d7,(sp)
 	bsr  	L66524
 	tst.w	d0
-	bne.s	L66124
+	bne.s	.L66124
 	clr.w	(sp)
 	move.w	d7,-(sp)
 	bsr  	L66394
 	addq.l	#2,sp
-L66124:
+.L66124:
 	move.w	d6,(sp)
 	move.w	d7,-(sp)
 	bsr  	L65948
 	addq.l	#2,sp
 	move.w	d0,d5
-	bne.s	L66216
-	move.w	d7,(sp)
-	jsr	L378
+	bne.s	.L66216
+	move.w	d7,d0
+	jsr	L378_1d
 	move.w	d0,d4
-	move.w	d4,(sp)
-	jsr	L378
+	jsr	L378_1d
 	move.w	d0,(sp)
 	move.w	12(fp),-(sp)
 	jsr	L65496
@@ -21294,125 +20525,97 @@ L66124:
 	move.w	d6,-(sp)
 	jsr	L65496
 	addq.l	#2,sp
-	move.w	d0,(sp)
-	move.w	d4,-(sp)
-	jsr	L65226
-	addq.l	#2,sp
+	move.w	d0,d1
+	move.w	d4,d0
+	jsr	L65226_2d
 	jsr	L64180
-	bra.s	L66230
-
-L66216:
-	move.w	12(fp),(sp)
-	move.w	d5,-(sp)
-	jsr	L65186
-	addq.l	#2,sp
-L66230:
+	bra.s	.L66230
+.L66216:
+	move.w	12(fp),d1
+	move.w	d5,d0
+	jsr	L65186_2d
+.L66230:
 	clr.w	d0
 	move.w	d7,d0
-L66234:
-	tst.l	(sp)+
+.L66234:
 	movem.l	(sp)+,d4-d7
 	unlk	fp
 	rts
 
 L66244:
 	link	fp,#0
-	movem.l	d5-d7,-(sp)
+	movem.l	d6-d7,-(sp)
 	move.w	8(fp),d7
 	clr.w	d0
 	move.w	10(fp),d0
 	cmp.w	U98716,d0
-	bne.s	L66276
+	bne.s	.L66276
 	move.w	d7,(sp)
 	bsr  	L66626
-L66276:
-	move.w	d7,(sp)
-	jsr	L378
+.L66276:
+	move.w	d7,d0
+	jsr	L378_1d
 	move.w	d0,d6
-	bra.s	L66334
-
-L66288:
-	move.w	d7,(sp)
-	jsr	L358
+	bra.s	.L66334
+.L66288:
+	move.w	d7,d0
+	jsr	L358_1d
 	cmp.w	10(fp),d0
-	bne.s	L66332
-	move.w	d7,(sp)
-	jsr	L378
-	move.w	d0,(sp)
-	jsr	L378
-	move.w	d0,(sp)
-	move.w	d6,-(sp)
-	jsr	L65226
-	addq.l	#2,sp
-	bra.s	L66346
-
-L66332:
+	bne.s	.L66332
+	move.w	d7,d0
+	jsr	L378_1d
+	jsr	L378_1d
+	move.w	d0,d1
+	move.w	d6,d0
+	jsr	L65226_2d
+	bra.s	.L66346
+.L66332:
 	move.w	d7,d6
-L66334:
-	move.w	d6,(sp)
-	jsr	L378
+.L66334:
+	move.w	d6,d0
+	jsr	L378_1d
 	move.w	d0,d7
-	bne.s	L66288
-L66346:
-	tst.l	(sp)+
+	bne.s	.L66288
+.L66346:
 	movem.l	(sp)+,d6-d7
-	unlk	fp
-	rts
-
-L66356:
-	link	fp,#0
-	movem.l	d6-d7,-(sp)
-	move.w	8(fp),d7
-	move.w	d7,(sp)
-	jsr	L378
-	move.w	d0,(sp)
-	jsr	L378
-	tst.l	(sp)+
-	movem.l	(sp)+,d7
 	unlk	fp
 	rts
 
 L66394:
 	link	fp,#0
-	movem.l	d5-d7,-(sp)
+	movem.l	d6-d7,-(sp)
 	move.w	8(fp),(sp)
 	jsr	L65694
 	move.w	d0,(sp)
 	jsr	L64090
 	tst.w	U100736
-	bne.s	L66442
+	bne.s	.L66442
 	jsr	L64224
 	move.w	d0,U100736
-	bra.s	L66514
-
-L66442:
+	bra.s	.L66514
+.L66442:
 	move.w	U100736,d7
-	bra.s	L66466
-
-L66450:
-	move.w	d7,(sp)
-	jsr	L358
+	bra.s	.L66466
+.L66450:
+	move.w	d7,d0
+	jsr	L358_1d
 	cmp.w	10(fp),d0
-	beq.s	L66478
+	beq.s	.L66478
 	move.w	d6,d7
-L66466:
-	move.w	d7,(sp)
-	jsr	L378
+.L66466:
+	move.w	d7,d0
+	jsr	L378_1d
 	move.w	d0,d6
-	bne.s	L66450
-L66478:
-	move.w	d6,(sp)
+	bne.s	.L66450
+.L66478:
 	jsr	L64160
-	move.w	d0,-(sp)
-	jsr	L65226
-	addq.l	#2,sp
+	move.w	d6,d1
+	jsr	L65226_2d
 	jsr	L64224
-	move.w	d0,(sp)
-	move.w	d7,-(sp)
-	jsr	L65226
-	addq.l	#2,sp
-L66514:
-	tst.l	(sp)+
+	move.w	d0,d1
+	move.w	d7,d0
+	jsr	L65226_2d
+.L66514:
 	movem.l	(sp)+,d6-d7
 	unlk	fp
 	rts
@@ -21442,16 +20645,16 @@ L66568:
 	bra.s	L66610
 
 L66582:
-	move.w	d7,(sp)
-	jsr	L358
+	move.w	d7,d0
+	jsr	L358_1d
 	cmp.w	10(fp),d0
 	bne.s	L66600
 	moveq	#1,d0
 	bra.s	L66616
 
 L66600:
-	move.w	d7,(sp)
-	jsr	L378
+	move.w	d7,d0
+	jsr	L378_1d
 	move.w	d0,d7
 L66610:
 	tst.w	d7
@@ -21474,55 +20677,47 @@ L66626:
 	rts
 
 L66654:
-	link	fp,#0
-	movem.l	d4-d7,-(sp)
-	move.w	8(fp),d7
+	movem.l	d5-d7,-(sp)
+	move.w	16(sp),d7
 	tst.w	d7
-	bne.s	L66674
+	bne.s	.L66674
 	clr.w	d0
-	bra.s	L66758
-
-L66674:
-	move.w	d7,(sp)
-	jsr	L358
-	cmp.w	10(fp),d0
-	bne.s	L66698
-	move.w	d7,(sp)
-	jsr	L378
-	bra.s	L66758
-
-L66698:
+	bra.s	.return
+.L66674:
+	move.w	d7,d0
+	jsr	L358_1d
+	cmp.w	18(sp),d0
+	bne.s	.L66698
+	move.w	d7,d0
+	jsr	L378_1d
+	bra.s	.return
+.L66698:
 	move.w	d7,d6
-	bra.s	L66750
-
-L66702:
-	move.w	d6,(sp)
-	jsr	L378
+	bra.s	.L66750
+.L66702:
+	move.w	d6,d0
+	jsr	L378_1d
 	move.w	d0,d5
-	move.w	d5,(sp)
-	jsr	L358
-	cmp.w	10(fp),d0
-	bne.s	L66748
-	move.w	d5,(sp)
-	jsr	L378
-	move.w	d0,(sp)
-	move.w	d6,-(sp)
-	jsr	L65226
-	addq.l	#2,sp
-	bra.s	L66754
-
-L66748:
+	move.w	d5,d0
+	jsr	L358_1d
+	cmp.w	18(sp),d0
+	bne.s	.L66748
+	move.w	d5,d0
+	jsr	L378_1d
+	move.w	d0,d1
+	move.w	d6,d0
+	jsr	L65226_2d
+	bra.s	.L66754
+.L66748:
 	move.w	d5,d6
-L66750:
+.L66750:
 	tst.w	d6
-	bne.s	L66702
-L66754:
+	bne.s	.L66702
+.L66754:
 	clr.w	d0
 	move.w	d7,d0
-L66758:
-	tst.l	(sp)+
+.return:
 	movem.l	(sp)+,d5-d7
-	unlk	fp
 	rts
 
 L66768:
@@ -21593,8 +20788,8 @@ L66942:
 	rts
 
 	link	fp,#-4
-	move.w	U101460,(sp)
-	jsr	L358
+	move.w	U101460,d0
+	jsr	L358_1d
 	move.w	d0,(sp)
 	bsr.s	L66942
 	unlk	fp
@@ -21675,10 +20870,10 @@ L67208:
 	unlk	fp
 	rts
 
-L67254:
+do_err_nodes_low:
 	link	fp,#-4
 	move.w	#1,U99188
-	move.l	T87102,(sp)
+	move.l	err_nodes_low,(sp)
 	move.w	#23,-(sp)
 	bsr  	L67928
 	addq.l	#2,sp
@@ -21689,8 +20884,8 @@ L67286:
 	link	fp,#-4
 	move.w	#50,(sp)
 	jsr	L53070
-	move.w	U101460,(sp)
-	jsr	L358
+	move.w	U101460,d0
+	jsr	L358_1d
 	move.w	d0,(sp)
 	jsr	L64090
 	move.l	T87274,(sp)
@@ -21702,8 +20897,8 @@ L67334:
 	link	fp,#-4
 	move.w	#8,(sp)
 	jsr	L53070
-	move.w	U101460,(sp)
-	jsr	L358
+	move.w	U101460,d0
+	jsr	L358_1d
 	move.w	d0,(sp)
 	jsr	L64090
 	move.l	T87278,(sp)
@@ -21762,9 +20957,9 @@ L67508:
 	unlk	fp
 	rts
 
-L67546:
+do_err_disk:
 	link	fp,#-4
-	move.l	T87114,(sp)
+	move.l	err_disk,(sp)
 	move.w	#11,-(sp)
 	bsr  	L67928
 	addq.l	#2,sp
@@ -21875,17 +21070,16 @@ L67866:
 	move.w	d7,(sp)
 	jsr	L65322
 	tst.w	d0
-	beq.s	L67910
+	beq.s	.L67910
 	move.w	d7,(sp)
 	jsr	L6858
 	tst.w	d0
-	beq.s	L67910
+	beq.s	.L67910
 	move.w	U100650,(sp)
-	bra.s	L67912
-
-L67910:
+	bra.s	.L67912
+.L67910:
 	move.w	d7,(sp)
-L67912:
+.L67912:
 	jsr	L64090
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
@@ -22050,12 +21244,12 @@ L68434:
 	bra.s	L68494
 
 L68462:
-	move.w	U100890,(sp)
-	jsr	L358
+	move.w	U100890,d0
+	jsr	L358_1d
 	move.w	d0,(sp)
 	jsr	L65532
 	move.l	d0,-(sp)
-	jsr	L81832
+	jsr	ffp_to_int
 	addq.l	#4,sp
 	move.w	d0,(sp)
 L68494:
@@ -22224,7 +21418,7 @@ L68938:
 
 L68942:
 	link	fp,#-218
-	jsr	L48330
+	jsr	mouse_show
 	tst.w	U100748
 	bne.s	L69040
 	move.l	#T86362,(sp)
@@ -22319,7 +21513,7 @@ L69040:
 	move.l	T87166,(sp)
 	jsr	L76856
 L69344:
-	jsr	L48260
+	jsr	mouse_hide
 	jsr	L74840
 	unlk	fp
 	rts
@@ -22353,7 +21547,7 @@ L69434:
 
 L69438:
 	link	fp,#-4
-	move.l	T87318,(sp)
+	move.l	temp_pic,(sp)
 	move.l	U101030,-(sp)
 	jsr	L83748
 	addq.l	#4,sp
@@ -22376,30 +21570,30 @@ L69500:
 
 L69504:
 	link	fp,#-4
-	move.l	T87318,(sp)
+	move.l	temp_pic,(sp)
 	move.l	U101030,-(sp)
 	jsr	L83748
 	addq.l	#4,sp
 	tst.w	d0
-	bne.s	L69550
+	bne.s	.err_trouble
 	move.l	#T86608,(sp)
 	move.w	#101,-(sp)
 	bsr  	L67928
 	addq.l	#2,sp
-	bra.s	L69566
+	bra.s	.return
 
-L69550:
-	move.l	#T86648,(sp)
+.err_trouble:
+	move.l	#err_s_trouble,(sp)
 	move.w	#101,-(sp)
 	bsr  	L67836
 	addq.l	#2,sp
-L69566:
+.return:
 	unlk	fp
 	rts
 
 L69570:
 	link	fp,#-4
-	move.l	T87318,(sp)
+	move.l	temp_pic,(sp)
 	move.l	U101030,-(sp)
 	jsr	L83814
 	addq.l	#4,sp
@@ -24330,14 +23524,14 @@ L74874:
 
 L74902:
 	link	fp,#-6
-	bra.s	L74918
+	bra.s	.L74918
 
-L74908:
+.L74908:
 	move.b	-2(fp),d0
 	ext.w	d0
 	move.w	d0,(sp)
 	bsr.s	L74948
-L74918:
+.L74918:
 	movea.l	8(fp),a0
 	move.b	(a0),d0
 	ext.w	d0
@@ -24346,7 +23540,7 @@ L74918:
 	bsr  	L74802
 	addq.l	#1,8(fp)
 	tst.w	d0
-	beq.s	L74908
+	beq.s	.L74908
 	unlk	fp
 	rts
 
@@ -24355,26 +23549,25 @@ L74948:
 	movem.l	d6-d7,-(sp)
 	move.b	9(fp),d7
 	tst.w	U98714
-	beq.s	L75020
+	beq.s	.L75020
 	addq.w	#1,U99178
 	clr.w	d0
 	move.w	U99178,d0
 	cmp.w	#134,d0
-	bcs.s	L74994
+	bcs.s	.L74994
 	jsr	L67450
-L74994:
+.L74994:
 	movea.l	U101030,a0
 	move.b	d7,(a0)
 	addq.l	#1,U101030
 	movea.l	U101030,a0
 	clr.b	(a0)
-	bra  	L75538
-
-L75020:
+	bra  	.L75538
+.L75020:
 	cmpi.w	#2,U100996
-	bne.s	L75090
+	bne.s	.L75090
 	cmp.b	#10,d7
-	bne.s	L75068
+	bne.s	.L75068
 	bsr  	L77150
 	move.w	#13,(sp)
 	jsr	L19402
@@ -24383,21 +23576,19 @@ L75020:
 	move.w	d0,(sp)
 	jsr	L19402
 	bsr  	L75596
-	bra.s	L75086
-
-L75068:
+	bra.s	.L75086
+.L75068:
 	addq.w	#1,U101044
 	move.b	d7,d0
 	ext.w	d0
 	move.w	d0,(sp)
 	jsr	L19402
-L75086:
-	bra  	L75538
-
-L75090:
+.L75086:
+	bra  	.L75538
+.L75090:
 	jsr	L58044
 	tst.w	d0
-	beq  	L75244
+	beq  	.L75244
 	move.w	U101200,d0
 	move.w	U101468,d1
 	add.w	#-250,d1
@@ -24405,73 +23596,68 @@ L75090:
 	move	sr,d0
 	addq.w	#1,U101200
 	move	d0,ccr
-	blt.s	L75150
+	blt.s	.L75150
 	move.w	#1,(sp)
 	move.l	#U101090,-(sp)
 	jsr	L218
 	addq.l	#4,sp
-L75150:
+.L75150:
 	cmp.b	#9,d7
-	bne.s	L75170
+	bne.s	.L75170
 	bsr  	L75548
 	move.w	d0,(sp)
 	bsr  	L76954
-	bra  	L75538
-
-L75170:
+	bra  	.L75538
+.L75170:
 	cmp.b	#10,d7
-	bne.s	L75188
+	bne.s	.L75188
 	addq.w	#1,U100990
 	bsr  	L77150
-	bra.s	L75226
-
-L75188:
+	bra.s	.L75226
+.L75188:
 	move.w	U101044,d0
 	cmp.w	U101498,d0
 	move	sr,d0
 	addq.w	#1,U101044
 	move	d0,ccr
-	blt.s	L75226
+	blt.s	.L75226
 	addq.w	#1,U100990
 	move.w	#2,U101044
-L75226:
+.L75226:
 	addq.l	#1,U101102
 	movea.l	U101102,a0
 	move.b	d7,(a0)
-	bra  	L75538
-
-L75244:
+	bra  	.L75538
+.L75244:
 	tst.w	U101146
-	beq.s	L75264
+	beq.s	.L75264
 	move.b	d7,d0
 	ext.w	d0
 	move.w	d0,(sp)
 	jsr	L19078
-L75264:
+.L75264:
 	move.b	d7,d0
 	ext.w	d0
-	bra  	L75506
-
-L75272:
+	bra  	.L75506
+.L75272:
 	move.w	U101154,(sp)
 	move.w	#1,-(sp)
 	jsr	L46014
 	addq.l	#2,sp
 	bsr  	L77262
 	tst.w	d0
-	beq.s	L75308
+	beq.s	.L75308
 	move.w	#2,(sp)
 	jsr	L47436
-L75308:
+.L75308:
 	jsr	L73172
 	tst.w	d0
-	beq.s	L75326
+	beq.s	.L75326
 	jsr	L46714
-	bra.s	L75332
-
-L75326:
+	bra.s	.L75332
+.L75326:
 	addq.w	#1,U101154
-L75332:
+.L75332:
 	move.w	U101154,(sp)
 	moveq	#1,d0
 	move.w	d0,U101044
@@ -24480,41 +23666,38 @@ L75332:
 	addq.l	#2,sp
 	bsr  	L77262
 	tst.w	d0
-	beq.s	L75376
+	beq.s	.L75376
 	clr.w	(sp)
 	jsr	L47436
 	bsr  	L75596
-L75376:
-	bra  	L75538
-
-L75380:
+.L75376:
+	bra  	.L75538
+.L75380:
 	cmpi.w	#1,U101044
-	ble.s	L75416
+	ble.s	.L75416
 	move.w	U101154,(sp)
 	subq.w	#1,U101044
 	move.w	U101044,-(sp)
 	jsr	L46014
 	addq.l	#2,sp
-L75416:
-	bra  	L75538
-
-L75420:
+.L75416:
+	bra  	.L75538
+.L75420:
 	bsr  	L75548
 	move.w	d0,(sp)
 	bsr  	L76954
-	bra.s	L75538
-
-L75432:
+	bra.s	.L75538
+.L75432:
 	jsr	L73144
 	tst.w	d0
-	beq.s	L75470
+	beq.s	.L75470
 	move.w	U101154,(sp)
 	move.w	U101044,-(sp)
 	move.w	#33,-(sp)
 	jsr	L45800
 	addq.l	#4,sp
 	bsr  	L74840
-L75470:
+.L75470:
 	move.w	U101154,(sp)
 	move.w	U101044,-(sp)
 	move.b	d7,d0
@@ -24523,22 +23706,18 @@ L75470:
 	jsr	L45800
 	addq.l	#4,sp
 	addq.w	#1,U101044
-	bra.s	L75538
-
-	bra.s	L75538
-
-L75506:
+	bra.s	.L75538
+.L75506:
 	cmp.w	#8,d0
-	beq  	L75380
+	beq  	.L75380
 	cmp.w	#9,d0
-	beq.s	L75420
+	beq.s	.L75420
 	cmp.w	#10,d0
-	beq  	L75272
+	beq  	.L75272
 	cmp.w	#13,d0
-	beq  	L75332
-	bra.s	L75432
-
-L75538:
+	beq  	.L75332
+	bra.s	.L75432
+.L75538:
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
 	unlk	fp
@@ -24546,10 +23725,10 @@ L75538:
 
 L75548:
 	link	fp,#-4
-	move.w	T84994,d0
+	moveq	#4,d0
 	move.w	U101044,d1
 	subq.w	#1,d1
-	move.w	T84994,d2
+	moveq	#4,d2
 	subq.w	#1,d2
 	and.w	d2,d1
 	sub.w	d1,d0
@@ -24568,19 +23747,19 @@ L75596:
 	movea.l	U91932,a1
 	move.l	0(a0,a1.l),d0
 	cmp.l	U91936,d0
-	bne.s	L75632
+	bne.s	.L75632
 	tst.w	U91926
-	beq.s	L75666
-L75632:
+	beq.s	.L75666
+.L75632:
 	movea.l	U91932,a0
 	addq.l	#6,a0
 	move.l	(a0),U91936
 	clr.w	U91926
 	jsr	L46108
 	cmp.w	#-1,d0
-	bne.s	L75666
+	bne.s	.L75666
 	bsr.s	L75670
-L75666:
+.L75666:
 	unlk	fp
 	rts
 
@@ -24600,8 +23779,8 @@ L75710:
 	link	fp,#-4
 	bsr  	L75962
 	tst.w	d0
-	beq.s	L75758
-	move.l	T87082,(sp)
+	beq	.L75758
+	move.l	err_stack,(sp)
 	move.w	#1,-(sp)
 	jsr	form_alert
 	addq.l	#2,sp
@@ -24609,18 +23788,18 @@ L75710:
 	move.l	#U101158,-(sp)
 	jsr	L218
 	addq.l	#4,sp
-L75758:
+.L75758:
 	bsr  	L75596
 	bsr.s	L75788
 	tst.w	d0
-	beq.s	L75780
+	beq.s	.L75780
 	bsr  	L75582
 	jsr	L2226
-	bra.s	L75784
+	bra	.return
 
-L75780:
+.L75780:
 	bsr  	L76400
-L75784:
+.return:
 	unlk	fp
 	rts
 
@@ -24710,56 +23889,53 @@ L75952:
 
 L75962:
 	link	fp,#0
-	movem.l	d6-d7,-(sp)
 	cmpi.w	#1,U100986
-	beq.s	L75990
+	beq.s	.L75990
 	cmpi.w	#1,U100996
-	bne.s	L76008
-L75990:
+	beq.s	.L75990
+	move.l	U100744,d0
+.L76014:
+	move.l	d0,d2
+	move.l	fp,d0
+	sub.l	#1719,d0
+	cmp.l	d0,d2
+	bhi.s	.gt
+.L76036:
+	move.l	fp,d0
+	sub.l	#503,d0
+	cmp.l	d0,d2
+	bhi.s	.ret1
+	clr.w	d0
+.return:
+	unlk	fp
+	rts
+.ret1:
+	moveq	#1,d0
+	bra.s	.return
+
+.gt:
+	move.w	#19,U99852
+	bra.s	.L76036
+
+.L75990:
 	move.l	U100744,d0
 	move.w	U101468,d1
 	ext.l	d1
 	add.l	d1,d0
-	bra.s	L76014
+	bra.s	.L76014
 
-L76008:
-	move.l	U100744,d0
-L76014:
-	move.l	d0,d7
-	move.l	fp,d0
-	add.l	#-1719,d0
-	cmp.l	d0,d7
-	bls.s	L76036
-	move.w	#19,U99852
-L76036:
-	move.l	fp,d0
-	add.l	#-503,d0
-	cmp.l	d0,d7
-	bhi.s	L76052
-	clr.w	d0
-	bra.s	L76054
-
-L76052:
-	moveq	#1,d0
-L76054:
-	tst.l	(sp)+
-	movem.l	(sp)+,d7
-	unlk	fp
-	rts
-
-L76064:
+is_oom:
 	link	fp,#-4
 	tst.w	U99190
-	beq.s	L76084
+	beq.s	.ret_noerr
 	tst.w	U101476
-	beq.s	L76088
-L76084:
+	beq.s	.ret_err
+.ret_noerr:
 	clr.w	d0
-	bra.s	L76090
-
-L76088:
+	bra.s	.return
+.ret_err:
 	moveq	#1,d0
-L76090:
+.return:
 	unlk	fp
 	rts
 
@@ -24767,7 +23943,7 @@ L76094:
 	link	fp,#-4
 	cmpi.w	#-7,U101458
 	bne  	L76344
-	bsr.s	L76064
+	bsr.s	is_oom
 	tst.w	d0
 	bne  	L76344
 	bsr  	L75582
@@ -24890,7 +24066,7 @@ L76500:
 	jsr	L83880
 	addq.l	#4,sp
 	move.l	d0,(sp)
-	jsr	L77692
+	jsr	Fdelete
 	move.l	U101030,(sp)
 	move.l	#T86975,-(sp)
 	move.l	#U100162,-(sp)
@@ -25082,8 +24258,8 @@ L76994:
 	bsr  	L74902
 	tst.w	U99864
 	beq.s	L77098
-	move.w	U99864,(sp)
-	jsr	L358
+	move.w	U99864,d0
+	jsr	L358_1d
 	move.w	d0,(sp)
 	jsr	L55354
 	bra.s	L77126
@@ -25091,8 +24267,8 @@ L76994:
 L77098:
 	tst.w	U99818
 	beq.s	L77126
-	move.w	U99818,(sp)
-	jsr	L358
+	move.w	U99818,d0
+	jsr	L358_1d
 	move.w	d0,(sp)
 	jsr	L55354
 L77126:
@@ -25165,29 +24341,11 @@ L77288:
 	unlk	fp
 	rts
 
-L77292:
-	link	fp,#-4
-	move.w	#199,d0
-	unlk	fp
-	rts
-
-L77304:
-	link	fp,#-4
-	move.l	#T88514,d0
-	unlk	fp
-	rts
-
-L77318:
-	link	fp,#-4
-	move.l	#T90106,d0
-	unlk	fp
-	rts
-
 Cprnout:
 	link	fp,#-4
 	move.w	8(fp),(sp)
 	move.w	#5,-(sp)
-	jsr	L552
+	trap	#1	; GEMDOS
 	addq.l	#2,sp
 	unlk	fp
 	rts
@@ -25196,7 +24354,7 @@ gemdos:
 	link	fp,#-4
 	move.l	10(fp),(sp)
 	move.w	8(fp),-(sp)
-	jsr	L552
+	trap	#1	; GEMDOS
 	addq.l	#2,sp
 	unlk	fp
 	rts
@@ -25204,7 +24362,7 @@ gemdos:
 Dgetdrv:
 	link	fp,#-4
 	move.w	#25,(sp)
-	jsr	L552
+	trap	#1	; GEMDOS
 	unlk	fp
 	rts
 
@@ -25212,114 +24370,114 @@ Fsetdta:
 	link	fp,#-4
 	move.l	8(fp),(sp)
 	move.w	#26,-(sp)
-	jsr	L552
+	trap	#1	; GEMDOS
 	addq.l	#2,sp
 	unlk	fp
 	rts
 
-L77422:
+Fsfirst:
 	link	fp,#-4
 	move.w	12(fp),(sp)
 	move.l	8(fp),-(sp)
 	move.w	#78,-(sp)
-	jsr	L552
+	trap	#1	; GEMDOS
 	addq.l	#6,sp
 	unlk	fp
 	rts
 
-L77450:
+Fsnext:
 	link	fp,#-6
 	move.w	#79,(sp)
-	jsr	L552
+	trap	#1	; GEMDOS
 	unlk	fp
 	rts
 
-L77468:
+Fopen:
 	link	fp,#-8
 	move.w	12(fp),(sp)
 	move.l	8(fp),-(sp)
 	move.w	#61,-(sp)
-	jsr	L552
+	trap	#1	; GEMDOS
 	addq.l	#6,sp
 	unlk	fp
 	rts
 
-L77496:
+Fclose:
 	link	fp,#-4
 	move.w	8(fp),(sp)
 	move.w	#62,-(sp)
-	jsr	L552
+	trap	#1	; GEMDOS
 	addq.l	#2,sp
 	unlk	fp
 	rts
 
-L77520:
+Fread:
 	link	fp,#-4
 	move.l	8(fp),(sp)
 	movea.w	12(fp),a0
 	move.l	a0,-(sp)
 	move.w	14(fp),-(sp)
 	move.w	#63,-(sp)
-	jsr	L552
+	trap	#1	; GEMDOS
 	addq.l	#8,sp
 	unlk	fp
 	rts
 
-L77554:
+Fwrite:
 	link	fp,#-4
 	move.l	8(fp),(sp)
 	movea.w	12(fp),a0
 	move.l	a0,-(sp)
 	move.w	14(fp),-(sp)
 	move.w	#64,-(sp)
-	jsr	L552
+	trap	#1	; GEMDOS
 	addq.l	#8,sp
 	unlk	fp
 	rts
 
-L77588:
+Dsetpath:
 	link	fp,#-4
 	move.l	8(fp),(sp)
 	move.w	#59,-(sp)
-	jsr	L552
+	trap	#1	; GEMDOS
 	addq.l	#2,sp
 	unlk	fp
 	rts
 
-L77612:
+Dgetpath:
 	link	fp,#-4
 	move.w	12(fp),(sp)
 	move.l	8(fp),-(sp)
 	move.w	#71,-(sp)
-	jsr	L552
+	trap	#1	; GEMDOS
 	addq.l	#6,sp
 	unlk	fp
 	rts
 
-L77640:
+Dsetdrv:
 	link	fp,#-4
 	move.w	8(fp),(sp)
 	move.w	#14,-(sp)
-	jsr	L552
+	trap	#1	; GEMDOS
 	addq.l	#2,sp
 	unlk	fp
 	rts
 
-L77664:
+Fcreate:
 	link	fp,#-4
 	move.w	12(fp),(sp)
 	move.l	8(fp),-(sp)
 	move.w	#60,-(sp)
-	jsr	L552
+	trap	#1	; GEMDOS
 	addq.l	#6,sp
 	unlk	fp
 	rts
 
-L77692:
+Fdelete:
 	link	fp,#-4
 	move.l	8(fp),(sp)
 	move.w	#65,-(sp)
-	jsr	L552
+	trap	#1	; GEMDOS
 	addq.l	#2,sp
 	unlk	fp
 	rts
@@ -25330,40 +24488,35 @@ Frename:
 	move.l	8(fp),-(sp)
 	move.w	-2(fp),-(sp)
 	move.w	#86,-(sp)
-	jsr	L552
+	trap	#1	; GEMDOS
 	addq.l	#8,sp
 	unlk	fp
 	rts
 
 Malloc:
-	link	fp,#-8
-	addq.l	#1,8(fp)
-	andi.l	#-2,8(fp)
-	move.l	8(fp),(sp)
+	move.l	4(sp),d0
+	addq.l	#1,d0
+	andi.l	#-2,d0
+	move.l	d0,-(sp)
 	move.w	#72,-(sp)
-	jsr	L552
-	addq.l	#2,sp
-	move.l	d0,-4(fp)
-	addq.l	#1,-4(fp)
-	andi.l	#-2,-4(fp)
-	move.l	-4(fp),d0
-	unlk	fp
+	trap	#1	; GEMDOS
+	addq.l	#6,sp
+	addq.l	#1,d0
+	andi.l	#-2,d0
 	rts
 
 get_free_mem:
-	link	fp,#-4
-	move.l	#-1,(sp)
+	move.l	#-1,-(sp)
 	move.w	#72,-(sp)
-	jsr	L552
-	addq.l	#2,sp
-	unlk	fp
+	trap	#1	; GEMDOS
+	addq.l	#6,sp
 	rts
 
 Mfree:
 	link	fp,#-4
 	move.l	8(fp),(sp)
 	move.w	#73,-(sp)
-	jsr	L552
+	trap	#1	; GEMDOS
 	addq.l	#2,sp
 	unlk	fp
 	rts
@@ -25373,8 +24526,6 @@ L77854:
 	movem.l	d7/a5,-(sp)
 	jsr	init
 	move.w	#1,U99190
-	jsr	L77318
-	move.l	d0,U101110
 	jsr	L47940
 	bsr  	alloc_mem
 	clr.w	d0
@@ -25383,11 +24534,9 @@ L77854:
 	move.w	d0,U101146
 	move.w	d0,U101198
 	move.w	d0,U100980
-	clr.w	d0
 	move.w	d0,U100626
 	move.w	d0,U98398
 	move.w	d0,U100736
-	clr.w	d0
 	move.b	d0,U101040
 	move.b	d0,U99202
 	clr.b	U101148
@@ -25398,7 +24547,7 @@ L77854:
 	jsr	L70006
 	jsr	L77166
 	jsr	L75582
-	movea.l	U101110,a0
+	movea.l	#string_table,a0
 	move.l	4(a0),(sp)
 	jsr	L74902
 	jsr	L74860
@@ -25407,17 +24556,15 @@ L77854:
 	jsr	L32858
 	jsr	L47940
 	move.w	U100984,U99816
-	jsr	L164
-	movea.l	d0,a0
+	move.l	U91922,a0
 	tst.b	(a0)
 	beq.s	.L78092
-	jsr	L164
-	move.l	d0,(sp)
+	move.l	a0,(sp)
 	addq.l	#1,(sp)
 	bra.s	.L78102
 
 .L78092:
-	movea.l	U101110,a0
+	movea.l	#string_table,a0
 	move.l	32(a0),(sp)
 .L78102:
 	move.l	#U100754,d0
@@ -25443,7 +24590,7 @@ L77854:
 .L78160:
 	move.w	d0,U101476
 	beq.s	.L78216
-	movea.l	U101110,a0
+	movea.l	#string_table,a0
 	move.l	28(a0),(sp)
 	jsr	L74902
 	move.l	#U100754,(sp)
@@ -25526,11 +24673,10 @@ alloc_mem:
 	addq.l	#4,sp
 
 	move.l	d0,-4(fp)
-	jsr	L146
-	add.l	#-7680,d0
+	move.l	sp,d0
+	sub.l	#8680,d0
 	move.l	d0,U100744
 	move.l	#33,-(sp)
-	move.l	U100744,d0
 	sub.l	-4(fp),d0
 	move.l	d0,-(sp)
 	subq.l	#1,(sp)
@@ -25538,20 +24684,20 @@ alloc_mem:
 	addq.l	#8,sp
 	add.l	-4(fp),d0
 	addq.l	#2,d0
-	and.l	#$00FFFFFE,d0
+	and.l	#$00FFFFFE,d0	; uh oh
 	move.l	d0,U101194
 	move.l	U100744,d7
 	sub.l	U101194,d7
 	asr.l	#2,d7
 	move.l	d7,d0
 	cmp.l	#65535,d0
-	ble.s	L78458
-	move.w	#-1,U100988
-	bra.s	L78464
-
-L78458:
-	move.w	d7,U100988
-L78464:
+	ble.s	.L78458
+	move.w	#-1,nodes_max
+	bra.s	.L78464
+.L78458:
+	;move.w	#2750,nodes_max
+	move.w	d7,nodes_max
+.L78464:
 	move.l	-4(fp),d0
 	subq.l	#4,d0
 	move.l	d0,U101036
@@ -25567,27 +24713,26 @@ L78494:
 	jsr	L75582
 	jsr	L74840
 	clr.w	d7
-	bra.s	L78532
-
-L78518:
+	bra.s	.L78532
+.L78518:
 	movea.w	d7,a0
 	adda.l	a0,a0
 	adda.l	#U101202,a0
 	clr.w	(a0)
 	addq.w	#1,d7
-L78532:
+.L78532:
 	cmp.w	#128,d7
-	blt.s	L78518
+	blt.s	.L78518
 	clr.w	d0
 	move.w	d0,U99186
 	move.w	d0,U99862
 	clr.w	U99188
 	clr.w	U100620
 	move.w	U100734,U99176
-	move.w	U100988,U100978
-	jsr	L62588
+	move.w	nodes_max,nodes_free
+	jsr	node_add
 	move.w	d0,U101004
-	movea.l	U101110,a0
+	movea.l	#string_table,a0
 	move.l	48(a0),(sp)
 	jsr	L62012
 	move.w	d0,U100742
@@ -25596,7 +24741,7 @@ L78532:
 	bsr.s	L78646
 	bsr  	L79392
 	bsr  	L79328
-	bsr.s	L78738
+	bsr.s	init_string_table
 	tst.l	(sp)+
 	movem.l	(sp)+,d7
 	unlk	fp
@@ -25607,8 +24752,7 @@ L78646:
 	move.l	#T91780,U101030
 	move.w	#1,U99178
 	jsr	L52566
-	jsr	L156
-	move.l	d0,-(sp)
+	move.l	p_tbase,-(sp)
 	move.l	#L3652,d0
 	sub.l	(sp)+,d0
 	move.w	d0,(sp)
@@ -25625,9 +24769,9 @@ L78646:
 	unlk	fp
 	rts
 
-L78738:
-	link	fp,#-4
-	move.l	T87142,(sp)
+init_string_table:
+	move.l	a3,-(sp)
+	move.l	T87142,-(sp)
 	jsr	L62012
 	move.w	d0,U100984
 	move.w	d0,(sp)
@@ -25637,127 +24781,121 @@ L78738:
 	move.w	d0,U101186
 	move.w	d0,(sp)
 	bsr  	L79296
-	movea.l	U101110,a0
-	move.l	52(a0),(sp)
+	movea.l	#string_table,a3
+	move.l	52(a3),(sp)
 	jsr	L62012
 	move.w	d0,U98716
 	move.w	d0,(sp)
 	bsr  	L79296
-	movea.l	U101110,a0
-	move.l	60(a0),(sp)
+	move.l	60(a3),(sp)
 	jsr	L62012
 	move.w	d0,U98718
 	move.w	d0,(sp)
 	bsr  	L79296
-	movea.l	U101110,a0
-	move.l	84(a0),(sp)
+	move.l	84(a3),(sp)
 	jsr	L62012
 	move.w	d0,U100738
 	move.w	d0,(sp)
 	bsr  	L79296
-	movea.l	U101110,a0
-	move.l	72(a0),(sp)
+	move.l	72(a3),(sp)
 	jsr	L62012
 	move.w	d0,U100740
 	move.w	d0,(sp)
 	bsr  	L79296
-	movea.l	U101110,a0
-	move.l	76(a0),(sp)
+	move.l	76(a3),(sp)
 	jsr	L62012
 	move.w	d0,U100676
 	move.w	d0,(sp)
 	bsr  	L79296
-	movea.l	U101110,a0
-	move.l	80(a0),(sp)
+	move.l	80(a3),(sp)
 	jsr	L62012
 	move.w	d0,U100634
 	move.w	d0,(sp)
 	bsr  	L79296
-	movea.l	U101110,a0
-	move.l	88(a0),(sp)
+	move.l	88(a3),(sp)
 	jsr	L62012
 	move.w	d0,U100994
 	move.w	d0,(sp)
 	bsr  	L79296
-	movea.l	U101110,a0
-	move.l	92(a0),(sp)
+	move.l	92(a3),(sp)
 	jsr	L62012
 	move.w	d0,U98400
 	move.w	d0,(sp)
 	bsr  	L79296
-	movea.l	U101110,a0
-	move.l	96(a0),(sp)
+	move.l	96(a3),(sp)
 	jsr	L62012
 	move.w	d0,U100648
 	move.w	d0,(sp)
 	bsr  	L79296
-	movea.l	U101110,a0
-	move.l	100(a0),(sp)
+	move.l	100(a3),(sp)
 	jsr	L62012
 	move.w	d0,U101012
 	move.w	d0,(sp)
 	bsr  	L79296
-	movea.l	U101110,a0
-	move.l	104(a0),(sp)
+	move.l	104(a3),(sp)
 	jsr	L62012
 	move.w	d0,U101114
 	move.w	d0,(sp)
 	bsr  	L79296
-	movea.l	U101110,a0
-	move.l	108(a0),(sp)
+	move.l	108(a3),(sp)
 	jsr	L62012
 	move.w	d0,U101500
 	move.w	d0,(sp)
 	bsr  	L79296
-	movea.l	U101110,a0
-	move.l	112(a0),(sp)
+	move.l	112(a3),(sp)
 	jsr	L62012
 	move.w	d0,U100650
 	move.w	d0,(sp)
 	bsr  	L79296
-	unlk	fp
+	move.l	(sp)+,a3
+	addq	#4,sp
 	rts
 
 L79158:
 	link	fp,#0
 	movem.l	d7/a5,-(sp)
+
 	movea.l	8(fp),a5
-L79170:
+
+.loop:
 	move.l	a5,U101030
 	clr.w	U99178
-	bra.s	L79192
+	bra.s	.L79192
 
-L79184:
+.L79184:
 	addq.w	#1,U99178
 	addq.l	#1,a5
-L79192:
+.L79192:
 	tst.b	(a5)
-	beq.s	L79202
+	beq.s	.L79202
 	cmpi.b	#32,(a5)
-	bne.s	L79184
-L79202:
+	bne.s	.L79184
+.L79202:
 	jsr	L53318
 	jsr	L52882
-	jsr	L156
-	move.l	d0,-(sp)
+	move.l	p_tbase,-(sp)
 	move.l	12(fp),d0
 	sub.l	(sp)+,d0
+
 	move.w	d0,(sp)
 	move.w	#10,-(sp)
 	jsr	L65496
 	addq.l	#2,sp
+
 	move.w	d0,(sp)
 	move.w	U100742,-(sp)
 	jsr	L64224
+
 	move.w	d0,U101046
 	move.w	d0,-(sp)
 	jsr	L66062
 	addq.l	#4,sp
-	tst.b	(a5)+
-	beq.s	L79278
-	bra.s	L79170
 
-L79278:
+	tst.b	(a5)+
+	beq.s	.break
+	bra.s	.loop
+
+.break:
 	clr.w	d0
 	move.w	U101046,d0
 	tst.l	(sp)+
@@ -25778,27 +24916,30 @@ L79296:
 L79328:
 	link	fp,#0
 	movem.l	d6-d7/a5,-(sp)
-	jsr	L77304
-	movea.l	d0,a5
-	jsr	L77292
-	move.w	d0,d7
-	bra.s	L79374
 
-L79354:
-	tst.l	4(a5)
-	beq.s	L79372
-	move.l	4(a5),(sp)
+	move.l	#word_table,a5
+	move.w	#199,d7
+	bra.s	.do
+
+.loop:
+	move.l	4(a5),d0
+	tst.l	d0
+	beq.s	.null
+
+	move.l	d0,(sp)
 	move.l	(a5),-(sp)
 	bsr  	L79158
 	addq.l	#4,sp
-L79372:
+
+.null:
 	addq.l	#8,a5
-L79374:
+.do:
 	move.w	d7,d0
 	subq.w	#1,d7
 	tst.w	d0
-	bne.s	L79354
+	bne.s	.loop
 	tst.l	(sp)+
+
 	movem.l	(sp)+,d7/a5
 	unlk	fp
 	rts
@@ -25842,7 +24983,7 @@ L79472:
 L79500:
 	not.b	(sp)
 	exg	d6,d7
-	jsr	L82558
+	jsr	FFPDIV
 L79510:
 	sub.b	#67,d7
 	neg.b	d7
@@ -25882,7 +25023,7 @@ L79582:
 	tst.b	(sp)+
 	beq.s	L79600
 	move.l	#-921707711,d7
-	jsr	L82294
+	jsr	FFPSUB
 L79600:
 	move.b	(sp)+,d6
 	tst.b	d7
@@ -25916,7 +25057,7 @@ L79660:
 	clr.w	d7
 	clr.l	-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	bge.s	L79708
 	movea.l	12(fp),a0
@@ -25929,7 +25070,7 @@ L79660:
 L79708:
 	clr.l	-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	ble.s	L79770
 	bra.s	L79750
@@ -25937,14 +25078,14 @@ L79708:
 L79726:
 	move.l	#-1610612668,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81968
+	jsr	fp_mul
 	addq.l	#8,sp
 	move.l	d0,8(fp)
 	subq.w	#1,d7
 L79750:
 	move.l	#-2147483583,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	blt.s	L79726
 L79770:
@@ -25953,14 +25094,14 @@ L79770:
 L79772:
 	move.l	#-1610612668,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81572
+	jsr	fp_div
 	addq.l	#8,sp
 	move.l	d0,8(fp)
 	addq.w	#1,d7
 L79796:
 	move.l	#-1610612668,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	bge.s	L79772
 	add.w	d7,d4
@@ -25968,7 +25109,7 @@ L79796:
 	move.w	d6,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688
+	jsr	int_to_ffp
 	addq.l	#4,sp
 	move.l	d0,-8(fp)
 	bra.s	L79864
@@ -25976,7 +25117,7 @@ L79796:
 L79840:
 	move.l	#-1610612668,-(sp)
 	move.l	-8(fp),-(sp)
-	jsr	L81572
+	jsr	fp_div
 	addq.l	#8,sp
 	move.l	d0,-8(fp)
 	addq.w	#1,d6
@@ -25985,16 +25126,16 @@ L79864:
 	blt.s	L79840
 	move.l	#-2147483582,-(sp)
 	move.l	-8(fp),-(sp)
-	jsr	L81572
+	jsr	fp_div
 	addq.l	#8,sp
 	move.l	d0,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81510
+	jsr	fp_add
 	addq.l	#8,sp
 	move.l	d0,8(fp)
 	move.l	#-1610612668,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	blt.s	L79934
 	move.l	#-2147483583,8(fp)
@@ -26029,7 +25170,7 @@ L79990:
 
 L79994:
 	move.l	8(fp),-(sp)
-	jsr	L81832
+	jsr	ffp_to_int
 	addq.l	#4,sp
 	move.w	d0,d5
 	move.w	d5,d0
@@ -26046,7 +25187,7 @@ L80040:
 	move.w	d5,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688
+	jsr	int_to_ffp
 	addq.l	#4,sp
 	move.l	d0,-8(fp)
 	move.l	d0,-(sp)
@@ -26056,7 +25197,7 @@ L80040:
 	move.l	d0,8(fp)
 	move.l	#-1610612668,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81968
+	jsr	fp_mul
 	addq.l	#8,sp
 	move.l	d0,8(fp)
 	addq.w	#1,d6
@@ -26095,7 +25236,7 @@ L80170:
 	clr.w	d7
 	clr.l	-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	bge.s	L80218
 	movea.l	12(fp),a0
@@ -26108,7 +25249,7 @@ L80170:
 L80218:
 	clr.l	-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	ble.s	L80280
 	bra.s	L80260
@@ -26116,14 +25257,14 @@ L80218:
 L80236:
 	move.l	#-1610612668,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81968
+	jsr	fp_mul
 	addq.l	#8,sp
 	move.l	d0,8(fp)
 	subq.w	#1,d7
 L80260:
 	move.l	#-2147483583,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	blt.s	L80236
 L80280:
@@ -26132,21 +25273,21 @@ L80280:
 L80282:
 	move.l	#-1610612668,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81572
+	jsr	fp_div
 	addq.l	#8,sp
 	move.l	d0,8(fp)
 	addq.w	#1,d7
 L80306:
 	move.l	#-1610612668,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	bge.s	L80282
 	moveq	#1,d6
 	move.w	d6,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688
+	jsr	int_to_ffp
 	addq.l	#4,sp
 	move.l	d0,-8(fp)
 	bra.s	L80372
@@ -26154,7 +25295,7 @@ L80306:
 L80348:
 	move.l	#-1610612668,-(sp)
 	move.l	-8(fp),-(sp)
-	jsr	L81572
+	jsr	fp_div
 	addq.l	#8,sp
 	move.l	d0,-8(fp)
 	addq.w	#1,d6
@@ -26163,16 +25304,16 @@ L80372:
 	blt.s	L80348
 	move.l	#-2147483582,-(sp)
 	move.l	-8(fp),-(sp)
-	jsr	L81572
+	jsr	fp_div
 	addq.l	#8,sp
 	move.l	d0,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81510
+	jsr	fp_add
 	addq.l	#8,sp
 	move.l	d0,8(fp)
 	move.l	#-1610612668,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	blt.s	L80442
 	move.l	#-2147483583,8(fp)
@@ -26183,7 +25324,7 @@ L80442:
 
 L80446:
 	move.l	8(fp),-(sp)
-	jsr	L81832
+	jsr	ffp_to_int
 	addq.l	#4,sp
 	move.w	d0,d5
 	move.w	d5,d0
@@ -26200,7 +25341,7 @@ L80492:
 	move.w	d5,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688
+	jsr	int_to_ffp
 	addq.l	#4,sp
 	move.l	d0,-8(fp)
 	move.l	d0,-(sp)
@@ -26210,7 +25351,7 @@ L80492:
 	move.l	d0,8(fp)
 	move.l	#-1610612668,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81968
+	jsr	fp_mul
 	addq.l	#8,sp
 	move.l	d0,8(fp)
 	addq.w	#1,d6
@@ -26383,7 +25524,7 @@ L80972:
 	bsr.s	L81044
 	addq.l	#2,sp
 	move.l	d0,-(sp)
-	jsr	L81968
+	jsr	fp_mul
 	addq.l	#8,sp
 	move.l	d0,-46(fp)
 	move.l	-46(fp),(sp)
@@ -26409,7 +25550,7 @@ L81044:
 L81064:
 	move.l	#-1610612668,-(sp)
 	move.l	-4(fp),-(sp)
-	jsr	L81572
+	jsr	fp_div
 	addq.l	#8,sp
 	move.l	d0,-4(fp)
 	addq.w	#1,8(fp)
@@ -26425,7 +25566,7 @@ L81098:
 L81108:
 	move.l	#-1610612668,-(sp)
 	move.l	-4(fp),-(sp)
-	jsr	L81968
+	jsr	fp_mul
 	addq.l	#8,sp
 	move.l	d0,-4(fp)
 	subq.w	#1,8(fp)
@@ -26445,7 +25586,7 @@ L81148:
 L81162:
 	move.l	#-1610612668,-(sp)
 	move.l	-4(fp),-(sp)
-	jsr	L81968
+	jsr	fp_mul
 	addq.l	#8,sp
 	move.l	d0,-4(fp)
 	move.l	-4(fp),-(sp)
@@ -26455,10 +25596,10 @@ L81162:
 	add.w	#-48,d0
 	ext.l	d0
 	move.l	d0,-(sp)
-	jsr	L81688
+	jsr	int_to_ffp
 	addq.l	#4,sp
 	move.l	d0,-(sp)
-	jsr	L81510
+	jsr	fp_add
 	addq.l	#8,sp
 	move.l	d0,-4(fp)
 	addq.l	#1,8(fp)
@@ -26479,7 +25620,7 @@ L81258:
 	movem.l	d4-d7,-(sp)
 	clr.l	-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	bne.s	L81288
 	clr.l	d0
@@ -26488,7 +25629,7 @@ L81258:
 L81288:
 	clr.l	-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	bge.s	L81324
 	move.l	8(fp),-(sp)
@@ -26508,13 +25649,13 @@ L81330:
 	addq.w	#1,d7
 	move.l	#-2147483582,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81572
+	jsr	fp_div
 	addq.l	#8,sp
 	move.l	d0,8(fp)
 L81354:
 	move.l	#-2147483583,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	bge.s	L81330
 	bra.s	L81400
@@ -26523,22 +25664,22 @@ L81376:
 	subq.w	#1,d7
 	move.l	#-2147483582,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81968
+	jsr	fp_mul
 	addq.l	#8,sp
 	move.l	d0,8(fp)
 L81400:
 	move.l	#-2147483584,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81542
+	jsr	fp_cmp
 	addq.l	#8,sp
 	blt.s	L81376
 	move.l	#-2147483559,-(sp)
 	move.l	8(fp),-(sp)
-	jsr	L81968
+	jsr	fp_mul
 	addq.l	#8,sp
 	move.l	d0,8(fp)
 	move.l	8(fp),-(sp)
-	jsr	L81832
+	jsr	ffp_to_int
 	addq.l	#4,sp
 	move.l	d0,-4(fp)
 	move.l	-4(fp),d0
@@ -26560,33 +25701,49 @@ L81500:
 	unlk	fp
 	rts
 
-L81510:
+fp_add:
 	link	fp,#-4
 	movem.l	d3-d7,-(sp)
 	move.l	8(fp),d7
 	move.l	12(fp),d6
-	jsr	L82312
+	jsr	FFPADD
 	move.l	d7,d0
 	movem.l	(sp)+,d3-d7
 	unlk	fp
 	rts
 
-L81542:
-	link	fp,#-4
-	movem.l	d3-d7,-(sp)
-	move.l	8(fp),d7
-	move.l	12(fp),d6
-	jsr	L82060
-	movem.l	(sp)+,d3-d7
-	unlk	fp
+fp_cmp:
+	movem.l	d6-d7,-(sp)
+	move.l	12(sp),d7
+	move.l	16(sp),d6
+	jsr	.FFPCMP
+	movem.l	(sp)+,d6-d7
 	rts
 
-L81572:
+.FFPCMP:
+	tst.b	d6
+	bpl.s	.FFPCP
+	tst.b	d7
+	bpl.s	.FFPCP
+	cmp.b	d7,d6
+	bne.s	.return
+	cmp.l	d7,d6
+.return:
+	rts
+
+.FFPCP:
+	cmp.b	d6,d7
+	bne.s	.FFPCRTN
+	cmp.l	d6,d7
+.FFPCRTN
+	rts
+
+fp_div:
 	link	fp,#-4
 	movem.l	d3-d7,-(sp)
 	move.l	8(fp),d7
 	move.l	12(fp),d6
-	jsr	L82558
+	jsr	FFPDIV
 	move.l	d7,d0
 	movem.l	(sp)+,d3-d7
 	unlk	fp
@@ -26602,68 +25759,68 @@ L81604:
 	unlk	fp
 	rts
 
-L81632:
+fp_exp:
 	link	fp,#-4
 	movem.l	d7,-(sp)
 	move.l	8(fp),d7
-	jsr	L82710
+	jsr	FFPEXP
 	move.l	d7,d0
 	movem.l	(sp)+,d7
 	unlk	fp
 	rts
 
-L81660:
+fp_log:
 	link	fp,#-4
 	movem.l	d7,-(sp)
 	move.l	8(fp),d7
-	jsr	L82928
+	jsr	FFPLOG
 	move.l	d7,d0
 	movem.l	(sp)+,d7
 	unlk	fp
 	rts
 
-L81688:
+int_to_ffp:
 	link	fp,#0
 	movem.l	d5-d7,-(sp)
 	tst.l	8(fp)
-	bge.s	L81716
+	bge.s	.L81716
 	moveq	#1,d6
 	move.l	8(fp),d0
 	neg.l	d0
 	move.l	d0,8(fp)
-	bra.s	L81718
+	bra.s	.L81718
 
-L81716:
+.L81716:
 	clr.w	d6
-L81718:
+.L81718:
 	tst.l	8(fp)
-	bne.s	L81728
+	bne.s	.L81728
 	clr.l	d0
-	bra.s	L81822
+	bra.s	.L81822
 
-L81728:
+.L81728:
 	moveq	#24,d7
-	bra.s	L81744
+	bra.s	.L81744
 
-L81732:
+.L81732:
 	move.l	8(fp),d0
 	asr.l	#1,d0
 	move.l	d0,8(fp)
 	addq.l	#1,d7
-L81744:
+.L81744:
 	move.l	8(fp),d0
 	and.l	#$7F000000,d0
-	bne.s	L81732
-	bra.s	L81770
+	bne.s	.L81732
+	bra.s	.L81770
 
-L81758:
+.L81758:
 	move.l	8(fp),d0
 	asl.l	#1,d0
 	move.l	d0,8(fp)
 	subq.l	#1,d7
-L81770:
+.L81770:
 	btst	#7,9(fp)
-	beq.s	L81758
+	beq.s	.L81758
 	move.l	8(fp),d0
 	asl.l	#8,d0
 	move.l	d0,8(fp)
@@ -26672,17 +25829,17 @@ L81770:
 	and.l	#127,d0
 	or.l	d0,8(fp)
 	tst.w	d6
-	beq.s	L81818
+	beq.s	.L81818
 	ori.l	#128,8(fp)
-L81818:
+.L81818:
 	move.l	8(fp),d0
-L81822:
+.L81822:
 	tst.l	(sp)+
 	movem.l	(sp)+,d6-d7
 	unlk	fp
 	rts
 
-L81832:
+ffp_to_int:
 	link	fp,#0
 	movem.l	d4-d7,-(sp)
 	move.l	8(fp),d0
@@ -26690,69 +25847,69 @@ L81832:
 	add.l	#-64,d0
 	move.w	d0,d6
 	tst.l	8(fp)
-	beq.s	L81868
+	beq.s	.L81868
 	tst.w	d6
-	bge.s	L81872
-L81868:
+	bge.s	.L81872
+.L81868:
 	clr.l	d0
-	bra.s	L81958
+	bra.s	.L81958
 
-L81872:
+.L81872:
 	move.l	8(fp),d0
 	and.l	#128,d0
 	move.w	d0,d5
 	cmp.w	#31,d6
-	ble.s	L81910
+	ble.s	.L81910
 	tst.w	d5
-	beq.s	L81902
+	beq.s	.L81902
 	move.l	#-2147483648,d0
-	bra.s	L81908
+	bra.s	.L81908
 
-L81902:
+.L81902:
 	move.l	#$7FFFFFFF,d0
-L81908:
-	bra.s	L81958
+.L81908:
+	bra.s	.L81958
 
-L81910:
+.L81910:
 	move.l	8(fp),d7
 	asr.l	#8,d7
 	and.l	#$00FFFFFF,d7
 	sub.w	#24,d6
-	bra.s	L81932
+	bra.s	.L81932
 
-L81928:
+.L81928:
 	asr.l	#1,d7
 	addq.w	#1,d6
-L81932:
+.L81932:
 	tst.w	d6
-	blt.s	L81928
-	bra.s	L81942
+	blt.s	.L81928
+	bra.s	.L81942
 
-L81938:
+.L81938:
 	asl.l	#1,d7
 	subq.w	#1,d6
-L81942:
+.L81942:
 	tst.w	d6
-	bgt.s	L81938
+	bgt.s	.L81938
 	tst.w	d5
-	beq.s	L81956
+	beq.s	.L81956
 	move.l	d7,d0
 	neg.l	d0
 	move.l	d0,d7
-L81956:
+.L81956:
 	move.l	d7,d0
-L81958:
+.L81958:
 	tst.l	(sp)+
 	movem.l	(sp)+,d5-d7
 	unlk	fp
 	rts
 
-L81968:
+fp_mul:
 	link	fp,#-4
 	movem.l	d3-d7,-(sp)
 	move.l	8(fp),d7
 	move.l	12(fp),d6
-	jsr	L83136
+	jsr	FFPMUL
 	move.l	d7,d0
 	movem.l	(sp)+,d3-d7
 	unlk	fp
@@ -26773,30 +25930,10 @@ L82028:
 	movem.l	d3-d7,-(sp)
 	move.l	8(fp),d7
 	move.l	12(fp),d6
-	jsr	L82294
+	jsr	FFPSUB
 	move.l	d7,d0
 	movem.l	(sp)+,d3-d7
 	unlk	fp
-	rts
-
-L82060:
-	tst.b	d6
-	bpl.s	L82076
-	tst.b	d7
-	bpl.s	L82076
-	cmp.b	d7,d6
-	bne.s	L82082
-	cmp.l	d7,d6
-	rts
-
-L82076:
-	cmp.b	d6,d7
-	bne.s	L82082
-	cmp.l	d6,d7
-L82082:
-	rts
-
-	tst.b	d7
 	rts
 
 L82088:
@@ -26862,7 +25999,7 @@ X82186:
 	dc.l	$00000001,$00000000
 	dc.l	$00000000
 
-	dc.l	-834928513
+	and.b	#127,d7
 	rts
 
 L82284:
@@ -26872,26 +26009,26 @@ L82284:
 L82292:
 	rts
 
-L82294:
+FFPSUB:
 	move.b	d6,d4
 	beq.s	L82380
 	eori.b	#128,d4
-	bmi.s	L82410
+	bmi.s	FPAMI1
 	move.b	d7,d5
-	bmi.s	L82416
-	bne.s	L82324
-	bra.s	L82374
+	bmi.s	FPAMS
+	bne.s	FPALS
+	bra.s	FPART1
 
-L82312:
+FFPADD:
 	move.b	d6,d4
-	bmi.s	L82410
+	bmi.s	FPAMI1
 	beq.s	L82380
 	move.b	d7,d5
-	bmi.s	L82416
-	beq.s	L82374
-L82324:
+	bmi.s	FPAMS
+	beq.s	FPART1
+FPALS:
 	sub.b	d4,d5
-	bmi.s	L82384
+	bmi.s	FPA2LT
 	move.b	d7,d4
 	cmp.b	#24,d5
 	bcc.s	L82380
@@ -26900,16 +26037,16 @@ L82324:
 	lsr.l	d5,d3
 	move.b	#128,d7
 	add.l	d3,d7
-	bcs.s	L82354
-L82350:
+	bcs.s	FPA2GC
+FPARSR:
 	move.b	d4,d7
 	rts
 
-L82354:
+FPA2GC:
 	roxr.l	#1,d7
 	addq.b	#1,d4
 	bvs.s	L82362
-	bcc.s	L82350
+	bcc.s	FPARSR
 L82362:
 	moveq	#-1,d7
 	subq.b	#1,d4
@@ -26917,7 +26054,7 @@ L82362:
 	ori	#2,ccr
 	rts
 
-L82374:
+FPART1:
 	move.l	d6,d7
 	move.b	d4,d7
 	rts
@@ -26926,24 +26063,24 @@ L82380:
 	tst.b	d7
 	rts
 
-L82384:
+FPA2LT:
 	cmp.b	#-24,d5 ;!! #$FFE8.W
-	ble.s	L82374
+	ble.s	FPART1
 	neg.b	d5
 	move.l	d6,d3
 	clr.b	d7
 	lsr.l	d5,d7
 	move.b	#128,d3
 	add.l	d3,d7
-	bcs.s	L82354
+	bcs.s	FPA2GC
 	move.b	d4,d7
 	rts
 
-L82410:
+FPAMI1:
 	move.b	d7,d5
-	bmi.s	L82324
-	beq.s	L82374
-L82416:
+	bmi.s	FPALS
+	beq.s	FPART1
+FPAMS:
 	moveq	#-128,d3
 	eor.b	d3,d5
 	sub.b	d4,d5
@@ -26958,7 +26095,7 @@ L82438:
 	clr.b	d3
 	lsr.l	d5,d3
 	sub.l	d3,d7
-	bmi.s	L82350
+	bmi.s	FPARSR
 L82446:
 	move.b	d4,d5
 L82448:
@@ -26983,7 +26120,7 @@ L82482:
 
 L82486:
 	cmp.b	#-24,d5 ;!! #$FFE8.W
-	ble.s	L82374
+	ble.s	FPART1
 	neg.b	d5
 	move.l	d7,d3
 	move.l	d6,d7
@@ -27001,51 +26138,51 @@ L82504:
 	move.b	d5,d4
 	bra.s	L82448
 
-L82522:
+FPDDZR:
 	divu	#0,d7
 	tst.l	d6
-	bne.s	L82558
-L82530:
+	bne.s	FFPDIV
+FPDOVF:
 	or.l	#-129,d7
 	tst.b	d7
 	ori	#2,ccr
-L82542:
+FPDRTN:
 	rts
 
-L82544:
+FPDOV2:
 	swap	d6
 	swap	d7
-L82548:
+FPDOVFS:
 	eor.b	d6,d7
-	bra.s	L82530
+	bra.s	FPDOVF
 
-L82552:
-	bmi.s	L82548
-L82554:
+FPDOUF:
+	bmi.s	FPDOVFS
+FPDUND:
 	moveq	#0,d7
 	rts
 
-L82558:
+FFPDIV:
 	move.b	d6,d5
-	beq.s	L82522
+	beq.s	FPDDZR
 	move.l	d7,d4
-	beq.s	L82542
+	beq.s	FPDRTN
 	moveq	#-128,d3
 	add.w	d5,d5
 	add.w	d4,d4
 	eor.b	d3,d5
 	eor.b	d3,d4
 	sub.b	d5,d4
-	bvs.s	L82552
+	bvs.s	FPDOUF
 	clr.b	d7
 	swap	d7
 	swap	d6
 	cmp.w	d6,d7
-	bmi.s	L82596
+	bmi.s	.FPDNOV
 	addq.b	#2,d4
-	bvs.s	L82544
+	bvs.s	FPDOV2
 	ror.l	#1,d7
-L82596:
+.FPDNOV:
 	swap	d7
 	move.b	d3,d5
 	eor.w	d5,d4
@@ -27061,28 +26198,28 @@ L82596:
 	clr.b	d3
 	mulu.w	d5,d3
 	sub.l	d3,d7
-	bcc.s	L82636
+	bcc.s	.FPDQOK
 	move.l	d6,d3
 	clr.b	d3
 	add.l	d3,d7
 	subq.w	#1,d5
-L82636:
+.FPDQOK:
 	move.l	d6,d3
 	swap	d3
 	clr.w	d7
 	divu	d3,d7
 	swap	d5
-	bmi.s	L82656
+	bmi.s	.FPDISN
 	move.w	d7,d5
 	add.l	d5,d5
 	subq.b	#1,d4
 	move.w	d5,d7
-L82656:
+.FPDISN:
 	move.w	d7,d5
 	add.l	#128,d5
 	move.l	d5,d7
 	move.b	d4,d7
-	beq.s	L82554
+	beq.s	FPDUND
 	rts
 
 L82672:
@@ -27106,14 +26243,14 @@ L82696:
 	tst.b	d7
 	rts
 
-L82710:
+FFPEXP:
 	movem.l	d1-d6/a0,-(sp)
 	move.w	d7,-(sp)
 	beq.s	L82696
 	and.b	#127,d7
 	move.l	d7,d2
 	move.l	#-1196803263,d6
-	jsr	L83136
+	jsr	FFPMUL
 	bvs.s	L82672
 	move.b	d7,d5
 	move.b	d7,d6
@@ -27122,34 +26259,34 @@ L82710:
 	cmp.b	#24,d5
 	ble.s	L82672
 	cmp.b	#32,d5
-	bge.s	L82794
+	bge.s	.L82794
 	lsr.l	d5,d7
 	move.b	d7,(sp)
 	lsl.l	d5,d7
 	move.b	d6,d7
 	move.l	#-1317922752,d6
-	jsr	L83136
+	jsr	FFPMUL
 	move.l	d7,d6
 	move.l	d2,d7
-	jsr	L82294
+	jsr	FFPSUB
 	move.l	d7,d2
-	bra.s	L82798
+	bra.s	.L82798
 
-L82794:
+.L82794:
 	clr.b	(sp)
 	move.l	d2,d7
-L82798:
+.L82798:
 	clr.b	d7
 	sub.b	#67,d2
 	neg.b	d2
 	cmp.b	#31,d2
-	bls.s	L82814
+	bls.s	.FPESHF
 	moveq	#0,d7
-L82814:
+.FPESHF:
 	lsr.l	d2,d7
 	moveq	#0,d5
 	move.l	#$26A3D100,d6
-	lea 	X83432,a0
+	lea 	FFPHTHET,a0
 	moveq	#0,d2
 	moveq	#3,d1
 	bsr.s	L82890
@@ -27162,10 +26299,10 @@ L82814:
 	moveq	#10,d1
 	bsr.s	L82890
 	tst.b	1(sp)
-	bpl.s	L82862
+	bpl.s	.L82862
 	neg.l	d5
 	neg.b	(sp)
-L82862:
+.L82862:
 	add.l	d5,d6
 	jsr	L83378
 	move.l	d6,d7
@@ -27197,42 +26334,42 @@ L82916:
 	dbf	d1,L82890
 	rts
 
-L82928:
+FFPLOG:
 	tst.b	d7
-	beq.s	L82946
-	bpl.s	L82954
+	beq.s	.FPLZRO
+	bpl.s	.FPLOK
 	and.b	#127,d7
-	bsr.s	L82954
-L82940:
+	bsr.s	.FPLOK
+.FPSETV:
 	ori	#2,ccr
 	rts
 
-L82946:
+.FPLZRO:
 	moveq	#-1,d7
-	jmp	L82940
+	jmp	.FPSETV
 
-L82954:
+.FPLOK:
 	movem.l	d1-d6/a0,-(sp)
 	move.b	d7,-(sp)
 	move.b	#65,d7
 	move.l	#-2147483583,d6
 	move.l	d7,d2
-	jsr	L82312
+	jsr	FFPADD
 	exg	d7,d2
-	jsr	L82294
+	jsr	FFPSUB
 	move.l	d2,d6
-	jsr	L82558
+	jsr	FFPDIV
 	beq.s	L83074
 	sub.b	#67,d7
 	neg.b	d7
 	cmp.b	#31,d7
-	bls.s	L83010
+	bls.s	.FPLSHF
 	moveq	#0,d7
-L83010:
+.FPLSHF:
 	lsr.l	d7,d7
 	moveq	#0,d6
 	move.l	#$20000000,d5
-	lea 	X83432,a0
+	lea 	FFPHTHET,a0
 	moveq	#22,d1
 	moveq	#1,d2
 	bra.s	L83038
@@ -27277,16 +26414,16 @@ L83096:
 	and.b	#128,d1
 	or.b	d1,d6
 	move.l	#-1317922752,d7
-	jsr	L83136
+	jsr	FFPMUL
 	move.l	d2,d6
-	jsr	L82312
+	jsr	FFPADD
 L83130:
 	movem.l	(sp)+,d1-d6/a0
 	rts
 
-L83136:
+FFPMUL:
 	move.b	d7,d5
-	beq.s	L83222
+	beq.s	.FFMRTN
 	move.b	d6,d4
 	beq.s	L83248
 	add.w	d5,d5
@@ -27326,7 +26463,7 @@ L83136:
 	add.l	#128,d7
 	move.b	d5,d7
 	beq.s	L83248
-L83222:
+.FFMRTN:
 	rts
 
 L83224:
@@ -27398,21 +26535,22 @@ L83428:
 L83430:
 	rts
 
-X83432:
+FFPHTHET:
 	dc.l	$1193EA7A,$082C577D
 	dc.l	$04056247,$0200AB11
 	dc.l	$01001558,$008002AA
-	dc.l	4194389,2097162
-	dc.l	1048577,524288
-	dc.l	262144,131072
-	dc.l	65536,32768
-	dc.l	16384,8192
-	dc.l	4096,2048
-	dc.l	1024,512
-	dc.l	256,128
-	dc.l	64,32
-	dc.b	'mc68343 floating point firmware (c) copyright 1981 '
-	dc.b	'by motorola inc.',0
+	dc.l	$00400055,$0020000A
+	dc.l	$00100001,$00080000
+	dc.l	$00040000,$00020000
+	dc.l	$00010000,$00008000
+	dc.l	$00004000,$00002000
+	dc.l	$00001000,$00000800
+	dc.l	$00000400,$00000200
+	dc.l	$00000100,$00000080
+	dc.l	$00000040,$00000020
+
+	;dc.b 'mc68343 floating point firmware '
+	;dc.b '(c) copyright 1981 by motorola inc.',0
 
 L83596:
 	link	fp,#0
@@ -27420,49 +26558,52 @@ L83596:
 	movea.l	8(fp),a5
 	clr.w	d7
 	clr.w	d6
-	bra.s	L83616
+	bra.s	.L83616
 
-L83614:
+.L83614:
 	addq.l	#1,a5
-L83616:
+.L83616:
 	move.b	(a5),d0
 	ext.w	d0
 	ext.l	d0
 	add.l	#T91786,d0
 	movea.l	d0,a0
 	btst	#5,(a0)
-	bne.s	L83614
+	bne.s	.L83614
 	cmpi.b	#43,(a5)
-	bne.s	L83646
+	bne.s	.L83646
 	addq.l	#1,a5
-	bra.s	L83656
+	bra.s	.L83656
 
-L83646:
+.L83646:
 	cmpi.b	#45,(a5)
-	bne.s	L83656
+	bne.s	.L83656
 	addq.l	#1,a5
 	addq.w	#1,d6
-L83656:
-	bra.s	L83672
+.L83656:
+	bra.s	.L83672
 
-L83658:
+.L83658:
 	muls	#10,d7
 	move.b	(a5)+,d0
 	ext.w	d0
+.L83666:
 	add.w	d0,d7
+.L83668:
 	add.w	#-48,d7
-L83672:
+.L83672:
 	cmpi.b	#48,(a5)
-	blt.s	L83684
+.L83676:
+	blt.s	.L83684
 	cmpi.b	#57,(a5)
-	ble.s	L83658
-L83684:
+	ble.s	.L83658
+.L83684:
 	tst.w	d6
-	beq.s	L83694
+	beq.s	.L83694
 	move.w	d7,d0
 	neg.w	d0
 	move.w	d0,d7
-L83694:
+.L83694:
 	move.w	d7,d0
 	tst.l	(sp)+
 	movem.l	(sp)+,d6-d7/a5
@@ -27474,16 +26615,15 @@ L83706:
 	movem.l	d7/a4-a5,-(sp)
 	movea.l	12(fp),a5
 	movea.l	8(fp),a4
-	bra.s	L83726
+	bra.s	.do
 
-L83724:
-	addq.l	#1,a4
-L83726:
-	tst.b	(a4)
-	bne.s	L83724
-L83730:
-	move.b	(a5)+,(a4)+
-	bne.s	L83730
+.loop:	addq.l	#1,a4
+.do:	tst.b	(a4)
+	bne.s	.loop
+
+.loop2: move.b	(a5)+,(a4)+
+	bne.s	.loop2
+
 	move.l	8(fp),d0
 	tst.l	(sp)+
 	movem.l	(sp)+,a4-a5
@@ -27583,22 +26723,17 @@ L83914:
 	movem.l	d7/a4-a5,-(sp)
 	movea.l	8(fp),a5
 	movea.l	a5,a4
-	bra.s	L83932
-
-L83930:
+	bra.s	.do
+.loop:
 	addq.l	#1,a4
-L83932:
+.do:
 	tst.b	(a4)
-	bne.s	L83930
+	bne.s	.loop
 	move.l	a4,d0
 	ext.l	d0
 	sub.l	a5,d0
 	tst.l	(sp)+
 	movem.l	(sp)+,a4-a5
-	unlk	fp
-	rts
-
-	link	fp,#-4
 	unlk	fp
 	rts
 
@@ -27609,72 +26744,72 @@ L83960:
 	clr.l	d5
 	move.l	8(fp),d7
 	move.l	12(fp),d6
-	bne.s	L84006
+	bne.s	.L84006
 	move.l	#-2147483648,U98682
 	move.l	#-2147483648,d0
 	divs	#0,d0
-	bra  	L84108
+	bra  	.L84108
 
-L84006:
-	bge.s	L84012
+.L84006:
+	bge.s	.L84012
 	neg.l	d6
 	addq.w	#1,d3
-L84012:
+.L84012:
 	tst.l	d7
-	bge.s	L84020
+	bge.s	.L84020
 	neg.l	d7
 	addq.w	#1,d3
-L84020:
+.L84020:
 	cmp.l	d7,d6
-	bgt.s	L84080
-	bne.s	L84032
+	bgt.s	.L84080
+	bne.s	.L84032
 	moveq	#1,d5
 	clr.l	d7
-	bra.s	L84080
+	bra.s	.L84080
 
-L84032:
+.L84032:
 	cmp.l	#65536,d7
-	bge.s	L84050
+	bge.s	.L84050
 	divu	d6,d7
 	move.w	d7,d5
 	swap	d7
 	ext.l	d7
-	bra.s	L84080
+	bra.s	.L84080
 
-L84050:
+.L84050:
 	moveq	#1,d4
-L84052:
+.L84052:
 	cmp.l	d6,d7
-	bcs.s	L84062
+	bcs.s	.L84062
 	asl.l	#1,d6
 	asl.l	#1,d4
-	bra.s	L84052
+	bra.s	.L84052
 
-L84062:
+.L84062:
 	tst.l	d4
-	beq.s	L84080
+	beq.s	.L84080
 	cmp.l	d6,d7
-	bcs.s	L84074
+	bcs.s	.L84074
 	or.l	d4,d5
 	sub.l	d6,d7
-L84074:
+.L84074:
 	lsr.l	#1,d4
 	lsr.l	#1,d6
-	bra.s	L84062
+	bra.s	.L84062
 
-L84080:
+.L84080:
 	cmp.w	#1,d3
-	bne.s	L84100
+	bne.s	.L84100
 	neg.l	d7
 	move.l	d7,U98682
 	move.l	d5,d0
 	neg.l	d0
-	bra.s	L84108
+	bra.s	.L84108
 
-L84100:
+.L84100:
 	move.l	d7,U98682
 	move.l	d5,d0
-L84108:
+.L84108:
 	tst.l	(sp)+
 	movem.l	(sp)+,d3-d7
 	unlk	fp
@@ -27768,6 +26903,7 @@ ctrl_cnts:
 	dc.b	0,0,0,1,2,3,1,2
 	dc.b	1,1,1,1,1,1,0,1
 	dc.b	1,0,1,2
+
 T84580:
 	dc.b	1,2
 T84582:
@@ -27850,144 +26986,68 @@ turtle_table:
 	dc.b	255,6,7,254,252,252,254,6
 	dc.b	7,255,252,252,254,5,7,255
 	dc.b	252,251,253,5,7,0,253,251
-T84994:
-	dc.w	4
-T84996:
-	dc.w	1
-T84998:
-	dc.w	0,115
-T85002:
-	dc.w	10
-T85004:
-	dc.w	256
-T85006:
-	dc.w	16,1,49,16
-T85014:
-	dc.b	'^',0
-T85016:
-	dc.l	-100663218
-T85020:
-	dc.b	'\/',0
-T85023:
-	dc.b	'*',0,0
-T85026:
-	dc.b	'\*',0
-T85029:
-	dc.b	'\:',0
-T85032:
-	dc.l	-2147483583
-T85036:
-	dc.l	-1275068343
-T85040:
-	dc.l	-100663217
-T85044:
-	dc.l	-2147483584
-T85048:
-	dc.l	0
-T85052:
-	dc.l	-449912250
-T85056:
-	dc.l	-1275068345
-T85060:
-	dc.l	0,-1896326853
-	dc.l	-1896691908,-698467524
-	dc.l	-1898153411,-1300318915
-	dc.l	-703396547,-107568323
-	dc.l	-1903991490,-1607443394
-	dc.l	-1311714498,-1016893634
-	dc.l	-723071426,-430337218
-	dc.l	-138781122,-2071728577
-	dc.l	-1927260353,-1783513537
-	dc.l	-1640531649,-1498358209
-	dc.l	-1357036481,-1216609985
-	dc.l	-1077120961,-938612673
-	dc.l	-801126081,-664704193
-	dc.l	-529387969,-395218369
-	dc.l	-262237121,-130484417
-	dc.l	-2147483584,-2082895552
-	dc.l	-2018981312,-1955760832
-	dc.l	-1893252032,-1831475648
-	dc.l	-1770449088,-1710191552
-	dc.l	-1650721472,-1592056512
-	dc.l	-1534215872,-1477215424
-	dc.l	-1421073088,-1365806784
-	dc.l	-1311432640,-1257966528
-	dc.l	-1205426368,-1153827520
-	dc.l	-1103184320,-1053514432
-	dc.l	-1004831936,-957151424
-	dc.l	-910486976,-864853696
-	dc.l	-820265920,-776736448
-	dc.l	-734278080,-692905408
-	dc.l	-652628928,-613461952
-	dc.l	-575416512,-538504384
-	dc.l	-502736576,-468124096
-	dc.l	-434676672,-402405312
-	dc.l	-371319488,-341429440
-	dc.l	-312742848,-285270720
-	dc.l	-259018176,-233996224
-	dc.l	-210211520,-187670464
-	dc.l	-166379968,-146347968
-	dc.l	-127579328,-110080448
-	dc.l	-93855424,-78910656
-	dc.l	-65250240,-52878016
-	dc.l	-41798848,-32014784
-	dc.l	-23528640,-16344000
-	dc.l	-10462656,-5886656
-	dc.l	-2616512,-654016
-	dc.l	-2147483583
 
-rsrc_err: dc.b '[3][Can''t find logo.rsc][EXIT]',0,0
+T85014: dc.b '^',0
+T85023: dc.b '*',0
+T85026: dc.b '\*',0
+T85020: dc.b '\/',0
+T85029: dc.b '\:',0
+
+	even
+
+T85060:	; beware these are fast floats
+	dc.l	$00000000,$8EF8593B
+	dc.l	$8EF2C73C,$D65E3B3C
+	dc.l	$8EDC7A3D,$B27EB53D
+	dc.l	$D613053D,$F996A33D
+	dc.l	$8E83653E,$A0305C3E
+	dc.l	$B1D0D33E,$C3636F3E
+	dc.l	$D4E6CE3E,$E659933E
+	dc.l	$F7BA5E3E,$8483EE3F
+	dc.l	$8D20573F,$95B1BE3F
+	dc.l	$9E37793F,$A6B0DE3F
+	dc.l	$AF1D443F,$B77C013F
+	dc.l	$BFCC703F,$C80DE83F
+	dc.l	$D03FC93F,$D8616B3F
+	dc.l	$E0722E3F,$E871723F
+	dc.l	$F05E943F,$F838F73F
+	dc.l	$80000040,$83D98940
+	dc.l	$87A8CA40,$8B6D7540
+	dc.l	$8F274440,$92D5E640
+	dc.l	$96791740,$9A108C40
+	dc.l	$9D9BFD40,$A11B2540
+	dc.l	$A48DB940,$A7F37B40
+	dc.l	$AB4C2540,$AE977140
+	dc.l	$B1D52040,$B504F440
+	dc.l	$B826A740,$BB39FD40
+	dc.l	$BE3EBE40,$C134A540
+	dc.l	$C41B7B40,$C6F30740
+	dc.l	$C9BB1240,$CC736140
+	dc.l	$CF1BBC40,$D1B3F140
+	dc.l	$D43BCE40,$D6B31A40
+	dc.l	$D919AC40,$DB6F5040
+	dc.l	$DDB3D740,$DFE71340
+	dc.l	$E208D940,$E418FE40
+	dc.l	$E6175C40,$E803C840
+	dc.l	$E9DE1D40,$EBA63340
+	dc.l	$ED5BEC40,$EEFF1D40
+	dc.l	$F08FB240,$F20D8040
+	dc.l	$F3786D40,$F4D06040
+	dc.l	$F6153E40,$F746E840
+	dc.l	$F8654B40,$F9704E40
+	dc.l	$FA67E140,$FB4BEB40
+	dc.l	$FC1C5C40,$FCD92540
+	dc.l	$FD823340,$FE177E40
+	dc.l	$FE98FB40,$FF069C40
+	dc.l	$FF605A40,$FFA62D40
+	dc.l	$FFD81340,$FFF60540
+	dc.l	$80000041
+
+rsrc_err: dc.b '[3][Can''t find LOGOHAX.RSC][EXIT]',0
 init_err: dc.b '[3][I can''t initialize LOGO.][EXIT]',0
 
-T85516:
-	dc.w	100,35,16,100
-	dc.w	16
-T85526:
-	dc.l	L37910,L39270
-	dc.l	L39270,L39270
-	dc.l	L39270,L39270
-	dc.l	L39270,L39270
-	dc.l	L39270,L39270
-	dc.l	L37952,L38088
-	dc.l	L38132,L38212
-	dc.l	L38986,L38854
-	dc.l	L38918,L38394
-	dc.l	L38572
-T85602:
-	dc.l	18176,18432
-	dc.l	19200,19712
-	dc.l	20480,20992
-	dc.l	0,L39316
-	dc.l	L39312,L39304
-	dc.l	L39300,L39308
-	dc.l	L39320,L39348
-T85658:
-	dc.l	L39650,L40578
-	dc.l	L40578,L40578
-	dc.l	L40578,L40578
-	dc.l	L40578,L40578
-	dc.l	L40578,L40110
-	dc.l	L40110,L40308
-	dc.l	L40578,L40216
-	dc.l	L40216,L40578
-	dc.l	L39884,L40196
-	dc.l	L40578,L39892
-	dc.l	L40094,L40094
-	dc.l	L39908,L40578
-	dc.l	L40094,L40308
-	dc.l	L39868,L39892
-	dc.l	L40578,L39692
-	dc.l	L39708,L39724
-	dc.l	L39740,L40578
-	dc.l	L39756,L39772
-	dc.l	L39788,L39804
-	dc.l	L39820,L40578
-	dc.l	L39836,L39852
-	dc.l	L40578,L40500
-	dc.l	L40402,L40452
-	dc.l	L40578,L39924
-	dc.l	L40094,L40094
-	dc.l	L40046,L39996
+T85516: dc.w 100,35,16,100,16
+
 T85866:
 	dc.b	'[3][Not enough windows to run LOGO][exit]',0
 T85908:
@@ -27999,7 +27059,7 @@ T85934:
 T85951:
 	dc.b	'DEBUG INFO',0
 T85962:
-	dc.b	'LOGO.RSC',0,0
+	dc.b	'LOGOHAX.RSC',0
 T85972:
 	dc.l	L51844
 	dc.l	L52180
@@ -28098,8 +27158,7 @@ T86334:
 	dc.b	'#2',0
 T86337:
 	dc.b	'] ',0
-T86340:
-	dc.b	1,2,4,8,16,' @',128
+
 T86348:
 	dc.b	'#3',0
 T86351:
@@ -28131,12 +27190,13 @@ T86580:
 	dc.b	'I can''t open picture file ',1,0
 T86608:
 	dc.b	'I''m having trouble with the buffer file',0
-T86648:
+err_s_trouble:
 	dc.b	'I''m having trouble with ',1,0
 T86674:
 	dc.b	'Can''t close buffer file. Disk full?',0
 T86710:
 	dc.b	1,' is not a picture or is the wrong resolution',0
+
 T86756:
 	dc.l	L70302,L70726
 	dc.l	L70628,L70530
@@ -28166,6 +27226,7 @@ T86864:
 	dc.l	L76446,L76628
 	dc.l	L76642,L76666
 	dc.l	L76694,L76746
+
 T86968:
 	dc.b	'LOAD "',0
 T86975:
@@ -28189,21 +27250,24 @@ T87040:
 T87048:
 	dc.b	'TRACE',0
 T87054:
-	dc.b	': ',0,0
+	dc.b	': ',0
+
+	even
+
 T87058:
 	dc.l	T87366
 T87062:
 	dc.l	T87430
 T87066:
 	dc.l	T87441
-T87070:
-	dc.l	T87450
-T87074:
-	dc.l	T87492
-T87078:
-	dc.l	T87534
-T87082:
-	dc.l	T87587
+err_mem:
+	dc.l	err_s_mem
+err_nodes:
+	dc.l	err_s_nodes
+err_stackgc:
+	dc.l	err_s_stackgc
+err_stack:
+	dc.l	err_s_stack
 T87086:
 	dc.l	T87620
 T87090:
@@ -28212,14 +27276,14 @@ T87094:
 	dc.l	T87667
 T87098:
 	dc.l	T87682
-T87102:
-	dc.l	T87694
+err_nodes_low:
+	dc.l	err_s_nodes_low
 T87106:
 	dc.l	T87719
 T87110:
 	dc.l	T87740
-T87114:
-	dc.l	T87761
+err_disk:
+	dc.l	err_s_disk
 T87118:
 	dc.l	T87794
 T87122:
@@ -28314,8 +27378,8 @@ T87310:
 	dc.l	T88431
 T87314:
 	dc.l	T88442
-T87318:
-	dc.l	T88447
+temp_pic:
+	dc.l	s_temp_pic
 T87322:
 	dc.l	T88458
 T87326:
@@ -28324,10 +27388,12 @@ T87330:
 	dc.l	T88464
 T87334:
 	dc.l	T88467
-T87338:
+
+window_mode_table:
 	dc.l	T88470
 	dc.l	T88477
 	dc.l	T88482
+
 T87350:
 	dc.l	T88488
 T87354:
@@ -28343,13 +27409,13 @@ T87430:
 	dc.b	'Pausing...',0
 T87441:
 	dc.b	'Stopped!',0
-T87450:
+err_s_mem:
 	dc.b	'[3][I need more memory to run LOGO][EXIT]',0
-T87492:
+err_s_nodes:
 	dc.b	'[3][I don''t have any LOGO nodes left][OK]',0
-T87534:
+err_s_stackgc:
 	dc.b	'[3][Out of LOGO stack during!garbage collection][OK]',0
-T87587:
+err_s_stack:
 	dc.b	'[3][Out of LOGO stack space][OK]',0
 T87620:
 	dc.b	'No pan with FENCE or WRAP',0
@@ -28359,13 +27425,13 @@ T87667:
 	dc.b	'Number too big',0
 T87682:
 	dc.b	') without (',0
-T87694:
+err_s_nodes_low:
 	dc.b	'I''m running out of nodes',0
 T87719:
 	dc.b	'Can''t divide by zero',0
 T87740:
 	dc.b	'The word is too long',0
-T87761:
+err_s_disk:
 	dc.b	'I''m having trouble with the disk',0
 T87794:
 	dc.b	'Disk is full',0
@@ -28373,20 +27439,12 @@ T87807:
 	dc.b	'My edit buffer is full',0
 T87830:
 	dc.b	'If wants [ ]''s around instructions',0
-T87865:
-	dc.b	0
-T87866:
-	dc.b	0
-T87867:
-	dc.b	0
 T87868:
 	dc.b	'TRUE',0
 T87873:
 	dc.b	'FALSE',0
 T87879:
 	dc.b	'.LOG',0
-T87884:
-	dc.b	0
 T87885:
 	dc.b	'TO',0
 T87888:
@@ -28415,8 +27473,6 @@ T87965:
 	dc.b	1,' isn''t a name or procedure',0
 T87993:
 	dc.b	'Evaluating ',1,0
-T88006:
-	dc.b	0
 T88007:
 	dc.b	1,' is a primitive',0
 T88024:
@@ -28449,8 +27505,6 @@ T88238:
 	dc.b	0
 T88263:
 	dc.b	'Can''t find label ',1,0
-T88282:
-	dc.b	0
 T88283:
 	dc.b	'I can''t ',1
 	dc.b	' while loading a file',0
@@ -28480,7 +27534,7 @@ T88431:
 	dc.b	' is ',3,0
 T88442:
 	dc.b	'.PIC',0
-T88447:
+s_temp_pic:
 	dc.b	'$TEMP$.PIC',0
 T88458:
 	dc.b	'PU',0
@@ -28490,12 +27544,6 @@ T88464:
 	dc.b	'PX',0
 T88467:
 	dc.b	'PE',0
-T88470:
-	dc.b	'WINDOW',0
-T88477:
-	dc.b	'WRAP',0
-T88482:
-	dc.b	'FENCE',0
 T88488:
 	dc.b	'GFILL',0
 T88494:
@@ -28503,24 +27551,34 @@ T88494:
 T88503:
 	dc.b	'.FPT',0
 T88508:
-	dc.b	'.LPT',0,0
-T88514:
+	dc.b	'.LPT'
+T87865:
+T87866:
+T87867:
+T87884:
+T88006:
+T88282:
+	dc.b	0
+
+	even
+
+word_table:
 	dc.l	T90222
-	dc.l	L6366
+	dc.l	word_ascii
 	dc.l	T90228
-	dc.l	L6400
+	dc.l	word_butfirst
 	dc.l	T90240
-	dc.l	L6972
+	dc.l	word_butlast
 	dc.l	T90251
 	dc.l	L6454
 	dc.l	T90256
 	dc.l	L6510
 	dc.l	T90262
-	dc.l	L6946
+	dc.l	word_emptyp
 	dc.l	T90269
 	dc.l	L7058
 	dc.l	T90276
-	dc.l	L7084
+	dc.l	word_first
 	dc.l	T90282
 	dc.l	L7144
 	dc.l	T90287
@@ -28528,17 +27586,17 @@ T88514:
 	dc.l	T90292
 	dc.l	L7374
 	dc.l	T90297
-	dc.l	L7472
+	dc.l	word_list
 	dc.l	T90302
 	dc.l	L7502
 	dc.l	T90308
-	dc.l	L7542
+	dc.l	word_lput
 	dc.l	T90313
 	dc.l	L7862
 	dc.l	T90321
 	dc.l	L8194
 	dc.l	T90329
-	dc.l	L8254
+	dc.l	word_sentence
 	dc.l	T90341
 	dc.l	L8482
 	dc.l	T90347
@@ -28638,9 +27696,9 @@ T88514:
 	dc.l	T90659
 	dc.l	L9984
 	dc.l	T90665
-	dc.l	L10446
+	dc.l	word_nodes
 	dc.l	T90671
-	dc.l	L62878
+	dc.l	word_recycle
 	dc.l	T90679
 	dc.l	L10492
 	dc.l	T90689
@@ -28688,17 +27746,17 @@ T88514:
 	dc.l	T90816
 	dc.l	L3504
 	dc.l	T90825
-	dc.l	L4734
+	dc.l	word_shuffle
 	dc.l	T90833
 	dc.l	L3520
 	dc.l	T90839
 	dc.l	L2890
 	dc.l	T90843
-	dc.l	L7706
+	dc.l	word_replace
 	dc.l	T90852
-	dc.l	L7772
+	dc.l	word_reptail
 	dc.l	T90861
-	dc.l	L4924
+	dc.l	word_sort
 	dc.l	T90866
 	dc.l	L5272
 	dc.l	T90871
@@ -28728,7 +27786,7 @@ T88514:
 	dc.l	T90963
 	dc.l	L12278
 	dc.l	T90970
-	dc.l	L12654
+	dc.l	word_potl
 	dc.l	T90975
 	dc.l	L13020
 	dc.l	T90981
@@ -28790,13 +27848,13 @@ T88514:
 	dc.l	T91135
 	dc.l	L34588
 	dc.l	T91141
-	dc.l	L16642
+	dc.l	word_forward
 	dc.l	T91152
-	dc.l	L16918
+	dc.l	word_hideturtle
 	dc.l	T91166
-	dc.l	L16944
+	dc.l	word_home
 	dc.l	T91171
-	dc.l	L16968
+	dc.l	word_left
 	dc.l	T91179
 	dc.l	L33212
 	dc.l	T91190
@@ -28806,11 +27864,11 @@ T88514:
 	dc.l	T91216
 	dc.l	L33238
 	dc.l	T91225
-	dc.l	L17004
+	dc.l	word_right
 	dc.l	T91234
 	dc.l	L17030
 	dc.l	T91240
-	dc.l	L17074
+	dc.l	word_setheading
 	dc.l	T91256
 	dc.l	L17100
 	dc.l	T91262
@@ -28818,7 +27876,7 @@ T88514:
 	dc.l	T91269
 	dc.l	L17352
 	dc.l	T91276
-	dc.l	L17822
+	dc.l	word_setscrunch
 	dc.l	T91287
 	dc.l	L17400
 	dc.l	T91292
@@ -28842,15 +27900,15 @@ T88514:
 	dc.l	T91368
 	dc.l	L17808
 	dc.l	T91381
-	dc.l	L16680
+	dc.l	word_turtlefacts
 	dc.l	T91396
-	dc.l	L16802
+	dc.l	word_screenfacts
 	dc.l	T91411
-	dc.l	L28812
+	dc.l	word_turtletext
 	dc.l	T91425
-	dc.l	L16370
+	dc.l	word_setzoom
 	dc.l	T91433
-	dc.l	L16396
+	dc.l	word_setpan
 	dc.l	T91440
 	dc.l	L27388
 	dc.l	T91445
@@ -28866,9 +27924,9 @@ T88514:
 	dc.l	T91475
 	dc.l	L18102
 	dc.l	T91483
-	dc.l	L28632
+	dc.l	word_setpal
 	dc.l	T91490
-	dc.l	L28740
+	dc.l	word_pal
 	dc.l	T91494
 	dc.l	L26000
 	dc.l	T91498
@@ -28892,7 +27950,7 @@ T88514:
 	dc.l	T91564
 	dc.l	L26954
 	dc.l	T91572
-	dc.l	L26974
+	dc.l	word_sysfacts
 	dc.l	T91581
 	dc.l	L25886
 	dc.l	T91587
@@ -28903,7 +27961,8 @@ T88514:
 	dc.l	L18474
 	dc.l	T91612
 	dc.l	L29214
-T90106:
+
+string_table:
 	dc.l	T91618
 	dc.l	T91619
 	dc.l	T91636
@@ -28933,6 +27992,7 @@ T90106:
 	dc.l	T91752
 	dc.l	T91759
 	dc.l	T91766
+
 T90222:
 	dc.b	'ASCII',0
 T90228:
@@ -29215,8 +28275,6 @@ T91114:
 	dc.b	'CLEAN',0
 T91120:
 	dc.b	'CLEARSCREEN CS',0
-T91135:
-	dc.b	'FENCE',0
 T91141:
 	dc.b	'FORWARD FD',0
 T91152:
@@ -29255,10 +28313,15 @@ T91297:
 	dc.b	'SHOWTURTLE ST',0
 T91311:
 	dc.b	'TOWARDS',0
+T88470:
 T91319:
 	dc.b	'WINDOW',0
+T88477:
 T91326:
 	dc.b	'WRAP',0
+T88482:
+T91135:
+	dc.b	'FENCE',0
 T91331:
 	dc.b	'KEYP',0
 T91336:
@@ -29331,20 +28394,8 @@ T91607:
 	dc.b	'CALL',0
 T91612:
 	dc.b	'MOUSE',0
-T91618:
-	dc.b	0
 T91619:
 	dc.b	'DR LOGO FOR GEM!',0
-T91636:
-	dc.b	0
-T91637:
-	dc.b	0
-T91638:
-	dc.b	0
-T91639:
-	dc.b	0
-T91640:
-	dc.b	0
 T91641:
 	dc.b	'LOADING: ',0
 T91651:
@@ -29388,7 +28439,15 @@ T91752:
 T91759:
 	dc.b	'ERRACT',0
 T91766:
-	dc.b	'an empty word',0
+	dc.b	'an empty word'
+T91618:
+T91636:
+T91637:
+T91638:
+T91639:
+T91640:
+	dc.b	0
+
 T91780:
 	dc.w	11520
 T91782:
@@ -29418,7 +28477,7 @@ T91786:
 p_tbase: ds.l	1
 
 U91922:
-	ds.b	4
+	ds.l	1
 U91926:
 	ds.b	2
 U91928:
@@ -29428,8 +28487,6 @@ U91932:
 U91936:
 	ds.b	6
 U91942:
-	ds.b	4
-U91946:
 	ds.b	4
 U91950:
 	ds.b	2
@@ -29475,41 +28532,37 @@ U92048:
 	ds.b	2
 U92050:
 	ds.b	2
-U92052:
-	ds.b	2
+prev_color:
+	ds.w	1
 U92054:
 	ds.b	2
 U92056:
 	ds.b	2
 U92058:
 	ds.b	8
-U92066:
-	ds.b	2
-U92068:
-	ds.b	2
-U92070:
-	ds.b	2
-U92072:
-	ds.b	4
+
+U92072: ds.l 1
+
 U92076:
 	ds.b	2
-U92078:
-	ds.b	4
-U92082:
-	ds.b	2
+
+U92078: ds.l 1
+
+U92082: ds.w 1
 
 turtle_show_flag: ds.w 1
 
-U92086:
-	ds.b	2
+window_mode: ds.w 1
+
 U92088:
 	ds.b	4
 U92092:
 	ds.b	1
 U92093:
 	ds.b	1
-U92094:
-	ds.b	2
+
+U92094: ds.w 1
+
 U92096:
 	ds.b	2
 U92098:
@@ -29576,20 +28629,17 @@ U92166:
 	ds.b	4
 
 pblock:
-	ds.l	1
-U92174:
-	ds.l	1
-U92178:
-	ds.l	1
-U92182:
-	ds.l	1
-U92186:
-	ds.l	1
+p_contrl: ds.l 1
+p_intin:  ds.l 1
+p_ptsin:  ds.l 1
+p_intout: ds.l 1
+p_ptsout: ds.l 1
 
 U92190:
 	ds.b	8
-U92198:
-	ds.b	4
+
+dialog_about: ds.l 1
+
 U92202:
 	ds.b	4
 U92206:
@@ -29602,12 +28652,12 @@ U92218:
 	ds.b	4
 U92222:
 	ds.b	4
-U92226:
-	ds.b	2
-U92228:
-	ds.b	2
-U92230:
-	ds.b	2
+
+draw_lock_flag: ds.w 1
+
+mouse_x: ds.w 1
+mouse_y: ds.w 1
+
 U92232:
 	ds.b	2
 U92234:
@@ -29691,32 +28741,11 @@ U98398:
 	ds.b	2
 U98400:
 	ds.b	2
-U98402:
-	ds.b	8
-U98410:
-	ds.b	2
-U98412:
-	ds.b	2
-U98414:
-	ds.b	2
-U98416:
-	ds.b	2
-U98418:
-	ds.b	2
-U98420:
-	ds.b	2
-U98422:
-	ds.b	2
-U98424:
-	ds.b	2
-U98426:
-	ds.b	2
-U98428:
-	ds.b	2
-U98430:
-	ds.b	244
-U98674:
-	ds.b	8
+
+intin: ds.w 132
+
+U98674: ds.b 8
+
 U98682:
 	ds.b	4
 U98686:
@@ -29741,28 +28770,14 @@ U98716:
 	ds.b	2
 U98718:
 	ds.b	2
-U98720:
-	ds.b	2
-U98722:
-	ds.b	4
-U98726:
-	ds.b	2
-U98728:
-	ds.b	6
-U98734:
-	ds.b	8
-U98742:
-	ds.b	2
-U98744:
-	ds.b	2
-U98746:
-	ds.b	254
-U99000:
-	ds.b	8
-U99008:
-	ds.b	8
-U99016:
-	ds.b	8
+
+intout: ds.w	140
+
+U99000: ds.b 8
+U99008: ds.b 8
+
+U99016: ds.b 8
+
 U99024:
 	ds.b	4
 U99028:
@@ -29809,10 +28824,8 @@ work_y: ds.w 1
 work_w: ds.w 1
 work_h: ds.w 1
 
-U99186:
-	ds.b	2
-U99188:
-	ds.b	2
+U99188: ds.w 1
+
 U99190:
 	ds.b	2
 U99192:
@@ -29847,12 +28860,14 @@ U99854:
 	ds.b	2
 U99856:
 	ds.b	4
-U99860:
-	ds.b	2
+
+U99860_x: ds.w 1
+
 U99862:
 	ds.b	2
-U99864:
-	ds.b	2
+
+U99864: ds.w 1
+
 U99866:
 	ds.b	2
 
@@ -29865,16 +28880,17 @@ U100561:
 	ds.b	1
 U100562:
 	ds.b	2
-U100564:
-	ds.b	2
+
+U100564_y: ds.w	1
 
 ptsout:
 	ds.w	12
 
 U100590:
 	ds.b	30
-U100620:
-	ds.b	2
+
+U100620: ds.w 2
+
 U100622:
 	ds.b	2
 U100624:
@@ -29926,7 +28942,7 @@ U100740:
 U100742:
 	ds.b	2
 U100744:
-	ds.b	4
+	ds.l	1
 U100748:
 	ds.b	2
 U100750:
@@ -29955,27 +28971,15 @@ U100904:
 	ds.b	2
 
 control: ds.w 4
-int_in: ds.w 16
-int_out: ds.w 1
+int_in:  ds.w 16
+int_out: ds.w 7
 
-U100948:
-	ds.b	2
-U100950:
-	ds.b	2
-U100952:
-	ds.b	2
-U100954:
-	ds.b	2
-U100956:
-	ds.b	2
-U100958:
-	ds.b	2
-U100960:
-	ds.b	2
-U100962:
-	ds.b	8
+U100960: ds.w 1
+
+U100962: ds.l 2
 
 turtle_p: ds.l 1
+
 U100970_x: ds.w 1
 U100972_y: ds.w 1
 
@@ -29983,8 +28987,9 @@ U100974:
 	ds.b	2
 U100976:
 	ds.b	2
-U100978:
-	ds.b	2
+
+nodes_free: ds.w 1
+
 U100980:
 	ds.b	2
 U100982:
@@ -29993,8 +28998,9 @@ U100984:
 	ds.b	2
 U100986:
 	ds.b	2
-U100988:
-	ds.b	2
+
+nodes_max: ds.w	1
+
 U100990:
 	ds.b	2
 U100992:
@@ -30021,8 +29027,9 @@ U101014:
 	ds.b	12
 U101026:
 	ds.b	4
-U101030:
-	ds.b	4
+
+U101030: ds.l 1
+
 U101034:
 	ds.b	2
 U101036:
@@ -30033,8 +29040,9 @@ U101042:
 	ds.b	2
 U101044:
 	ds.b	2
-U101046:
-	ds.b	2
+
+U101046: ds.w 1
+
 U101048:
 	ds.b	2
 U101050:
@@ -30057,20 +29065,16 @@ U101106:
 	ds.b	2
 U101108:
 	ds.b	2
-U101110:
-	ds.b	4
+
 U101114:
 	ds.b	6
 U101120:
 	ds.b	2
 U101122:
 	ds.b	2
-U101124:
-	ds.b	2
-U101126:
-	ds.b	2
-U101128:
-	ds.b	2
+
+max_colors: ds.w 1
+
 U101130:
 	ds.b	2
 U101132:
@@ -30107,8 +29111,6 @@ U101186:
 	ds.b	2
 U101192:
 	ds.b	2
-U101194:
-	ds.b	4
 U101198:
 	ds.b	2
 U101200:
@@ -30129,8 +29131,8 @@ U101470:
 	ds.b	4
 U101474:
 	ds.b	2
-U101476:
-	ds.b	2
+
+U101476: ds.w 1
 
 nplanes: ds.w 1
 
