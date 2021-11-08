@@ -12409,7 +12409,7 @@ L40090:
 	bra  	L40578
 
 L40094:
-	clr.w	(sp)
+	clr.l	(sp)
 	move.w	8(fp),-(sp)
 	bsr  	L40590
 	addq.l	#2,sp
