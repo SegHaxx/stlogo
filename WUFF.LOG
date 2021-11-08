@@ -1,0 +1,65 @@
+TO WUFF :S :I ; seg rulz ok
+F :S :I
+RT 90
+F :S :I
+F :S :I
+F :S :I
+LT 135
+F :S :I
+RT 90
+F :S :I
+LT 135
+F :S :I
+RT 90
+F :S :I
+LT 90
+F :S * 0.5 :I
+PU
+BK :S * 0.2
+LT 135
+PD
+FD :S * 0.2
+LT 45
+FD :S * 0.15
+PU
+BK :S * 0.15
+RT 45
+BK :S * 0.2
+RT 135
+FD :S * 0.2
+PD
+LT 90
+FD :S * 0.9
+PU
+BK :S * 0.9
+PD
+RT 45
+F :S * 0.4142 :I
+LT 45
+F :S * 0.75 :I
+RT 90
+F :S * 0.85 :I
+RT 45
+F :S * 0.5 :I
+RT 45
+F :S * 0.25 :I
+F :S :I
+END
+
+TO F :S :I
+MAKE "I :I - 1
+IF :I < 1 [FD :S STOP]
+WUFF :S / 4 :I
+END
+
+TO INIT
+SETZOOM (ROUND (ITEM 3 SYSFACTS)/80)/8
+CS PU BK 120 LT 90 BK 300 PD
+END
+
+TO KOIRAKOIRA :I
+INIT
+REPEAT 2 [WUFF 75 :I]
+END
+
+FS KOIRAKOIRA 2

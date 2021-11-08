@@ -1,0 +1,3 @@
+*.rsc binary
+*.RSC binary
+*.LOG text eol=crlf
