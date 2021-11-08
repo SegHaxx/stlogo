@@ -1,6 +1,11 @@
 VASM=vasmm68k_mot
 
-all: logohax.prg
+TARGETS=logohax.prg
+
+.PHONY: all clean
+all: $(TARGETS)
+clean:
+	rm -f *.o $(TARGETS)
 
 logohax.prg: logohax.s
 	$(VASM) -Ftos -no-opt -nosym $< -o $@ -L $@.lst
@@ -11,7 +16,11 @@ logohax.prg: logohax.s
 	@echo "306a6e5196e3aa27f9c61040747fa33bbf5f25fc $@"|sha1sum -c -
 	@echo
 
-.PHONY: clean
+EXAMPLES=HANOI.LOG MANDEL.LOG SNOWFLAK.LOG SQUIRAL.LOG TEST.LOG TEST_TT.LOG TETRA.LOG WUFF.LOG
 
-clean:
-	rm -f logohax.prg
+logohax.st: logohax.prg LOGO.RSC $(EXAMPLES)
+	dd if=/dev/zero of=$@ bs=720K count=1 status=none
+	mkdosfs -n LOGOHAX $@
+	mcopy -v -m -i $@ AUTO/ DESKTOP.INF LOGO.PRG LOGO.RSC ::/
+	mmd -i $@ LOGOHAX
+	mcopy -v -m -i $@ $^ ::/LOGOHAX

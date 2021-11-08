@@ -1,3 +1,4 @@
 *.rsc binary
 *.RSC binary
 *.LOG text eol=crlf
+DESKTOP.INF text eol=crlf
