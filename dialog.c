@@ -9,7 +9,7 @@ OBJECT* banner_load_file;
 OBJECT* banner_save_file;
 OBJECT* banner_delete_file;
 
-static char version[]="Sep 11 2021";
+static char version[]="Happy Halloween 2021";
 static char credit[]="Patched by Seg <seg@haxxed.com>";
 
 OBJECT* get_rsrc_gaddr(int16_t re_gindex){

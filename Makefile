@@ -2,7 +2,7 @@ VASM=vasmm68k_mot
 MINT_PREFIX=m68k-atari-mint
 MINT_CFLAGS=-Wall -Os -mshort
 
-TARGETS=logohax.prg
+TARGETS=logohax.prg logohax.st
 
 .PHONY: all clean
 all: $(TARGETS)
