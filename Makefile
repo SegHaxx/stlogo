@@ -16,6 +16,6 @@ EXAMPLES=HANOI.LOG MANDEL.LOG SNOWFLAK.LOG SQUIRAL.LOG TEST.LOG TEST_TT.LOG TETR
 logohax.st: logohax.prg logohax.rsc $(EXAMPLES)
 	dd if=/dev/zero of=$@ bs=720K count=1 status=none
 	mkdosfs -n LOGOHAX $@
-	mcopy -v -m -i $@ AUTO/ DESKTOP.INF LOGO.PRG LOGO.RSC ::/
+	mcopy -v -m -i $@ AUTO/ DESKTOP.INF orig/LOGO.PRG orig/LOGO.RSC ::/
 	mmd -i $@ LOGOHAX
 	mcopy -v -m -i $@ $^ ::/LOGOHAX
