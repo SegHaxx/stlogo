@@ -24,7 +24,7 @@ dialog.o: dialog.c aes.h
 
 EXAMPLES=HANOI.LOG MANDEL.LOG SNOWFLAK.LOG SQUIRAL.LOG TEST.LOG TEST_TT.LOG TETRA.LOG WUFF.LOG
 
-logohax.st: logohax.prg logohax.rsc $(EXAMPLES)
+logohax.st: README.TXT logohax.prg logohax.rsc $(EXAMPLES)
 	dd if=/dev/zero of=$@ bs=720K count=1 status=none
 	mkdosfs -n LOGOHAX $@
 	mcopy -v -m -i $@ AUTO/ DESKTOP.INF orig/LOGO.PRG orig/LOGO.RSC ::/
